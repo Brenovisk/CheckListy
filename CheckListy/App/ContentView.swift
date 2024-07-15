@@ -8,14 +8,59 @@
 import SwiftUI
 
 struct ContentView: View {
+    @StateObject private var firebaseAuth = FirebaseAuthService.shared
     
     var body: some View {
-        NavigationView {
-            ListItemsView()
-                .environmentObject(ListItemViewModel())
+        NavigationStack {
+            if let isSignIn = firebaseAuth.isSignIn {
+                if isSignIn {
+                    MainView()
+                } else {
+                    AuthenticationView()
+                }
+            } else {
+                ProgressView()
+            }
         }
     }
+}
+
+struct MainView: View {
+    var body: some View {
+        ListsView()
+            .environmentObject(ListsViewModel())
+    }
+}
+
+struct AuthenticationView: View {
+    @State private var showSignUp = false
     
+    var body: some View {
+        VStack {
+            if showSignUp {
+                SignUpView()
+                    .environmentObject(SignUpViewModel())
+            } else {
+                SignInView()
+                    .environmentObject(SignInViewModel())
+            }
+            
+            ToggleSignUpButton(showSignUp: $showSignUp)
+                .padding()
+        }
+    }
+}
+
+struct ToggleSignUpButton: View {
+    @Binding var showSignUp: Bool
+    
+    var body: some View {
+        Button(action: {
+            showSignUp.toggle()
+        }) {
+            Text(showSignUp ? "Já tem uma conta? Entrar" : "Se cadastrar")
+        }
+    }
 }
 
 #Preview {

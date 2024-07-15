@@ -9,6 +9,7 @@ import Foundation
 import Combine
 
 class SignInViewModel: ObservableObject {
+    
     @Published var email: String = ""
     @Published var password: String = ""
     @Published var isLoading: Bool = false
@@ -27,14 +28,4 @@ class SignInViewModel: ObservableObject {
         }
     }
     
-    func signUp() async {
-        do {
-            isLoading = true
-            try await FirebaseAuthService.shared.signUp(withEmail: email, password: password)
-            isLoading = false
-        } catch {
-            errorMessage = error.localizedDescription
-            isLoading = false
-        }
-    }
 }

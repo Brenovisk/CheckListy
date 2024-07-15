@@ -1,5 +1,5 @@
 //
-//  Loginview.swift
+//  SignInView.swift
 //  CheckListy
 //
 //  Created by Breno Lucas on 04/07/24.
@@ -9,10 +9,14 @@ import Foundation
 import SwiftUI
 
 struct SignInView: View {
-    @EnvironmentObject private var viewModel: LoginViewModel
+    
+    @EnvironmentObject private var viewModel: SignInViewModel
     
     var body: some View {
         VStack {
+            Text("SignIn")
+                .font(.title)
+            
             TextField("Email", text: $viewModel.email)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .padding()
@@ -47,12 +51,19 @@ struct SignInView: View {
                     .foregroundColor(.red)
                     .padding()
             }
+            
+            if let isSignIn = FirebaseAuthService.shared.isSignIn, isSignIn {
+                Text("Success!")
+                    .foregroundColor(.green)
+                    .padding()
+            }
         }
         .padding()
     }
+    
 }
 
 #Preview {
     SignInView()
-        .environmentObject(LoginViewModel())
+        .environmentObject(SignInViewModel())
 }

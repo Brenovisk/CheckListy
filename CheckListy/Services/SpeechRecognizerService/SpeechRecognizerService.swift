@@ -29,17 +29,17 @@ actor SpeechRecognizerService: ObservableObject {
         
         recognizer = SFSpeechRecognizer(locale: locale)
         guard recognizer != nil else {
-            transcribe(RecognizerError.nilRecognizer)
+            transcribe(Errors.nilRecognizer)
             return
         }
         
         Task {
             do {
                 guard await SFSpeechRecognizer.hasAuthorizationToRecognize() else {
-                    throw RecognizerError.notAuthorizedToRecognize
+                    throw Errors.notAuthorizedToRecognize
                 }
                 guard await AVAudioSession.sharedInstance().hasPermissionToRecord() else {
-                    throw RecognizerError.notPermittedToRecord
+                    throw Errors.notPermittedToRecord
                 }
             } catch {
                 transcribe(error)
@@ -73,7 +73,7 @@ actor SpeechRecognizerService: ObservableObject {
      */
     private func transcribe() {
         guard let recognizer, recognizer.isAvailable else {
-            self.transcribe(RecognizerError.recognizerIsUnavailable)
+            self.transcribe(Errors.recognizerIsUnavailable)
             return
         }
         
@@ -142,7 +142,7 @@ actor SpeechRecognizerService: ObservableObject {
     
     nonisolated private func transcribe(_ error: Error) {
         var errorMessage = ""
-        if let error = error as? RecognizerError {
+        if let error = error as? Errors {
             errorMessage += error.description
         } else {
             errorMessage += error.localizedDescription
@@ -174,5 +174,11 @@ extension AVAudioSession {
             return false
         }
     }
+    
+}
+
+extension SpeechRecognizerService {
+    
+    typealias Errors = SpeechRecognizerServiceErrors
     
 }

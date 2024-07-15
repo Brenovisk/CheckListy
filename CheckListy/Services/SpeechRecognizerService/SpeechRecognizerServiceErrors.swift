@@ -1,5 +1,5 @@
 //
-//  RecognizerError.swift
+//  SpeechRecognizerServiceErrors.swift
 //  CheckListy
 //
 //  Created by Breno Lucas on 02/07/24.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum RecognizerError: Error, LocalizedError {
+enum SpeechRecognizerServiceErrors: Error, LocalizedError {
     
     case nilRecognizer
     case notAuthorizedToRecognize
@@ -16,7 +16,7 @@ enum RecognizerError: Error, LocalizedError {
     
 }
 
-extension RecognizerError: CustomStringConvertible {
+extension SpeechRecognizerServiceErrors: CustomStringConvertible {
     
     var description: String {
         switch self {

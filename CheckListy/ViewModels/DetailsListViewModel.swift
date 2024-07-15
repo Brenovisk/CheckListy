@@ -1,5 +1,5 @@
 //
-//  ListItemViewModel.swift
+//  DetailsListViewModel.swift
 //  CheckListy
 //
 //  Created by Breno Lucas on 02/07/24.

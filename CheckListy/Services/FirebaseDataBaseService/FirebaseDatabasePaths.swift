@@ -6,3 +6,20 @@
 //
 
 import Foundation
+
+enum FirebaseDatabasePaths: CustomStringConvertible {
+    
+    case lists
+    
+}
+
+extension FirebaseDatabasePaths {
+    
+    var description: String {
+        switch self {
+        case .lists:
+            return "lists"
+        }
+    }
+    
+}
