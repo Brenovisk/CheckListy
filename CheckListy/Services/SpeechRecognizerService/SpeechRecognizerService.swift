@@ -10,7 +10,7 @@ import Speech
 import SwiftUI
 
 /// A helper for transcribing speech to text using SFSpeechRecognizer and AVAudioEngine.
-actor SpeechRecognizer: ObservableObject {
+actor SpeechRecognizerService: ObservableObject {
     
     @MainActor var transcript: String = ""
     

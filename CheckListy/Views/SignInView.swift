@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-struct LoginView: View {
+struct SignInView: View {
     @EnvironmentObject private var viewModel: LoginViewModel
     
     var body: some View {
@@ -28,7 +28,9 @@ struct LoginView: View {
                     .padding()
             } else {
                 Button(action: {
-                    viewModel.login()
+                    Task {
+                        await viewModel.signIn()
+                    }
                 }) {
                     Text("Entrar")
                         .frame(maxWidth: .infinity)
@@ -51,6 +53,6 @@ struct LoginView: View {
 }
 
 #Preview {
-    LoginView()
+    SignInView()
         .environmentObject(LoginViewModel())
 }

@@ -1,19 +1,21 @@
 //
-//  ListItemsView.swift
+//  DetailsList.swift
 //  CheckListy
 //
 //  Created by Breno Lucas on 02/07/24.
 //
 
 import SwiftUI
+import FirebaseDatabase
 
-struct ListItemsView: View {
+struct DetailsListView: View {
+    @StateObject var speechRecognizer = SpeechRecognizerService()
     
     @State private var isPressed = false
-    @StateObject var speechRecognizer = SpeechRecognizer()
+    @State private var isShowForm = false
     @State private var multiSelection = Set<UUID>()
     
-    @EnvironmentObject var viewModel: ListItemViewModel
+    @EnvironmentObject var viewModel: DetailsListViewModel
     
     var body: some View {
         VStack {
@@ -30,14 +32,23 @@ struct ListItemsView: View {
                             Text(item.name)
                         }                    }
                 }            }
-            .navigationTitle("Itens")
-            
+            .navigationTitle(viewModel.detailsList?.name ?? String())
+            .toolbar() {
+                ToolbarItemGroup(placement: .primaryAction){
+                    Button(action: { isShowForm.toggle() }) {
+                        Image(systemName: "gear")
+                            .foregroundColor(Color.accentColor)
+                    }
+                }
+            }
             if !isPressed {
                 Text(speechRecognizer.transcript)
             }
             
             Button(action: {}) {
                 Image(systemName: "mic")
+                    .resizable()
+                    .frame(width: 18, height: 24)
             }
             .symbolEffect(.bounce, value: 1)
             .simultaneousGesture(
@@ -49,6 +60,14 @@ struct ListItemsView: View {
                         endScrum()
                     }
             )
+        }.sheet(isPresented: $isShowForm) {
+            FormListView(item: $viewModel.detailsList)
+                .onSave() { newList in
+                    viewModel.updateList(with: newList)
+                }
+                .onClose() {
+                    isShowForm.toggle()
+                }
         }
     }
     
@@ -75,8 +94,8 @@ struct ListItemsView: View {
 }
 
 #Preview {
-    NavigationView {
-        ListItemsView()
-            .environmentObject(ListItemViewModel())
+    NavigationStack {
+        DetailsListView()
+            .environmentObject(DetailsListViewModel(ListModel(name: String(), color: String(), icon: String(), items: [])))
     }
 }

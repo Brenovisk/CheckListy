@@ -8,17 +8,28 @@
 import Foundation
 import SwiftUI
 
-class ListItemViewModel: ObservableObject {
+class DetailsListViewModel: ObservableObject {
     
-    @Published var items: Array<ListItemModel> = [
-        ListItemModel(name: "Macarrão", description: "Description", color: Color.red, isCheck: false),
-        ListItemModel(name: "Feijão", description: "Description", color: Color.red, isCheck: false),
-        ListItemModel(name: "Ovos", description: "Description", color: Color.red, isCheck: false)
-    ]
+    @Published var items: Array<ListItemModel>
+    @Published var detailsList: ListModel?
+    private let firebaseDataBase = FirebaseDatabase.shared
+    
+    init(_ list: ListModel) {
+        self.items = list.items
+        self.detailsList = list
+    }
+    
+    func updateList(with newList: ListModel) {
+        guard let detailsList else { return }
+        let pathNewList = "\(FirebaseDatabasePaths.lists.description)/\(detailsList.id.uuidString)"
+        firebaseDataBase.update(path: pathNewList, data: newList.toNSDictionary())
+        self.detailsList = newList
+    }
     
     func set(isCheck: Bool, of item: ListItemModel) {
         let index = items.firstIndex(of: item)
-        items[index!].isCheck = isCheck
+        guard let index else { return }
+        items[index].isCheck = isCheck
     }
     
     func set(isCheck: Bool, of index: Int) {
