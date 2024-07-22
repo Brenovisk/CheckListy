@@ -14,9 +14,10 @@ struct TitleIcon: View {
     var icon: String?
     var color: Color?
     var iconSize: CGFloat = 16
+    var subtitle: String? = nil
     
     var body: some View {
-        HStack {
+        HStack(alignment: .center) {
             if let icon, let color {
                 ZStack {
                     Circle()
@@ -31,10 +32,23 @@ struct TitleIcon: View {
                 }
             }
             
-            Text(title)
-                .font(iconSize < 16 ? .headline : .largeTitle)
-                .fontWeight(.bold)
+            HStack(alignment: .bottom) {
+                Text(title)
+                    .font(iconSize < 16 ? .headline : .largeTitle)
+                    .fontWeight(.bold)
+                
+                if let subtitle {
+                    Text(subtitle)
+                        .font(.headline)
+                        .foregroundColor(Color(.secondaryLabel))
+                        .padding(.bottom, 5)
+                }
+            }
         }
     }
     
+}
+
+#Preview {
+    TitleIcon(title: "List Name", icon: "house", color: Color(.red), subtitle: "1/15")
 }

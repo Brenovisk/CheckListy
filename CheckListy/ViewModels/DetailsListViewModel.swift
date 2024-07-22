@@ -132,6 +132,18 @@ class DetailsListViewModel: ObservableObject {
         completion(index)
     }
     
+    func getCheckedItemByList() -> String {
+        let total = list.items.count
+        let checkedItems = list.items.filter { $0.isCheck }.count
+        return  "\(checkedItems)/\(total)"
+    }
+    
+    func getCheckedItemBy(section: SectionModel) -> String {
+        let total = section.items.count
+        let checkedItems = section.items.filter { $0.isCheck }.count
+        return  "\(checkedItems)/\(total)"
+    }
+    
 }
 
 enum Commands: String {

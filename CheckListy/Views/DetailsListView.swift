@@ -23,8 +23,16 @@ struct DetailsListView: View {
     var body: some View {
         ScrollView {
             VStack {
-                TitleIcon(title: viewModel.list.name, icon: viewModel.list.icon, color: Color(viewModel.list.color))
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                TitleIcon(
+                    title: viewModel.list.name,
+                    icon: viewModel.list.icon,
+                    color: Color(viewModel.list.color),
+                    subtitle: viewModel.getCheckedItemByList()
+                )
+                .frame(
+                    maxWidth: .infinity,
+                    alignment: .leading
+                )
                 
                 Spacer()
                     .frame(height: 24)
@@ -144,42 +152,20 @@ struct DetailsListView: View {
         
     }
     
-    func headerSection(_ section: SectionModel) -> some View {
-        HStack {
-            if !section.name.isEmpty {
-                Text(section.name.uppercased())
-                    .font(.subheadline)
-                    .fontWeight(.semibold)
-                    .padding(0)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .foregroundColor(Color(.lightGray))
-                
-                Spacer()
-                
-                HStack(spacing: 24){
-                    Button(action: {
-                        withAnimation {
-                            viewModel.itemToEdit = nil
-                            viewModel.sectionSelected = section.name
-                            isShowFormItem = true
-                        }
-                    }) {
-                        Image(systemName: "plus")
-                    }
-                    
-                    Button(action: {
-                        withAnimation {
-                            viewModel.setCollapsed(of: section, with: !section.collapsed)
-                        }
-                    }) {
-                        Image(systemName: "chevron.right")
-                            .rotationEffect(section.collapsed ? .zero : .degrees(90))
-                    }
-                }.padding(.bottom, 16)
+    func headerSection(_ sectionList: SectionModel) -> some View {
+        HeaderSection(section: sectionList, subtitle: viewModel.getCheckedItemBy(section: sectionList))
+            .onAdd { section in
+                withAnimation {
+                    viewModel.itemToEdit = nil
+                    viewModel.sectionSelected = section.name
+                    isShowFormItem = true
+                }
             }
-        }
-        .frame(alignment: .center)
-        .font(.headline)
+            .onCollapse { section in
+                withAnimation {
+                    viewModel.setCollapsed(of: section, with: !section.collapsed)
+                }
+            }
     }
     
     var listOptionalBinding: Binding<ListModel?> {
