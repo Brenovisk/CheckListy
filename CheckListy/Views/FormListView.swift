@@ -32,6 +32,8 @@ struct FormListView: View {
         self.init(item: item)
         self.onSave = onSave
         self.onClose = onClose
+        
+        UITextField.appearance().clearButtonMode = .whileEditing
     }
     
     init(item: Binding<ListModel?>) {

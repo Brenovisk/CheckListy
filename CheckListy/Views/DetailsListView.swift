@@ -9,55 +9,73 @@ import SwiftUI
 import FirebaseDatabase
 
 struct DetailsListView: View {
+    
     @StateObject var speechRecognizer = SpeechRecognizerService()
+    @EnvironmentObject var viewModel: DetailsListViewModel
     
     @State private var isPressed = false
     @State private var isShowForm = false
+    @State private var isShowFormItem = false
     @State private var multiSelection = Set<UUID>()
     @State private var showTitle = false
-    
-    @EnvironmentObject var viewModel: DetailsListViewModel
+    @State private var offset: CGFloat = 0
     
     var body: some View {
         ScrollView {
-            GeometryReader { geometry in
-                ZStack(){
-                    VStack {
-                        if let list = viewModel.detailsList {
-                            TitleIcon(title: list.name, icon: list.icon, color: Color(list.color))
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                .padding(.leading, 16)
-                        }
-                        
-                        List(viewModel.items) { item in
-                            VStack {
-                                Button(action: {
-                                    withAnimation {
-                                        viewModel.set(isCheck: !item.isCheck, of: item)
+            VStack {
+                TitleIcon(title: viewModel.list.name, icon: viewModel.list.icon, color: Color(viewModel.list.color))
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                
+                Spacer()
+                    .frame(height: 24)
+                
+                ForEach(viewModel.sections) { sectionList in
+                    Section(header: headerSection(sectionList)) {
+                        VStack {
+                            ForEach(sectionList.items) { item in
+                                ItemCard(item: item, list: viewModel.list, sections: viewModel.sections)
+                                    .onCheck { item in
+                                        withAnimation {
+                                            viewModel.set(isCheck: !item.isCheck, of: item)
+                                        }
                                     }
-                                }) {
-                                    HStack {
-                                        Image(systemName: item.isCheck ? "circle.fill" : "circle")
-                                            .foregroundColor(.blue)
-                                        Text(item.name)
-                                    }                    }
+                                    .onEdit { item in
+                                        withAnimation {
+                                            viewModel.itemToEdit = item
+                                            viewModel.sectionSelected = String()
+                                            isShowFormItem.toggle()
+                                        }
+                                    }
+                                    .onDelete { item in
+                                        viewModel.remove(item)
+                                    }
+                                    .onMove { item, section in
+                                        viewModel.move(item, to: section)
+                                    }
                             }
                         }
+                        .padding(.bottom, 16)
+                        .collapse(isCollapsed: sectionList.name.isEmpty ? false : sectionList.collapsed)
                     }
-
+                    
                 }
-                .preference(key: ViewOffsetKey.self, value: geometry.frame(in: .named("scroll")).minY)
+            }
+            
+            GeometryReader { geometry in
+                Color.clear
+                    .preference(key: ViewOffsetKey.self, value: geometry.frame(in: .named("scroll")).minY)
             }
         }
         .coordinateSpace(name: "scroll")
+        .padding(.horizontal, 16)
         .onPreferenceChange(ViewOffsetKey.self) { value in
             handleScrollValue(value)
         }
         .navigationTitle("")
         .toolbar {
             ToolbarItem(placement: .principal) {
-                if showTitle, let list = viewModel.detailsList {
-                    TitleIcon(title: list.name, icon: list.icon, color: Color(list.color), iconSize: 10)
+                if showTitle {
+                    TitleIcon(title: viewModel.list.name, icon: viewModel.list.icon, color: Color(viewModel.list.color), iconSize: 10)
                 }
             }
             
@@ -69,6 +87,18 @@ struct DetailsListView: View {
             }
             
             ToolbarItemGroup(placement: .bottomBar) {
+                HStack {
+                    Button(action: {
+                        viewModel.itemToEdit = nil
+                        isShowFormItem.toggle()
+                    }) {
+                        HStack {
+                            Image(systemName: "plus")
+                            Text("Adicionar Item")
+                        }
+                    }
+                }.frame(maxWidth: .infinity, alignment: .leading)
+                
                 VStack {
                     if !isPressed {
                         Text(speechRecognizer.transcript)
@@ -93,7 +123,7 @@ struct DetailsListView: View {
             }
         }
         .sheet(isPresented: $isShowForm) {
-            FormListView(item: $viewModel.detailsList)
+            FormListView(item: listOptionalBinding)
                 .onSave() { newList in
                     viewModel.updateList(with: newList)
                 }
@@ -101,6 +131,74 @@ struct DetailsListView: View {
                     isShowForm.toggle()
                 }
         }
+        .sheet(isPresented: $isShowFormItem) {
+            FormItemView(
+                item: $viewModel.itemToEdit,
+                section: $viewModel.sectionSelected
+            )
+            .onSave() { item in
+                if viewModel.itemToEdit != nil {
+                    viewModel.update(item)
+                    return
+                }
+                viewModel.add(item)
+                viewModel.sectionSelected = String()
+            }
+            .onClose() {
+                isShowFormItem = false
+                viewModel.sectionSelected = String()
+            }
+        }
+        
+    }
+    
+    func headerSection(_ section: SectionModel) -> some View {
+        HStack {
+            if !section.name.isEmpty {
+                Text(section.name.uppercased())
+                    .font(.subheadline)
+                    .fontWeight(.semibold)
+                    .padding(0)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .foregroundColor(Color(.lightGray))
+                
+                Spacer()
+                
+                HStack(spacing: 24){
+                    Button(action: {
+                        withAnimation {
+                            viewModel.itemToEdit = nil
+                            viewModel.sectionSelected = section.name
+                            isShowFormItem = true
+                        }
+                    }) {
+                        Image(systemName: "plus")
+                    }
+                    
+                    Button(action: {
+                        withAnimation {
+                            viewModel.setCollapsed(of: section, with: !section.collapsed)
+                        }
+                    }) {
+                        Image(systemName: "chevron.right")
+                            .rotationEffect(section.collapsed ? .zero : .degrees(90))
+                    }
+                }.padding(.bottom, 16)
+            }
+        }
+        .frame(alignment: .center)
+        .font(.headline)
+    }
+    
+    var listOptionalBinding: Binding<ListModel?> {
+        Binding<ListModel?>(
+            get: { viewModel.list },
+            set: { newValue in
+                if let newValue = newValue {
+                    viewModel.list = newValue
+                }
+            }
+        )
     }
     
     private func startRecord() {
@@ -124,8 +222,12 @@ struct DetailsListView: View {
     }
     
     private func handleScrollValue(_ value: ViewOffsetKey.Value) {
+        if offset == 0 {
+            offset = value
+        }
+        
         withAnimation {
-            showTitle =  value < (-30)
+            showTitle =  value < (offset - 30)
         }
     }
     
@@ -140,22 +242,40 @@ struct DetailsListView: View {
                         name: "List name" ,
                         color: "green",
                         icon: "checkmark",
-                        items: []
+                        items: [
+                            ListItemModel(
+                                name: "Teste",
+                                description: "asdf",
+                                section: "B",
+                                isCheck: true
+                            ),
+                            ListItemModel(
+                                name: "Teste",
+                                description: "",
+                                section: "",
+                                isCheck: true
+                            ),
+                            ListItemModel(
+                                name: "Teste",
+                                description: "",
+                                section: "",
+                                isCheck: true
+                            ),
+                            ListItemModel(
+                                name: "Teste",
+                                description: "",
+                                section: "",
+                                isCheck: true
+                            ),
+                            ListItemModel(
+                                name: "Teste",
+                                description: "",
+                                section: "Ahhh",
+                                isCheck: true
+                            ),
+                        ]
                     )
                 )
             )
-    }
-}
-
-
-struct CustomTitleView: View {
-    var body: some View {
-        HStack {
-            Image(systemName: "star.fill")
-                .foregroundColor(.yellow)
-            Text("Título Customizado")
-                .font(.headline) // Usar .headline em vez de .largeTitle para melhor ajuste na barra de navegação
-                .fontWeight(.bold)
-        }
     }
 }

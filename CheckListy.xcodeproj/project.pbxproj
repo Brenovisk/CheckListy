@@ -25,6 +25,13 @@
 		14B225602C3F508800A7F15F /* FormListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B2255F2C3F508800A7F15F /* FormListView.swift */; };
 		14B225632C45C0B800A7F15F /* ViewOffsetKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B225622C45C0B800A7F15F /* ViewOffsetKey.swift */; };
 		14B225652C45C84700A7F15F /* TitleIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B225642C45C84700A7F15F /* TitleIcon.swift */; };
+		14B225672C45E06200A7F15F /* FormItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B225662C45E06200A7F15F /* FormItemView.swift */; };
+		14B225692C46169400A7F15F /* ItemCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B225682C46169400A7F15F /* ItemCard.swift */; };
+		14B2256D2C4742C000A7F15F /* AutoFocusTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B2256C2C4742C000A7F15F /* AutoFocusTextField.swift */; };
+		14B225702C47490200A7F15F /* RoundedBackgroundTextFieldStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B2256F2C47490200A7F15F /* RoundedBackgroundTextFieldStyle.swift */; };
+		14B225752C48B12D00A7F15F /* KeyboardReadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B225742C48B12D00A7F15F /* KeyboardReadable.swift */; };
+		14B225772C496C0A00A7F15F /* SectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B225762C496C0A00A7F15F /* SectionModel.swift */; };
+		14B225792C49B6C600A7F15F /* CollapseModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B225782C49B6C600A7F15F /* CollapseModifier.swift */; };
 		14DBB6A42C3433560084EB23 /* CheckListyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DBB6A32C3433560084EB23 /* CheckListyApp.swift */; };
 		14DBB6A62C3433560084EB23 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DBB6A52C3433560084EB23 /* ContentView.swift */; };
 		14DBB6A82C3433570084EB23 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 14DBB6A72C3433570084EB23 /* Assets.xcassets */; };
@@ -73,6 +80,13 @@
 		14B2255F2C3F508800A7F15F /* FormListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormListView.swift; sourceTree = "<group>"; };
 		14B225622C45C0B800A7F15F /* ViewOffsetKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewOffsetKey.swift; sourceTree = "<group>"; };
 		14B225642C45C84700A7F15F /* TitleIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleIcon.swift; sourceTree = "<group>"; };
+		14B225662C45E06200A7F15F /* FormItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormItemView.swift; sourceTree = "<group>"; };
+		14B225682C46169400A7F15F /* ItemCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemCard.swift; sourceTree = "<group>"; };
+		14B2256C2C4742C000A7F15F /* AutoFocusTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoFocusTextField.swift; sourceTree = "<group>"; };
+		14B2256F2C47490200A7F15F /* RoundedBackgroundTextFieldStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedBackgroundTextFieldStyle.swift; sourceTree = "<group>"; };
+		14B225742C48B12D00A7F15F /* KeyboardReadable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardReadable.swift; sourceTree = "<group>"; };
+		14B225762C496C0A00A7F15F /* SectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionModel.swift; sourceTree = "<group>"; };
+		14B225782C49B6C600A7F15F /* CollapseModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollapseModifier.swift; sourceTree = "<group>"; };
 		14DBB6A02C3433560084EB23 /* CheckListy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CheckListy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		14DBB6A32C3433560084EB23 /* CheckListyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckListyApp.swift; sourceTree = "<group>"; };
 		14DBB6A52C3433560084EB23 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -145,8 +159,27 @@
 			isa = PBXGroup;
 			children = (
 				14B225642C45C84700A7F15F /* TitleIcon.swift */,
+				14B225682C46169400A7F15F /* ItemCard.swift */,
+				14B2256C2C4742C000A7F15F /* AutoFocusTextField.swift */,
 			);
 			path = Components;
+			sourceTree = "<group>";
+		};
+		14B2256E2C4748ED00A7F15F /* Modifiers */ = {
+			isa = PBXGroup;
+			children = (
+				14B2256F2C47490200A7F15F /* RoundedBackgroundTextFieldStyle.swift */,
+				14B225782C49B6C600A7F15F /* CollapseModifier.swift */,
+			);
+			path = Modifiers;
+			sourceTree = "<group>";
+		};
+		14B225732C48B11600A7F15F /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				14B225742C48B12D00A7F15F /* KeyboardReadable.swift */,
+			);
+			path = Protocol;
 			sourceTree = "<group>";
 		};
 		14CEA8832C36455200E3CAED /* App */ = {
@@ -163,12 +196,15 @@
 		14CEA8842C36457000E3CAED /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				14B225732C48B11600A7F15F /* Protocol */,
+				14B2256E2C4748ED00A7F15F /* Modifiers */,
 				14B225612C45C08C00A7F15F /* Components */,
 				14DBB6D42C3440630084EB23 /* DetailsListView.swift */,
 				14B225312C364F0F00A7F15F /* SignInView.swift */,
 				14B2254E2C36DBA800A7F15F /* SignUpView.swift */,
 				14B225592C3EAD6E00A7F15F /* ListsView.swift */,
 				14B2255F2C3F508800A7F15F /* FormListView.swift */,
+				14B225662C45E06200A7F15F /* FormItemView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -190,6 +226,7 @@
 				14DBB6D62C34A5500084EB23 /* ListItemModel.swift */,
 				14B225572C3E9EE300A7F15F /* ListModel.swift */,
 				14B225622C45C0B800A7F15F /* ViewOffsetKey.swift */,
+				14B225762C496C0A00A7F15F /* SectionModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -421,19 +458,26 @@
 			buildActionMask = 2147483647;
 			files = (
 				14B225322C364F0F00A7F15F /* SignInView.swift in Sources */,
+				14B225792C49B6C600A7F15F /* CollapseModifier.swift in Sources */,
 				14B225532C3DF60A00A7F15F /* FirebaseDataBaseService.swift in Sources */,
 				14B2255C2C3EADF900A7F15F /* ListsViewModel.swift in Sources */,
+				14B225672C45E06200A7F15F /* FormItemView.swift in Sources */,
 				14DBB6D52C3440630084EB23 /* DetailsListView.swift in Sources */,
 				14B225602C3F508800A7F15F /* FormListView.swift in Sources */,
 				14B225342C364FA100A7F15F /* SignInViewModel.swift in Sources */,
 				14DBB6A62C3433560084EB23 /* ContentView.swift in Sources */,
 				14B2254A2C36D66C00A7F15F /* FirebaseAuthService.swift in Sources */,
+				14B225702C47490200A7F15F /* RoundedBackgroundTextFieldStyle.swift in Sources */,
+				14B2256D2C4742C000A7F15F /* AutoFocusTextField.swift in Sources */,
 				14DBB6CF2C3434560084EB23 /* SpeechRecognizerService.swift in Sources */,
+				14B225692C46169400A7F15F /* ItemCard.swift in Sources */,
+				14B225752C48B12D00A7F15F /* KeyboardReadable.swift in Sources */,
 				14B225582C3E9EE300A7F15F /* ListModel.swift in Sources */,
 				14B225512C36DBC500A7F15F /* SignUpViewModel.swift in Sources */,
 				14B225632C45C0B800A7F15F /* ViewOffsetKey.swift in Sources */,
 				14A4CAD22C34D71300634E19 /* String+RemoveWhiteSpaces.swift in Sources */,
 				14B225652C45C84700A7F15F /* TitleIcon.swift in Sources */,
+				14B225772C496C0A00A7F15F /* SectionModel.swift in Sources */,
 				14B2255A2C3EAD6E00A7F15F /* ListsView.swift in Sources */,
 				14DBB6D22C343B2C0084EB23 /* SpeechRecognizerServiceErrors.swift in Sources */,
 				14B2254F2C36DBA800A7F15F /* SignUpView.swift in Sources */,

@@ -10,30 +10,97 @@ import SwiftUI
 
 class DetailsListViewModel: ObservableObject {
     
-    @Published var items: Array<ListItemModel>
-    @Published var detailsList: ListModel?
     private let firebaseDataBase = FirebaseDatabase.shared
     
+    @Published var itemToEdit: ListItemModel?
+    @Published var sectionSelected: String = String()
+    @Published var sections: Array<SectionModel> = []
+    
+    @Published var list: ListModel {
+        didSet {
+            getSections()
+        }
+    }
+    
     init(_ list: ListModel) {
-        self.items = list.items
-        self.detailsList = list
+        self.list = list
+        getSections()
+    }
+    
+    func getSections() {
+        let validSections = Dictionary(grouping: list.items.filter { !$0.section.isEmpty }, by: { $0.section })
+        let emptySections = list.items.filter { $0.section.isEmpty }
+        
+        var sections: [SectionModel] = validSections.compactMap { (sectionName, items) in
+            let sectionList = getSection(by: sectionName)
+            return SectionModel(
+                name: sectionName,
+                items:  items,
+                collapsed: sectionList?.collapsed ?? false
+            )
+        }
+        
+        if !emptySections.isEmpty {
+            sections.insert(SectionModel(name: String(), items: emptySections), at: 0)
+        }
+        
+        self.sections = sections.sorted(by: { $0.name < $1.name })
+    }
+    
+    func move(_ item: ListItemModel, to section: SectionModel) {
+        var itemToEdit = item
+        itemToEdit.section = section.name
+        update(itemToEdit)
+    }
+    
+    func getSection(by name: String) -> SectionModel? {
+        return self.sections.first(where: { name == $0.name })
+    }
+    
+    func setCollapsed(of section: SectionModel, with value: Bool) {
+        guard let index = sections.firstIndex(where: { $0.id == section.id }) else { return }
+        sections[index].collapsed = value
     }
     
     func updateList(with newList: ListModel) {
-        guard let detailsList else { return }
-        let pathNewList = "\(FirebaseDatabasePaths.lists.description)/\(detailsList.id.uuidString)"
+        let pathNewList = "\(FirebaseDatabasePaths.lists.description)/\(list.id.uuidString)"
         firebaseDataBase.update(path: pathNewList, data: newList.toNSDictionary())
-        self.detailsList = newList
+        self.list = newList
+    }
+    
+    func add(_ item: ListItemModel) {
+        let pathNewList = "\(FirebaseDatabasePaths.lists.description)/\(list.id.uuidString)"
+        list.items.append(item)
+        firebaseDataBase.update(path: pathNewList, data: list.toNSDictionary())
+    }
+    
+    func update(_ item: ListItemModel) {
+        let pathNewList = "\(FirebaseDatabasePaths.lists.description)/\(list.id.uuidString)"
+        guard let indexItem = getIndex(of: item) else { return }
+        list.items[indexItem] = item
+        firebaseDataBase.update(path: pathNewList, data: list.toNSDictionary())
+    }
+    
+    func remove(_ item: ListItemModel) {
+        let pathNewList = "\(FirebaseDatabasePaths.lists.description)/\(list.id.uuidString)"
+        guard let indexItem = getIndex(of: item) else { return }
+        list.items.remove(at: indexItem)
+        firebaseDataBase.update(path: pathNewList, data: list.toNSDictionary())
+    }
+    
+    func getIndex(of item: ListItemModel) -> Int? {
+        list.items.firstIndex(where: { $0.id == item.id })
     }
     
     func set(isCheck: Bool, of item: ListItemModel) {
-        let index = items.firstIndex(of: item)
-        guard let index else { return }
-        items[index].isCheck = isCheck
+        guard let index = getIndex(of: item) else { return }
+        list.items[index].isCheck = isCheck
+        update(list.items[index])
     }
     
     func set(isCheck: Bool, of index: Int) {
-        items[index].isCheck = isCheck
+        list.items[index].isCheck = isCheck
+        update(list.items[index])
     }
     
     func changeItemIfNeeded(according transcript: String) {
@@ -60,7 +127,7 @@ class DetailsListViewModel: ObservableObject {
         guard transcriptLowercased.contains(word) else { return }
         let transcriptFormatted = transcriptLowercased.remove(word).removeWhiteSpaces()
         
-        let index = items.firstIndex(where: { $0.name.lowercased().removeWhiteSpaces() == transcriptFormatted })
+        let index = list.items.firstIndex(where: { $0.name.lowercased().removeWhiteSpaces() == transcriptFormatted })
         guard let index else { return }
         completion(index)
     }

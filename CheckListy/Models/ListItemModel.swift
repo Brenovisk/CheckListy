@@ -11,8 +11,8 @@ struct ListItemModel: Identifiable, Hashable {
     
     var id: UUID = UUID()
     var name: String
-    var description: String
-    var section: String
+    var description: String = String()
+    var section: String = String()
     var isCheck: Bool
     
 }
