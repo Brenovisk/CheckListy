@@ -87,38 +87,30 @@ struct DetailsListView: View {
             }
             
             ToolbarItemGroup(placement: .bottomBar) {
-                HStack {
-                    Button(action: {
-                        viewModel.itemToEdit = nil
-                        isShowFormItem.toggle()
-                    }) {
-                        HStack {
-                            Image(systemName: "plus")
-                            Text("Adicionar Item")
+                ZStack(alignment: .center) {
+                    HStack {
+                        Button(action: {
+                            viewModel.itemToEdit = nil
+                            isShowFormItem.toggle()
+                        }) {
+                            HStack {
+                                Image(systemName: "plus")
+                                Text("Adicionar Item")
+                            }
                         }
-                    }
-                }.frame(maxWidth: .infinity, alignment: .leading)
-                
-                VStack {
-                    if !isPressed {
-                        Text(speechRecognizer.transcript)
-                    }
+                    }.frame(maxWidth: .infinity, alignment: .leading)
                     
-                    Button(action: {}) {
-                        Image(systemName: "mic")
-                            .resizable()
-                            .frame(width: 18, height: 24)
-                    }
-                    .symbolEffect(.bounce, value: 1)
-                    .simultaneousGesture(
-                        DragGesture(minimumDistance: .zero)
-                            .onChanged() { _ in
-                                startRecord()
-                            }
-                            .onEnded() { _ in
-                                endRecord()
-                            }
+                    RecordButton(
+                        transcript: $speechRecognizer.transcript,
+                        isPressed: $isPressed,
+                        color: Color(viewModel.list.color)
                     )
+                    .onStartRecord {
+                        startRecord()
+                    }
+                    .onEndRecord {
+                        endRecord()
+                    }
                 }
             }
         }
