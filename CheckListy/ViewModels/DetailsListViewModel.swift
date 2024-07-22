@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import AudioToolbox
 
 class DetailsListViewModel: ObservableObject {
     
@@ -79,6 +80,7 @@ class DetailsListViewModel: ObservableObject {
         guard let indexItem = getIndex(of: item) else { return }
         list.items[indexItem] = item
         firebaseDataBase.update(path: pathNewList, data: list.toNSDictionary())
+        executeFeedbacks()
     }
     
     func remove(_ item: ListItemModel) {
@@ -142,6 +144,11 @@ class DetailsListViewModel: ObservableObject {
         let total = section.items.count
         let checkedItems = section.items.filter { $0.isCheck }.count
         return  "\(checkedItems)/\(total)"
+    }
+    
+    private func executeFeedbacks() {
+        FeedbackService.shared.provideHapticFeedback()
+        FeedbackService.shared.playCheckSoundFeedback()
     }
     
 }

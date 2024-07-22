@@ -10,6 +10,8 @@
 		145706E42C4DDB94007E642C /* RecordButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145706E32C4DDB94007E642C /* RecordButton.swift */; };
 		145706E62C4DE4E9007E642C /* AudioAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145706E52C4DE4E9007E642C /* AudioAnimation.swift */; };
 		145706E82C4EDE94007E642C /* HeaderSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145706E72C4EDE94007E642C /* HeaderSection.swift */; };
+		145706EA2C4EE5A4007E642C /* FeedbackService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145706E92C4EE5A4007E642C /* FeedbackService.swift */; };
+		145706ED2C4EF2F6007E642C /* check.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 145706EC2C4EF2F6007E642C /* check.mp3 */; };
 		14A4CAD02C34D5AE00634E19 /* String+RemoveWord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A4CACF2C34D5AE00634E19 /* String+RemoveWord.swift */; };
 		14A4CAD22C34D71300634E19 /* String+RemoveWhiteSpaces.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A4CAD12C34D71300634E19 /* String+RemoveWhiteSpaces.swift */; };
 		14B225322C364F0F00A7F15F /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B225312C364F0F00A7F15F /* SignInView.swift */; };
@@ -70,6 +72,8 @@
 		145706E32C4DDB94007E642C /* RecordButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordButton.swift; sourceTree = "<group>"; };
 		145706E52C4DE4E9007E642C /* AudioAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioAnimation.swift; sourceTree = "<group>"; };
 		145706E72C4EDE94007E642C /* HeaderSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderSection.swift; sourceTree = "<group>"; };
+		145706E92C4EE5A4007E642C /* FeedbackService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackService.swift; sourceTree = "<group>"; };
+		145706EC2C4EF2F6007E642C /* check.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = check.mp3; path = ../../../../../../Downloads/check.mp3; sourceTree = "<group>"; };
 		14A4CACF2C34D5AE00634E19 /* String+RemoveWord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+RemoveWord.swift"; sourceTree = "<group>"; };
 		14A4CAD12C34D71300634E19 /* String+RemoveWhiteSpaces.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+RemoveWhiteSpaces.swift"; sourceTree = "<group>"; };
 		14B225312C364F0F00A7F15F /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
@@ -137,6 +141,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		145706EB2C4EEE8C007E642C /* FeedbackService */ = {
+			isa = PBXGroup;
+			children = (
+				145706E92C4EE5A4007E642C /* FeedbackService.swift */,
+			);
+			path = FeedbackService;
+			sourceTree = "<group>";
+		};
 		14B225482C36D64900A7F15F /* FirebaseAuthService */ = {
 			isa = PBXGroup;
 			children = (
@@ -243,6 +255,7 @@
 		14CEA8872C36460100E3CAED /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				145706EC2C4EF2F6007E642C /* check.mp3 */,
 				14DBB6AA2C3433570084EB23 /* Preview Assets.xcassets */,
 				14DBB6A72C3433570084EB23 /* Assets.xcassets */,
 			);
@@ -303,6 +316,7 @@
 		14DBB6CD2C3434220084EB23 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				145706EB2C4EEE8C007E642C /* FeedbackService */,
 				14B225562C3DF65100A7F15F /* FirebaseDataBaseService */,
 				14B225482C36D64900A7F15F /* FirebaseAuthService */,
 				14DBB6D02C343B060084EB23 /* SpeechRecognizerService */,
@@ -442,6 +456,7 @@
 				14DBB6AB2C3433570084EB23 /* Preview Assets.xcassets in Resources */,
 				14DBB6A82C3433570084EB23 /* Assets.xcassets in Resources */,
 				14B225472C36D30600A7F15F /* GoogleService-Info.plist in Resources */,
+				145706ED2C4EF2F6007E642C /* check.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -470,6 +485,7 @@
 				14B225792C49B6C600A7F15F /* CollapseModifier.swift in Sources */,
 				14B225532C3DF60A00A7F15F /* FirebaseDataBaseService.swift in Sources */,
 				14B2255C2C3EADF900A7F15F /* ListsViewModel.swift in Sources */,
+				145706EA2C4EE5A4007E642C /* FeedbackService.swift in Sources */,
 				14B225672C45E06200A7F15F /* FormItemView.swift in Sources */,
 				14DBB6D52C3440630084EB23 /* DetailsListView.swift in Sources */,
 				14B225602C3F508800A7F15F /* FormListView.swift in Sources */,

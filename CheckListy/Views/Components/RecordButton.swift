@@ -95,23 +95,12 @@ extension RecordButton {
         onStartRecord?()
         self.showTranscript = true
         resetTimer()
-        provideHapticFeedback()
-        playSoundFeedback()
+        FeedbackService.shared.provideHapticFeedback()
     }
     
     private func stopRecording() {
         onEndRecord?()
-        provideHapticFeedback()
-        playSoundFeedback()
-    }
-    
-    private func provideHapticFeedback() {
-        let generator = UIImpactFeedbackGenerator(style: .medium)
-        generator.impactOccurred()
-    }
-    
-    private func playSoundFeedback() {
-        AudioServicesPlaySystemSound(1104) // Play the default system sound
+        FeedbackService.shared.provideHapticFeedback()
     }
     
     private func setupTimer() {

@@ -4,15 +4,13 @@
 //
 //  Created by Breno Lucas on 02/07/24.
 //
-import Foundation
 import AVFoundation
 import Speech
 import SwiftUI
 
-/// A helper for transcribing speech to text using SFSpeechRecognizer and AVAudioEngine.
 actor SpeechRecognizerService: ObservableObject {
     
-    @MainActor var transcript: String = ""
+    @MainActor @Published var transcript: String = ""
     
     private var audioEngine: AVAudioEngine?
     private var request: SFSpeechAudioBufferRecognitionRequest?
@@ -106,7 +104,7 @@ actor SpeechRecognizerService: ObservableObject {
         request.shouldReportPartialResults = true
         
         let audioSession = AVAudioSession.sharedInstance()
-        try audioSession.setCategory(.playAndRecord, mode: .measurement, options: .duckOthers)
+        try audioSession.setCategory(.playAndRecord, mode: .default, options: [.defaultToSpeaker, .allowBluetooth, .allowBluetoothA2DP, .mixWithOthers])
         try audioSession.setActive(true, options: .notifyOthersOnDeactivation)
         let inputNode = audioEngine.inputNode
         
