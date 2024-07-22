@@ -55,6 +55,7 @@ struct HeaderSection: View {
                 }
             }
         }
+        .padding(.bottom, section.collapsed ? 16 : 0)
         .frame(alignment: .center)
         .font(.headline)
     }

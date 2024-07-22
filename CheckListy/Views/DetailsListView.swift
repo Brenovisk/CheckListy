@@ -22,56 +22,58 @@ struct DetailsListView: View {
     
     var body: some View {
         ScrollView {
-            VStack {
-                TitleIcon(
-                    title: viewModel.list.name,
-                    icon: viewModel.list.icon,
-                    color: Color(viewModel.list.color),
-                    subtitle: viewModel.getCheckedItemByList()
-                )
-                .frame(
-                    maxWidth: .infinity,
-                    alignment: .leading
-                )
-                
-                Spacer()
-                    .frame(height: 24)
-                
-                ForEach(viewModel.sections) { sectionList in
-                    Section(header: headerSection(sectionList)) {
-                        VStack {
-                            ForEach(sectionList.items) { item in
-                                ItemCard(item: item, list: viewModel.list, sections: viewModel.sections)
-                                    .onCheck { item in
-                                        withAnimation {
-                                            viewModel.set(isCheck: !item.isCheck, of: item)
-                                        }
-                                    }
-                                    .onEdit { item in
-                                        withAnimation {
-                                            viewModel.itemToEdit = item
-                                            viewModel.sectionSelected = String()
-                                            isShowFormItem.toggle()
-                                        }
-                                    }
-                                    .onDelete { item in
-                                        viewModel.remove(item)
-                                    }
-                                    .onMove { item, section in
-                                        viewModel.move(item, to: section)
-                                    }
-                            }
-                        }
-                        .padding(.bottom, 16)
-                        .collapse(isCollapsed: sectionList.name.isEmpty ? false : sectionList.collapsed)
-                    }
+            ZStack {
+                VStack {
+                    TitleIcon(
+                        title: viewModel.list.name,
+                        icon: viewModel.list.icon,
+                        color: Color(viewModel.list.color),
+                        subtitle: viewModel.getCheckedItemByList()
+                    )
+                    .frame(
+                        maxWidth: .infinity,
+                        alignment: .leading
+                    )
                     
+                    Spacer()
+                        .frame(height: 24)
+                    
+                    ForEach(viewModel.sections) { sectionList in
+                        Section(header: headerSection(sectionList)) {
+                            VStack {
+                                ForEach(sectionList.items) { item in
+                                    ItemCard(item: item, list: viewModel.list, sections: viewModel.sections)
+                                        .onCheck { item in
+                                            withAnimation {
+                                                viewModel.set(isCheck: !item.isCheck, of: item)
+                                            }
+                                        }
+                                        .onEdit { item in
+                                            withAnimation {
+                                                viewModel.itemToEdit = item
+                                                viewModel.sectionSelected = String()
+                                                isShowFormItem.toggle()
+                                            }
+                                        }
+                                        .onDelete { item in
+                                            viewModel.remove(item)
+                                        }
+                                        .onMove { item, section in
+                                            viewModel.move(item, to: section)
+                                        }
+                                }
+                            }
+                            .padding(.bottom, 16)
+                            .collapse(isCollapsed: sectionList.name.isEmpty ? false : sectionList.collapsed)
+                        }
+                        
+                    }
                 }
-            }
-            
-            GeometryReader { geometry in
-                Color.clear
-                    .preference(key: ViewOffsetKey.self, value: geometry.frame(in: .named("scroll")).minY)
+                
+                GeometryReader { geometry in
+                    Color.clear
+                        .preference(key: ViewOffsetKey.self, value: geometry.frame(in: .named("scroll")).minY)
+                }
             }
         }
         .coordinateSpace(name: "scroll")
@@ -83,7 +85,13 @@ struct DetailsListView: View {
         .toolbar {
             ToolbarItem(placement: .principal) {
                 if showTitle {
-                    TitleIcon(title: viewModel.list.name, icon: viewModel.list.icon, color: Color(viewModel.list.color), iconSize: 10)
+                    TitleIcon(
+                        title: viewModel.list.name,
+                        icon: viewModel.list.icon,
+                        color: Color(viewModel.list.color),
+                        iconSize: 10, 
+                        subtitle: viewModel.getCheckedItemByList()
+                    )
                 }
             }
             
@@ -200,10 +208,6 @@ struct DetailsListView: View {
     }
     
     private func handleScrollValue(_ value: ViewOffsetKey.Value) {
-        if offset == 0 {
-            offset = value
-        }
-        
         withAnimation {
             showTitle =  value < (offset - 30)
         }

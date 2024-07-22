@@ -39,9 +39,9 @@ struct TitleIcon: View {
                 
                 if let subtitle {
                     Text(subtitle)
-                        .font(.headline)
+                        .font(iconSize < 16 ? .system(size: iconSize) : .headline)
                         .foregroundColor(Color(.secondaryLabel))
-                        .padding(.bottom, 5)
+                        .padding(.bottom, iconSize < 16 ? 2 : 5)
                 }
             }
         }
@@ -50,5 +50,5 @@ struct TitleIcon: View {
 }
 
 #Preview {
-    TitleIcon(title: "List Name", icon: "house", color: Color(.red), subtitle: "1/15")
+    TitleIcon(title: "List Name", icon: "house", color: Color(.red), iconSize: 12, subtitle: "1/15")
 }
