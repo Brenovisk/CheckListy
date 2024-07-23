@@ -14,31 +14,38 @@ struct ListsView: View {
     @State var showCreateListForm: Bool = false
     
     var body: some View {
-        VStack {
-            List {
-                ForEach(viewModel.lists, id: \.self) { item in
-                    if let item {
-                        NavigationLink(destination: DetailsListView().environmentObject(DetailsListViewModel(item))) {
-                            HStack {
-                                ZStack {
-                                    Circle()
-                                        .fill(Color(item.color))
-                                        .frame(width: 32, height: 32)
-                                    
-                                    Image(systemName: item.icon)             .foregroundColor(Color.black)
-                                        .font(.system(size: 16))
-                                }
-                                Text(item.name)
-                            }
+        VStack(alignment: .leading) {
+            TitleIcon(title: "Minhas Listas", subtitle: "\(viewModel.lists.count)")
+            
+            ForEach(viewModel.lists, id: \.self) { list in
+                if let list {
+                    ListCard(list: list, mode: $viewModel.visualizationMode)
+                        .onEdit { list in
+                            viewModel.listToEdit = list
+                            showCreateListForm = true
                         }
-                    }
-                }.onDelete() { offset in 
-                    viewModel.delete(at: offset)
+                        .onDelete { list in
+                            viewModel.delete(list: list)
+                        }
                 }
             }
+            .grid(enable: $viewModel.visualizationMode)
+            
         }
-        .navigationTitle("Listas")
+        .scrollable {
+            TitleIcon(
+                title: "Minhas Listas",
+                iconSize: 10,
+                subtitle: "\(viewModel.lists.count)"
+            )
+        }
         .toolbar {
+            ToolbarItemGroup(placement: .primaryAction) {
+                Button(action: { viewModel.toggleVisualization() }) {
+                    Image(systemName: viewModel.visualizationMode == .list ?  "rectangle.grid.1x2" : "square.grid.2x2")
+                }
+            }
+            
             ToolbarItemGroup(placement: .secondaryAction) {
                 Button(action: { viewModel.signOut() }) {
                     Text("Sair")
@@ -59,15 +66,18 @@ struct ListsView: View {
             }
         }
         .sheet(isPresented: $showCreateListForm) {
-            FormListView(item: Binding.constant(nil))
+            FormListView(item: $viewModel.listToEdit)
                 .onSave() { newList in
                     viewModel.create(list: newList)
                 }
                 .onClose() {
                     showCreateListForm.toggle()
                 }
+        }.navigationDestination(for: ListModel.self) { list in
+            DetailsListView().environmentObject(DetailsListViewModel(list))
         }
     }
+    
 }
 
 #Preview {

@@ -17,84 +17,65 @@ struct DetailsListView: View {
     @State private var isShowForm = false
     @State private var isShowFormItem = false
     @State private var multiSelection = Set<UUID>()
-    @State private var showTitle = false
-    @State private var offset: CGFloat = 0
     
     var body: some View {
-        ScrollView {
-            ZStack {
-                VStack {
-                    TitleIcon(
-                        title: viewModel.list.name,
-                        icon: viewModel.list.icon,
-                        color: Color(viewModel.list.color),
-                        subtitle: viewModel.getCheckedItemByList()
-                    )
-                    .frame(
-                        maxWidth: .infinity,
-                        alignment: .leading
-                    )
-                    
-                    Spacer()
-                        .frame(height: 24)
-                    
-                    ForEach(viewModel.sections) { sectionList in
-                        Section(header: headerSection(sectionList)) {
-                            VStack {
-                                ForEach(sectionList.items) { item in
-                                    ItemCard(item: item, list: viewModel.list, sections: viewModel.sections)
-                                        .onCheck { item in
-                                            withAnimation {
-                                                viewModel.set(isCheck: !item.isCheck, of: item)
-                                            }
-                                        }
-                                        .onEdit { item in
-                                            withAnimation {
-                                                viewModel.itemToEdit = item
-                                                viewModel.sectionSelected = String()
-                                                isShowFormItem.toggle()
-                                            }
-                                        }
-                                        .onDelete { item in
-                                            viewModel.remove(item)
-                                        }
-                                        .onMove { item, section in
-                                            viewModel.move(item, to: section)
-                                        }
+        VStack {
+            TitleIcon(
+                title: viewModel.list.name,
+                icon: viewModel.list.icon,
+                color: Color(viewModel.list.color),
+                subtitle: viewModel.getCheckedItemByList()
+            )
+            .frame(
+                maxWidth: .infinity,
+                alignment: .leading
+            )
+            
+            Spacer()
+                .frame(height: 24)
+            
+            ForEach(viewModel.sections) { sectionList in
+                Section(header: headerSection(sectionList)) {
+                    VStack {
+                        ForEach(sectionList.items) { item in
+                            ItemCard(item: item, list: viewModel.list, sections: viewModel.sections)
+                                .onCheck { item in
+                                    withAnimation {
+                                        viewModel.set(isCheck: !item.isCheck, of: item)
+                                    }
                                 }
-                            }
-                            .padding(.bottom, 16)
-                            .collapse(isCollapsed: sectionList.name.isEmpty ? false : sectionList.collapsed)
+                                .onEdit { item in
+                                    withAnimation {
+                                        viewModel.itemToEdit = item
+                                        viewModel.sectionSelected = String()
+                                        isShowFormItem.toggle()
+                                    }
+                                }
+                                .onDelete { item in
+                                    viewModel.remove(item)
+                                }
+                                .onMove { item, section in
+                                    viewModel.move(item, to: section)
+                                }
                         }
-                        
                     }
+                    .padding(.bottom, 16)
+                    .collapse(isCollapsed: sectionList.name.isEmpty ? false : sectionList.collapsed)
                 }
                 
-                GeometryReader { geometry in
-                    Color.clear
-                        .preference(key: ViewOffsetKey.self, value: geometry.frame(in: .named("scroll")).minY)
-                }
             }
         }
-        .coordinateSpace(name: "scroll")
-        .padding(.horizontal, 16)
-        .onPreferenceChange(ViewOffsetKey.self) { value in
-            handleScrollValue(value)
+        .scrollable {
+            TitleIcon(
+                title: viewModel.list.name,
+                icon: viewModel.list.icon,
+                color: Color(viewModel.list.color),
+                iconSize: 10,
+                subtitle: viewModel.getCheckedItemByList()
+            )
         }
         .navigationTitle("")
         .toolbar {
-            ToolbarItem(placement: .principal) {
-                if showTitle {
-                    TitleIcon(
-                        title: viewModel.list.name,
-                        icon: viewModel.list.icon,
-                        color: Color(viewModel.list.color),
-                        iconSize: 10, 
-                        subtitle: viewModel.getCheckedItemByList()
-                    )
-                }
-            }
-            
             ToolbarItemGroup(placement: .primaryAction) {
                 Button(action: { isShowForm.toggle() }) {
                     Image(systemName: "gear")
@@ -204,12 +185,6 @@ struct DetailsListView: View {
                 speechRecognizer.stopTranscribing()
                 viewModel.changeItemIfNeeded(according: speechRecognizer.transcript)
             }
-        }
-    }
-    
-    private func handleScrollValue(_ value: ViewOffsetKey.Value) {
-        withAnimation {
-            showTitle =  value < (offset - 30)
         }
     }
     

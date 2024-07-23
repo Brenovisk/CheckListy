@@ -12,6 +12,10 @@ import Combine
 class ListsViewModel: ObservableObject {
     
     @Published var lists: [ListModel?] = []
+    @Published var listToEdit: ListModel? = nil
+    @Published var selectedList: ListModel? = nil
+    @Published var visualizationMode: ListMode = .list
+    
     private let firebaseDataBase = FirebaseDatabase.shared
     
     init() {
@@ -24,12 +28,9 @@ class ListsViewModel: ObservableObject {
         firebaseDataBase.add(path: pathNewList, data: list.toNSDictionary())
     }
     
-    func delete(at offset: IndexSet) {
-        offset.forEach { index in
-            guard let list = lists[index] else { return }
-            let pathNewList = "\(Paths.lists.description)/\(list.id.uuidString)"
-            firebaseDataBase.delete(path: pathNewList)
-        }
+    func delete(list: ListModel) {
+        let pathNewList = "\(Paths.lists.description)/\(list.id.uuidString)"
+        firebaseDataBase.delete(path: pathNewList)
     }
     
     func signOut() {
@@ -42,6 +43,12 @@ class ListsViewModel: ObservableObject {
         }
     }
     
+    func toggleVisualization() {
+        withAnimation {
+            visualizationMode = visualizationMode == .list ? .grid : .list
+        }
+    }
+    
 }
 
 // MARK: - Helper methods
@@ -49,8 +56,7 @@ extension ListsViewModel {
     
     private func setupCallbacksManager() {
         firebaseDataBase.dataChanged = { [weak self] in
-            self?.lists = self?.firebaseDataBase.data ?? []
-        }
+            self?.lists = self?.firebaseDataBase.data ?? []        }
     }
     
 }

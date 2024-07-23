@@ -12,6 +12,10 @@
 		145706E82C4EDE94007E642C /* HeaderSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145706E72C4EDE94007E642C /* HeaderSection.swift */; };
 		145706EA2C4EE5A4007E642C /* FeedbackService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145706E92C4EE5A4007E642C /* FeedbackService.swift */; };
 		145706ED2C4EF2F6007E642C /* check.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 145706EC2C4EF2F6007E642C /* check.mp3 */; };
+		145706EF2C4F09D3007E642C /* ListCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145706EE2C4F09D3007E642C /* ListCard.swift */; };
+		145706F22C4F0C08007E642C /* ListMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145706F12C4F0C08007E642C /* ListMode.swift */; };
+		145706F42C4F4774007E642C /* ScrollableModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145706F32C4F4774007E642C /* ScrollableModifier.swift */; };
+		145706FA2C4F59C5007E642C /* GridModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145706F92C4F59C5007E642C /* GridModifier.swift */; };
 		14A4CAD02C34D5AE00634E19 /* String+RemoveWord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A4CACF2C34D5AE00634E19 /* String+RemoveWord.swift */; };
 		14A4CAD22C34D71300634E19 /* String+RemoveWhiteSpaces.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A4CAD12C34D71300634E19 /* String+RemoveWhiteSpaces.swift */; };
 		14B225322C364F0F00A7F15F /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B225312C364F0F00A7F15F /* SignInView.swift */; };
@@ -74,6 +78,10 @@
 		145706E72C4EDE94007E642C /* HeaderSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderSection.swift; sourceTree = "<group>"; };
 		145706E92C4EE5A4007E642C /* FeedbackService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackService.swift; sourceTree = "<group>"; };
 		145706EC2C4EF2F6007E642C /* check.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = check.mp3; path = ../../../../../../Downloads/check.mp3; sourceTree = "<group>"; };
+		145706EE2C4F09D3007E642C /* ListCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCard.swift; sourceTree = "<group>"; };
+		145706F12C4F0C08007E642C /* ListMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListMode.swift; sourceTree = "<group>"; };
+		145706F32C4F4774007E642C /* ScrollableModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollableModifier.swift; sourceTree = "<group>"; };
+		145706F92C4F59C5007E642C /* GridModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridModifier.swift; sourceTree = "<group>"; };
 		14A4CACF2C34D5AE00634E19 /* String+RemoveWord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+RemoveWord.swift"; sourceTree = "<group>"; };
 		14A4CAD12C34D71300634E19 /* String+RemoveWhiteSpaces.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+RemoveWhiteSpaces.swift"; sourceTree = "<group>"; };
 		14B225312C364F0F00A7F15F /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
@@ -149,6 +157,14 @@
 			path = FeedbackService;
 			sourceTree = "<group>";
 		};
+		145706F02C4F0BEB007E642C /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				145706F12C4F0C08007E642C /* ListMode.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
 		14B225482C36D64900A7F15F /* FirebaseAuthService */ = {
 			isa = PBXGroup;
 			children = (
@@ -182,6 +198,7 @@
 				145706E32C4DDB94007E642C /* RecordButton.swift */,
 				145706E52C4DE4E9007E642C /* AudioAnimation.swift */,
 				145706E72C4EDE94007E642C /* HeaderSection.swift */,
+				145706EE2C4F09D3007E642C /* ListCard.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -191,6 +208,8 @@
 			children = (
 				14B2256F2C47490200A7F15F /* RoundedBackgroundTextFieldStyle.swift */,
 				14B225782C49B6C600A7F15F /* CollapseModifier.swift */,
+				145706F32C4F4774007E642C /* ScrollableModifier.swift */,
+				145706F92C4F59C5007E642C /* GridModifier.swift */,
 			);
 			path = Modifiers;
 			sourceTree = "<group>";
@@ -217,6 +236,7 @@
 		14CEA8842C36457000E3CAED /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				145706F02C4F0BEB007E642C /* Helpers */,
 				14B225732C48B11600A7F15F /* Protocol */,
 				14B2256E2C4748ED00A7F15F /* Modifiers */,
 				14B225612C45C08C00A7F15F /* Components */,
@@ -490,17 +510,21 @@
 				14DBB6D52C3440630084EB23 /* DetailsListView.swift in Sources */,
 				14B225602C3F508800A7F15F /* FormListView.swift in Sources */,
 				14B225342C364FA100A7F15F /* SignInViewModel.swift in Sources */,
+				145706F42C4F4774007E642C /* ScrollableModifier.swift in Sources */,
 				14DBB6A62C3433560084EB23 /* ContentView.swift in Sources */,
 				14B2254A2C36D66C00A7F15F /* FirebaseAuthService.swift in Sources */,
 				14B225702C47490200A7F15F /* RoundedBackgroundTextFieldStyle.swift in Sources */,
 				14B2256D2C4742C000A7F15F /* AutoFocusTextField.swift in Sources */,
 				145706E82C4EDE94007E642C /* HeaderSection.swift in Sources */,
 				14DBB6CF2C3434560084EB23 /* SpeechRecognizerService.swift in Sources */,
+				145706EF2C4F09D3007E642C /* ListCard.swift in Sources */,
 				14B225692C46169400A7F15F /* ItemCard.swift in Sources */,
+				145706F22C4F0C08007E642C /* ListMode.swift in Sources */,
 				145706E42C4DDB94007E642C /* RecordButton.swift in Sources */,
 				14B225752C48B12D00A7F15F /* KeyboardReadable.swift in Sources */,
 				14B225582C3E9EE300A7F15F /* ListModel.swift in Sources */,
 				14B225512C36DBC500A7F15F /* SignUpViewModel.swift in Sources */,
+				145706FA2C4F59C5007E642C /* GridModifier.swift in Sources */,
 				14B225632C45C0B800A7F15F /* ViewOffsetKey.swift in Sources */,
 				14A4CAD22C34D71300634E19 /* String+RemoveWhiteSpaces.swift in Sources */,
 				14B225652C45C84700A7F15F /* TitleIcon.swift in Sources */,

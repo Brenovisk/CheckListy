@@ -54,5 +54,11 @@ extension ListModel {
         )
     }
     
+    var checkItems: String {
+        let total = items.count
+        let checkedItems = items.filter{ $0.isCheck }.count
+        return "\(checkedItems)/\(total)"
+    }
+    
 }
 

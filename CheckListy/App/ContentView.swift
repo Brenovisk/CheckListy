@@ -9,9 +9,10 @@ import SwiftUI
 
 struct ContentView: View {
     @StateObject private var firebaseAuth = FirebaseAuthService.shared
+    @State var path = NavigationPath()
     
     var body: some View {
-        NavigationStack {
+        NavigationStack(path: $path) {
             if let isSignIn = firebaseAuth.isSignIn {
                 if isSignIn {
                     MainView()
