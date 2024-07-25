@@ -48,51 +48,20 @@ struct ListCard: View {
         HStack {
             VStack(alignment: .leading, spacing: 8) {
                 HStack(alignment: .top) {
-                    NavigationLink(value: list) {
+                    HStack {
                         icon
-                        
-                        Spacer()
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .background(Color(.secondarySystemBackground))
+                    .onTapGesture {
+                        onRedirect?(list)
                     }
                     
                     menu
                 }
                 
-                NavigationLink(value: list) {
-                    HStack(alignment: .center) {
-                        VStack(alignment: .leading) {
-                            Text(list.name)
-                                .font(.body)
-                                .foregroundColor(colorScheme == .dark ? Color.white : Color.black)
-                            
-                            if !list.description.isEmpty  {
-                                Text(list.description)
-                                    .font(.subheadline)
-                                    .foregroundColor(colorScheme == .dark ? Color(.lightGray) : Color(.darkGray))
-                            }
-                        }
-                        
-                        Spacer()
-                        
-                        checkedItems
-                            .padding(.trailing, 12)
-                    }
-                    .frame(maxWidth: .infinity)
-                }
-            }
-        }
-        .padding([.leading, .vertical], 16)
-        .background(Color(.secondarySystemBackground))
-        .cornerRadius(12)
-    }
-    
-    
-    var listCard: some View {
-        HStack {
-            NavigationLink(value: list) {
-                HStack(alignment: .center, spacing: .zero) {
-                    icon
-                        .padding(.horizontal, 16)
-                    
+                
+                HStack(alignment: .center) {
                     VStack(alignment: .leading) {
                         Text(list.name)
                             .font(.body)
@@ -104,12 +73,52 @@ struct ListCard: View {
                                 .foregroundColor(colorScheme == .dark ? Color(.lightGray) : Color(.darkGray))
                         }
                     }
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                    
+                    Spacer()
                     
                     checkedItems
+                        .padding(.trailing, 12)
                 }
-                .padding(.vertical, 16)
+                .frame(maxWidth: .infinity)
+                .background(Color(.secondarySystemBackground))
+                .onTapGesture {
+                    onRedirect?(list)
+                }
+                
+            }
+        }
+        .padding([.leading, .vertical], 16)
+        .background(Color(.secondarySystemBackground))
+        .cornerRadius(12)
+    }
+    
+    
+    var listCard: some View {
+        HStack {
+            HStack(alignment: .center, spacing: .zero) {
+                icon
+                    .padding(.horizontal, 16)
+                
+                VStack(alignment: .leading) {
+                    Text(list.name)
+                        .font(.body)
+                        .foregroundColor(colorScheme == .dark ? Color.white : Color.black)
+                    
+                    if !list.description.isEmpty  {
+                        Text(list.description)
+                            .font(.subheadline)
+                            .foregroundColor(colorScheme == .dark ? Color(.lightGray) : Color(.darkGray))
+                    }
+                }
                 .frame(maxWidth: .infinity, alignment: .leading)
+                
+                checkedItems
+            }
+            .padding(.vertical, 16)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background(Color(.secondarySystemBackground))
+            .onTapGesture {
+                onRedirect?(list)
             }
             
             menu

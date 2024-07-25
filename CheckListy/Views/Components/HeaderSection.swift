@@ -8,22 +8,26 @@
 import Foundation
 import SwiftUI
 
-struct HeaderSection: View {
+struct HeaderSection<Item: Hashable>: View {
     
-    var section: SectionModel
-    var onAdd: ((SectionModel) -> Void)?
-    var onCollapse: ((SectionModel) -> Void)?
+    var section: SectionModel<Item>
+    var onAdd: ((SectionModel<Item>) -> Void)?
+    var onCollapse: ((SectionModel<Item>) -> Void)?
     var subtitle: String?
+    var enableAdd: Bool = true
+    var enableCollapse: Bool = true
     
-    private init(section: SectionModel, subtitle: String? = nil, onAdd: ((SectionModel) -> Void)?, onCollapse: ((SectionModel) -> Void)?) {
-        self.init(section: section, subtitle: subtitle)
+    private init(section: SectionModel<Item>, subtitle: String? = nil, enableAdd: Bool = true, enableCollapse: Bool = true, onAdd: ((SectionModel<Item>) -> Void)?, onCollapse: ((SectionModel<Item>) -> Void)?) {
+        self.init(section: section, subtitle: subtitle, enableAdd: enableAdd, enableCollapse: enableCollapse)
         self.onAdd = onAdd
         self.onCollapse = onCollapse
     }
     
-    init(section: SectionModel, subtitle: String? = nil) {
+    init(section: SectionModel<Item>, subtitle: String? = nil, enableAdd: Bool = true, enableCollapse: Bool = true) {
         self.section = section
         self.subtitle = subtitle
+        self.enableAdd = enableAdd
+        self.enableCollapse = enableCollapse
     }
 
     var body: some View {
@@ -44,13 +48,17 @@ struct HeaderSection: View {
                 Spacer()
                 
                 HStack(spacing: 24) {
-                    Button(action: { onAdd?(section) }) {
-                        Image(systemName: "plus")
+                    if enableAdd {
+                        Button(action: { onAdd?(section) }) {
+                            Image(systemName: "plus")
+                        }
                     }
                     
-                    Button(action: { onCollapse?(section) }) {
-                        Image(systemName: "chevron.right")
-                            .rotationEffect(section.collapsed ? .zero : .degrees(90))
+                    if enableCollapse {
+                        Button(action: { onCollapse?(section) }) {
+                            Image(systemName: "chevron.right")
+                                .rotationEffect(section.collapsed ? .zero : .degrees(90))
+                        }
                     }
                 }
             }
@@ -64,19 +72,23 @@ struct HeaderSection: View {
 //MARK: - Callbacks modifiers
 extension HeaderSection {
     
-    func `onAdd`(action: ((SectionModel) -> Void)?) -> HeaderSection {
+    func `onAdd`(action: ((SectionModel<Item>) -> Void)?) -> HeaderSection {
         HeaderSection(
             section: self.section,
             subtitle: self.subtitle,
+            enableAdd: self.enableAdd, 
+            enableCollapse: self.enableCollapse, 
             onAdd: action,
             onCollapse: self.onCollapse
         )
     }
     
-    func `onCollapse`(action: ((SectionModel) -> Void)?) -> HeaderSection {
+    func `onCollapse`(action: ((SectionModel<Item>) -> Void)?) -> HeaderSection {
         HeaderSection(
             section: self.section,
             subtitle: self.subtitle,
+            enableAdd: self.enableAdd, 
+            enableCollapse: self.enableCollapse,
             onAdd: self.onAdd,
             onCollapse: action
         )
@@ -85,5 +97,5 @@ extension HeaderSection {
 }
 
 #Preview {
-    HeaderSection(section: SectionModel(name: "Section name", items: []), subtitle: "1/5")
+    HeaderSection(section: SectionModel<ListItemModel>(name: "Section name", items: []), subtitle: "1/5")
 }

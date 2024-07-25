@@ -10,12 +10,44 @@ import SwiftUI
 
 struct ListsView: View {
     
+    @Environment(\.verticalSizeClass) var verticalSizeClass
     @EnvironmentObject var viewModel: ListsViewModel
     @State var showCreateListForm: Bool = false
     
     var body: some View {
-        VStack(alignment: .leading) {
+        VStack(alignment: .leading, spacing: 24) {
             TitleIcon(title: "Minhas Listas", subtitle: "\(viewModel.lists.count)")
+            
+            if !viewModel.recentsSection.items.isEmpty {
+                Section(header:
+                    HeaderSection(section: viewModel.recentsSection, enableAdd: false)
+                        .onCollapse { section in
+                            viewModel.toggleCollapseRecentSection()
+                        }
+                ) {
+                    ScrollView(.horizontal) {
+                        HStack {
+                            ForEach($viewModel.recentsSection.items, id: \.self) { listId in
+                                if let list = viewModel.getList(by: listId.wrappedValue) {
+                                    ListCard(list: list, mode: Binding.constant(.grid))
+                                        .onEdit { list in
+                                            handleEdit(list)
+                                        }
+                                        .onDelete { list in
+                                            handleDelete(list)
+                                        }
+                                        .onRedirect { list in
+                                            handleRedirect(list)
+                                        }
+                                        .containerRelativeFrame(.horizontal, count: verticalSizeClass == .regular ? 2 : 4, spacing: 16)
+                                }
+                            }
+                        }
+                    }
+                    .contentMargins(.horizontal, 16, for: .scrollContent)
+                    .collapse(isCollapsed: viewModel.recentsSection.collapsed)
+                }
+            }
             
             ForEach(viewModel.lists, id: \.self) { list in
                 if let list {
@@ -27,10 +59,12 @@ struct ListsView: View {
                         .onDelete { list in
                             viewModel.delete(list: list)
                         }
+                        .onRedirect { list in
+                            handleRedirect(list)
+                        }
                 }
             }
             .grid(enable: $viewModel.visualizationMode)
-            
         }
         .scrollable {
             TitleIcon(
@@ -55,6 +89,7 @@ struct ListsView: View {
             ToolbarItemGroup(placement: .bottomBar) {
                 HStack {
                     Button(action: {
+                        viewModel.listToEdit = nil
                         showCreateListForm.toggle()
                     }) {
                         HStack {
@@ -73,11 +108,28 @@ struct ListsView: View {
                 .onClose() {
                     showCreateListForm.toggle()
                 }
-        }.navigationDestination(for: ListModel.self) { list in
-            DetailsListView().environmentObject(DetailsListViewModel(list))
+        }
+        .onAppear {
+            viewModel.recentsSection.items = viewModel.getRecents()
         }
     }
     
+    func handleEdit(_ list: ListModel) {
+        withAnimation {
+            viewModel.listToEdit = list
+            showCreateListForm = true
+        }
+    }
+    
+    func handleDelete(_ list: ListModel) {
+        withAnimation {
+            viewModel.delete(list: list)
+        }
+    }
+    
+    func handleRedirect(_ list: ListModel) {
+        NavigationService.shared.navigateTo(.detailsListView(list: list))
+    }
 }
 
 #Preview {

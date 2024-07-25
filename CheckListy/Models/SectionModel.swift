@@ -7,11 +7,11 @@
 
 import Foundation
 
-struct SectionModel: Identifiable {
+struct SectionModel<Item: Hashable>: Identifiable {
     
     var id: UUID = UUID()
     var name: String
-    var items: [ListItemModel]
+    var items: [Item]
     var collapsed: Bool = false
     
 }

@@ -12,16 +12,16 @@ struct ItemCard: View {
     
     var item: ListItemModel
     var list: ListModel
-    var sections: Array<SectionModel>
+    var sections: Array<SectionModel<ListItemModel>>
     
     @Environment(\.colorScheme) var colorScheme
     
     var onEdit: ((ListItemModel) -> Void)?
     var onDelete: ((ListItemModel) -> Void)?
     var onCheck: ((ListItemModel) -> Void)?
-    var onMove: ((ListItemModel, SectionModel) -> Void)?
+    var onMove: ((ListItemModel, SectionModel<ListItemModel>) -> Void)?
     
-    private init(item: ListItemModel, list: ListModel, sections: Array<SectionModel>, onEdit: ((ListItemModel) -> Void)?, onDelete: ((ListItemModel) -> Void)?,onMove: ((ListItemModel, SectionModel) -> Void)?, onCheck: ((ListItemModel) -> Void)? ) {
+    private init(item: ListItemModel, list: ListModel, sections: Array<SectionModel<ListItemModel>>, onEdit: ((ListItemModel) -> Void)?, onDelete: ((ListItemModel) -> Void)?,onMove: ((ListItemModel, SectionModel<ListItemModel>) -> Void)?, onCheck: ((ListItemModel) -> Void)? ) {
         self.init(item: item, list: list, sections: sections)
         
         self.onEdit = onEdit
@@ -30,7 +30,7 @@ struct ItemCard: View {
         self.onMove = onMove
     }
     
-    init(item: ListItemModel, list: ListModel, sections: Array<SectionModel>) {
+    init(item: ListItemModel, list: ListModel, sections: Array<SectionModel<ListItemModel>>) {
         self.item = item
         self.list = list
         self.sections = sections
@@ -156,7 +156,7 @@ extension ItemCard {
         )
     }
     
-    func `onMove`(action: ((ListItemModel, SectionModel) -> Void)?) -> ItemCard {
+    func `onMove`(action: ((ListItemModel, SectionModel<ListItemModel>) -> Void)?) -> ItemCard {
         ItemCard(
             item: self.item,
             list: self.list,
@@ -182,7 +182,7 @@ extension ItemCard {
             name: "scroll",
             color: "red"
         ),
-        sections: [SectionModel(
+        sections: [SectionModel<ListItemModel>(
             name: "Section A",
             items: []
         )]

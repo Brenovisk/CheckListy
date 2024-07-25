@@ -8,12 +8,13 @@
 import SwiftUI
 
 struct ContentView: View {
-    @StateObject private var firebaseAuth = FirebaseAuthService.shared
-    @State var path = NavigationPath()
+    
+    @StateObject private var firebaseAuthService = FirebaseAuthService.shared
+    @StateObject private var navigationService = NavigationService.shared
     
     var body: some View {
-        NavigationStack(path: $path) {
-            if let isSignIn = firebaseAuth.isSignIn {
+        NavigationStack(path: $navigationService.navigationPath) {
+            if let isSignIn = firebaseAuthService.isSignIn {
                 if isSignIn {
                     MainView()
                 } else {
@@ -30,6 +31,13 @@ struct MainView: View {
     var body: some View {
         ListsView()
             .environmentObject(ListsViewModel())
+            .navigationDestination(for: AppDestination.self) { destination in
+                switch destination {
+                case .detailsListView(let list):
+                    DetailsListView()
+                        .environmentObject(DetailsListViewModel(list))
+                }
+            }
     }
 }
 

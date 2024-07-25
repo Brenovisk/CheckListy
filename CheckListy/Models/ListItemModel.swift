@@ -51,4 +51,8 @@ extension ListItemModel {
         )
     }
     
+    public static func == (lhs: ListItemModel, rhs: ListItemModel) -> Bool {
+        lhs.id == rhs.id && lhs.name == rhs.name &&  lhs.section == rhs.section
+    }
+    
 }

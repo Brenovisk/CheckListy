@@ -60,5 +60,13 @@ extension ListModel {
         return "\(checkedItems)/\(total)"
     }
     
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+    
+    static func == (lhs: ListModel, rhs: ListModel) -> Bool {
+        lhs.id == rhs.id
+    }
+    
 }
 

@@ -34,7 +34,7 @@ struct DetailsListView: View {
             Spacer()
                 .frame(height: 24)
             
-            ForEach(viewModel.sections) { sectionList in
+            ForEach(viewModel.sections, id: \.id) { sectionList in
                 Section(header: headerSection(sectionList)) {
                     VStack {
                         ForEach(sectionList.items) { item in
@@ -131,7 +131,6 @@ struct DetailsListView: View {
                     return
                 }
                 viewModel.add(item)
-                viewModel.sectionSelected = String()
             }
             .onClose() {
                 isShowFormItem = false
@@ -141,8 +140,8 @@ struct DetailsListView: View {
         
     }
     
-    func headerSection(_ sectionList: SectionModel) -> some View {
-        HeaderSection(section: sectionList, subtitle: viewModel.getCheckedItemBy(section: sectionList))
+    func headerSection(_ sectionList: SectionModel<ListItemModel>) -> some View {
+        HeaderSection<ListItemModel>(section: sectionList, subtitle: viewModel.getCheckedItemBy(section: sectionList))
             .onAdd { section in
                 withAnimation {
                     viewModel.itemToEdit = nil

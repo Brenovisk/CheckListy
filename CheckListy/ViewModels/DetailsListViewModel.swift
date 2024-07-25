@@ -15,7 +15,7 @@ class DetailsListViewModel: ObservableObject {
     
     @Published var itemToEdit: ListItemModel?
     @Published var sectionSelected: String = String()
-    @Published var sections: Array<SectionModel> = []
+    @Published var sections: Array<SectionModel<ListItemModel>> = []
     
     @Published var list: ListModel {
         didSet {
@@ -25,14 +25,29 @@ class DetailsListViewModel: ObservableObject {
     
     init(_ list: ListModel) {
         self.list = list
+        setup(to: list)
+    }
+    
+    func setup(to list: ListModel) {
+        setRecent(list.id.uuidString)
         getSections()
+    }
+    
+    func getRecents() -> [String] {
+        UserDefaultsService.load(.recents).removingDuplicates()
+    }
+
+    func setRecent(_ id: String) {
+        var ids = getRecents()
+        ids.insert(id, at: 0)
+        UserDefaultsService.save(.recents, ids)
     }
     
     func getSections() {
         let validSections = Dictionary(grouping: list.items.filter { !$0.section.isEmpty }, by: { $0.section })
         let emptySections = list.items.filter { $0.section.isEmpty }
         
-        var sections: [SectionModel] = validSections.compactMap { (sectionName, items) in
+        var sections: [SectionModel<ListItemModel>] = validSections.compactMap { (sectionName, items) in
             let sectionList = getSection(by: sectionName)
             return SectionModel(
                 name: sectionName,
@@ -48,17 +63,17 @@ class DetailsListViewModel: ObservableObject {
         self.sections = sections.sorted(by: { $0.name < $1.name })
     }
     
-    func move(_ item: ListItemModel, to section: SectionModel) {
+    func move(_ item: ListItemModel, to section: SectionModel<ListItemModel>) {
         var itemToEdit = item
         itemToEdit.section = section.name
         update(itemToEdit)
     }
     
-    func getSection(by name: String) -> SectionModel? {
-        return self.sections.first(where: { name == $0.name })
+    func getSection(by name: String) -> SectionModel<ListItemModel>? {
+        self.sections.first(where: { name == $0.name })
     }
     
-    func setCollapsed(of section: SectionModel, with value: Bool) {
+    func setCollapsed(of section: SectionModel<ListItemModel>, with value: Bool) {
         guard let index = sections.firstIndex(where: { $0.id == section.id }) else { return }
         sections[index].collapsed = value
     }
@@ -140,7 +155,7 @@ class DetailsListViewModel: ObservableObject {
         return  "\(checkedItems)/\(total)"
     }
     
-    func getCheckedItemBy(section: SectionModel) -> String {
+    func getCheckedItemBy(section: SectionModel<ListItemModel>) -> String {
         let total = section.items.count
         let checkedItems = section.items.filter { $0.isCheck }.count
         return  "\(checkedItems)/\(total)"
