@@ -14,24 +14,31 @@ struct HeaderSection<Item: Hashable>: View {
     var onAdd: ((SectionModel<Item>) -> Void)?
     var onCollapse: ((SectionModel<Item>) -> Void)?
     var subtitle: String?
+    var icon: String?
     var enableAdd: Bool = true
     var enableCollapse: Bool = true
     
-    private init(section: SectionModel<Item>, subtitle: String? = nil, enableAdd: Bool = true, enableCollapse: Bool = true, onAdd: ((SectionModel<Item>) -> Void)?, onCollapse: ((SectionModel<Item>) -> Void)?) {
-        self.init(section: section, subtitle: subtitle, enableAdd: enableAdd, enableCollapse: enableCollapse)
+    private init(section: SectionModel<Item>, subtitle: String? = nil, icon: String? = nil, enableAdd: Bool = true, enableCollapse: Bool = true, onAdd: ((SectionModel<Item>) -> Void)?, onCollapse: ((SectionModel<Item>) -> Void)?) {
+        self.init(section: section, subtitle: subtitle, icon: icon, enableAdd: enableAdd, enableCollapse: enableCollapse)
         self.onAdd = onAdd
         self.onCollapse = onCollapse
     }
     
-    init(section: SectionModel<Item>, subtitle: String? = nil, enableAdd: Bool = true, enableCollapse: Bool = true) {
+    init(section: SectionModel<Item>, subtitle: String? = nil, icon: String? = nil, enableAdd: Bool = true, enableCollapse: Bool = true) {
         self.section = section
         self.subtitle = subtitle
+        self.icon = icon
         self.enableAdd = enableAdd
         self.enableCollapse = enableCollapse
     }
 
     var body: some View {
         HStack {
+            if let icon {
+                Image(systemName: icon)
+                    .foregroundColor(Color(.lightGray))
+            }
+            
             if !section.name.isEmpty {
                 Text(section.name.uppercased())
                     .font(.subheadline)
@@ -76,7 +83,8 @@ extension HeaderSection {
         HeaderSection(
             section: self.section,
             subtitle: self.subtitle,
-            enableAdd: self.enableAdd, 
+            icon: self.icon,
+            enableAdd: self.enableAdd,
             enableCollapse: self.enableCollapse, 
             onAdd: action,
             onCollapse: self.onCollapse
@@ -87,7 +95,8 @@ extension HeaderSection {
         HeaderSection(
             section: self.section,
             subtitle: self.subtitle,
-            enableAdd: self.enableAdd, 
+            icon: self.icon,
+            enableAdd: self.enableAdd,
             enableCollapse: self.enableCollapse,
             onAdd: self.onAdd,
             onCollapse: action
@@ -97,5 +106,12 @@ extension HeaderSection {
 }
 
 #Preview {
-    HeaderSection(section: SectionModel<ListItemModel>(name: "Section name", items: []), subtitle: "1/5")
+    HeaderSection(
+        section: SectionModel<ListItemModel>(
+            name: "Section name",
+            items: []
+        ),
+        subtitle: "1/5",
+        icon: "star"
+    )
 }

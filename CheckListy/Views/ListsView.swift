@@ -15,53 +15,36 @@ struct ListsView: View {
     @State var showCreateListForm: Bool = false
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 24) {
-            TitleIcon(title: "Minhas Listas", subtitle: "\(viewModel.lists.count)")
+        VStack(alignment: .leading, spacing: 0) {
+            TitleIcon(title: "Minhas Listas", subtitle: "\(viewModel.lists.count)").padding(.bottom, 24)
             
             if !viewModel.recentsSection.items.isEmpty {
-                Section(header:
-                    HeaderSection(section: viewModel.recentsSection, enableAdd: false)
-                        .onCollapse { section in
-                            viewModel.toggleCollapseRecentSection()
-                        }
-                ) {
-                    ScrollView(.horizontal) {
-                        HStack {
-                            ForEach($viewModel.recentsSection.items, id: \.self) { listId in
-                                if let list = viewModel.getList(by: listId.wrappedValue) {
-                                    ListCard(list: list, mode: Binding.constant(.grid))
-                                        .onEdit { list in
-                                            handleEdit(list)
-                                        }
-                                        .onDelete { list in
-                                            handleDelete(list)
-                                        }
-                                        .onRedirect { list in
-                                            handleRedirect(list)
-                                        }
-                                        .containerRelativeFrame(.horizontal, count: verticalSizeClass == .regular ? 2 : 4, spacing: 16)
-                                }
-                            }
+                Section(header: recentsHeaderSection) {
+                    ForEach($viewModel.recentsSection.items, id: \.self) { listId in
+                        if let list = viewModel.getList(by: listId.wrappedValue) {
+                            card(list, visualization: Binding.constant(.grid))
+                                .containerRelativeHorizontal()
                         }
                     }
-                    .contentMargins(.horizontal, 16, for: .scrollContent)
+                    .scrollHorizontal()
                     .collapse(isCollapsed: viewModel.recentsSection.collapsed)
-                }
+                }.padding(.bottom, viewModel.recentsSection.collapsed ? 0 : 16 )
+            }
+            
+            if !viewModel.favorites.isEmpty {
+                Section(header: favoritesHeaderSection) {
+                    ForEach(viewModel.favorites, id: \.self) { list in
+                        card(list, visualization: Binding.constant(.grid))
+                            .containerRelativeHorizontal()
+                    }
+                    .scrollHorizontal()
+                    .collapse(isCollapsed: viewModel.favoritesSection.collapsed)
+                }.padding(.bottom, viewModel.favoritesSection.collapsed ? 0 : 16 )
             }
             
             ForEach(viewModel.lists, id: \.self) { list in
                 if let list {
-                    ListCard(list: list, mode: $viewModel.visualizationMode)
-                        .onEdit { list in
-                            viewModel.listToEdit = list
-                            showCreateListForm = true
-                        }
-                        .onDelete { list in
-                            viewModel.delete(list: list)
-                        }
-                        .onRedirect { list in
-                            handleRedirect(list)
-                        }
+                    card(list, visualization: $viewModel.visualizationMode)
                 }
             }
             .grid(enable: $viewModel.visualizationMode)
@@ -103,6 +86,10 @@ struct ListsView: View {
         .sheet(isPresented: $showCreateListForm) {
             FormListView(item: $viewModel.listToEdit)
                 .onSave() { newList in
+                    if viewModel.listToEdit != nil {
+                        viewModel.update(list: newList)
+                        return
+                    }
                     viewModel.create(list: newList)
                 }
                 .onClose() {
@@ -111,7 +98,47 @@ struct ListsView: View {
         }
         .onAppear {
             viewModel.recentsSection.items = viewModel.getRecents()
+        }.onChange(of: verticalSizeClass) {
+            viewModel.setVisualizationMode(according: verticalSizeClass)
+           
         }
+    }
+    
+    var recentsHeaderSection: some View {
+        HeaderSection(
+            section: viewModel.recentsSection,
+            icon: "clock",
+            enableAdd: false
+        ).onCollapse { section in
+             viewModel.toggleCollapseRecentSection()
+        }
+    }
+    
+    var favoritesHeaderSection: some View {
+        HeaderSection(
+            section: viewModel.favoritesSection,
+            icon: "star",
+            enableAdd: false
+        ).onCollapse { section in
+             viewModel.toggleCollapseFavoritesSection()
+        }
+    }
+    
+    func card(_ list: ListModel, visualization: (Binding<ListMode>)? = nil) -> some View {
+        ListCard(list: list, mode: visualization)
+            .onEdit { list in
+                viewModel.listToEdit = list
+                showCreateListForm = true
+            }
+            .onDelete { list in
+                viewModel.delete(list: list)
+            }
+            .onRedirect { list in
+                handleRedirect(list)
+            }
+            .onFavorite { list in
+                handleOnFavorite(list)
+            }
     }
     
     func handleEdit(_ list: ListModel) {
@@ -129,6 +156,12 @@ struct ListsView: View {
     
     func handleRedirect(_ list: ListModel) {
         NavigationService.shared.navigateTo(.detailsListView(list: list))
+    }
+    
+    func handleOnFavorite(_ list: ListModel) {
+        withAnimation {
+            viewModel.toggleIsFavorite(to: list)
+        }
     }
 }
 

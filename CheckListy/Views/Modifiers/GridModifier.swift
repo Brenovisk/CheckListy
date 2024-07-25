@@ -10,19 +10,24 @@ import SwiftUI
 
 struct GridModifier: ViewModifier {
     
+    @Environment(\.verticalSizeClass) var verticalSizeClass
+    
     @Binding var isGrid: ListMode
-    var columns: Int = 2
+    var columns: Int
     
     var columnsGrid: Array<GridItem> = []
+    var columnsGridLandscape: Array<GridItem> = []
     var oneColumn: Array<GridItem> = [ GridItem(.flexible()) ]
     
     init(isGrid: Binding<ListMode>, columns: Int = 2) {
         self._isGrid = isGrid
-        self.columnsGrid = (0..<columns).map { _ in GridItem(.flexible()) }
+        self.columns = columns
+        self.columnsGrid = getColumnsGrid(columns)
+        self.columnsGridLandscape = getColumnsGrid(2 * columns)
     }
 
     func body(content: Content) -> some View {
-        LazyVGrid(columns: isGrid == .grid ? columnsGrid : oneColumn , spacing: 0) {
+        LazyVGrid(columns: getColumns() , spacing: 0) {
             content
         }
     }
@@ -31,8 +36,28 @@ struct GridModifier: ViewModifier {
 
 extension View {
     
-    func grid(enable: Binding<ListMode>, columns: Int = 2) -> some View {
+    func grid(enable: Binding<ListMode> = Binding.constant(.grid), columns: Int = 2) -> some View {
         self.modifier(GridModifier(isGrid: enable, columns: columns))
+    }
+    
+}
+
+extension GridModifier {
+    
+    private func getColumnsGrid(_ columns: Int) -> [GridItem] {
+        return (0..<columns).map { _ in GridItem(.flexible()) }
+    }
+    
+    private func getColumns() -> Array<GridItem> {
+        if isGrid == .grid {
+            if verticalSizeClass == .regular {
+                return columnsGrid
+            }
+            
+            return columnsGridLandscape
+        }
+        
+        return oneColumn
     }
     
 }

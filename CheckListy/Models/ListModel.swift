@@ -15,6 +15,7 @@ struct ListModel: Identifiable, Hashable {
     var color: String = String()
     var icon: String = String()
     var items: Array<ListItemModel> = []
+    var isFavorite: Bool = false
     
 }
 
@@ -27,12 +28,15 @@ extension ListModel {
             "description": description,
             "color": color,
             "icon": icon,
-            "items": items.map{ $0.toNSDictionary() }
+            "items": items.map{ $0.toNSDictionary() },
+            "isFavorite": isFavorite
         ]
     }
     
     static func fromNSDictionary(_ dictionary: NSDictionary) -> ListModel? {
         let items = (dictionary["items"] as? Array<NSDictionary>)?.compactMap({ ListItemModel.fromNSDictionary($0) }) ?? []
+        
+        let isFavorite = dictionary["isFavorite"] as? Bool ?? false
         
         guard
             let id = UUID(uuidString: dictionary["id"] as? String ?? "") ,
@@ -50,7 +54,8 @@ extension ListModel {
             description: description,
             color: color,
             icon: icon,
-            items: items
+            items: items,
+            isFavorite: isFavorite
         )
     }
     

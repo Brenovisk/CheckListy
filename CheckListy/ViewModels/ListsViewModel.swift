@@ -15,7 +15,14 @@ class ListsViewModel: ObservableObject {
     @Published var listToEdit: ListModel? = nil
     @Published var selectedList: ListModel? = nil
     @Published var visualizationMode: ListMode = .list
+    
     @Published var recentsSection: SectionModel<String> = SectionModel(name: "Recentes", items: [])
+    
+    @Published var favoritesSection: SectionModel<ListModel> = SectionModel(name: "Favoritos", items: [])
+    
+    var favorites: Array<ListModel>  {
+        lists.compactMap{ $0 }.filter { $0.isFavorite }
+    }
 
     private let firebaseDataBase = FirebaseDatabase.shared
 
@@ -24,9 +31,22 @@ class ListsViewModel: ObservableObject {
         self.lists = firebaseDataBase.data
     }
 
+    func toggleIsFavorite(to list: ListModel) {
+        withAnimation {
+            var listToEdit = list
+            listToEdit.isFavorite = !list.isFavorite
+            update(list: listToEdit)        }
+    }
+    
     func toggleCollapseRecentSection() {
         withAnimation {
             recentsSection.collapsed = !recentsSection.collapsed
+        }
+    }
+    
+    func toggleCollapseFavoritesSection() {
+        withAnimation {
+            favoritesSection.collapsed = !favoritesSection.collapsed
         }
     }
 
@@ -45,6 +65,11 @@ class ListsViewModel: ObservableObject {
     func create(list: ListModel) {
         let pathNewList = "\(Paths.lists.description)/\(list.id.uuidString)"
         firebaseDataBase.add(path: pathNewList, data: list.toNSDictionary())
+    }
+    
+    func update(list: ListModel) {
+        let pathNewList = "\(Paths.lists.description)/\(list.id.uuidString)"
+        firebaseDataBase.update(path: pathNewList, data: list.toNSDictionary())
     }
 
     func delete(list: ListModel) {
@@ -65,6 +90,12 @@ class ListsViewModel: ObservableObject {
     func toggleVisualization() {
         withAnimation {
             visualizationMode = visualizationMode == .list ? .grid : .list
+        }
+    }
+    
+    func setVisualizationMode(according verticalSizeClass: UserInterfaceSizeClass?) {
+        withAnimation {
+            visualizationMode = verticalSizeClass == .regular ? .list : .grid
         }
     }
 

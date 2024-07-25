@@ -18,13 +18,15 @@ struct ListCard: View {
     var onEdit: ((ListModel) -> Void)?
     var onDelete: ((ListModel) -> Void)?
     var onRedirect: ((ListModel) -> Void)?
+    var onFavorite: ((ListModel) -> Void)?
     
-    private init(list: ListModel, mode: (Binding<ListMode>)? = nil, onEdit: ((ListModel) -> Void)?, onDelete: ((ListModel) -> Void)?, onRedirect: ((ListModel) -> Void)?) {
+    private init(list: ListModel, mode: (Binding<ListMode>)? = nil, onEdit: ((ListModel) -> Void)?, onDelete: ((ListModel) -> Void)?, onRedirect: ((ListModel) -> Void)?, onFavorite: ((ListModel) -> Void)?) {
         self.init(list: list, mode: mode)
         
         self.onEdit = onEdit
         self.onDelete = onDelete
         self.onRedirect = onRedirect
+        self.onFavorite = onFavorite
     }
     
     init(list: ListModel, mode:(Binding<ListMode>)? = nil) {
@@ -64,11 +66,13 @@ struct ListCard: View {
                 HStack(alignment: .center) {
                     VStack(alignment: .leading) {
                         Text(list.name)
+                            .lineLimit(1)
                             .font(.body)
                             .foregroundColor(colorScheme == .dark ? Color.white : Color.black)
                         
                         if !list.description.isEmpty  {
                             Text(list.description)
+                                .lineLimit(1)
                                 .font(.subheadline)
                                 .foregroundColor(colorScheme == .dark ? Color(.lightGray) : Color(.darkGray))
                         }
@@ -101,11 +105,13 @@ struct ListCard: View {
                 
                 VStack(alignment: .leading) {
                     Text(list.name)
+                        .lineLimit(1)
                         .font(.body)
                         .foregroundColor(colorScheme == .dark ? Color.white : Color.black)
                     
                     if !list.description.isEmpty  {
                         Text(list.description)
+                            .lineLimit(1)
                             .font(.subheadline)
                             .foregroundColor(colorScheme == .dark ? Color(.lightGray) : Color(.darkGray))
                     }
@@ -160,6 +166,12 @@ struct ListCard: View {
             }) {
                 Label("Deletar", systemImage: "trash")
             }
+            
+            Button(action: {
+                self.onFavorite?(list)
+            }) {
+                Label(list.isFavorite ? "Desfavoritar" : "Favoritar", systemImage: list.isFavorite ? "star.slash" : "star")
+            }
         } label: {
             Image(systemName: "ellipsis")
                 .padding()
@@ -177,7 +189,8 @@ extension ListCard {
             mode: self.$mode,
             onEdit: action,
             onDelete: self.onDelete,
-            onRedirect: self.onRedirect
+            onRedirect: self.onRedirect,
+            onFavorite: self.onFavorite
         )
     }
     
@@ -187,7 +200,8 @@ extension ListCard {
             mode: self.$mode,
             onEdit: self.onEdit,
             onDelete: action,
-            onRedirect: self.onRedirect
+            onRedirect: self.onRedirect,
+            onFavorite: self.onFavorite
         )
     }
     
@@ -197,7 +211,19 @@ extension ListCard {
             mode: self.$mode,
             onEdit: self.onEdit,
             onDelete: self.onDelete,
-            onRedirect: action
+            onRedirect: action,
+            onFavorite: self.onFavorite
+        )
+    }
+    
+    func `onFavorite`(action: ((ListModel) -> Void)?) -> ListCard {
+        ListCard(
+            list: self.list,
+            mode: self.$mode,
+            onEdit: self.onEdit,
+            onDelete: self.onDelete,
+            onRedirect: self.onRedirect,
+            onFavorite: action
         )
     }
     
