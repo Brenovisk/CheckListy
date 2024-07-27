@@ -14,11 +14,21 @@ struct ListsView: View {
     @EnvironmentObject var viewModel: ListsViewModel
     @State var showCreateListForm: Bool = false
     
+    init() {
+        UITextField.appearance().clearButtonMode = .whileEditing
+    }
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             TitleIcon(title: "Minhas Listas", subtitle: "\(viewModel.lists.count)").padding(.bottom, 24)
             
-            if !viewModel.recentsSection.items.isEmpty {
+            if viewModel.showSearchBar {
+                AutoFocusTextField(text: $viewModel.searchText, placeholder: "Pesquisar...")
+                    .roundedBackgroundTextField()
+                    .padding(.bottom, 24)
+            }
+            
+            if !viewModel.recentsSection.items.isEmpty && !viewModel.showSearchBar {
                 Section(header: recentsHeaderSection) {
                     ForEach($viewModel.recentsSection.items, id: \.self) { listId in
                         if let list = viewModel.getList(by: listId.wrappedValue) {
@@ -31,7 +41,7 @@ struct ListsView: View {
                 }.padding(.bottom, viewModel.recentsSection.collapsed ? 0 : 16 )
             }
             
-            if !viewModel.favorites.isEmpty {
+            if !viewModel.favorites.isEmpty && !viewModel.showSearchBar {
                 Section(header: favoritesHeaderSection) {
                     ForEach(viewModel.favorites, id: \.self) { list in
                         card(list, visualization: Binding.constant(.grid))
@@ -42,7 +52,7 @@ struct ListsView: View {
                 }.padding(.bottom, viewModel.favoritesSection.collapsed ? 0 : 16 )
             }
             
-            ForEach(viewModel.lists, id: \.self) { list in
+            ForEach(viewModel.getLists(), id: \.self) { list in
                 if let list {
                     card(list, visualization: $viewModel.visualizationMode)
                 }
@@ -57,6 +67,13 @@ struct ListsView: View {
             )
         }
         .toolbar {
+            ToolbarItemGroup(placement: .primaryAction) {
+                SearchButton(isEnable: $viewModel.showSearchBar)
+                    .onEnable {
+                        viewModel.toggleSearchBar()
+                    }
+            }
+            
             ToolbarItemGroup(placement: .primaryAction) {
                 Button(action: { viewModel.toggleVisualization() }) {
                     Image(systemName: viewModel.visualizationMode == .list ?  "rectangle.grid.1x2" : "square.grid.2x2")

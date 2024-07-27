@@ -45,39 +45,40 @@ struct ItemCard: View {
                         .frame(width: 24, height: 24)
                         .foregroundColor(Color(list.color))
                         .padding(.horizontal, 16)
+                        .onTapGesture {
+                            self.onCheck?(item)
+                        }
                     
                     VStack(alignment: .leading) {
                         Text(item.name)
+                            .lineLimit(1)
                             .font(.body)
                             .foregroundColor(colorScheme == .dark ? Color.white : Color.black)
                         
                         if !item.description.isEmpty  {
                             Text(item.description)
+                                .lineLimit(1)
                                 .font(.subheadline)
                                 .foregroundColor(colorScheme == .dark ? Color(.lightGray) : Color(.darkGray))
                         }
                     }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .background(Color(.secondarySystemBackground))
                     .onTapGesture {
                         self.onEdit?(item)
                     }
                 }
                 .padding(.vertical, 4)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .onTapGesture {
-                    self.onCheck?(item)
-                }
                 
                 Menu {
+                    Button(role: .destructive, action: { self.onDelete?(item) }) {
+                        Label("Deletar", systemImage: "trash")
+                    }
+                    
                     Button(action: {
                         self.onEdit?(item)
                     }) {
                         Label("Editar", systemImage: "pencil")
-                    }
-                    
-                    Button(action: {
-                        self.onDelete?(item)
-                    }) {
-                        Label("Deletar", systemImage: "trash")
                     }
                     
                     if isShowMoveButton {

@@ -49,12 +49,12 @@ extension GridModifier {
     }
     
     private func getColumns() -> Array<GridItem> {
-        if isGrid == .grid {
-            if verticalSizeClass == .regular {
-                return columnsGrid
-            }
-            
+        if verticalSizeClass != .regular {
             return columnsGridLandscape
+        }
+        
+        if isGrid == .grid {
+            return columnsGrid
         }
         
         return oneColumn

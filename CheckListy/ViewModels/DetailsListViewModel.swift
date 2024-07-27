@@ -16,6 +16,8 @@ class DetailsListViewModel: ObservableObject {
     @Published var itemToEdit: ListItemModel?
     @Published var sectionSelected: String = String()
     @Published var sections: Array<SectionModel<ListItemModel>> = []
+    @Published var showSearchBar: Bool = false
+    @Published var searchText: String = String()
     
     @Published var list: ListModel {
         didSet {
@@ -23,9 +25,23 @@ class DetailsListViewModel: ObservableObject {
         }
     }
     
+    var filterItems: Array<ListItemModel> {
+        list.items.compactMap{ $0 }.filter { $0.name.lowercased().contains(searchText.lowercased()) }
+    }
+    
     init(_ list: ListModel) {
         self.list = list
         setup(to: list)
+    }
+    
+    func getItems() -> Array<ListItemModel> {
+        searchText.isEmpty ? list.items : filterItems
+    }
+    
+    func toggleSearchBar() {
+        withAnimation {
+            showSearchBar.toggle()
+        }
     }
     
     func setup(to list: ListModel) {

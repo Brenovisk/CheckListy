@@ -15,10 +15,14 @@ class ListsViewModel: ObservableObject {
     @Published var listToEdit: ListModel? = nil
     @Published var selectedList: ListModel? = nil
     @Published var visualizationMode: ListMode = .list
-    
+    @Published var showSearchBar: Bool = false
+    @Published var searchText: String = String()
     @Published var recentsSection: SectionModel<String> = SectionModel(name: "Recentes", items: [])
-    
     @Published var favoritesSection: SectionModel<ListModel> = SectionModel(name: "Favoritos", items: [])
+    
+    var filterLists: Array<ListModel> {
+        lists.compactMap{ $0 }.filter { $0.name.lowercased().contains(searchText.lowercased()) }
+    }
     
     var favorites: Array<ListModel>  {
         lists.compactMap{ $0 }.filter { $0.isFavorite }
@@ -30,12 +34,22 @@ class ListsViewModel: ObservableObject {
         setupCallbacksManager()
         self.lists = firebaseDataBase.data
     }
+    
+    func getLists() -> Array<ListModel?> {
+        searchText.isEmpty ? lists : filterLists
+    }
 
     func toggleIsFavorite(to list: ListModel) {
         withAnimation {
             var listToEdit = list
             listToEdit.isFavorite = !list.isFavorite
             update(list: listToEdit)        }
+    }
+    
+    func toggleSearchBar() {
+        withAnimation {
+            showSearchBar.toggle()
+        }
     }
     
     func toggleCollapseRecentSection() {

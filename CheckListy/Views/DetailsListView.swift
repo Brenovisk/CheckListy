@@ -17,7 +17,7 @@ struct DetailsListView: View {
     @State private var isShowForm = false
     @State private var isShowFormItem = false
     @State private var multiSelection = Set<UUID>()
-    
+ 
     var body: some View {
         VStack {
             TitleIcon(
@@ -26,43 +26,35 @@ struct DetailsListView: View {
                 color: Color(viewModel.list.color),
                 subtitle: viewModel.getCheckedItemByList()
             )
-            .frame(
-                maxWidth: .infinity,
-                alignment: .leading
-            )
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.bottom, 24)
             
-            Spacer()
-                .frame(height: 24)
-            
-            ForEach(viewModel.sections, id: \.id) { sectionList in
-                Section(header: headerSection(sectionList)) {
-                    VStack {
-                        ForEach(sectionList.items) { item in
-                            ItemCard(item: item, list: viewModel.list, sections: viewModel.sections)
-                                .onCheck { item in
-                                    withAnimation {
-                                        viewModel.set(isCheck: !item.isCheck, of: item)
-                                    }
-                                }
-                                .onEdit { item in
-                                    withAnimation {
-                                        viewModel.itemToEdit = item
-                                        viewModel.sectionSelected = String()
-                                        isShowFormItem.toggle()
-                                    }
-                                }
-                                .onDelete { item in
-                                    viewModel.remove(item)
-                                }
-                                .onMove { item, section in
-                                    viewModel.move(item, to: section)
-                                }
-                        }
-                    }
-                    .padding(.bottom, 16)
-                    .collapse(isCollapsed: sectionList.name.isEmpty ? false : sectionList.collapsed)
-                }
+            if viewModel.showSearchBar {
+                AutoFocusTextField(text: $viewModel.searchText, placeholder: "Pesquisar...")
+                    .roundedBackgroundTextField()
+                    .padding(.bottom, 24)
                 
+                ForEach(viewModel.getItems(), id: \.id) { item in
+                    card(item)
+                }
+            }
+            
+            if !viewModel.showSearchBar {
+                ForEach(viewModel.sections, id: \.id) { sectionList in
+                    Section(header: headerSection(sectionList)) {
+                        VStack {
+                            ForEach(sectionList.items) { item in
+                                card(item)
+                                    .onMove { item, section in
+                                        viewModel.move(item, to: section)
+                                    }
+                            }.grid(enable: Binding.constant(.list), columns: 2)
+                        }
+                        .padding(.bottom, 16)
+                        .collapse(isCollapsed: sectionList.name.isEmpty ? false : sectionList.collapsed)
+                    }
+                    
+                }
             }
         }
         .scrollable {
@@ -76,6 +68,13 @@ struct DetailsListView: View {
         }
         .navigationTitle("")
         .toolbar {
+            ToolbarItemGroup(placement: .primaryAction) {
+                SearchButton(isEnable: $viewModel.showSearchBar)
+                    .onEnable {
+                        viewModel.toggleSearchBar()
+                    }
+            }
+            
             ToolbarItemGroup(placement: .primaryAction) {
                 Button(action: { isShowForm.toggle() }) {
                     Image(systemName: "gear")
@@ -140,6 +139,26 @@ struct DetailsListView: View {
         
     }
     
+    func card(_ item: ListItemModel) -> ItemCard {
+        ItemCard(item: item, list: viewModel.list, sections: viewModel.sections)
+            .onCheck { item in
+                withAnimation {
+                    viewModel.set(isCheck: !item.isCheck, of: item)
+                }
+            }
+            .onEdit { item in
+                withAnimation {
+                    viewModel.itemToEdit = item
+                    viewModel.sectionSelected = String()
+                    isShowFormItem.toggle()
+                }
+            }
+            .onDelete { item in
+                viewModel.remove(item)
+            }
+    }
+    
+    
     func headerSection(_ sectionList: SectionModel<ListItemModel>) -> some View {
         HeaderSection<ListItemModel>(section: sectionList, subtitle: viewModel.getCheckedItemBy(section: sectionList))
             .onAdd { section in
@@ -200,7 +219,7 @@ struct DetailsListView: View {
                         icon: "checkmark",
                         items: [
                             ListItemModel(
-                                name: "Teste",
+                                name: "Teste ",
                                 description: "asdf",
                                 section: "B",
                                 isCheck: true

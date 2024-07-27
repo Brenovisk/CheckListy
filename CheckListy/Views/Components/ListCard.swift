@@ -155,13 +155,7 @@ struct ListCard: View {
     
     var menu: some View {
         Menu {
-            Button(action: {
-                self.onEdit?(list)
-            }) {
-                Label("Editar", systemImage: "pencil")
-            }
-            
-            Button(action: {
+            Button(role: .destructive, action: {
                 self.onDelete?(list)
             }) {
                 Label("Deletar", systemImage: "trash")
@@ -171,6 +165,12 @@ struct ListCard: View {
                 self.onFavorite?(list)
             }) {
                 Label(list.isFavorite ? "Desfavoritar" : "Favoritar", systemImage: list.isFavorite ? "star.slash" : "star")
+            }
+            
+            Button(action: {
+                self.onEdit?(list)
+            }) {
+                Label("Editar", systemImage: "pencil")
             }
         } label: {
             Image(systemName: "ellipsis")
