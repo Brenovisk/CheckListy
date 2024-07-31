@@ -127,10 +127,11 @@ class ListsViewModel: ObservableObject {
     func signOut() {
         Task {
             do {
-                try await FirebaseAuthService.shared.signOut()
+                self.lists = []
                 FirebaseDatabase.shared.removeListeners()
                 FirebaseDatabase.shared.clearData()
-                self.lists = []
+                UserDefaultsService.clearAll()
+                try await FirebaseAuthService.shared.signOut()
             } catch {
                 debugPrint(error.localizedDescription)
             }
