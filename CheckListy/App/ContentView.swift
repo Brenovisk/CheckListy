@@ -14,7 +14,7 @@ struct ContentView: View {
     
     var body: some View {
         NavigationStack(path: $navigationService.navigationPath) {
-            if let isSignIn = firebaseAuthService.isSignIn {
+            if let isSignIn = firebaseAuthService.isSignIn, firebaseAuthService.isEnable {
                 if isSignIn {
                     MainView()
                 } else {

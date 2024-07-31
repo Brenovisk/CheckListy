@@ -34,6 +34,7 @@ struct TitleIcon: View {
             
             HStack(alignment: .bottom) {
                 Text(title)
+                    .lineLimit(1)
                     .font(iconSize < 16 ? .headline : .largeTitle)
                     .fontWeight(.bold)
                 

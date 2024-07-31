@@ -13,9 +13,11 @@ struct FormListView: View {
     @Binding var item: ListModel?
     @State private var id: UUID
     @State private var name: String
+    @State private var listCode: String = String()
     @State private var selectedColor: String
     @State private var selectedIcon: String
     @State private var items: Array<ListItemModel>
+    @State private var showAddListByCode: Bool = false
     
     let layoutIcon = [
         GridItem(.flexible()),
@@ -23,15 +25,17 @@ struct FormListView: View {
     ]
     
     var onSave: ((ListModel) -> Void)?
+    var onSaveByCode: ((String) -> Void)?
     var onClose: (() -> Void)?
     
     let colors: [String] = ["red", "green", "blue", "yellow", "purple"]
     let icons: [String] = ["house.fill", "star.fill", "bell.fill", "heart.fill", "flag.fill", "book.fill", "folder.fill", "flame.fill", "bolt.fill", "leaf.fill"]
     
-    private init(item: Binding<ListModel?>, onSave: ((ListModel) -> Void)?, onClose: (() -> Void)?) {
+    private init(item: Binding<ListModel?>, onSave: ((ListModel) -> Void)?, onClose: (() -> Void)?, onSaveByCode: ((String) -> Void)?) {
         self.init(item: item)
         self.onSave = onSave
         self.onClose = onClose
+        self.onSaveByCode = onSaveByCode
         
         UITextField.appearance().clearButtonMode = .whileEditing
     }
@@ -89,6 +93,15 @@ struct FormListView: View {
                             }
                         }.padding(.top, 16)
                     }
+                    
+                    Toggle(isOn: $showAddListByCode) {
+                        Text("Adicionar lista por código")
+                            .foregroundColor(.secondary)
+                    }
+                    
+                    if showAddListByCode {
+                        TextField("Código", text: $listCode)
+                    }
                 }
                 .navigationTitle(item == nil ? "Adicionar Lista" : "Editar Lista")
                 .navigationBarItems(
@@ -97,15 +110,22 @@ struct FormListView: View {
                     },
                     trailing:
                         Button(action: {
-                            let newItem = ListModel(
-                                id: id,
-                                name: name,
-                                color: selectedColor,
-                                icon: selectedIcon,
-                                items: items
-                            )
-                            
-                            onSave?(newItem)
+                            if listCode.isEmpty {
+                                let newItem = ListModel(
+                                    id: id,
+                                    name: name,
+                                    color: selectedColor,
+                                    icon: selectedIcon,
+                                    items: items,
+                                    createdAt: item?.createdAt ?? Date(),
+                                    editedAt: Date(),
+                                    users: item?.users ?? [FirebaseAuthService.shared.getAuthUserId()]
+                                )
+                                
+                                onSave?(newItem)
+                            } else {
+                                onSaveByCode?(listCode)
+                            }
                             onClose?()
                         }) {
                             Text(item == nil ? "Criar" : "Editar")
@@ -115,7 +135,6 @@ struct FormListView: View {
             }
         }
     }
-    
 }
 
 // MARK: - Callbacks modifiers
@@ -125,7 +144,8 @@ extension FormListView {
         FormListView(
             item: self.$item,
             onSave: action,
-            onClose: self.onClose
+            onClose: self.onClose,
+            onSaveByCode: self.onSaveByCode
         )
     } 
     
@@ -133,7 +153,17 @@ extension FormListView {
         FormListView(
             item: self.$item,
             onSave: self.onSave,
-            onClose: action
+            onClose: action,
+            onSaveByCode: self.onSaveByCode
+        )
+    }
+    
+    func `onSaveByCode`(action: ((String) -> Void)?) -> FormListView {
+        FormListView(
+            item: self.$item,
+            onSave: self.onSave,
+            onClose: self.onClose,
+            onSaveByCode: action
         )
     }
     

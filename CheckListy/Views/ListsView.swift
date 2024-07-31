@@ -20,6 +20,16 @@ struct ListsView: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
+            WelcomeView(
+                userName: viewModel.userName ?? String(),
+                uiImage: viewModel.userImage
+            )
+            .task {
+                viewModel.getUserName()
+                await viewModel.getUserImage()
+            }
+            .padding(.top, 8)
+            
             TitleIcon(title: "Minhas Listas", subtitle: "\(viewModel.lists.count)").padding(.bottom, 24)
             
             if viewModel.showSearchBar {
@@ -102,15 +112,18 @@ struct ListsView: View {
         }
         .sheet(isPresented: $showCreateListForm) {
             FormListView(item: $viewModel.listToEdit)
-                .onSave() { newList in
+                .onSave { newList in
                     if viewModel.listToEdit != nil {
                         viewModel.update(list: newList)
                         return
                     }
                     viewModel.create(list: newList)
                 }
-                .onClose() {
+                .onClose {
                     showCreateListForm.toggle()
+                }
+                .onSaveByCode { code in
+                    viewModel.add(by: code)
                 }
         }
         .onAppear {

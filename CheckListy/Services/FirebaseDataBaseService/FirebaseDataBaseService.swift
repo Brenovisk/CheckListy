@@ -13,36 +13,52 @@ import FirebaseDatabase
 class FirebaseDatabase {
     
     static let shared = FirebaseDatabase()
-
+    
     var databaseRef: DatabaseReference!
     var data: [ListModel?] = []
     
     var dataChanged: (() -> Void)?
     
+    private var childAddedHandle: DatabaseHandle?
+    private var childChangedHandle: DatabaseHandle?
+    private var childRemovedHandle: DatabaseHandle?
+    
     init() {
         Database.database().isPersistenceEnabled = true
-        setupFirebase()
+        setupIfNeeded()
+    }
+    
+    func setupIfNeeded() {
+        guard let childAddedHandle,
+              let childChangedHandle,
+              let childRemovedHandle else {
+            setupFirebase()
+            return
+        }
     }
     
     func setupFirebase() {
         databaseRef = Database.database().reference()
         
-        databaseRef.child(Paths.lists.description).observe(.childAdded) { snapshot, arg in
+        childAddedHandle = databaseRef.child(Paths.lists.description).observe(.childAdded) { [weak self] snapshot in
+            guard let self = self else { return }
             if let value = snapshot.value as? NSDictionary {
                 self.data.append(ListModel.fromNSDictionary(value))
                 self.dataChanged?()
             }
-        } 
+        }
         
-        databaseRef.child(Paths.lists.description).observe(.childChanged) { snapshot, arg in
+        childChangedHandle = databaseRef.child(Paths.lists.description).observe(.childChanged) { [weak self] snapshot in
+            guard let self = self else { return }
             if let value = snapshot.value as? NSDictionary {
                 let item = ListModel.fromNSDictionary(value)
                 self.updated(with: item)
                 self.dataChanged?()
             }
         }
-
-        databaseRef.child(Paths.lists.description).observe(.childRemoved) { snapshot,arg  in
+        
+        childRemovedHandle = databaseRef.child(Paths.lists.description).observe(.childRemoved) { [weak self] snapshot in
+            guard let self = self else { return }
             if let value = snapshot.value as? NSDictionary {
                 let item = ListModel.fromNSDictionary(value)
                 self.remove(item: item)
@@ -79,6 +95,27 @@ extension FirebaseDatabase {
         if let index = data.firstIndex(where: {$0?.id == item?.id}) {
             self.data.remove(at: index)
         }
+    }
+    
+    func removeListeners() {
+        if let handle = childAddedHandle {
+            databaseRef.child(Paths.lists.description).removeObserver(withHandle: handle)
+            childAddedHandle = nil
+        }
+        
+        if let handle = childChangedHandle {
+            databaseRef.child(Paths.lists.description).removeObserver(withHandle: handle)
+            childChangedHandle = nil
+        }
+        
+        if let handle = childRemovedHandle {
+            databaseRef.child(Paths.lists.description).removeObserver(withHandle: handle)
+            childRemovedHandle = nil
+        }
+    }
+    
+    func clearData() {
+        data = []
     }
     
 }

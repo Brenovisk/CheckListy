@@ -7,6 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		14044F742C56CD4100FD3A73 /* ImagePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14044F732C56CD4100FD3A73 /* ImagePickerController.swift */; };
+		14044F782C56CDB200FD3A73 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14044F772C56CDB200FD3A73 /* ImagePicker.swift */; };
+		14044F7A2C56D1B600FD3A73 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14044F792C56D1B600FD3A73 /* WelcomeView.swift */; };
+		14044F7D2C571AA800FD3A73 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 14044F7C2C571AA800FD3A73 /* FirebaseStorage */; };
+		14044F7F2C571B1300FD3A73 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 14044F7E2C571B1300FD3A73 /* FirebaseFirestore */; };
+		14044F812C591B7800FD3A73 /* UserDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14044F802C591B7700FD3A73 /* UserDatabase.swift */; };
+		14044F842C5922D100FD3A73 /* ImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14044F832C5922D100FD3A73 /* ImageService.swift */; };
+		14044F872C59233300FD3A73 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14044F862C59233200FD3A73 /* UserService.swift */; };
+		14044F8A2C5923A900FD3A73 /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14044F892C5923A900FD3A73 /* UserManager.swift */; };
 		145706E42C4DDB94007E642C /* RecordButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145706E32C4DDB94007E642C /* RecordButton.swift */; };
 		145706E62C4DE4E9007E642C /* AudioAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145706E52C4DE4E9007E642C /* AudioAnimation.swift */; };
 		145706E82C4EDE94007E642C /* HeaderSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145706E72C4EDE94007E642C /* HeaderSection.swift */; };
@@ -81,6 +90,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		14044F732C56CD4100FD3A73 /* ImagePickerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerController.swift; sourceTree = "<group>"; };
+		14044F772C56CDB200FD3A73 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
+		14044F792C56D1B600FD3A73 /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
+		14044F802C591B7700FD3A73 /* UserDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDatabase.swift; sourceTree = "<group>"; };
+		14044F832C5922D100FD3A73 /* ImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageService.swift; sourceTree = "<group>"; };
+		14044F862C59233200FD3A73 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
+		14044F892C5923A900FD3A73 /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
 		145706E32C4DDB94007E642C /* RecordButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordButton.swift; sourceTree = "<group>"; };
 		145706E52C4DE4E9007E642C /* AudioAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioAnimation.swift; sourceTree = "<group>"; };
 		145706E72C4EDE94007E642C /* HeaderSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderSection.swift; sourceTree = "<group>"; };
@@ -144,7 +160,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				14B225552C3DF62600A7F15F /* FirebaseDatabase in Frameworks */,
+				14044F7F2C571B1300FD3A73 /* FirebaseFirestore in Frameworks */,
 				14B2254D2C36D78500A7F15F /* FirebaseAuth in Frameworks */,
+				14044F7D2C571AA800FD3A73 /* FirebaseStorage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -165,6 +183,53 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		07C3842D8BE9A3C3C2C74EE4 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		14044F752C56CD7E00FD3A73 /* ImagePicker */ = {
+			isa = PBXGroup;
+			children = (
+				14044F732C56CD4100FD3A73 /* ImagePickerController.swift */,
+				14044F772C56CDB200FD3A73 /* ImagePicker.swift */,
+			);
+			path = ImagePicker;
+			sourceTree = "<group>";
+		};
+		14044F7B2C571AA700FD3A73 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		14044F822C5922C200FD3A73 /* ImageService */ = {
+			isa = PBXGroup;
+			children = (
+				14044F832C5922D100FD3A73 /* ImageService.swift */,
+			);
+			path = ImageService;
+			sourceTree = "<group>";
+		};
+		14044F852C59231800FD3A73 /* UserService */ = {
+			isa = PBXGroup;
+			children = (
+				14044F862C59233200FD3A73 /* UserService.swift */,
+			);
+			path = UserService;
+			sourceTree = "<group>";
+		};
+		14044F882C59239300FD3A73 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				14044F892C5923A900FD3A73 /* UserManager.swift */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
 		145706EB2C4EEE8C007E642C /* FeedbackService */ = {
 			isa = PBXGroup;
 			children = (
@@ -207,13 +272,6 @@
 			path = FirebaseAuthService;
 			sourceTree = "<group>";
 		};
-		14B2254B2C36D78500A7F15F /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		14B225562C3DF65100A7F15F /* FirebaseDataBaseService */ = {
 			isa = PBXGroup;
 			children = (
@@ -226,6 +284,7 @@
 		14B225612C45C08C00A7F15F /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				14044F752C56CD7E00FD3A73 /* ImagePicker */,
 				14B225642C45C84700A7F15F /* TitleIcon.swift */,
 				14B225682C46169400A7F15F /* ItemCard.swift */,
 				14B2256C2C4742C000A7F15F /* AutoFocusTextField.swift */,
@@ -234,6 +293,7 @@
 				145706E72C4EDE94007E642C /* HeaderSection.swift */,
 				145706EE2C4F09D3007E642C /* ListCard.swift */,
 				145707102C528DBC007E642C /* SearchButton.swift */,
+				14044F792C56D1B600FD3A73 /* WelcomeView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -301,6 +361,7 @@
 		14CEA8862C36459C00E3CAED /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				14044F802C591B7700FD3A73 /* UserDatabase.swift */,
 				14DBB6D62C34A5500084EB23 /* ListItemModel.swift */,
 				14B225572C3E9EE300A7F15F /* ListModel.swift */,
 				14B225622C45C0B800A7F15F /* ViewOffsetKey.swift */,
@@ -326,7 +387,8 @@
 				14DBB6B32C3433570084EB23 /* CheckListyTests */,
 				14DBB6BD2C3433570084EB23 /* CheckListyUITests */,
 				14DBB6A12C3433560084EB23 /* Products */,
-				14B2254B2C36D78500A7F15F /* Frameworks */,
+				07C3842D8BE9A3C3C2C74EE4 /* Pods */,
+				14044F7B2C571AA700FD3A73 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -348,6 +410,7 @@
 				14CEA8842C36457000E3CAED /* Views */,
 				14CEA8852C36458000E3CAED /* ViewModels */,
 				14DBB6CD2C3434220084EB23 /* Services */,
+				14044F882C59239300FD3A73 /* Managers */,
 				14DBB6DA2C34CB960084EB23 /* Extensions */,
 			);
 			path = CheckListy;
@@ -373,6 +436,8 @@
 		14DBB6CD2C3434220084EB23 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				14044F852C59231800FD3A73 /* UserService */,
+				14044F822C5922C200FD3A73 /* ImageService */,
 				145707052C51AA1B007E642C /* NavigationService */,
 				145706FB2C4FC967007E642C /* UserDefaultsService */,
 				145706EB2C4EEE8C007E642C /* FeedbackService */,
@@ -421,6 +486,8 @@
 			packageProductDependencies = (
 				14B2254C2C36D78500A7F15F /* FirebaseAuth */,
 				14B225542C3DF62600A7F15F /* FirebaseDatabase */,
+				14044F7C2C571AA800FD3A73 /* FirebaseStorage */,
+				14044F7E2C571B1300FD3A73 /* FirebaseFirestore */,
 			);
 			productName = CheckListy;
 			productReference = 14DBB6A02C3433560084EB23 /* CheckListy.app */;
@@ -542,6 +609,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				14B225322C364F0F00A7F15F /* SignInView.swift in Sources */,
+				14044F782C56CDB200FD3A73 /* ImagePicker.swift in Sources */,
 				14B225792C49B6C600A7F15F /* CollapseModifier.swift in Sources */,
 				14B225532C3DF60A00A7F15F /* FirebaseDataBaseService.swift in Sources */,
 				14B2255C2C3EADF900A7F15F /* ListsViewModel.swift in Sources */,
@@ -559,9 +627,13 @@
 				145707012C4FE3B1007E642C /* Array+RemoveDuplicates.swift in Sources */,
 				14B2256D2C4742C000A7F15F /* AutoFocusTextField.swift in Sources */,
 				145706E82C4EDE94007E642C /* HeaderSection.swift in Sources */,
+				14044F7A2C56D1B600FD3A73 /* WelcomeView.swift in Sources */,
 				1457070D2C51EB4E007E642C /* ScrollHorizontalModifier.swift in Sources */,
 				14DBB6CF2C3434560084EB23 /* SpeechRecognizerService.swift in Sources */,
 				145706EF2C4F09D3007E642C /* ListCard.swift in Sources */,
+				14044F872C59233300FD3A73 /* UserService.swift in Sources */,
+				14044F842C5922D100FD3A73 /* ImageService.swift in Sources */,
+				14044F742C56CD4100FD3A73 /* ImagePickerController.swift in Sources */,
 				145706FD2C4FC975007E642C /* UserDefaultsService.swift in Sources */,
 				145707072C51AA2B007E642C /* NavigationService.swift in Sources */,
 				14B225692C46169400A7F15F /* ItemCard.swift in Sources */,
@@ -578,6 +650,7 @@
 				14B225772C496C0A00A7F15F /* SectionModel.swift in Sources */,
 				145707112C528DBD007E642C /* SearchButton.swift in Sources */,
 				14B2255A2C3EAD6E00A7F15F /* ListsView.swift in Sources */,
+				14044F8A2C5923A900FD3A73 /* UserManager.swift in Sources */,
 				14DBB6D22C343B2C0084EB23 /* SpeechRecognizerServiceErrors.swift in Sources */,
 				14B2254F2C36DBA800A7F15F /* SignUpView.swift in Sources */,
 				14DBB6D72C34A5500084EB23 /* ListItemModel.swift in Sources */,
@@ -585,6 +658,7 @@
 				145706E62C4DE4E9007E642C /* AudioAnimation.swift in Sources */,
 				14B2255E2C3F42F800A7F15F /* FirebaseDatabasePaths.swift in Sources */,
 				14A4CAD02C34D5AE00634E19 /* String+RemoveWord.swift in Sources */,
+				14044F812C591B7800FD3A73 /* UserDatabase.swift in Sources */,
 				14DBB6D92C34ABC60084EB23 /* DetailsListViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -932,6 +1006,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		14044F7C2C571AA800FD3A73 /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 14B225352C36D1BE00A7F15F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
+		};
+		14044F7E2C571B1300FD3A73 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 14B225352C36D1BE00A7F15F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
 		14B2254C2C36D78500A7F15F /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 14B225352C36D1BE00A7F15F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;

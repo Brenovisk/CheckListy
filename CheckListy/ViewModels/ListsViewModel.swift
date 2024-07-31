@@ -20,6 +20,12 @@ class ListsViewModel: ObservableObject {
     @Published var recentsSection: SectionModel<String> = SectionModel(name: "Recentes", items: [])
     @Published var favoritesSection: SectionModel<ListModel> = SectionModel(name: "Favoritos", items: [])
     
+    @Published var userImage: UIImage? = nil
+    @Published var userName: String? = nil
+    
+    @MainActor
+    let userId = FirebaseAuthService.shared.getAuthUserId()
+    
     var filterLists: Array<ListModel> {
         lists.compactMap{ $0 }.filter { $0.name.lowercased().contains(searchText.lowercased()) }
     }
@@ -28,11 +34,23 @@ class ListsViewModel: ObservableObject {
         lists.compactMap{ $0 }.filter { $0.isFavorite }
     }
 
-    private let firebaseDataBase = FirebaseDatabase.shared
+    var firebaseDatabase = FirebaseDatabase.shared
 
+    @MainActor
     init() {
         setupCallbacksManager()
-        self.lists = firebaseDataBase.data
+        firebaseDatabase.setupIfNeeded()
+        self.lists = firebaseDatabase.data.compactMap { $0 }
+    }
+    
+    @MainActor 
+    func getUserName() {
+        self.userName = FirebaseAuthService.shared.getAuthUserName()
+    }
+    
+    @MainActor
+    func getUserImage() async {
+        self.userImage = await FirebaseAuthService.shared.getAuthUserImage()
     }
     
     func getLists() -> Array<ListModel?> {
@@ -71,6 +89,10 @@ class ListsViewModel: ObservableObject {
     func getList(by id: String) -> ListModel? {
         lists.compactMap({ $0 }).first(where: { $0.id.uuidString == id })
     }
+    
+    func getFirebaseList(by id: String) -> ListModel? {
+        FirebaseDatabase.shared.data.compactMap({ $0 }).first(where: { $0.id.uuidString == id })
+    }
 
     func getRecents() -> [String] {
         UserDefaultsService.load(.recents).removingDuplicates()
@@ -78,23 +100,37 @@ class ListsViewModel: ObservableObject {
 
     func create(list: ListModel) {
         let pathNewList = "\(Paths.lists.description)/\(list.id.uuidString)"
-        firebaseDataBase.add(path: pathNewList, data: list.toNSDictionary())
+        firebaseDatabase.add(path: pathNewList, data: list.toNSDictionary())
     }
     
     func update(list: ListModel) {
         let pathNewList = "\(Paths.lists.description)/\(list.id.uuidString)"
-        firebaseDataBase.update(path: pathNewList, data: list.toNSDictionary())
+        firebaseDatabase.update(path: pathNewList, data: list.toNSDictionary())
+    }
+    
+    @MainActor 
+    func add(by code: String) {
+        let pathNewList = "\(Paths.lists.description)/\(code)"
+        guard let list = getFirebaseList(by: code) else { return }
+        var listToEdit = list
+        let userId = FirebaseAuthService.shared.getAuthUserId()
+        listToEdit.users.append(userId)
+        firebaseDatabase.update(path: pathNewList, data: listToEdit.toNSDictionary())
     }
 
     func delete(list: ListModel) {
         let pathNewList = "\(Paths.lists.description)/\(list.id.uuidString)"
-        firebaseDataBase.delete(path: pathNewList)
+        firebaseDatabase.delete(path: pathNewList)
     }
 
+    @MainActor
     func signOut() {
         Task {
             do {
                 try await FirebaseAuthService.shared.signOut()
+                FirebaseDatabase.shared.removeListeners()
+                FirebaseDatabase.shared.clearData()
+                self.lists = []
             } catch {
                 debugPrint(error.localizedDescription)
             }
@@ -118,9 +154,12 @@ class ListsViewModel: ObservableObject {
 // MARK: - Helper methods
 extension ListsViewModel {
 
+    @MainActor
     private func setupCallbacksManager() {
-        firebaseDataBase.dataChanged = { [weak self] in
-            self?.lists = self?.firebaseDataBase.data ?? []      
+        firebaseDatabase.dataChanged = { [weak self] in
+            guard let self else { return }
+            self.lists = (self.firebaseDatabase.data.compactMap{ $0 }.filter { $0.users.contains(self.userId)
+            })
         }
     }
 

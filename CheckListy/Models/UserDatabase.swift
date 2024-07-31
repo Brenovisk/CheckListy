@@ -11,7 +11,7 @@ struct UserDatabase {
     
     var id: String
     var name: String
-    var urlProfileImage: URL
+    var urlProfileImage: URL?
     
 }
 
@@ -21,7 +21,7 @@ extension UserDatabase {
         return [
             "id": self.id,
             "name": self.name,
-            "urlProfileImage": self.urlProfileImage.absoluteString
+            "urlProfileImage": self.urlProfileImage?.absoluteString ?? String()
         ] as NSDictionary
     }
     

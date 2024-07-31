@@ -1,0 +1,16 @@
+PODS:
+  - MemojiView (0.0.1)
+
+DEPENDENCIES:
+  - MemojiView
+
+SPEC REPOS:
+  trunk:
+    - MemojiView
+
+SPEC CHECKSUMS:
+  MemojiView: d58c9a7272506704038f0351d2f4a273bcd84cd9
+
+PODFILE CHECKSUM: 10939fdfd3d124a98cf369e639962343fa100f4e
+
+COCOAPODS: 1.15.2

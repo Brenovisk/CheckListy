@@ -7,7 +7,7 @@
 		<key>CheckListy.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>0</integer>
+			<integer>1</integer>
 		</dict>
 		<key>Promises (Playground) 1.xcscheme</key>
 		<dict>
@@ -29,6 +29,24 @@
 			<false/>
 			<key>orderHint</key>
 			<integer>0</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>14DBB69F2C3433560084EB23</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>14DBB6AF2C3433570084EB23</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>14DBB6B92C3433570084EB23</key>
+		<dict>
+			<key>primary</key>
+			<true/>
 		</dict>
 	</dict>
 </dict>

@@ -17,6 +17,15 @@ struct SignUpView: View {
             Text("SignUp")
                 .font(.title)
             
+            ImagePicker()
+                .onPick { imageUrl in
+                    viewModel.uiImage = imageUrl
+                }
+            
+            TextField("Nome", text: $viewModel.name)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .padding()
+            
             TextField("Email", text: $viewModel.email)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .padding()

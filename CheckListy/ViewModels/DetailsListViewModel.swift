@@ -29,9 +29,11 @@ class DetailsListViewModel: ObservableObject {
         list.items.compactMap{ $0 }.filter { $0.name.lowercased().contains(searchText.lowercased()) }
     }
     
+    @MainActor
     init(_ list: ListModel) {
         self.list = list
         setup(to: list)
+        setupCallbacksManager() 
     }
     
     func getItems() -> Array<ListItemModel> {
@@ -181,6 +183,19 @@ class DetailsListViewModel: ObservableObject {
         FeedbackService.shared.provideHapticFeedback()
         FeedbackService.shared.playCheckSoundFeedback()
     }
+    
+}
+
+extension DetailsListViewModel {
+    
+    @MainActor
+    private func setupCallbacksManager() {
+        firebaseDataBase.dataChanged = { [weak self] in
+            guard let self else { return }
+            self.list = (self.firebaseDataBase.data.compactMap{ $0 }.first(where: {$0.id == self.list.id})) ?? self.list
+        }
+    }
+
     
 }
 
