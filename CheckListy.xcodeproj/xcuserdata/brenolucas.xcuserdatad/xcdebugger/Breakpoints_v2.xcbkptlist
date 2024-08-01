@@ -217,6 +217,20 @@
                   startingLineNumber = "178"
                   endingLineNumber = "178">
                </Location>
+               <Location
+                  uuid = "4FB681F0-BDE8-453B-B229-630AC2AC8A73 - e44691e2ffdca94c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "CheckListy.ListsViewModel.setContentToShared(to: CheckListy.ListModel) -&gt; ()"
+                  moduleName = "CheckListy"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/brenolucas/Documents/Projects/CheckListy/CheckListy/ViewModels/ListsViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "177"
+                  endingLineNumber = "177">
+               </Location>
             </Locations>
          </BreakpointContent>
       </BreakpointProxy>

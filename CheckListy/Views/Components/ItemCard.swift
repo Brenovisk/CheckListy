@@ -51,6 +51,8 @@ struct ItemCard: View {
                     
                     VStack(alignment: .leading) {
                         Text(item.name)
+                            .strikethrough(item.isCheck)
+                            .opacity(item.isCheck ? 0.5 : 1.0)
                             .lineLimit(1)
                             .font(.body)
                             .foregroundColor(colorScheme == .dark ? Color.white : Color.black)
