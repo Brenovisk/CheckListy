@@ -12,7 +12,9 @@ struct ListsView: View {
     
     @Environment(\.verticalSizeClass) var verticalSizeClass
     @EnvironmentObject var viewModel: ListsViewModel
+    
     @State var showCreateListForm: Bool = false
+    @State var showSheetShare: Bool = false
     
     init() {
         UITextField.appearance().clearButtonMode = .whileEditing
@@ -126,6 +128,9 @@ struct ListsView: View {
                     viewModel.add(by: code)
                 }
         }
+        .sheet(isPresented: $showSheetShare) {
+            ShareSheet(items: viewModel.contentToShare)
+        }
         .onAppear {
             viewModel.recentsSection.items = viewModel.getRecents()
         }.onChange(of: verticalSizeClass) {
@@ -169,6 +174,9 @@ struct ListsView: View {
             .onFavorite { list in
                 handleOnFavorite(list)
             }
+            .onShare { list in
+                handleOnShare(list)
+            }
     }
     
     func handleEdit(_ list: ListModel) {
@@ -191,6 +199,15 @@ struct ListsView: View {
     func handleOnFavorite(_ list: ListModel) {
         withAnimation {
             viewModel.toggleIsFavorite(to: list)
+        }
+    }
+    
+    func handleOnShare(_ list: ListModel) {
+        withAnimation {
+            withAnimation {
+                viewModel.setContentToShared(to: list)
+                showSheetShare = true
+            }
         }
     }
 }

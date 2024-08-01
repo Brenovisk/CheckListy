@@ -10,9 +10,10 @@ import SwiftUI
 import Combine
 
 class ListsViewModel: ObservableObject {
-
+    
     @Published var lists: [ListModel?] = []
     @Published var listToEdit: ListModel? = nil
+    @Published var contentToShare: Array<Any> = []
     @Published var selectedList: ListModel? = nil
     @Published var visualizationMode: ListMode = .list
     @Published var showSearchBar: Bool = false
@@ -22,6 +23,7 @@ class ListsViewModel: ObservableObject {
     
     @Published var userImage: UIImage? = nil
     @Published var userName: String? = nil
+    private var cancellables = Set<AnyCancellable>()
     
     @MainActor
     let userId = FirebaseAuthService.shared.getAuthUserId()
@@ -33,17 +35,26 @@ class ListsViewModel: ObservableObject {
     var favorites: Array<ListModel>  {
         lists.compactMap{ $0 }.filter { $0.isFavorite }
     }
-
+    
     var firebaseDatabase = FirebaseDatabase.shared
-
+    
     @MainActor
     init() {
-        setupCallbacksManager()
+        subscribeToDatabaseChanges()
         firebaseDatabase.setupIfNeeded()
         self.lists = firebaseDatabase.data.compactMap { $0 }
     }
     
-    @MainActor 
+    func subscribeToDatabaseChanges() {
+        firebaseDatabase.dataChanged
+            .receive(on: RunLoop.main)
+            .sink { [weak self] data in
+                guard let self = self else { return }
+                self.lists = data.compactMap{ $0 }.filter { $0.users.contains(self.userId) }
+            }.store(in: &cancellables)
+    }
+    
+    @MainActor
     func getUserName() {
         self.userName = FirebaseAuthService.shared.getAuthUserName()
     }
@@ -56,7 +67,7 @@ class ListsViewModel: ObservableObject {
     func getLists() -> Array<ListModel?> {
         searchText.isEmpty ? lists : filterLists
     }
-
+    
     func toggleIsFavorite(to list: ListModel) {
         withAnimation {
             var listToEdit = list
@@ -81,11 +92,11 @@ class ListsViewModel: ObservableObject {
             favoritesSection.collapsed = !favoritesSection.collapsed
         }
     }
-
+    
     func addRecent(listId: String) {
         UserDefaultsService.addItem(key: .recents, listId)
     }
-
+    
     func getList(by id: String) -> ListModel? {
         lists.compactMap({ $0 }).first(where: { $0.id.uuidString == id })
     }
@@ -93,11 +104,11 @@ class ListsViewModel: ObservableObject {
     func getFirebaseList(by id: String) -> ListModel? {
         FirebaseDatabase.shared.data.compactMap({ $0 }).first(where: { $0.id.uuidString == id })
     }
-
+    
     func getRecents() -> [String] {
         UserDefaultsService.load(.recents).removingDuplicates()
     }
-
+    
     func create(list: ListModel) {
         let pathNewList = "\(Paths.lists.description)/\(list.id.uuidString)"
         firebaseDatabase.add(path: pathNewList, data: list.toNSDictionary())
@@ -108,21 +119,27 @@ class ListsViewModel: ObservableObject {
         firebaseDatabase.update(path: pathNewList, data: list.toNSDictionary())
     }
     
-    @MainActor 
+    @MainActor
     func add(by code: String) {
-        let pathNewList = "\(Paths.lists.description)/\(code)"
-        guard let list = getFirebaseList(by: code) else { return }
+        guard let listId = code.removingSuffix(".co").fromBase64Code(),
+              let list = getFirebaseList(by: listId) else {
+            return
+        }
+        
+        let pathNewList = "\(Paths.lists.description)/\(listId)"
+        
         var listToEdit = list
         let userId = FirebaseAuthService.shared.getAuthUserId()
         listToEdit.users.append(userId)
+        
         firebaseDatabase.update(path: pathNewList, data: listToEdit.toNSDictionary())
     }
-
+    
     func delete(list: ListModel) {
         let pathNewList = "\(Paths.lists.description)/\(list.id.uuidString)"
         firebaseDatabase.delete(path: pathNewList)
     }
-
+    
     @MainActor
     func signOut() {
         Task {
@@ -137,7 +154,7 @@ class ListsViewModel: ObservableObject {
             }
         }
     }
-
+    
     func toggleVisualization() {
         withAnimation {
             visualizationMode = visualizationMode == .list ? .grid : .list
@@ -149,27 +166,23 @@ class ListsViewModel: ObservableObject {
             visualizationMode = verticalSizeClass == .regular ? .list : .grid
         }
     }
-
-}
-
-// MARK: - Helper methods
-extension ListsViewModel {
-
-    @MainActor
-    private func setupCallbacksManager() {
-        firebaseDatabase.dataChanged = { [weak self] in
-            guard let self else { return }
-            self.lists = (self.firebaseDatabase.data.compactMap{ $0 }.filter { $0.users.contains(self.userId)
-            })
-        }
+    
+    func setContentToShared(to list: ListModel) {
+        let listCode = list.id.uuidString.toBase64Code().addingSuffix(".co")
+        let shareMessage = """
+           Quero compartilhar a lista **\(list.name)** com você.\n
+           Copie o código abaixo e use na seção de adicionar lista:
+           \n\(listCode)\n
+           """
+        self.contentToShare = [shareMessage]
     }
-
+    
 }
 
 // MARK: - Typealias
 extension ListsViewModel {
-
+    
     typealias Paths = FirebaseDatabasePaths
-
+    
 }
 

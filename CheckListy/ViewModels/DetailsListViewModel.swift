@@ -8,10 +8,12 @@
 import Foundation
 import SwiftUI
 import AudioToolbox
+import Combine
 
 class DetailsListViewModel: ObservableObject {
     
     private let firebaseDataBase = FirebaseDatabase.shared
+    private var cancellables = Set<AnyCancellable>()
     
     @Published var itemToEdit: ListItemModel?
     @Published var sectionSelected: String = String()
@@ -33,7 +35,17 @@ class DetailsListViewModel: ObservableObject {
     init(_ list: ListModel) {
         self.list = list
         setup(to: list)
-        setupCallbacksManager() 
+        subscribeToDatabaseChanges()
+    }
+    
+    func subscribeToDatabaseChanges() {
+        firebaseDataBase.dataChanged
+            .receive(on: RunLoop.main)
+            .sink { [weak self] data in
+                guard let self = self else { return }
+                self.list = data.compactMap{ $0 }.first(where: { $0.id == self.list.id }) ?? self.list
+            }
+            .store(in: &cancellables)
     }
     
     func getItems() -> Array<ListItemModel> {
@@ -183,19 +195,6 @@ class DetailsListViewModel: ObservableObject {
         FeedbackService.shared.provideHapticFeedback()
         FeedbackService.shared.playCheckSoundFeedback()
     }
-    
-}
-
-extension DetailsListViewModel {
-    
-    @MainActor
-    private func setupCallbacksManager() {
-        firebaseDataBase.dataChanged = { [weak self] in
-            guard let self else { return }
-            self.list = (self.firebaseDataBase.data.compactMap{ $0 }.first(where: {$0.id == self.list.id})) ?? self.list
-        }
-    }
-
     
 }
 

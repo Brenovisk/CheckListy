@@ -5,7 +5,6 @@
 //  Created by Breno Lucas on 22/07/24.
 //
 
-import Foundation
 import SwiftUI
 
 struct ListCard: View {
@@ -19,14 +18,16 @@ struct ListCard: View {
     var onDelete: ((ListModel) -> Void)?
     var onRedirect: ((ListModel) -> Void)?
     var onFavorite: ((ListModel) -> Void)?
+    var onShare: ((ListModel) -> Void)?
     
-    private init(list: ListModel, mode: (Binding<ListMode>)? = nil, onEdit: ((ListModel) -> Void)?, onDelete: ((ListModel) -> Void)?, onRedirect: ((ListModel) -> Void)?, onFavorite: ((ListModel) -> Void)?) {
+    private init(list: ListModel, mode: (Binding<ListMode>)? = nil, onEdit: ((ListModel) -> Void)?, onDelete: ((ListModel) -> Void)?, onRedirect: ((ListModel) -> Void)?, onFavorite: ((ListModel) -> Void)?, onShare: ((ListModel) -> Void)?) {
         self.init(list: list, mode: mode)
         
         self.onEdit = onEdit
         self.onDelete = onDelete
         self.onRedirect = onRedirect
         self.onFavorite = onFavorite
+        self.onShare = onShare
     }
     
     init(list: ListModel, mode:(Binding<ListMode>)? = nil) {
@@ -172,6 +173,12 @@ struct ListCard: View {
             }) {
                 Label("Editar", systemImage: "pencil")
             }
+            
+            Button(action: {
+                self.onShare?(list)
+            }) {
+                Label("Compartilhar", systemImage: "square.and.arrow.up")
+            }
         } label: {
             Image(systemName: "ellipsis")
                 .padding()
@@ -190,7 +197,8 @@ extension ListCard {
             onEdit: action,
             onDelete: self.onDelete,
             onRedirect: self.onRedirect,
-            onFavorite: self.onFavorite
+            onFavorite: self.onFavorite,
+            onShare: self.onShare
         )
     }
     
@@ -201,7 +209,8 @@ extension ListCard {
             onEdit: self.onEdit,
             onDelete: action,
             onRedirect: self.onRedirect,
-            onFavorite: self.onFavorite
+            onFavorite: self.onFavorite,
+            onShare: self.onShare
         )
     }
     
@@ -212,7 +221,8 @@ extension ListCard {
             onEdit: self.onEdit,
             onDelete: self.onDelete,
             onRedirect: action,
-            onFavorite: self.onFavorite
+            onFavorite: self.onFavorite,
+            onShare: self.onShare
         )
     }
     
@@ -223,10 +233,22 @@ extension ListCard {
             onEdit: self.onEdit,
             onDelete: self.onDelete,
             onRedirect: self.onRedirect,
-            onFavorite: action
+            onFavorite: action,
+            onShare: self.onShare
         )
     }
     
+    func `onShare`(action: ((ListModel) -> Void)?) -> ListCard {
+        ListCard(
+            list: self.list,
+            mode: self.$mode,
+            onEdit: self.onEdit,
+            onDelete: self.onDelete,
+            onRedirect: self.onRedirect,
+            onFavorite: self.onFavorite,
+            onShare: action
+        )
+    }
 }
 
 #Preview {

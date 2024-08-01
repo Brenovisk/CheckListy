@@ -7,38 +7,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "A08BDEBA-0684-42B6-86F1-CA55F045CBEF"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "CheckListy/Views/Components/ListCard.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "59"
-            endingLineNumber = "59"
-            landmarkName = "gridCard"
-            landmarkType = "24">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "49C2E091-6A44-4E14-A4A0-CDAB873C0AD2"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "CheckListy/Views/Components/ListCard.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "89"
-            endingLineNumber = "89"
-            landmarkName = "gridCard"
-            landmarkType = "24">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "58315166-736B-43FC-A89B-8B3CFABE5B4B"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -62,26 +30,10 @@
             filePath = "CheckListy/Views/ListsView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "126"
-            endingLineNumber = "126"
+            startingLineNumber = "128"
+            endingLineNumber = "128"
             landmarkName = "body"
             landmarkType = "24">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "B4903C4A-482B-450A-9D28-F8E52CFA546D"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "CheckListy/ViewModels/DetailsListViewModel.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "194"
-            endingLineNumber = "194"
-            landmarkName = "setupCallbacksManager()"
-            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -94,25 +46,9 @@
             filePath = "CheckListy/ViewModels/ListsViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "103"
-            endingLineNumber = "103"
+            startingLineNumber = "114"
+            endingLineNumber = "114"
             landmarkName = "create(list:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "9D10FAB8-BA4E-466E-92E8-784D2D18D4DD"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "CheckListy/ViewModels/DetailsListViewModel.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "195"
-            endingLineNumber = "195"
-            landmarkName = "setupCallbacksManager()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -207,39 +143,81 @@
                   startingLineNumber = "59"
                   endingLineNumber = "59">
                </Location>
+               <Location
+                  uuid = "9C4C7450-952C-4387-8479-7033666B118D - f979e89f6ae0cefc"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(6) suspend resume partial function for CheckListy.FirebaseAuthService.signUp(withEmail: Swift.String, password: Swift.String, name: Swift.String, uiImage: Swift.Optional&lt;__C.UIImage&gt;, completion: (Swift.Bool) -&gt; ()) async throws -&gt; ()"
+                  moduleName = "CheckListy"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/brenolucas/Documents/Projects/CheckListy/CheckListy/Services/FirebaseAuthService/FirebaseAuthService.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "59"
+                  endingLineNumber = "59">
+               </Location>
+               <Location
+                  uuid = "9C4C7450-952C-4387-8479-7033666B118D - 3162e315a2e7a8ff"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(7) suspend resume partial function for CheckListy.FirebaseAuthService.signUp(withEmail: Swift.String, password: Swift.String, name: Swift.String, uiImage: Swift.Optional&lt;__C.UIImage&gt;, completion: (Swift.Bool) -&gt; ()) async throws -&gt; ()"
+                  moduleName = "CheckListy"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/brenolucas/Documents/Projects/CheckListy/CheckListy/Services/FirebaseAuthService/FirebaseAuthService.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "59"
+                  endingLineNumber = "59">
+               </Location>
             </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "C4A5E008-3332-478B-B911-B07C810AD028"
+            uuid = "4FB681F0-BDE8-453B-B229-630AC2AC8A73"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "CheckListy/Services/FirebaseAuthService/FirebaseAuthService.swift"
+            filePath = "CheckListy/ViewModels/ListsViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "96"
-            endingLineNumber = "96"
-            landmarkName = "getAuthUserImage()"
+            startingLineNumber = "177"
+            endingLineNumber = "177"
+            landmarkName = "setContentToShared(to:)"
             landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "62775F25-74E5-4C48-AA11-A712BFE8630B"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "CheckListy/Services/FirebaseAuthService/FirebaseAuthService.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "103"
-            endingLineNumber = "103"
-            landmarkName = "getAuthUserImage()"
-            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "4FB681F0-BDE8-453B-B229-630AC2AC8A73 - e44691e2ffdca96d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "CheckListy.ListsViewModel.setContentToShared(to: CheckListy.ListModel) -&gt; ()"
+                  moduleName = "CheckListy"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/brenolucas/Documents/Projects/CheckListy/CheckListy/ViewModels/ListsViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "178"
+                  endingLineNumber = "178">
+               </Location>
+               <Location
+                  uuid = "4FB681F0-BDE8-453B-B229-630AC2AC8A73 - e44691e2ffdca96d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "CheckListy.ListsViewModel.setContentToShared(to: CheckListy.ListModel) -&gt; ()"
+                  moduleName = "CheckListy"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/brenolucas/Documents/Projects/CheckListy/CheckListy/ViewModels/ListsViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "178"
+                  endingLineNumber = "178">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

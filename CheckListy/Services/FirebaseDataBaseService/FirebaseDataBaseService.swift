@@ -9,15 +9,21 @@ import Foundation
 import SwiftUI
 import Firebase
 import FirebaseDatabase
+import Combine
 
 class FirebaseDatabase {
     
     static let shared = FirebaseDatabase()
     
     var databaseRef: DatabaseReference!
-    var data: [ListModel?] = []
     
-    var dataChanged: (() -> Void)?
+    var data: [ListModel?] = [] {
+        didSet {
+            dataChanged.send(data)
+        }
+    }
+    
+    var dataChanged = PassthroughSubject<[ListModel?], Never>()
     
     private var childAddedHandle: DatabaseHandle?
     private var childChangedHandle: DatabaseHandle?
@@ -29,12 +35,13 @@ class FirebaseDatabase {
     }
     
     func setupIfNeeded() {
-        guard let childAddedHandle,
-              let childChangedHandle,
-              let childRemovedHandle else {
-            setupFirebase()
+        guard childAddedHandle == nil,
+              childChangedHandle == nil,
+              childRemovedHandle == nil else {
             return
         }
+        
+        setupFirebase()
     }
     
     func setupFirebase() {
@@ -44,7 +51,6 @@ class FirebaseDatabase {
             guard let self = self else { return }
             if let value = snapshot.value as? NSDictionary {
                 self.data.append(ListModel.fromNSDictionary(value))
-                self.dataChanged?()
             }
         }
         
@@ -53,7 +59,6 @@ class FirebaseDatabase {
             if let value = snapshot.value as? NSDictionary {
                 let item = ListModel.fromNSDictionary(value)
                 self.updated(with: item)
-                self.dataChanged?()
             }
         }
         
@@ -62,7 +67,6 @@ class FirebaseDatabase {
             if let value = snapshot.value as? NSDictionary {
                 let item = ListModel.fromNSDictionary(value)
                 self.remove(item: item)
-                self.dataChanged?()
             }
         }
     }
