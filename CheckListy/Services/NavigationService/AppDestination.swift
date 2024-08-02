@@ -10,5 +10,6 @@ import Foundation
 enum AppDestination: Hashable {
     
     case detailsListView(list: ListModel)
+    case profileView
     
 }

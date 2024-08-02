@@ -30,8 +30,8 @@
             filePath = "CheckListy/Views/ListsView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "128"
-            endingLineNumber = "128"
+            startingLineNumber = "131"
+            endingLineNumber = "131"
             landmarkName = "body"
             landmarkType = "24">
          </BreakpointContent>
@@ -114,64 +114,6 @@
             endingLineNumber = "59"
             landmarkName = "signUp(withEmail:password:name:uiImage:completion:)"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "9C4C7450-952C-4387-8479-7033666B118D - f979e89f6ae0cefc"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(6) suspend resume partial function for CheckListy.FirebaseAuthService.signUp(withEmail: Swift.String, password: Swift.String, name: Swift.String, uiImage: Swift.Optional&lt;__C.UIImage&gt;, completion: (Swift.Bool) -&gt; ()) async throws -&gt; ()"
-                  moduleName = "CheckListy"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/brenolucas/Documents/Projects/CheckListy/CheckListy/Services/FirebaseAuthService/FirebaseAuthService.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "59"
-                  endingLineNumber = "59">
-               </Location>
-               <Location
-                  uuid = "9C4C7450-952C-4387-8479-7033666B118D - 3162e315a2e7a8ff"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(7) suspend resume partial function for CheckListy.FirebaseAuthService.signUp(withEmail: Swift.String, password: Swift.String, name: Swift.String, uiImage: Swift.Optional&lt;__C.UIImage&gt;, completion: (Swift.Bool) -&gt; ()) async throws -&gt; ()"
-                  moduleName = "CheckListy"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/brenolucas/Documents/Projects/CheckListy/CheckListy/Services/FirebaseAuthService/FirebaseAuthService.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "59"
-                  endingLineNumber = "59">
-               </Location>
-               <Location
-                  uuid = "9C4C7450-952C-4387-8479-7033666B118D - f979e89f6ae0cefc"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(6) suspend resume partial function for CheckListy.FirebaseAuthService.signUp(withEmail: Swift.String, password: Swift.String, name: Swift.String, uiImage: Swift.Optional&lt;__C.UIImage&gt;, completion: (Swift.Bool) -&gt; ()) async throws -&gt; ()"
-                  moduleName = "CheckListy"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/brenolucas/Documents/Projects/CheckListy/CheckListy/Services/FirebaseAuthService/FirebaseAuthService.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "59"
-                  endingLineNumber = "59">
-               </Location>
-               <Location
-                  uuid = "9C4C7450-952C-4387-8479-7033666B118D - 3162e315a2e7a8ff"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(7) suspend resume partial function for CheckListy.FirebaseAuthService.signUp(withEmail: Swift.String, password: Swift.String, name: Swift.String, uiImage: Swift.Optional&lt;__C.UIImage&gt;, completion: (Swift.Bool) -&gt; ()) async throws -&gt; ()"
-                  moduleName = "CheckListy"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/brenolucas/Documents/Projects/CheckListy/CheckListy/Services/FirebaseAuthService/FirebaseAuthService.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "59"
-                  endingLineNumber = "59">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -188,50 +130,6 @@
             endingLineNumber = "177"
             landmarkName = "setContentToShared(to:)"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "4FB681F0-BDE8-453B-B229-630AC2AC8A73 - e44691e2ffdca96d"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "CheckListy.ListsViewModel.setContentToShared(to: CheckListy.ListModel) -&gt; ()"
-                  moduleName = "CheckListy"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/brenolucas/Documents/Projects/CheckListy/CheckListy/ViewModels/ListsViewModel.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "178"
-                  endingLineNumber = "178">
-               </Location>
-               <Location
-                  uuid = "4FB681F0-BDE8-453B-B229-630AC2AC8A73 - e44691e2ffdca96d"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "CheckListy.ListsViewModel.setContentToShared(to: CheckListy.ListModel) -&gt; ()"
-                  moduleName = "CheckListy"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/brenolucas/Documents/Projects/CheckListy/CheckListy/ViewModels/ListsViewModel.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "178"
-                  endingLineNumber = "178">
-               </Location>
-               <Location
-                  uuid = "4FB681F0-BDE8-453B-B229-630AC2AC8A73 - e44691e2ffdca94c"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "CheckListy.ListsViewModel.setContentToShared(to: CheckListy.ListModel) -&gt; ()"
-                  moduleName = "CheckListy"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/brenolucas/Documents/Projects/CheckListy/CheckListy/ViewModels/ListsViewModel.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "177"
-                  endingLineNumber = "177">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

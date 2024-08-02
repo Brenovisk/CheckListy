@@ -36,6 +36,9 @@ struct MainView: View {
                 case .detailsListView(let list):
                     DetailsListView()
                         .environmentObject(DetailsListViewModel(list))
+                case .profileView:
+                    ProfileView()
+                        .environmentObject(ProfileViewModel())
                 }
             }
     }

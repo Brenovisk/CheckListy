@@ -91,6 +91,11 @@ class FirebaseAuthService: ObservableObject {
     }
     
     @MainActor
+    func getAuthUserEmail() -> String {
+        auth.currentUser?.email ?? String()
+    }
+    
+    @MainActor
     func getAuthUserImage() async -> UIImage? {
         if let userImage = self.authUserImage {
             return userImage

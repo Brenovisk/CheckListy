@@ -31,6 +31,9 @@ struct ListsView: View {
                 await viewModel.getUserImage()
             }
             .padding(.top, 8)
+            .onTapGesture {
+                NavigationService.shared.navigateTo(.profileView)
+            }
             
             TitleIcon(title: "Minhas Listas", subtitle: "\(viewModel.lists.count)").padding(.bottom, 24)
             
