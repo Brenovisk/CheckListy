@@ -25,6 +25,8 @@
 		14044F982C5C214500FD3A73 /* SectionModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14044F972C5C214500FD3A73 /* SectionModifier.swift */; };
 		14044F9A2C5C29D900FD3A73 /* DefaultSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14044F992C5C29D900FD3A73 /* DefaultSection.swift */; };
 		14044F9C2C5C2BB300FD3A73 /* DefaultSectionOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14044F9B2C5C2BB300FD3A73 /* DefaultSectionOption.swift */; };
+		14044F9F2C5C6E9600FD3A73 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14044F9E2C5C6E9600FD3A73 /* UserProfile.swift */; };
+		14044FA12C5C714E00FD3A73 /* FormUserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14044FA02C5C714E00FD3A73 /* FormUserProfile.swift */; };
 		145706E42C4DDB94007E642C /* RecordButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145706E32C4DDB94007E642C /* RecordButton.swift */; };
 		145706E62C4DE4E9007E642C /* AudioAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145706E52C4DE4E9007E642C /* AudioAnimation.swift */; };
 		145706E82C4EDE94007E642C /* HeaderSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145706E72C4EDE94007E642C /* HeaderSection.swift */; };
@@ -115,6 +117,8 @@
 		14044F972C5C214500FD3A73 /* SectionModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionModifier.swift; sourceTree = "<group>"; };
 		14044F992C5C29D900FD3A73 /* DefaultSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultSection.swift; sourceTree = "<group>"; };
 		14044F9B2C5C2BB300FD3A73 /* DefaultSectionOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultSectionOption.swift; sourceTree = "<group>"; };
+		14044F9E2C5C6E9600FD3A73 /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
+		14044FA02C5C714E00FD3A73 /* FormUserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormUserProfile.swift; sourceTree = "<group>"; };
 		145706E32C4DDB94007E642C /* RecordButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordButton.swift; sourceTree = "<group>"; };
 		145706E52C4DE4E9007E642C /* AudioAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioAnimation.swift; sourceTree = "<group>"; };
 		145706E72C4EDE94007E642C /* HeaderSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderSection.swift; sourceTree = "<group>"; };
@@ -248,6 +252,16 @@
 			path = Managers;
 			sourceTree = "<group>";
 		};
+		14044F9D2C5C6E3200FD3A73 /* Forms */ = {
+			isa = PBXGroup;
+			children = (
+				14B2255F2C3F508800A7F15F /* FormListView.swift */,
+				14B225662C45E06200A7F15F /* FormItemView.swift */,
+				14044FA02C5C714E00FD3A73 /* FormUserProfile.swift */,
+			);
+			path = Forms;
+			sourceTree = "<group>";
+		};
 		145706EB2C4EEE8C007E642C /* FeedbackService */ = {
 			isa = PBXGroup;
 			children = (
@@ -356,6 +370,7 @@
 		14CEA8842C36457000E3CAED /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				14044F9D2C5C6E3200FD3A73 /* Forms */,
 				145706F02C4F0BEB007E642C /* Helpers */,
 				14B225732C48B11600A7F15F /* Protocol */,
 				14B2256E2C4748ED00A7F15F /* Modifiers */,
@@ -364,8 +379,6 @@
 				14B225312C364F0F00A7F15F /* SignInView.swift */,
 				14B2254E2C36DBA800A7F15F /* SignUpView.swift */,
 				14B225592C3EAD6E00A7F15F /* ListsView.swift */,
-				14B2255F2C3F508800A7F15F /* FormListView.swift */,
-				14B225662C45E06200A7F15F /* FormItemView.swift */,
 				14044F912C5B24EF00FD3A73 /* ProfileView.swift */,
 			);
 			path = Views;
@@ -386,6 +399,7 @@
 		14CEA8862C36459C00E3CAED /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				14044F9E2C5C6E9600FD3A73 /* UserProfile.swift */,
 				14044F802C591B7700FD3A73 /* UserDatabase.swift */,
 				14DBB6D62C34A5500084EB23 /* ListItemModel.swift */,
 				14B225572C3E9EE300A7F15F /* ListModel.swift */,
@@ -657,6 +671,7 @@
 				145706E82C4EDE94007E642C /* HeaderSection.swift in Sources */,
 				14044F7A2C56D1B600FD3A73 /* WelcomeView.swift in Sources */,
 				1457070D2C51EB4E007E642C /* ScrollHorizontalModifier.swift in Sources */,
+				14044FA12C5C714E00FD3A73 /* FormUserProfile.swift in Sources */,
 				14DBB6CF2C3434560084EB23 /* SpeechRecognizerService.swift in Sources */,
 				145706EF2C4F09D3007E642C /* ListCard.swift in Sources */,
 				14044F872C59233300FD3A73 /* UserService.swift in Sources */,
@@ -681,6 +696,7 @@
 				14044F922C5B24EF00FD3A73 /* ProfileView.swift in Sources */,
 				14B225652C45C84700A7F15F /* TitleIcon.swift in Sources */,
 				14B225772C496C0A00A7F15F /* SectionModel.swift in Sources */,
+				14044F9F2C5C6E9600FD3A73 /* UserProfile.swift in Sources */,
 				145707112C528DBD007E642C /* SearchButton.swift in Sources */,
 				14B2255A2C3EAD6E00A7F15F /* ListsView.swift in Sources */,
 				14044F8E2C5A916C00FD3A73 /* ShareSheet.swift in Sources */,

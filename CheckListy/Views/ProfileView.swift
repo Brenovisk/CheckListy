@@ -12,6 +12,8 @@ struct ProfileView: View {
     
     @EnvironmentObject var viewModel: ProfileViewModel
     
+    @State var isEditProfileForm: Bool = false
+    
     var body: some View {
         ZStack(alignment: .bottom) {
             VStack(spacing: 24){
@@ -19,7 +21,7 @@ struct ProfileView: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                 
                 HStack(spacing: .zero) {
-                    if let image = viewModel.userImage {
+                    if let image = viewModel.userProfile?.profileImage {
                         Image(uiImage: image)
                             .resizable()
                             .profileImage(60)
@@ -28,15 +30,15 @@ struct ProfileView: View {
                             .resizable()
                             .padding(12)
                             .background(Color.accentColor)
-                            .profileImage(54)
+                            .profileImage(60)
                     }
                     
                     VStack(alignment: .leading) {
-                        Text(viewModel.userName)
+                        Text(viewModel.userProfile?.name ?? String())
                             .font(.headline)
                             .lineLimit(1)
                         
-                        Text(viewModel.userEmail)
+                        Text(viewModel.userProfile?.email ?? String())
                             .font(.subheadline)
                             .foregroundStyle(Color(uiColor: UIColor.secondaryLabel))
                             .lineLimit(1)
@@ -44,7 +46,7 @@ struct ProfileView: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.leading, 16)
                     
-                    Button(action: {}) {
+                    Button(action: { isEditProfileForm = true }) {
                         Image(systemName: "pencil.circle")
                             .imageScale(.large)
                     }
@@ -52,7 +54,7 @@ struct ProfileView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .section()
                 .task {
-                    await viewModel.getUserData()
+                    await viewModel.getUserProfile()
                 }
                 
                 DefaultSection(title: "Geral") {
@@ -114,6 +116,17 @@ struct ProfileView: View {
                 }.foregroundColor(.red)
             }
             .padding(.bottom, 16)
+        }
+        .sheet(isPresented: $isEditProfileForm) {
+            FormUserProfile(user: $viewModel.userProfile)
+                .onSave { userEdited in
+                    Task {
+                        try await viewModel.update(user: userEdited)
+                        isEditProfileForm.toggle()
+                    }
+                }.onClose {
+                    isEditProfileForm.toggle()
+                }
         }
     }
     

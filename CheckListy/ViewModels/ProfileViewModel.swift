@@ -10,30 +10,82 @@ import UIKit
 
 class ProfileViewModel: ObservableObject {
     
-    @Published var userImage: UIImage? = nil
-    @Published var userName: String = "tes tes tes"
-    @Published var userEmail: String = "easdfasdfasdfasd@gmail.com"
+    @Published var userProfile: UserProfile?
     
-    @MainActor 
-    func getUserData() async {
-        getUserName()
-        await getUserImage()
-        getUserEmail()
+    @MainActor
+    func getUserProfile() async {
+        do {
+            let id = getUserId()
+            let email = getUserEmail()
+            let image = await getUserImage()
+            let user = try await UserService.fetchFromDatabase(withId: id)
+            
+            self.userProfile = UserProfile(
+                id: id,
+                name: user.name,
+                urlProfileImage: user.urlProfileImage,
+                profileImage: image,
+                email: email
+            )
+        } catch {
+            debugPrint(error)
+        }
+    }
+    
+    func update(user: UserProfile) async throws {
+        do {
+            guard hasChangeData(of: user) else { return }
+            try await updateNameIfNeeded(user)
+            try await updateImageIfNeeded(user)
+            try await user.saveToDatabase()
+            await getUserProfile()
+        } catch {
+            debugPrint(error)
+        }
+    }
+    
+    func hasChangeData(of user: UserProfile) -> Bool {
+        user.name != userProfile?.name || user.profileImage != userProfile?.profileImage
+    }
+    
+}
+
+extension ProfileViewModel {
+    
+    @MainActor
+    private func getUserName() -> String {
+        FirebaseAuthService.shared.getAuthUserName()
     }
     
     @MainActor
-    func getUserName() {
-        self.userName = FirebaseAuthService.shared.getAuthUserName()
+    private func getUserImage() async -> UIImage? {
+        await FirebaseAuthService.shared.getAuthUserImage()
     }
     
     @MainActor
-    func getUserImage() async {
-        self.userImage = await FirebaseAuthService.shared.getAuthUserImage()
+    private func getUserEmail() -> String {
+        FirebaseAuthService.shared.getAuthUserEmail()
     }
     
-    @MainActor 
-    func getUserEmail() {
-        self.userName = FirebaseAuthService.shared.getAuthUserEmail()
+    @MainActor
+    private func getUserId() -> String {
+        FirebaseAuthService.shared.getAuthUserId()
+    }
+    
+    @MainActor
+    private func updateNameIfNeeded(_ user: UserProfile) async throws {
+        if user.name != userProfile?.name {
+            try await UserManager.updateFirebaseUser(name: user.name)
+            FirebaseAuthService.shared.authUserName = user.name
+        }
+    }
+    
+    @MainActor
+    private func updateImageIfNeeded(_ user: UserProfile) async throws {
+        if let image = user.profileImage, image != userProfile?.profileImage  {
+            try await UserManager.uploadProfileImage(image, forUser: user)
+            FirebaseAuthService.shared.authUserImage = user.profileImage
+        }
     }
     
 }

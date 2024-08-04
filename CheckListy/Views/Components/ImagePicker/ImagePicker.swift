@@ -10,41 +10,48 @@ import SwiftUI
 
 struct ImagePicker: View {
     
-    @State private var image: UIImage?
+    @State private var image: UIImage? = nil
     @State private var imageURL: URL?
     @State private var showImagePicker = false
     
     var onPick: ((UIImage) -> Void)?
     
-    private init(onPick: ((UIImage) -> Void)?) {
-        self.init()
+    private init(image: UIImage?, onPick: ((UIImage) -> Void)?) {
+        self.init(image: image)
         self.onPick = onPick
     }
     
-     init() {
-        self.image = image
+    init(image: UIImage?) {
+        _image = State(initialValue: image)
         self.imageURL = imageURL
         self.showImagePicker = showImagePicker
     }
-
+    
     var body: some View {
         VStack {
-            if let image = image {
-                Image(uiImage: image)
+            ZStack(alignment: .bottomTrailing){
+                if let image = image {
+                    Image(uiImage: image)
+                        .resizable()
+                        .profileImage(100)
+                } else {
+                    Circle()
+                        .fill(Color.accentColor)
+                        .profileImage(100)
+                        .overlay(
+                            Image(systemName: "camera.fill")
+                                .colorInvert()
+                        )
+                }
+                
+                Image(systemName: "pencil.circle.fill")
                     .resizable()
-                    .scaledToFit()
-                    .frame(height: 64)
+                    .frame(width: 32, height: 32)
+                    .foregroundColor(.black)
+                    .background(.white)
                     .clipShape(Circle())
-            } else {
-                Circle()
-                    .fill(Color.gray)
-                    .frame(height: 64)
-                    .overlay(
-                        Image(systemName: "camera")
-                            .colorInvert()
-                    )
             }
-           
+            
         }
         .onTapGesture {
             showImagePicker = true
@@ -66,6 +73,7 @@ extension ImagePicker {
     
     func `onPick`(action: ((UIImage) -> Void)?) -> ImagePicker {
         ImagePicker(
+            image: self.image,
             onPick: action
         )
     }
@@ -74,5 +82,5 @@ extension ImagePicker {
 
 
 #Preview {
-    ImagePicker()
+    ImagePicker(image: nil)
 }

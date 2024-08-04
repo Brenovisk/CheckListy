@@ -17,7 +17,7 @@ struct SignUpView: View {
             Text("SignUp")
                 .font(.title)
             
-            ImagePicker()
+            ImagePicker(image: nil)
                 .onPick { imageUrl in
                     viewModel.uiImage = imageUrl
                 }

@@ -7,11 +7,17 @@
 
 import Foundation
 
-struct UserDatabase {
+class UserDatabase {
     
     var id: String
     var name: String
     var urlProfileImage: URL?
+    
+    init(id: String, name: String, urlProfileImage: URL?) {
+        self.id = id
+        self.name = name
+        self.urlProfileImage = urlProfileImage
+    }
     
 }
 
@@ -53,27 +59,6 @@ extension UserDatabase {
                     continuation.resume(throwing: error)
                 } else {
                     continuation.resume(returning: ())
-                }
-            }
-        }
-    }
-
-    static func fetchFromDatabase(withId id: String) async throws -> UserDatabase {
-        guard let dbRef = FirebaseDatabase.shared.databaseRef else {
-            throw NSError(domain: "DatabaseError", code: -1, userInfo: [NSLocalizedDescriptionKey: "Unable to get database reference"])
-        }
-
-        return try await withCheckedThrowingContinuation { continuation in
-            dbRef.child("users").child(id).observeSingleEvent(of: .value) { snapshot in
-                guard let value = snapshot.value as? NSDictionary else {
-                    continuation.resume(throwing: NSError(domain: "DataError", code: -1, userInfo: [NSLocalizedDescriptionKey: "Unable to fetch data"]))
-                    return
-                }
-
-                if let user = UserDatabase.fromNSDictionary(value) {
-                    continuation.resume(returning: user)
-                } else {
-                    continuation.resume(throwing: NSError(domain: "DataError", code: -1, userInfo: [NSLocalizedDescriptionKey: "Unable to parse data"]))
                 }
             }
         }
