@@ -11,6 +11,7 @@ import SwiftUI
 struct AutoFocusTextField: UIViewRepresentable {
     @Binding var text: String
     var placeholder: String
+    var isSecureTextEntry: Bool = false
 
     func makeCoordinator() -> Coordinator {
         Coordinator(parent: self)
@@ -18,6 +19,7 @@ struct AutoFocusTextField: UIViewRepresentable {
 
     func makeUIView(context: Context) -> UITextField {
         let textField = UITextField(frame: .zero)
+        textField.isSecureTextEntry =  isSecureTextEntry
         textField.delegate = context.coordinator
         textField.text = text
         textField.placeholder = placeholder // Configura o placeholder

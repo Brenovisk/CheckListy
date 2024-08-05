@@ -13,3 +13,9 @@ enum AppDestination: Hashable {
     case profileView
     
 }
+
+enum AppDestinationAuth: Hashable {
+    
+    case singUpView
+    
+}

@@ -40,7 +40,6 @@ class FirebaseAuthService: ObservableObject {
         do {
             let authDataResult = try await auth.signIn(withEmail: email, password: password)
             debugPrint(authDataResult)
-            self.isSignIn = true
         } catch {
             throw error
         }
@@ -60,7 +59,7 @@ class FirebaseAuthService: ObservableObject {
         }
     }
     
-    func signOut() async throws {
+    func signOut() throws {
         do {
             try auth.signOut()
             self.isSignIn = false
@@ -121,6 +120,12 @@ extension FirebaseAuthService {
         
         Auth.auth(app: app).addStateDidChangeListener { auth, user in
             Task { @MainActor in
+                if user != nil {
+                    NavigationService.shared.resetNavigation()
+                } else {
+                    NavigationService.shared.resetNavigationAuth()
+                }
+                
                 self.isSignIn = (user != nil)
             }
         }

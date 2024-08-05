@@ -40,9 +40,9 @@ class ListsViewModel: ObservableObject {
     
     @MainActor
     init() {
-        subscribeToDatabaseChanges()
         firebaseDatabase.setupIfNeeded()
-        self.lists = firebaseDatabase.data.compactMap { $0 }
+        subscribeToDatabaseChanges()
+//        self.lists = firebaseDatabase.data.compactMap { $0 }
     }
     
     func subscribeToDatabaseChanges() {
@@ -138,21 +138,6 @@ class ListsViewModel: ObservableObject {
     func delete(list: ListModel) {
         let pathNewList = "\(Paths.lists.description)/\(list.id.uuidString)"
         firebaseDatabase.delete(path: pathNewList)
-    }
-    
-    @MainActor
-    func signOut() {
-        Task {
-            do {
-                self.lists = []
-                FirebaseDatabase.shared.removeListeners()
-                FirebaseDatabase.shared.clearData()
-                UserDefaultsService.clearAll()
-                try await FirebaseAuthService.shared.signOut()
-            } catch {
-                debugPrint(error.localizedDescription)
-            }
-        }
     }
     
     func toggleVisualization() {

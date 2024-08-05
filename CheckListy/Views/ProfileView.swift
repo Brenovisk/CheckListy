@@ -13,10 +13,11 @@ struct ProfileView: View {
     @EnvironmentObject var viewModel: ProfileViewModel
     
     @State var isEditProfileForm: Bool = false
+    @State var isEditPasswordForm: Bool = false
     
     var body: some View {
         ZStack(alignment: .bottom) {
-            VStack(spacing: 24){
+            VStack(spacing: 24) {
                 TitleIcon(title: "Perfil")
                     .frame(maxWidth: .infinity, alignment: .leading)
                 
@@ -64,7 +65,7 @@ struct ProfileView: View {
                             icon: "lock",
                             navigable: true
                         ).onPress {
-                            
+                            isEditPasswordForm = true
                         }
                         
                         Divider()
@@ -93,7 +94,7 @@ struct ProfileView: View {
                         Divider()
                         
                         DefaultSectionOption(
-                            title: "Privacy Policy",
+                            title: "Política de Privacidade",
                             icon: "exclamationmark.circle",
                             navigable: true
                         ).onPress {
@@ -109,23 +110,36 @@ struct ProfileView: View {
                 )
             }
             
-            Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/) {
+            Button(action: { viewModel.signOut() }) {
                 HStack {
                     Image(systemName: "rectangle.portrait.and.arrow.right")
                     Text("Finalizar Sessão")
-                }.foregroundColor(.red)
+                }
             }
-            .padding(.bottom, 16)
+            .padding(.bottom, 24)
         }
         .sheet(isPresented: $isEditProfileForm) {
             FormUserProfile(user: $viewModel.userProfile)
                 .onSave { userEdited in
                     Task {
                         try await viewModel.update(user: userEdited)
-                        isEditProfileForm.toggle()
+                        isEditProfileForm = false
                     }
-                }.onClose {
-                    isEditProfileForm.toggle()
+                }
+                .onClose {
+                    isEditProfileForm = false
+                }
+        }
+        .sheet(isPresented: $isEditPasswordForm) {
+            FormChangeUserPassword()
+                .onSave { (oldPassword, newPassword) in
+                    Task {
+                        try await viewModel.update(oldPassword, to: newPassword)
+                        isEditPasswordForm = false
+                    }
+                }
+                .onClose {
+                    isEditPasswordForm = false
                 }
         }
     }

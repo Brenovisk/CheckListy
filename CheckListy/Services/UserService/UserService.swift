@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import FirebaseAuth
 
 class UserService {
     
@@ -91,6 +92,42 @@ class UserService {
                     continuation.resume(returning: user)
                 } else {
                     continuation.resume(throwing: NSError(domain: "DataError", code: -1, userInfo: [NSLocalizedDescriptionKey: "Unable to parse data"]))
+                }
+            }
+        }
+    }
+    
+    static func updateFirebaseUser(oldPassword: String, to newPassword: String) async throws {
+        guard let currentUser = await FirebaseAuthService.shared.getAuthUser() else {
+            throw NSError(domain: "UserNotFoundError", code: -1, userInfo: [NSLocalizedDescriptionKey: "No authenticated user found."])
+        }
+        
+        try await reauthenticateUser(currentUser, oldPassword)
+        
+        let _: () = try await withCheckedThrowingContinuation { continuation in
+            currentUser.updatePassword(to: newPassword) { error in
+                if let error = error {
+                    continuation.resume(throwing: error)
+                } else {
+                    continuation.resume()
+                }
+            }
+        }
+    }
+    
+    private static func reauthenticateUser(_ user: User, _ password: String) async throws {
+        guard let email = user.email else {
+            throw NSError(domain: "ReauthenticationError", code: -1, userInfo: [NSLocalizedDescriptionKey: "Email do usuário não encontrado."])
+        }
+        
+        let authCredential = EmailAuthProvider.credential(withEmail: email, password: password)
+        
+        let _: () = try await withCheckedThrowingContinuation { continuation in
+            user.reauthenticate(with: authCredential) { authResult, error in
+                if let error = error {
+                    continuation.resume(throwing: error)
+                } else {
+                    continuation.resume()
                 }
             }
         }

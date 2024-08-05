@@ -95,12 +95,6 @@ struct ListsView: View {
                 }
             }
             
-            ToolbarItemGroup(placement: .secondaryAction) {
-                Button(action: { viewModel.signOut() }) {
-                    Text("Sair")
-                }
-            }
-            
             ToolbarItemGroup(placement: .bottomBar) {
                 HStack {
                     Button(action: {

@@ -13,66 +13,67 @@ struct ContentView: View {
     @StateObject private var navigationService = NavigationService.shared
     
     var body: some View {
-        NavigationStack(path: $navigationService.navigationPath) {
-            if let isSignIn = firebaseAuthService.isSignIn, firebaseAuthService.isEnable {
-                if isSignIn {
-                    MainView()
+        VStack {
+            if let isSignIn = firebaseAuthService.isSignIn {
+                if isSignIn && firebaseAuthService.isEnable {
+                    NavigationStack(path: $navigationService.navigationPath) {
+                        MainView()
+                            .navigationDestination(for: AppDestination.self) { destination in
+                                switch destination {
+                                case .detailsListView(let list):
+                                    DetailsListView()
+                                        .environmentObject(DetailsListViewModel(list))
+                                case .profileView:
+                                    ProfileView()
+                                        .environmentObject(ProfileViewModel())
+                                }
+                            }
+                    }
                 } else {
-                    AuthenticationView()
+                    NavigationStack(path: $navigationService.navigationPathAuth) {
+                        AuthenticationView()
+                            .navigationDestination(for: AppDestinationAuth.self) { destination in
+                                switch destination {
+                                case .singUpView:
+                                    SignUpView()
+                                        .environmentObject(SignUpViewModel())
+                                }
+                            }
+                    }
                 }
             } else {
                 ProgressView()
             }
         }
+        
     }
 }
 
 struct MainView: View {
+    
     var body: some View {
         ListsView()
             .environmentObject(ListsViewModel())
-            .navigationDestination(for: AppDestination.self) { destination in
-                switch destination {
-                case .detailsListView(let list):
-                    DetailsListView()
-                        .environmentObject(DetailsListViewModel(list))
-                case .profileView:
-                    ProfileView()
-                        .environmentObject(ProfileViewModel())
-                }
-            }
+        
     }
+    
 }
 
 struct AuthenticationView: View {
+    
     @State private var showSignUp = false
     
     var body: some View {
         VStack {
-            if showSignUp {
-                SignUpView()
-                    .environmentObject(SignUpViewModel())
-            } else {
-                SignInView()
-                    .environmentObject(SignInViewModel())
-            }
+            SignInView()
+                .environmentObject(SignInViewModel())
             
-            ToggleSignUpButton(showSignUp: $showSignUp)
-                .padding()
+            Button(action: { NavigationService.shared.navigateTo(.singUpView) }) {
+                Text("Se cadastrar")
+            }
         }
     }
-}
-
-struct ToggleSignUpButton: View {
-    @Binding var showSignUp: Bool
     
-    var body: some View {
-        Button(action: {
-            showSignUp.toggle()
-        }) {
-            Text(showSignUp ? "Já tem uma conta? Entrar" : "Se cadastrar")
-        }
-    }
 }
 
 #Preview {

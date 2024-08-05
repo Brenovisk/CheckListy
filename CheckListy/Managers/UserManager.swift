@@ -23,4 +23,8 @@ class UserManager {
         try await UserService.updateFirebaseUser(displayName: name)
     }
     
+    static func updateFirebaseUser(oldPassword: String, to newPassword: String) async throws {
+        try await UserService.updateFirebaseUser(oldPassword: oldPassword, to: newPassword)
+    }
+    
 }

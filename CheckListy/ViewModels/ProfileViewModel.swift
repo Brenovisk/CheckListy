@@ -44,8 +44,32 @@ class ProfileViewModel: ObservableObject {
         }
     }
     
+    func update(_ oldPassword: String, to newPassword: String) async throws {
+        do {
+            guard !newPassword.isEmpty, !oldPassword.isEmpty else { return }
+            try await UserManager.updateFirebaseUser(oldPassword: oldPassword, to: newPassword)
+        } catch {
+            debugPrint(error)
+        }
+    }
+    
     func hasChangeData(of user: UserProfile) -> Bool {
         user.name != userProfile?.name || user.profileImage != userProfile?.profileImage
+    }
+    
+    @MainActor
+    func signOut() {
+        do {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5){
+                FirebaseDatabase.shared.removeListeners()
+                UserDefaultsService.clearAll()
+                FirebaseDatabase.shared.clearData()
+            }
+            
+            try FirebaseAuthService.shared.signOut()
+        } catch {
+            debugPrint(error.localizedDescription)
+        }
     }
     
 }
