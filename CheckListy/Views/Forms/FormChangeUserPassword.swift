@@ -12,38 +12,54 @@ struct FormChangeUserPassword: View {
     
     @State private var newPassword: String = String()
     @State private var oldPassword: String = String()
+    @Binding var isLoading: Bool
+    @State private var termsAccepted = false
     
     var onSave: (((String, String)) -> Void)?
     var onClose: (() -> Void)?
     
-    private init(onSave: (((String, String)) -> Void)?, onClose: (() -> Void)?) {
+    private init(
+        isLoading: Binding<Bool>,
+        onSave: (((String,String)) -> Void)?,
+        onClose: (() -> Void)?) 
+    {
+        self.init(isLoading: isLoading)
         self.onSave = onSave
         self.onClose = onClose
         
         UITextField.appearance().clearButtonMode = .whileEditing
     }
     
-    init() {}
+    init(isLoading: Binding<Bool>) {
+        self._isLoading = isLoading
+    }
     
     var body: some View {
         NavigationView{
-            Form{
-                AutoFocusTextField(text: $oldPassword, placeholder: "Senha antiga", isSecureTextEntry: true)
-                
-                SecureField("Nova Senha", text: $newPassword)
+            VStack {
+                Form {
+                    AutoFocusTextField(text: $oldPassword, placeholder: "Senha antiga", isSecureTextEntry: true)
+                    
+                    SecureField("Nova Senha", text: $newPassword)
+                }
+                .navigationTitle("Mudar Senha")
+                .navigationBarItems(
+                    leading: Button(action: { onClose?() }) {
+                        Text("Cancelar")
+                    },
+                    trailing:
+                        Button(action: {
+                            onSave?((oldPassword, newPassword))
+                        }) {
+                            if isLoading {
+                                ProgressView()
+                            } else {
+                                Text("Mudar")
+                            }
+                        }
+                )
             }
-            .navigationTitle("Mudar Senha")
-            .navigationBarItems(
-                leading: Button(action: { onClose?() }) {
-                    Text("Cancelar")
-                },
-                trailing:
-                    Button(action: {
-                        onSave?((oldPassword, newPassword))
-                    }) {
-                        Text("Mudar")
-                    }
-            )
+            .interactiveDismissDisabled(!termsAccepted && isLoading)
         }
     }
 }
@@ -53,6 +69,7 @@ extension FormChangeUserPassword {
     
     func `onSave`(action: (((String, String)) -> Void)?) -> FormChangeUserPassword {
         FormChangeUserPassword(
+            isLoading: self.$isLoading,
             onSave: action,
             onClose: self.onClose
         )
@@ -60,6 +77,7 @@ extension FormChangeUserPassword {
     
     func `onClose`(action: (() -> Void)?) -> FormChangeUserPassword {
         FormChangeUserPassword(
+            isLoading: self.$isLoading,
             onSave: self.onSave,
             onClose: action
         )
@@ -69,6 +87,6 @@ extension FormChangeUserPassword {
 
 #Preview {
     NavigationView {
-        FormChangeUserPassword()
+        FormChangeUserPassword(isLoading: Binding.constant(false))
     }
 }

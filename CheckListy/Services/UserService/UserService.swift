@@ -75,6 +75,10 @@ class UserService {
         FirebaseDatabase.shared.delete(path: pathUser)
     }
     
+    static func removeFromFirebaseAuth(_ user: User) async throws  {
+        try await FirebaseAuthService.shared.deleteAuthUser(user)
+    }
+    
 }
 
 // MARK: Help method

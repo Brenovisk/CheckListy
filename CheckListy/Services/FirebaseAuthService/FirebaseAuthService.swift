@@ -66,6 +66,10 @@ class FirebaseAuthService: ObservableObject {
         return user
     }
     
+    func deleteAuthUser(_ user: User) async throws {
+        try await user.delete()
+    }
+    
 }
 
 // MARK: - Helper methods

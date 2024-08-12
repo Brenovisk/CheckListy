@@ -28,8 +28,14 @@ class UserManager {
     
     func removeUserData() async throws {
         try await UserService.removeLists(of: authUser)
-        try await UserService.removePhoto(of: authUser)
+        let urlImage = try await getUrlProfileImage()
+        
+        if urlImage != nil {
+            try await UserService.removePhoto(of: authUser)
+        }
+        
         UserService.removeFromDataBase(authUser)
+        try await UserService.removeFromFirebaseAuth(authUser)
     }
     
     func storeDataBase(with name: String, and image: UIImage?) async throws {

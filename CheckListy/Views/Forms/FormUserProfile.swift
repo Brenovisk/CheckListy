@@ -11,24 +11,32 @@ import SwiftUI
 struct FormUserProfile: View {
     
     @Binding var user: UserProfile?
+    @Binding var isLoading: Bool
     @State private var id: String
     @State private var name: String
     @State private var email: String
     @State private var image: UIImage?
+    @State private var termsAccepted = false
     
     var onSave: ((UserProfile) -> Void)?
     var onClose: (() -> Void)?
     
-    private init(user: Binding<UserProfile?>, onSave: ((UserProfile) -> Void)?, onClose: (() -> Void)?) {
-        self.init(user: user)
+    private init(
+        user: Binding<UserProfile?>,
+        isLoading: Binding<Bool>,
+        onSave: ((UserProfile) -> Void)?,
+        onClose: (() -> Void)?
+    ) {
+        self.init(user: user, isLoading: isLoading)
         self.onSave = onSave
         self.onClose = onClose
         
         UITextField.appearance().clearButtonMode = .whileEditing
     }
     
-    init(user: Binding<UserProfile?>) {
+    init(user: Binding<UserProfile?>, isLoading: Binding<Bool>) {
         self._user = user
+        self._isLoading = isLoading
         _id = State(initialValue: user.wrappedValue?.id ?? String())
         _name = State(initialValue: user.wrappedValue?.name ?? String())
         _email = State(initialValue: user.wrappedValue?.email ?? String())
@@ -64,11 +72,16 @@ struct FormUserProfile: View {
                             
                             onSave?(user)
                         }) {
-                            Text("Editar")
+                            if isLoading {
+                                ProgressView()
+                            } else {
+                                Text("Editar")
+                            }
                         }
                 )
                 
             }
+            .interactiveDismissDisabled(!termsAccepted && isLoading)
         }
     }
 }
@@ -79,6 +92,7 @@ extension FormUserProfile {
     func `onSave`(action: ((UserProfile) -> Void)?) -> FormUserProfile {
         FormUserProfile(
             user: self.$user,
+            isLoading: self.$isLoading,
             onSave: action,
             onClose: self.onClose
         )
@@ -87,6 +101,7 @@ extension FormUserProfile {
     func `onClose`(action: (() -> Void)?) -> FormUserProfile {
         FormUserProfile(
             user: self.$user,
+            isLoading: self.$isLoading,
             onSave: self.onSave,
             onClose: action
         )
@@ -96,6 +111,6 @@ extension FormUserProfile {
 
 #Preview {
     NavigationView {
-        FormUserProfile(user: Binding.constant(UserProfile(id: String(), name: "Teste", email: "test@gmail.com")))
+        FormUserProfile(user: Binding.constant(UserProfile(id: String(), name: "Teste", email: "test@gmail.com")), isLoading: Binding.constant(false))
     }
 }

@@ -14,6 +14,7 @@ struct ProfileView: View {
     
     @State var isEditProfileForm: Bool = false
     @State var isEditPasswordForm: Bool = false
+    @State var isExecutingFormAction: Bool = false
     
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -119,10 +120,12 @@ struct ProfileView: View {
             .padding(.bottom, 24)
         }
         .sheet(isPresented: $isEditProfileForm) {
-            FormUserProfile(user: $viewModel.userProfile)
+            FormUserProfile(user: $viewModel.userProfile, isLoading: $isExecutingFormAction)
                 .onSave { userEdited in
                     Task {
+                        isExecutingFormAction = true
                         try await viewModel.update(user: userEdited)
+                        isExecutingFormAction = false
                         isEditProfileForm = false
                     }
                 }
@@ -131,11 +134,13 @@ struct ProfileView: View {
                 }
         }
         .sheet(isPresented: $isEditPasswordForm) {
-            FormChangeUserPassword()
+            FormChangeUserPassword(isLoading: $isExecutingFormAction)
                 .onSave { (oldPassword, newPassword) in
                     Task {
+                        isExecutingFormAction = true
                         try await viewModel.update(oldPassword, to: newPassword)
                         isEditPasswordForm = false
+                        isExecutingFormAction = false
                     }
                 }
                 .onClose {
