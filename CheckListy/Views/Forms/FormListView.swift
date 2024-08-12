@@ -110,6 +110,7 @@ struct FormListView: View {
                     },
                     trailing:
                         Button(action: {
+                            guard let user = try? FirebaseAuthService.shared.getAuthUser() else { return }
                             if listCode.isEmpty {
                                 let newItem = ListModel(
                                     id: id,
@@ -119,7 +120,7 @@ struct FormListView: View {
                                     items: items,
                                     createdAt: item?.createdAt ?? Date(),
                                     editedAt: Date(),
-                                    users: item?.users ?? [FirebaseAuthService.shared.getAuthUserId()]
+                                    users: item?.users ?? [user.uid]
                                 )
                                 
                                 onSave?(newItem)

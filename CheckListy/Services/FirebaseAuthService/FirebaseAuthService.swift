@@ -18,16 +18,6 @@ class FirebaseAuthService: ObservableObject {
     
     var auth: Auth = Auth.auth()
     
-    var authUserImage: UIImage? {
-        get { UserDefaultsService.loadImage(.userProfileImage) }
-        set { UserDefaultsService.addImage(.userProfileImage, newValue) }
-    }
-    
-    var authUserName: String? {
-        get { UserDefaultsService.loadItem(.userName) }
-        set { UserDefaultsService.add(.userName, newValue) }
-    }
-    
     @Published var isSignIn: Bool?
     @Published var isEnable: Bool = true
     
@@ -50,8 +40,8 @@ class FirebaseAuthService: ObservableObject {
         do {
             isEnable = false
             let authDataResult = try await auth.createUser(withEmail: email, password: password)
-            try await saveInDataBase(newUser: authDataResult.user, with: name, image: uiImage)
-            updateAuthUser(name, uiImage)
+            let manager = UserManager(authUser: authDataResult.user)
+            try await manager.storeDataBase(with: name, and: uiImage)
             completion(false)
             isEnable = true
         } catch {
@@ -68,46 +58,12 @@ class FirebaseAuthService: ObservableObject {
         }
     }
     
-    @MainActor
-    func getAuthUser() -> User? {
-        auth.currentUser
-    }
-    
-    @MainActor
-    func getAuthUserId() -> String {
-        auth.currentUser?.uid ?? String()
-    }
-    
-    @MainActor
-    func getAuthUserName() -> String {
-        if let name = self.authUserName, !name.isEmpty {
-            return name
-        }
-        
-        let name = auth.currentUser?.displayName ?? String()
-        updateAuthUser(name)
-        return name
-    }
-    
-    @MainActor
-    func getAuthUserEmail() -> String {
-        auth.currentUser?.email ?? String()
-    }
-    
-    @MainActor
-    func getAuthUserImage() async -> UIImage? {
-        if let userImage = self.authUserImage {
-            return userImage
-        }
-        
-        do {
-            let userId = self.getAuthUserId()
-            let image = try await UserManager.fetchProfileImage(forUserId: userId)
-            updateAuthUser(String(), image)
-            return image
-        } catch {
-            return nil
-        }
+    func getAuthUser() throws -> User {
+        guard let user = auth.currentUser else {
+           throw NSError(domain: "no User", code: -1, userInfo: nil)
+       }
+       
+        return user
     }
     
 }
@@ -129,28 +85,6 @@ extension FirebaseAuthService {
                 self.isSignIn = (user != nil)
             }
         }
-    }
-    
-    private func saveInDataBase(newUser: User, with name: String, image: UIImage? ) async throws {
-        guard let user = getAuthUser() else {
-            throw NSError(domain: "no User", code: -1, userInfo: nil)
-        }
-        
-        let userDb = UserDatabase(id: user.uid, name: name, urlProfileImage: URL(string: String()))
-        try await userDb.saveToDatabase()
-        try await UserManager.updateFirebaseUser(name: name)
-        
-        guard let image else { return }
-        try await UserManager.uploadProfileImage(image, forUser: userDb)
-    }
-    
-    private func updateAuthUser(_ name: String = String(), _ image: UIImage? = nil) {
-        if !name.isEmpty {
-            self.authUserName = name
-        }
-        
-        guard let image else { return }
-        self.authUserImage = image
     }
     
 }

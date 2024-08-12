@@ -10,6 +10,7 @@ import Foundation
 enum FirebaseDatabasePaths: CustomStringConvertible {
     
     case lists
+    case users
     
 }
 
@@ -19,6 +20,8 @@ extension FirebaseDatabasePaths {
         switch self {
         case .lists:
             return "lists"
+        case .users:
+            return "users"
         }
     }
     

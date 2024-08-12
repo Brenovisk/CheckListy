@@ -7,130 +7,151 @@
 
 import Foundation
 import UIKit
+import Firebase
 import FirebaseAuth
+import FirebaseStorage
 
 class UserService {
     
-    let userDatabase: UserDatabase
-    
-    init(userDatabase: UserDatabase) {
-        self.userDatabase = userDatabase
-    }
-    
-    func updateUserProfileImage(_ image: UIImage) async throws {
+    static func updateProfile(_ image: UIImage, for user: UserDatabase) async throws {
         let imageData = try ImageService.convertImageToData(image)
-        let downloadURL = try await ImageService.uploadImageData(imageData, forUserId: userDatabase.id)
-        let updatedUserDatabase = UserDatabase(id: userDatabase.id, name: userDatabase.name, urlProfileImage: downloadURL)
+        let downloadURL = try await ImageService.uploadImageData(imageData, for: user.id)
+        let updatedUserDatabase = UserDatabase(id: user.id, name: user.name, urlProfileImage: downloadURL)
         try await updatedUserDatabase.saveToDatabase()
+        UserDefaultsService.addImage(.userProfileImage, image)
     }
     
-    static func fetchUserProfileImage(forUserId userId: String) async throws -> UIImage {
-        let user = try await UserService.fetchFromDatabase(withId: userId)
-        
-        guard let url = user.urlProfileImage else {
-            throw NSError(domain: "url Error", code: -1, userInfo: nil)
+    static func update(_ user: User, displayName: String) async throws {
+        try await updateProfile(user) { changeRequest in
+            changeRequest.displayName = displayName
         }
-        
+    }
+    
+    static func update(_ user: User, photoUrl: URL) async throws {
+        try await updateProfile(user) { changeRequest in
+            changeRequest.photoURL = photoUrl
+        }
+    }
+    
+    static func update(_ user: User, oldPassword: String, to newPassword: String) async throws {
+        try await reauthenticate(user, with: oldPassword)
+        try await user.updatePassword(to: newPassword)
+    }
+    
+    static func getUserProfileImage(for userId: String) async throws -> UIImage? {
+        guard let url = try await getUrlProfileImage(of: userId) else { return nil }
         let imageData = try await ImageService.downloadImage(fromURL: url)
-        
-        guard let image = UIImage(data: imageData) else {
-            throw NSError(domain: "ImageDataError", code: -1, userInfo: nil)
-        }
-        
+        let image = try ImageService.convertToUImage(from: imageData)
         return image
     }
     
-    static func updateFirebaseUser(displayName: String) async throws {
-        guard let currentUser = await FirebaseAuthService.shared.getAuthUser() else {
-            throw NSError(domain: "UserNotFoundError", code: -1, userInfo: [NSLocalizedDescriptionKey: "No authenticated user found."])
-        }
-        
-        let _: Data = try await withCheckedThrowingContinuation { continuation in
-            let changeRequest = currentUser.createProfileChangeRequest()
-            changeRequest.displayName = displayName
-            changeRequest.commitChanges { error in
-                if let error = error {
-                    continuation.resume(throwing: error)
-                } else {
-                    continuation.resume(returning: Data())
-                }
-            }
-        }
+    static func getUrlProfileImage(of userId: String) async throws -> URL? {
+        let user = try await UserService.getUserFromDatabase(with: userId)
+        return user.urlProfileImage
     }
     
-    static func updateFirebaseUser(photoUrl: URL) async throws {
-        guard let currentUser = await FirebaseAuthService.shared.getAuthUser() else {
-            throw NSError(domain: "UserNotFoundError", code: -1, userInfo: [NSLocalizedDescriptionKey: "No authenticated user found."])
-        }
-        
-        let _: Data = try await withCheckedThrowingContinuation { continuation in
-            let changeRequest = currentUser.createProfileChangeRequest()
-            changeRequest.photoURL = photoUrl
-            changeRequest.commitChanges { error in
-                if let error = error {
-                    continuation.resume(throwing: error)
-                } else {
-                    continuation.resume(returning: Data())
-                }
-            }
-        }
-    }
-    
-    static func fetchFromDatabase(withId id: String) async throws -> UserDatabase {
-        guard let dbRef = FirebaseDatabase.shared.databaseRef else {
-            throw NSError(domain: "DatabaseError", code: -1, userInfo: [NSLocalizedDescriptionKey: "Unable to get database reference"])
-        }
-        
-        return try await withCheckedThrowingContinuation { continuation in
-            dbRef.child("users").child(id).observeSingleEvent(of: .value) { snapshot in
-                guard let value = snapshot.value as? NSDictionary else {
-                    continuation.resume(throwing: NSError(domain: "DataError", code: -1, userInfo: [NSLocalizedDescriptionKey: "Unable to fetch data"]))
-                    return
-                }
-                
-                if let user = UserDatabase.fromNSDictionary(value) {
-                    continuation.resume(returning: user)
-                } else {
-                    continuation.resume(throwing: NSError(domain: "DataError", code: -1, userInfo: [NSLocalizedDescriptionKey: "Unable to parse data"]))
-                }
-            }
-        }
-    }
-    
-    static func updateFirebaseUser(oldPassword: String, to newPassword: String) async throws {
-        guard let currentUser = await FirebaseAuthService.shared.getAuthUser() else {
-            throw NSError(domain: "UserNotFoundError", code: -1, userInfo: [NSLocalizedDescriptionKey: "No authenticated user found."])
-        }
-        
-        try await reauthenticateUser(currentUser, oldPassword)
-        
-        let _: () = try await withCheckedThrowingContinuation { continuation in
-            currentUser.updatePassword(to: newPassword) { error in
-                if let error = error {
-                    continuation.resume(throwing: error)
-                } else {
-                    continuation.resume()
-                }
-            }
-        }
-    }
-    
-    private static func reauthenticateUser(_ user: User, _ password: String) async throws {
+    static func getEmail(of user: User) throws -> String {
         guard let email = user.email else {
-            throw NSError(domain: "ReauthenticationError", code: -1, userInfo: [NSLocalizedDescriptionKey: "Email do usuário não encontrado."])
+            throw Errors.userNotFoundError
         }
         
-        let authCredential = EmailAuthProvider.credential(withEmail: email, password: password)
-        
-        let _: () = try await withCheckedThrowingContinuation { continuation in
-            user.reauthenticate(with: authCredential) { authResult, error in
-                if let error = error {
-                    continuation.resume(throwing: error)
-                } else {
-                    continuation.resume()
-                }
-            }
-        }
+        return email
+    }
+    
+    static func removeLists(of user: User) async throws {
+        let id = user.uid
+        let userLists = findLists(by: id)
+        try await remove(userLists, by: id)
+    }
+    
+    static func removePhoto(of user: User) async throws {
+        let id = user.uid
+        try await ImageService.deletePhoto(name: id)
+    }
+    
+    static func removeFromDataBase(_ user: User) {
+        let id = user.uid
+        let pathUser = "\(Paths.users)/\(id)"
+        FirebaseDatabase.shared.delete(path: pathUser)
     }
     
 }
+
+// MARK: Help method
+extension UserService {
+    
+    private static func reauthenticate(_ user: User, with password: String) async throws {
+        let email = try getEmail(of: user)
+        let authCredential = EmailAuthProvider.credential(withEmail: email, password: password)
+        try await user.reauthenticate(with: authCredential)
+    }
+
+    
+    private static func updateProfile(_ user: User, with changes: ChangeRequest) async throws {
+         let changeRequest = user.createProfileChangeRequest()
+         changes(changeRequest)
+         
+         do {
+             try await changeRequest.commitChanges()
+         } catch {
+             throw Errors.updateError(error.localizedDescription)
+         }
+     }
+    
+}
+
+// MARK: Helper Get methods
+extension UserService {
+    
+    private static func getUserFromDatabase(with id: String) async throws -> UserDatabase {
+        try await FirebaseDatabase.shared.getData(from: .users, with: id)
+    }
+    
+}
+
+// MARK: Helper Find methods
+extension UserService {
+    
+    private static func findLists(by userId: String) -> [ListModel] {
+        FirebaseDatabase.shared.data.compactMap { $0 }.filter { $0.users.contains(userId) }
+    }
+    
+    private static func findList(by listId: String) -> ListModel? {
+        FirebaseDatabase.shared.data.first { $0?.id.uuidString == listId } ?? nil
+    }
+    
+}
+
+// MARK: Helper Remove methods
+extension UserService {
+    
+    private static func remove(_ lists: [ListModel], by userId: String) async throws {
+        for list in lists {
+            let pathList = "\(Paths.lists.description)/\(list.id)"
+            if list.users.count == 1 {
+                FirebaseDatabase.shared.delete(path: pathList)
+            } else {
+                try await remove(list, for: userId, with: pathList)
+            }
+        }
+    }
+    
+    private static func remove(_ list: ListModel, for userId: String, with path: String) async throws {
+        guard var list = findList(by: list.id.uuidString),
+              let index = list.users.firstIndex(where: { $0 == userId }) else { return }
+        
+        list.users.remove(at: index)
+        FirebaseDatabase.shared.update(path: path, data: list.toNSDictionary())
+    }
+    
+}
+
+// MARK: - Typealias
+extension UserService {
+    
+    typealias Paths = FirebaseDatabasePaths
+    typealias Errors = UserServiceErrors
+    typealias ChangeRequest = (UserProfileChangeRequest) -> Void
+    
+}
+

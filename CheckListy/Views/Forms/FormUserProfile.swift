@@ -38,12 +38,11 @@ struct FormUserProfile: View {
     var body: some View {
         NavigationView{
             VStack {
-                if let image {
-                    ImagePicker(image: image)
-                        .onPick { uiImage in
-                            self.image = uiImage
-                        }.padding(.top, 16)
-                }
+                ImagePicker(image: image)
+                    .onPick { uiImage in
+                        self.image = uiImage
+                    }
+                    .padding(.top, 16)
                 
                 Form{
                     AutoFocusTextField(text: $name, placeholder: String())

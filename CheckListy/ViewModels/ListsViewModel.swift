@@ -25,9 +25,6 @@ class ListsViewModel: ObservableObject {
     @Published var userName: String? = nil
     private var cancellables = Set<AnyCancellable>()
     
-    @MainActor
-    let userId = FirebaseAuthService.shared.getAuthUserId()
-    
     var filterLists: Array<ListModel> {
         lists.compactMap{ $0 }.filter { $0.name.lowercased().contains(searchText.lowercased()) }
     }
@@ -42,26 +39,31 @@ class ListsViewModel: ObservableObject {
     init() {
         firebaseDatabase.setupIfNeeded()
         subscribeToDatabaseChanges()
-//        self.lists = firebaseDatabase.data.compactMap { $0 }
     }
     
+    @MainActor 
     func subscribeToDatabaseChanges() {
+        guard let user = try? FirebaseAuthService.shared.getAuthUser() else { return }
         firebaseDatabase.dataChanged
             .receive(on: RunLoop.main)
             .sink { [weak self] data in
                 guard let self = self else { return }
-                self.lists = data.compactMap{ $0 }.filter { $0.users.contains(self.userId) }
+                self.lists = data.compactMap{ $0 }.filter { $0.users.contains(user.uid) }
             }.store(in: &cancellables)
     }
     
     @MainActor
     func getUserName() {
-        self.userName = FirebaseAuthService.shared.getAuthUserName()
+        guard let user = try? FirebaseAuthService.shared.getAuthUser() else { return }
+        let userManager = UserManager(authUser: user)
+        self.userName = userManager.getName()
     }
     
     @MainActor
     func getUserImage() async {
-        self.userImage = await FirebaseAuthService.shared.getAuthUserImage()
+        guard let user = try? FirebaseAuthService.shared.getAuthUser() else { return }
+        let userManager = UserManager(authUser: user)
+        self.userImage = try? await userManager.getImage()
     }
     
     func getLists() -> Array<ListModel?> {
@@ -121,6 +123,7 @@ class ListsViewModel: ObservableObject {
     
     @MainActor
     func add(by code: String) {
+        guard let user = try? FirebaseAuthService.shared.getAuthUser() else { return }
         guard let listId = code.removingSuffix(".co").fromBase64Code(),
               let list = getFirebaseList(by: listId) else {
             return
@@ -129,8 +132,7 @@ class ListsViewModel: ObservableObject {
         let pathNewList = "\(Paths.lists.description)/\(listId)"
         
         var listToEdit = list
-        let userId = FirebaseAuthService.shared.getAuthUserId()
-        listToEdit.users.append(userId)
+        listToEdit.users.append(user.uid)
         
         firebaseDatabase.update(path: pathNewList, data: listToEdit.toNSDictionary())
     }

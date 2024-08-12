@@ -28,6 +28,8 @@
 		14044F9F2C5C6E9600FD3A73 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14044F9E2C5C6E9600FD3A73 /* UserProfile.swift */; };
 		14044FA12C5C714E00FD3A73 /* FormUserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14044FA02C5C714E00FD3A73 /* FormUserProfile.swift */; };
 		14044FA32C60308E00FD3A73 /* FormChangeUserPassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14044FA22C60308E00FD3A73 /* FormChangeUserPassword.swift */; };
+		14044FA52C61AF2B00FD3A73 /* UserServiceErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14044FA42C61AF2B00FD3A73 /* UserServiceErrors.swift */; };
+		14044FA82C61BC1300FD3A73 /* ConvertibleDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14044FA72C61BC1300FD3A73 /* ConvertibleDictionary.swift */; };
 		145706E42C4DDB94007E642C /* RecordButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145706E32C4DDB94007E642C /* RecordButton.swift */; };
 		145706E62C4DE4E9007E642C /* AudioAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145706E52C4DE4E9007E642C /* AudioAnimation.swift */; };
 		145706E82C4EDE94007E642C /* HeaderSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145706E72C4EDE94007E642C /* HeaderSection.swift */; };
@@ -121,6 +123,8 @@
 		14044F9E2C5C6E9600FD3A73 /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
 		14044FA02C5C714E00FD3A73 /* FormUserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormUserProfile.swift; sourceTree = "<group>"; };
 		14044FA22C60308E00FD3A73 /* FormChangeUserPassword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormChangeUserPassword.swift; sourceTree = "<group>"; };
+		14044FA42C61AF2B00FD3A73 /* UserServiceErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserServiceErrors.swift; sourceTree = "<group>"; };
+		14044FA72C61BC1300FD3A73 /* ConvertibleDictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConvertibleDictionary.swift; sourceTree = "<group>"; };
 		145706E32C4DDB94007E642C /* RecordButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordButton.swift; sourceTree = "<group>"; };
 		145706E52C4DE4E9007E642C /* AudioAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioAnimation.swift; sourceTree = "<group>"; };
 		145706E72C4EDE94007E642C /* HeaderSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderSection.swift; sourceTree = "<group>"; };
@@ -242,6 +246,7 @@
 			isa = PBXGroup;
 			children = (
 				14044F862C59233200FD3A73 /* UserService.swift */,
+				14044FA42C61AF2B00FD3A73 /* UserServiceErrors.swift */,
 			);
 			path = UserService;
 			sourceTree = "<group>";
@@ -263,6 +268,14 @@
 				14044FA22C60308E00FD3A73 /* FormChangeUserPassword.swift */,
 			);
 			path = Forms;
+			sourceTree = "<group>";
+		};
+		14044FA62C61BBCB00FD3A73 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				14044FA72C61BC1300FD3A73 /* ConvertibleDictionary.swift */,
+			);
+			path = Protocols;
 			sourceTree = "<group>";
 		};
 		145706EB2C4EEE8C007E642C /* FeedbackService */ = {
@@ -455,6 +468,7 @@
 				14DBB6CD2C3434220084EB23 /* Services */,
 				14044F882C59239300FD3A73 /* Managers */,
 				14DBB6DA2C34CB960084EB23 /* Extensions */,
+				14044FA62C61BBCB00FD3A73 /* Protocols */,
 			);
 			path = CheckListy;
 			sourceTree = "<group>";
@@ -652,6 +666,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				14044FA52C61AF2B00FD3A73 /* UserServiceErrors.swift in Sources */,
 				14B225322C364F0F00A7F15F /* SignInView.swift in Sources */,
 				14044F782C56CDB200FD3A73 /* ImagePicker.swift in Sources */,
 				14B225792C49B6C600A7F15F /* CollapseModifier.swift in Sources */,
@@ -690,6 +705,7 @@
 				14044F9A2C5C29D900FD3A73 /* DefaultSection.swift in Sources */,
 				14B225752C48B12D00A7F15F /* KeyboardReadable.swift in Sources */,
 				14B225582C3E9EE300A7F15F /* ListModel.swift in Sources */,
+				14044FA82C61BC1300FD3A73 /* ConvertibleDictionary.swift in Sources */,
 				14B225512C36DBC500A7F15F /* SignUpViewModel.swift in Sources */,
 				145706FA2C4F59C5007E642C /* GridModifier.swift in Sources */,
 				145706FF2C4FC9F6007E642C /* UserDefaultsServiceKeys.swift in Sources */,

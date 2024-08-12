@@ -7,13 +7,13 @@
 
 import Foundation
 
-class UserDatabase {
-    
+class UserDatabase: ConvertibleDictionary {
+
     var id: String
     var name: String
     var urlProfileImage: URL?
     
-    init(id: String, name: String, urlProfileImage: URL?) {
+    required init(id: String, name: String, urlProfileImage: URL?) {
         self.id = id
         self.name = name
         self.urlProfileImage = urlProfileImage
@@ -31,15 +31,16 @@ extension UserDatabase {
         ] as NSDictionary
     }
     
-    static func fromNSDictionary(_ dictionary: NSDictionary) -> UserDatabase? {
+    static func fromNSDictionary(_ dictionary: NSDictionary) -> Self? {
         guard let id = dictionary["id"] as? String,
               let name = dictionary["name"] as? String,
-              let urlString = dictionary["urlProfileImage"] as? String,
-              let urlProfileImage = URL(string: urlString) else {
+              let urlString = dictionary["urlProfileImage"] as? String else {
             return nil
         }
         
-        return UserDatabase(id: id, name: name, urlProfileImage: urlProfileImage)
+        let urlProfileImage = URL(string: urlString)
+        
+        return Self(id: id, name: name, urlProfileImage: urlProfileImage)
     }
     
 }

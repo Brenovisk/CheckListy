@@ -13,11 +13,20 @@ class UserProfile: UserDatabase {
     var profileImage: UIImage?
     var email: String
     
-    init(id: String, name: String, urlProfileImage: URL? = nil, profileImage: UIImage? = nil, email: String = String()) {
+    required init(id: String, name: String, urlProfileImage: URL? = nil, profileImage: UIImage? = nil, email: String = String()) {
         self.profileImage = profileImage
         self.email = email
         super.init(id: id, name: name, urlProfileImage: urlProfileImage)
     }
     
+    required init(id: String, name: String, urlProfileImage: URL?) {
+        self.profileImage = nil
+        self.email = ""
+        super.init(id: id, name: name, urlProfileImage: urlProfileImage)
+    }
+    
+    convenience init(id: String, name: String, email: String) {
+        self.init(id: id, name: name, urlProfileImage: nil, profileImage: nil, email: email)
+    }
     
 }

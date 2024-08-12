@@ -18,7 +18,7 @@ class ImageService {
         return imageData
     }
     
-    static func uploadImageData(_ data: Data, forUserId userId: String) async throws -> URL {
+    static func uploadImageData(_ data: Data, for userId: String) async throws -> URL {
         let storageRef = Storage.storage().reference().child("profile_images").child("\(userId).jpg")
         let metadata = StorageMetadata()
         metadata.contentType = "image/jpeg"
@@ -59,6 +59,28 @@ class ImageService {
                 }
             }
         }
+    }
+    
+    static func deletePhoto(name: String) async throws {
+        let storageRef = Storage.storage().reference().child("profile_images").child("\(name).jpg")
+        
+        let _:() = try await withCheckedThrowingContinuation { continuation in
+            storageRef.delete { error in
+                if let error = error {
+                    continuation.resume(throwing: error)
+                } else {
+                    continuation.resume(returning: ())
+                }
+            }
+        }
+    }
+    
+    static func convertToUImage(from imageData: Data) throws -> UIImage{
+        guard let image = UIImage(data: imageData) else {
+            throw NSError(domain: "ImageDataError", code: -1, userInfo: nil)
+        }
+        
+        return image
     }
     
 }

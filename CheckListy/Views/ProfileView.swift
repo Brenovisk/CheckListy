@@ -76,7 +76,7 @@ struct ProfileView: View {
                             navigable: true,
                             destructive: true
                         ).onPress {
-                            
+                            viewModel.removeUserData()
                         }
                     }
                 }
