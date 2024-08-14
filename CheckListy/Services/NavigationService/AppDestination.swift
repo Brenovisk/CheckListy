@@ -17,5 +17,6 @@ enum AppDestination: Hashable {
 enum AppDestinationAuth: Hashable {
     
     case singUpView
+    case forgotPasswordView(String)
     
 }

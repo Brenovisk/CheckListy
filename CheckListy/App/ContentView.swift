@@ -11,6 +11,7 @@ struct ContentView: View {
     
     @StateObject private var firebaseAuthService = FirebaseAuthService.shared
     @StateObject private var navigationService = NavigationService.shared
+    var viewModel = SignInViewModel()
     
     var body: some View {
         VStack {
@@ -32,11 +33,15 @@ struct ContentView: View {
                 } else {
                     NavigationStack(path: $navigationService.navigationPathAuth) {
                         AuthenticationView()
+                            .environmentObject(viewModel)
                             .navigationDestination(for: AppDestinationAuth.self) { destination in
                                 switch destination {
                                 case .singUpView:
                                     SignUpView()
                                         .environmentObject(SignUpViewModel())
+                                case .forgotPasswordView(let email):
+                                    ForgotPasswordView()
+                                        .environmentObject(ForgotPasswordViewModel(email: email))
                                 }
                             }
                     }
@@ -62,14 +67,19 @@ struct MainView: View {
 struct AuthenticationView: View {
     
     @State private var showSignUp = false
+    @EnvironmentObject var viewModel: SignInViewModel
     
     var body: some View {
         VStack {
             SignInView()
-                .environmentObject(SignInViewModel())
+                .environmentObject(viewModel)
             
             Button(action: { NavigationService.shared.navigateTo(.singUpView) }) {
                 Text("Se cadastrar")
+            }
+            
+            Button(action: { NavigationService.shared.navigateTo(.forgotPasswordView(viewModel.email)) }) {
+                Text("Esqueci a senha")
             }
         }
     }

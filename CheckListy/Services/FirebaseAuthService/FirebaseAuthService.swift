@@ -70,6 +70,11 @@ class FirebaseAuthService: ObservableObject {
         try await user.delete()
     }
     
+    @MainActor
+    func resetPassword(with email: String) async throws {
+        try await auth.sendPasswordReset(withEmail: email)
+    }
+    
 }
 
 // MARK: - Helper methods
