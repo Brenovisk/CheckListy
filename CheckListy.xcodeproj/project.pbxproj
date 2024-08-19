@@ -50,6 +50,12 @@
 		145707112C528DBD007E642C /* SearchButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145707102C528DBC007E642C /* SearchButton.swift */; };
 		149F89BD2C6A6C400092F82C /* ForgotPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149F89BC2C6A6C400092F82C /* ForgotPasswordView.swift */; };
 		149F89BF2C6A6CE30092F82C /* ForgotPasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149F89BE2C6A6CE30092F82C /* ForgotPasswordViewModel.swift */; };
+		149F89C12C73D4AA0092F82C /* StartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149F89C02C73D4AA0092F82C /* StartView.swift */; };
+		149F89C32C73D5C30092F82C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 149F89C22C73D5C30092F82C /* Images.xcassets */; };
+		149F89C52C73D9AB0092F82C /* ImagesHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149F89C42C73D9AB0092F82C /* ImagesHelper.swift */; };
+		149F89C72C73DC3B0092F82C /* ColorsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149F89C62C73DC3B0092F82C /* ColorsHelper.swift */; };
+		149F89C92C73E10A0092F82C /* TextsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149F89C82C73E10A0092F82C /* TextsHelper.swift */; };
+		149F89CB2C73E3400092F82C /* FilledButtonModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149F89CA2C73E3400092F82C /* FilledButtonModifier.swift */; };
 		14A4CAD02C34D5AE00634E19 /* String+RemoveWord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A4CACF2C34D5AE00634E19 /* String+RemoveWord.swift */; };
 		14A4CAD22C34D71300634E19 /* String+RemoveWhiteSpaces.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A4CAD12C34D71300634E19 /* String+RemoveWhiteSpaces.swift */; };
 		14B225322C364F0F00A7F15F /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B225312C364F0F00A7F15F /* SignInView.swift */; };
@@ -77,7 +83,7 @@
 		14B225792C49B6C600A7F15F /* CollapseModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B225782C49B6C600A7F15F /* CollapseModifier.swift */; };
 		14DBB6A42C3433560084EB23 /* CheckListyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DBB6A32C3433560084EB23 /* CheckListyApp.swift */; };
 		14DBB6A62C3433560084EB23 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DBB6A52C3433560084EB23 /* ContentView.swift */; };
-		14DBB6A82C3433570084EB23 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 14DBB6A72C3433570084EB23 /* Assets.xcassets */; };
+		14DBB6A82C3433570084EB23 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 14DBB6A72C3433570084EB23 /* Colors.xcassets */; };
 		14DBB6AB2C3433570084EB23 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 14DBB6AA2C3433570084EB23 /* Preview Assets.xcassets */; };
 		14DBB6B52C3433570084EB23 /* CheckListyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DBB6B42C3433570084EB23 /* CheckListyTests.swift */; };
 		14DBB6BF2C3433570084EB23 /* CheckListyUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DBB6BE2C3433570084EB23 /* CheckListyUITests.swift */; };
@@ -148,6 +154,12 @@
 		145707102C528DBC007E642C /* SearchButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchButton.swift; sourceTree = "<group>"; };
 		149F89BC2C6A6C400092F82C /* ForgotPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordView.swift; sourceTree = "<group>"; };
 		149F89BE2C6A6CE30092F82C /* ForgotPasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewModel.swift; sourceTree = "<group>"; };
+		149F89C02C73D4AA0092F82C /* StartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartView.swift; sourceTree = "<group>"; };
+		149F89C22C73D5C30092F82C /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		149F89C42C73D9AB0092F82C /* ImagesHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesHelper.swift; sourceTree = "<group>"; };
+		149F89C62C73DC3B0092F82C /* ColorsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorsHelper.swift; sourceTree = "<group>"; };
+		149F89C82C73E10A0092F82C /* TextsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextsHelper.swift; sourceTree = "<group>"; };
+		149F89CA2C73E3400092F82C /* FilledButtonModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilledButtonModifier.swift; sourceTree = "<group>"; };
 		14A4CACF2C34D5AE00634E19 /* String+RemoveWord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+RemoveWord.swift"; sourceTree = "<group>"; };
 		14A4CAD12C34D71300634E19 /* String+RemoveWhiteSpaces.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+RemoveWhiteSpaces.swift"; sourceTree = "<group>"; };
 		14B225312C364F0F00A7F15F /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
@@ -174,7 +186,7 @@
 		14DBB6A02C3433560084EB23 /* CheckListy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CheckListy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		14DBB6A32C3433560084EB23 /* CheckListyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckListyApp.swift; sourceTree = "<group>"; };
 		14DBB6A52C3433560084EB23 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		14DBB6A72C3433570084EB23 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		14DBB6A72C3433570084EB23 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		14DBB6AA2C3433570084EB23 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		14DBB6B02C3433570084EB23 /* CheckListyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CheckListyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		14DBB6B42C3433570084EB23 /* CheckListyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckListyTests.swift; sourceTree = "<group>"; };
@@ -296,6 +308,9 @@
 			isa = PBXGroup;
 			children = (
 				145706F12C4F0C08007E642C /* ListMode.swift */,
+				149F89C42C73D9AB0092F82C /* ImagesHelper.swift */,
+				149F89C62C73DC3B0092F82C /* ColorsHelper.swift */,
+				149F89C82C73E10A0092F82C /* TextsHelper.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -367,6 +382,7 @@
 				1457070E2C51EF5C007E642C /* ContainerRelativeFrameHorizontalModifier.swift */,
 				14044F952C5C1ED800FD3A73 /* ProfileImageModifier.swift */,
 				14044F972C5C214500FD3A73 /* SectionModifier.swift */,
+				149F89CA2C73E3400092F82C /* FilledButtonModifier.swift */,
 			);
 			path = Modifiers;
 			sourceTree = "<group>";
@@ -400,6 +416,7 @@
 				14B225612C45C08C00A7F15F /* Components */,
 				14DBB6D42C3440630084EB23 /* DetailsListView.swift */,
 				14B225312C364F0F00A7F15F /* SignInView.swift */,
+				149F89C02C73D4AA0092F82C /* StartView.swift */,
 				14B2254E2C36DBA800A7F15F /* SignUpView.swift */,
 				14B225592C3EAD6E00A7F15F /* ListsView.swift */,
 				14044F912C5B24EF00FD3A73 /* ProfileView.swift */,
@@ -440,7 +457,8 @@
 			children = (
 				145706EC2C4EF2F6007E642C /* check.mp3 */,
 				14DBB6AA2C3433570084EB23 /* Preview Assets.xcassets */,
-				14DBB6A72C3433570084EB23 /* Assets.xcassets */,
+				14DBB6A72C3433570084EB23 /* Colors.xcassets */,
+				149F89C22C73D5C30092F82C /* Images.xcassets */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -648,7 +666,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				14DBB6AB2C3433570084EB23 /* Preview Assets.xcassets in Resources */,
-				14DBB6A82C3433570084EB23 /* Assets.xcassets in Resources */,
+				149F89C32C73D5C30092F82C /* Images.xcassets in Resources */,
+				14DBB6A82C3433570084EB23 /* Colors.xcassets in Resources */,
 				14B225472C36D30600A7F15F /* GoogleService-Info.plist in Resources */,
 				145706ED2C4EF2F6007E642C /* check.mp3 in Resources */,
 			);
@@ -679,7 +698,9 @@
 				14B225322C364F0F00A7F15F /* SignInView.swift in Sources */,
 				14044F782C56CDB200FD3A73 /* ImagePicker.swift in Sources */,
 				14B225792C49B6C600A7F15F /* CollapseModifier.swift in Sources */,
+				149F89C92C73E10A0092F82C /* TextsHelper.swift in Sources */,
 				14044FA32C60308E00FD3A73 /* FormChangeUserPassword.swift in Sources */,
+				149F89CB2C73E3400092F82C /* FilledButtonModifier.swift in Sources */,
 				14B225532C3DF60A00A7F15F /* FirebaseDataBaseService.swift in Sources */,
 				14B2255C2C3EADF900A7F15F /* ListsViewModel.swift in Sources */,
 				145706EA2C4EE5A4007E642C /* FeedbackService.swift in Sources */,
@@ -702,6 +723,7 @@
 				1457070D2C51EB4E007E642C /* ScrollHorizontalModifier.swift in Sources */,
 				14044FA12C5C714E00FD3A73 /* FormUserProfile.swift in Sources */,
 				14DBB6CF2C3434560084EB23 /* SpeechRecognizerService.swift in Sources */,
+				149F89C52C73D9AB0092F82C /* ImagesHelper.swift in Sources */,
 				145706EF2C4F09D3007E642C /* ListCard.swift in Sources */,
 				14044F872C59233300FD3A73 /* UserService.swift in Sources */,
 				14044F842C5922D100FD3A73 /* ImageService.swift in Sources */,
@@ -716,10 +738,12 @@
 				14B225752C48B12D00A7F15F /* KeyboardReadable.swift in Sources */,
 				14B225582C3E9EE300A7F15F /* ListModel.swift in Sources */,
 				14044FA82C61BC1300FD3A73 /* ConvertibleDictionary.swift in Sources */,
+				149F89C12C73D4AA0092F82C /* StartView.swift in Sources */,
 				14B225512C36DBC500A7F15F /* SignUpViewModel.swift in Sources */,
 				149F89BF2C6A6CE30092F82C /* ForgotPasswordViewModel.swift in Sources */,
 				145706FA2C4F59C5007E642C /* GridModifier.swift in Sources */,
 				145706FF2C4FC9F6007E642C /* UserDefaultsServiceKeys.swift in Sources */,
+				149F89C72C73DC3B0092F82C /* ColorsHelper.swift in Sources */,
 				14B225632C45C0B800A7F15F /* ViewOffsetKey.swift in Sources */,
 				14A4CAD22C34D71300634E19 /* String+RemoveWhiteSpaces.swift in Sources */,
 				14044F942C5B254600FD3A73 /* ProfileViewModel.swift in Sources */,

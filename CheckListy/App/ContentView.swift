@@ -66,20 +66,22 @@ struct MainView: View {
 
 struct AuthenticationView: View {
     
-    @State private var showSignUp = false
     @EnvironmentObject var viewModel: SignInViewModel
     
     var body: some View {
         VStack {
-            SignInView()
-                .environmentObject(viewModel)
-            
-            Button(action: { NavigationService.shared.navigateTo(.singUpView) }) {
-                Text("Se cadastrar")
-            }
-            
-            Button(action: { NavigationService.shared.navigateTo(.forgotPasswordView(viewModel.email)) }) {
-                Text("Esqueci a senha")
+            if viewModel.showStartView {
+                StartView()
+                    .onStart {
+                        viewModel.setShowStartView(to: false)
+                    }
+                    .onRegister {
+                        viewModel.navigateToSignUpView()
+                    }
+                    .transition(.move(edge: .top))
+            } else {
+                SignInView()
+                    .environmentObject(viewModel)
             }
         }
     }
