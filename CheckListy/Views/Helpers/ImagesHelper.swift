@@ -9,8 +9,8 @@ import SwiftUI
 
 enum ImagesHelper: String {
     
-    case logo            = "logo-image"
-    case logoName        = "name-image"
+    case logo            = "logo-vector"
+    case logoName        = "name-vector"
     case photoBackground = "initial-photo-image"
     
 }
