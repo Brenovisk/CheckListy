@@ -11,7 +11,6 @@ import SwiftUI
 struct SignInView: View, KeyboardReadable {
     
     @EnvironmentObject private var viewModel: SignInViewModel
-    @State var isKeyboardEnable = false
     
     init() {
         UITextField.appearance().clearButtonMode = .whileEditing
@@ -59,42 +58,36 @@ struct SignInView: View, KeyboardReadable {
                 }
             }.padding(.top, 16)
             
-            if !isKeyboardEnable {
-                Group {
-                    if viewModel.isLoading {
-                        ProgressView()
-                            .foregroundColor(Color.accentColor)
-                            .padding()
-                    } else {
-                        Button(action: { viewModel.signIn() }) {
-                            Text(Texts.signIn.rawValue)
-                                .frame(maxWidth: .infinity)
-                        }
-                        .filledButton()
+            Group {
+                if viewModel.isLoading {
+                    ProgressView()
+                        .foregroundColor(Color.accentColor)
+                        .padding()
+                } else {
+                    Button(action: { viewModel.signIn() }) {
+                        Text(Texts.signIn.rawValue)
+                            .frame(maxWidth: .infinity)
                     }
+                    .filledButton()
                 }
-                .padding(.top, 32)
-                
-                HStack {
-                    Texts.notHaveAccount.value
-                    
-                    Button(action: { viewModel.navigateToSignUpView() }) {
-                        Texts.registerYourSelf.value
-                            .foregroundColor(.accentColor)
-                    }
-                }.padding(.top, 12)
             }
+            .padding(.top, 32)
+            
+            HStack {
+                Texts.notHaveAccount.value
+                
+                Button(action: { viewModel.navigateToSignUpView() }) {
+                    Texts.registerYourSelf.value
+                        .foregroundColor(.accentColor)
+                }
+            }.padding(.top, 12)
         }
         .padding(.top, 80)
         .padding(.horizontal, 16)
         .frame(maxHeight: .infinity, alignment: .top)
         .animatedBackground()
         .gradientTop(color: Color.accentColor, height: 200)
-        .onReceive(keyboardPublisher) { value in
-            withAnimation {
-                isKeyboardEnable = value
-            }
-        }
+        .popup(isPresent: $viewModel.showPopup, data: viewModel.popupData)
         
     }
     

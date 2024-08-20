@@ -61,6 +61,12 @@
 		149F89D12C74C8530092F82C /* IconsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149F89D02C74C8530092F82C /* IconsHelper.swift */; };
 		149F89D32C74CD520092F82C /* ToolbarDoneButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149F89D22C74CD520092F82C /* ToolbarDoneButton.swift */; };
 		149F89D52C74EC830092F82C /* TextFieldCustom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149F89D42C74EC830092F82C /* TextFieldCustom.swift */; };
+		149F89D82C7516A00092F82C /* PopupModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149F89D72C7516A00092F82C /* PopupModifier.swift */; };
+		149F89DA2C7517350092F82C /* PopupView in Frameworks */ = {isa = PBXBuildFile; productRef = 149F89D92C7517350092F82C /* PopupView */; };
+		149F89DC2C7517D70092F82C /* PopupType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149F89DB2C7517D70092F82C /* PopupType.swift */; };
+		149F89DE2C7518180092F82C /* PopupHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149F89DD2C7518180092F82C /* PopupHelper.swift */; };
+		149F89E02C751F730092F82C /* PopupData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149F89DF2C751F730092F82C /* PopupData.swift */; };
+		149F89E22C7539D40092F82C /* FirebaseErrorsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149F89E12C7539D40092F82C /* FirebaseErrorsHelper.swift */; };
 		14A4CAD02C34D5AE00634E19 /* String+RemoveWord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A4CACF2C34D5AE00634E19 /* String+RemoveWord.swift */; };
 		14A4CAD22C34D71300634E19 /* String+RemoveWhiteSpaces.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A4CAD12C34D71300634E19 /* String+RemoveWhiteSpaces.swift */; };
 		14B225322C364F0F00A7F15F /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B225312C364F0F00A7F15F /* SignInView.swift */; };
@@ -170,6 +176,11 @@
 		149F89D02C74C8530092F82C /* IconsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconsHelper.swift; sourceTree = "<group>"; };
 		149F89D22C74CD520092F82C /* ToolbarDoneButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarDoneButton.swift; sourceTree = "<group>"; };
 		149F89D42C74EC830092F82C /* TextFieldCustom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldCustom.swift; sourceTree = "<group>"; };
+		149F89D72C7516A00092F82C /* PopupModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupModifier.swift; sourceTree = "<group>"; };
+		149F89DB2C7517D70092F82C /* PopupType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupType.swift; sourceTree = "<group>"; };
+		149F89DD2C7518180092F82C /* PopupHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupHelper.swift; sourceTree = "<group>"; };
+		149F89DF2C751F730092F82C /* PopupData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupData.swift; sourceTree = "<group>"; };
+		149F89E12C7539D40092F82C /* FirebaseErrorsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseErrorsHelper.swift; sourceTree = "<group>"; };
 		14A4CACF2C34D5AE00634E19 /* String+RemoveWord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+RemoveWord.swift"; sourceTree = "<group>"; };
 		14A4CAD12C34D71300634E19 /* String+RemoveWhiteSpaces.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+RemoveWhiteSpaces.swift"; sourceTree = "<group>"; };
 		14B225312C364F0F00A7F15F /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
@@ -217,6 +228,7 @@
 			files = (
 				14B225552C3DF62600A7F15F /* FirebaseDatabase in Frameworks */,
 				14044F7F2C571B1300FD3A73 /* FirebaseFirestore in Frameworks */,
+				149F89DA2C7517350092F82C /* PopupView in Frameworks */,
 				14B2254D2C36D78500A7F15F /* FirebaseAuth in Frameworks */,
 				14044F7D2C571AA800FD3A73 /* FirebaseStorage in Frameworks */,
 			);
@@ -322,6 +334,8 @@
 				149F89C62C73DC3B0092F82C /* ColorsHelper.swift */,
 				149F89C82C73E10A0092F82C /* TextsHelper.swift */,
 				149F89D02C74C8530092F82C /* IconsHelper.swift */,
+				149F89DD2C7518180092F82C /* PopupHelper.swift */,
+				149F89E12C7539D40092F82C /* FirebaseErrorsHelper.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -398,6 +412,7 @@
 				149F89CC2C73EF560092F82C /* AnimatedBackgroundModifier.swift */,
 				149F89CE2C73F9C70092F82C /* GradientTopModifier.swift */,
 				149F89D22C74CD520092F82C /* ToolbarDoneButton.swift */,
+				149F89D72C7516A00092F82C /* PopupModifier.swift */,
 			);
 			path = Modifiers;
 			sourceTree = "<group>";
@@ -463,6 +478,8 @@
 				14B225622C45C0B800A7F15F /* ViewOffsetKey.swift */,
 				14B225762C496C0A00A7F15F /* SectionModel.swift */,
 				14044F8B2C5A8F9D00FD3A73 /* ShareableItem.swift */,
+				149F89DB2C7517D70092F82C /* PopupType.swift */,
+				149F89DF2C751F730092F82C /* PopupData.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -588,6 +605,7 @@
 				14B225542C3DF62600A7F15F /* FirebaseDatabase */,
 				14044F7C2C571AA800FD3A73 /* FirebaseStorage */,
 				14044F7E2C571B1300FD3A73 /* FirebaseFirestore */,
+				149F89D92C7517350092F82C /* PopupView */,
 			);
 			productName = CheckListy;
 			productReference = 14DBB6A02C3433560084EB23 /* CheckListy.app */;
@@ -663,6 +681,7 @@
 			mainGroup = 14DBB6972C3433560084EB23;
 			packageReferences = (
 				14B225352C36D1BE00A7F15F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				149F89D62C7515C60092F82C /* XCRemoteSwiftPackageReference "PopupView" */,
 			);
 			productRefGroup = 14DBB6A12C3433560084EB23 /* Products */;
 			projectDirPath = "";
@@ -737,6 +756,7 @@
 				14044FAA2C6A48C500FD3A73 /* ContinuousLoadingBar.swift in Sources */,
 				14044F7A2C56D1B600FD3A73 /* WelcomeView.swift in Sources */,
 				1457070D2C51EB4E007E642C /* ScrollHorizontalModifier.swift in Sources */,
+				149F89DC2C7517D70092F82C /* PopupType.swift in Sources */,
 				14044FA12C5C714E00FD3A73 /* FormUserProfile.swift in Sources */,
 				14DBB6CF2C3434560084EB23 /* SpeechRecognizerService.swift in Sources */,
 				149F89C52C73D9AB0092F82C /* ImagesHelper.swift in Sources */,
@@ -748,6 +768,7 @@
 				14044F742C56CD4100FD3A73 /* ImagePickerController.swift in Sources */,
 				149F89CF2C73F9C70092F82C /* GradientTopModifier.swift in Sources */,
 				145706FD2C4FC975007E642C /* UserDefaultsService.swift in Sources */,
+				149F89DE2C7518180092F82C /* PopupHelper.swift in Sources */,
 				145707072C51AA2B007E642C /* NavigationService.swift in Sources */,
 				14B225692C46169400A7F15F /* ItemCard.swift in Sources */,
 				145706F22C4F0C08007E642C /* ListMode.swift in Sources */,
@@ -770,10 +791,12 @@
 				14B225652C45C84700A7F15F /* TitleIcon.swift in Sources */,
 				14B225772C496C0A00A7F15F /* SectionModel.swift in Sources */,
 				14044F9F2C5C6E9600FD3A73 /* UserProfile.swift in Sources */,
+				149F89E02C751F730092F82C /* PopupData.swift in Sources */,
 				145707112C528DBD007E642C /* SearchButton.swift in Sources */,
 				14B2255A2C3EAD6E00A7F15F /* ListsView.swift in Sources */,
 				149F89BD2C6A6C400092F82C /* ForgotPasswordView.swift in Sources */,
 				149F89D12C74C8530092F82C /* IconsHelper.swift in Sources */,
+				149F89D82C7516A00092F82C /* PopupModifier.swift in Sources */,
 				149F89D52C74EC830092F82C /* TextFieldCustom.swift in Sources */,
 				14044F8E2C5A916C00FD3A73 /* ShareSheet.swift in Sources */,
 				14044F8A2C5923A900FD3A73 /* UserManager.swift in Sources */,
@@ -784,6 +807,7 @@
 				145706E62C4DE4E9007E642C /* AudioAnimation.swift in Sources */,
 				14B2255E2C3F42F800A7F15F /* FirebaseDatabasePaths.swift in Sources */,
 				14044F962C5C1ED800FD3A73 /* ProfileImageModifier.swift in Sources */,
+				149F89E22C7539D40092F82C /* FirebaseErrorsHelper.swift in Sources */,
 				14044F9C2C5C2BB300FD3A73 /* DefaultSectionOption.swift in Sources */,
 				14A4CAD02C34D5AE00634E19 /* String+RemoveWord.swift in Sources */,
 				14044F812C591B7800FD3A73 /* UserDatabase.swift in Sources */,
@@ -1123,6 +1147,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		149F89D62C7515C60092F82C /* XCRemoteSwiftPackageReference "PopupView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/exyte/PopupView.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.6;
+			};
+		};
 		14B225352C36D1BE00A7F15F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
@@ -1143,6 +1175,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 14B225352C36D1BE00A7F15F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestore;
+		};
+		149F89D92C7517350092F82C /* PopupView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 149F89D62C7515C60092F82C /* XCRemoteSwiftPackageReference "PopupView" */;
+			productName = PopupView;
 		};
 		14B2254C2C36D78500A7F15F /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;

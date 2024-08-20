@@ -15,12 +15,15 @@ class SignInViewModel: ObservableObject {
     @Published var password: String = ""
     @Published var isLoading: Bool = false
     @Published var errorMessage: String?
+    @Published var showPopup: Bool = false
     
     @Published private(set) var isSecure: Bool = false
     @Published private(set) var showStartView: Bool = true
+    @Published private(set) var popupData: PopupData = .init()
     
     private var cancellables = Set<AnyCancellable>()
     
+    @MainActor
     func signIn() {
         Task {
             do {
@@ -28,7 +31,8 @@ class SignInViewModel: ObservableObject {
                 try await FirebaseAuthService.shared.signIn(withEmail: email, password: password)
                 isLoading = false
             } catch {
-                errorMessage = error.localizedDescription
+                errorMessage = FirebaseErrorsHelper.getDescription(to: error)
+                setPopupDataError(with: errorMessage ?? String())
                 isLoading = false
             }
         }
@@ -56,6 +60,14 @@ class SignInViewModel: ObservableObject {
         withAnimation {
             NavigationService.shared.navigateTo(.forgotPasswordView(email))
         }
+    }
+    
+    func setPopupDataError(with message: String) {
+        popupData = PopupData(
+            type: .error,
+            message: message
+        )
+        showPopup = true
     }
     
 }
