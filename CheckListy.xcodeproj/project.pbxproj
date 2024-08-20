@@ -56,6 +56,11 @@
 		149F89C72C73DC3B0092F82C /* ColorsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149F89C62C73DC3B0092F82C /* ColorsHelper.swift */; };
 		149F89C92C73E10A0092F82C /* TextsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149F89C82C73E10A0092F82C /* TextsHelper.swift */; };
 		149F89CB2C73E3400092F82C /* FilledButtonModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149F89CA2C73E3400092F82C /* FilledButtonModifier.swift */; };
+		149F89CD2C73EF560092F82C /* AnimatedBackgroundModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149F89CC2C73EF560092F82C /* AnimatedBackgroundModifier.swift */; };
+		149F89CF2C73F9C70092F82C /* GradientTopModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149F89CE2C73F9C70092F82C /* GradientTopModifier.swift */; };
+		149F89D12C74C8530092F82C /* IconsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149F89D02C74C8530092F82C /* IconsHelper.swift */; };
+		149F89D32C74CD520092F82C /* ToolbarDoneButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149F89D22C74CD520092F82C /* ToolbarDoneButton.swift */; };
+		149F89D52C74EC830092F82C /* TextFieldCustom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149F89D42C74EC830092F82C /* TextFieldCustom.swift */; };
 		14A4CAD02C34D5AE00634E19 /* String+RemoveWord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A4CACF2C34D5AE00634E19 /* String+RemoveWord.swift */; };
 		14A4CAD22C34D71300634E19 /* String+RemoveWhiteSpaces.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A4CAD12C34D71300634E19 /* String+RemoveWhiteSpaces.swift */; };
 		14B225322C364F0F00A7F15F /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B225312C364F0F00A7F15F /* SignInView.swift */; };
@@ -160,6 +165,11 @@
 		149F89C62C73DC3B0092F82C /* ColorsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorsHelper.swift; sourceTree = "<group>"; };
 		149F89C82C73E10A0092F82C /* TextsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextsHelper.swift; sourceTree = "<group>"; };
 		149F89CA2C73E3400092F82C /* FilledButtonModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilledButtonModifier.swift; sourceTree = "<group>"; };
+		149F89CC2C73EF560092F82C /* AnimatedBackgroundModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedBackgroundModifier.swift; sourceTree = "<group>"; };
+		149F89CE2C73F9C70092F82C /* GradientTopModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientTopModifier.swift; sourceTree = "<group>"; };
+		149F89D02C74C8530092F82C /* IconsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconsHelper.swift; sourceTree = "<group>"; };
+		149F89D22C74CD520092F82C /* ToolbarDoneButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarDoneButton.swift; sourceTree = "<group>"; };
+		149F89D42C74EC830092F82C /* TextFieldCustom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldCustom.swift; sourceTree = "<group>"; };
 		14A4CACF2C34D5AE00634E19 /* String+RemoveWord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+RemoveWord.swift"; sourceTree = "<group>"; };
 		14A4CAD12C34D71300634E19 /* String+RemoveWhiteSpaces.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+RemoveWhiteSpaces.swift"; sourceTree = "<group>"; };
 		14B225312C364F0F00A7F15F /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
@@ -311,6 +321,7 @@
 				149F89C42C73D9AB0092F82C /* ImagesHelper.swift */,
 				149F89C62C73DC3B0092F82C /* ColorsHelper.swift */,
 				149F89C82C73E10A0092F82C /* TextsHelper.swift */,
+				149F89D02C74C8530092F82C /* IconsHelper.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -367,6 +378,7 @@
 				14044F992C5C29D900FD3A73 /* DefaultSection.swift */,
 				14044F9B2C5C2BB300FD3A73 /* DefaultSectionOption.swift */,
 				14044FA92C6A48C500FD3A73 /* ContinuousLoadingBar.swift */,
+				149F89D42C74EC830092F82C /* TextFieldCustom.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -383,6 +395,9 @@
 				14044F952C5C1ED800FD3A73 /* ProfileImageModifier.swift */,
 				14044F972C5C214500FD3A73 /* SectionModifier.swift */,
 				149F89CA2C73E3400092F82C /* FilledButtonModifier.swift */,
+				149F89CC2C73EF560092F82C /* AnimatedBackgroundModifier.swift */,
+				149F89CE2C73F9C70092F82C /* GradientTopModifier.swift */,
+				149F89D22C74CD520092F82C /* ToolbarDoneButton.swift */,
 			);
 			path = Modifiers;
 			sourceTree = "<group>";
@@ -715,6 +730,7 @@
 				1457070F2C51EF5C007E642C /* ContainerRelativeFrameHorizontalModifier.swift in Sources */,
 				14B2254A2C36D66C00A7F15F /* FirebaseAuthService.swift in Sources */,
 				14B225702C47490200A7F15F /* RoundedBackgroundTextFieldStyle.swift in Sources */,
+				149F89D32C74CD520092F82C /* ToolbarDoneButton.swift in Sources */,
 				145707012C4FE3B1007E642C /* Array+RemoveDuplicates.swift in Sources */,
 				14B2256D2C4742C000A7F15F /* AutoFocusTextField.swift in Sources */,
 				145706E82C4EDE94007E642C /* HeaderSection.swift in Sources */,
@@ -727,8 +743,10 @@
 				145706EF2C4F09D3007E642C /* ListCard.swift in Sources */,
 				14044F872C59233300FD3A73 /* UserService.swift in Sources */,
 				14044F842C5922D100FD3A73 /* ImageService.swift in Sources */,
+				149F89CD2C73EF560092F82C /* AnimatedBackgroundModifier.swift in Sources */,
 				14044F8C2C5A8F9D00FD3A73 /* ShareableItem.swift in Sources */,
 				14044F742C56CD4100FD3A73 /* ImagePickerController.swift in Sources */,
+				149F89CF2C73F9C70092F82C /* GradientTopModifier.swift in Sources */,
 				145706FD2C4FC975007E642C /* UserDefaultsService.swift in Sources */,
 				145707072C51AA2B007E642C /* NavigationService.swift in Sources */,
 				14B225692C46169400A7F15F /* ItemCard.swift in Sources */,
@@ -755,6 +773,8 @@
 				145707112C528DBD007E642C /* SearchButton.swift in Sources */,
 				14B2255A2C3EAD6E00A7F15F /* ListsView.swift in Sources */,
 				149F89BD2C6A6C400092F82C /* ForgotPasswordView.swift in Sources */,
+				149F89D12C74C8530092F82C /* IconsHelper.swift in Sources */,
+				149F89D52C74EC830092F82C /* TextFieldCustom.swift in Sources */,
 				14044F8E2C5A916C00FD3A73 /* ShareSheet.swift in Sources */,
 				14044F8A2C5923A900FD3A73 /* UserManager.swift in Sources */,
 				14DBB6D22C343B2C0084EB23 /* SpeechRecognizerServiceErrors.swift in Sources */,

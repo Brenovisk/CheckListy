@@ -8,22 +8,23 @@
 import Foundation
 import SwiftUI
 
-struct RoundedBackgroundTextFieldStyle: ViewModifier {
+struct RoundedBackgroundTextFieldStyle<Suffix: View>: ViewModifier {
+    
+    let suffix: Suffix
     
     func body(content: Content) -> some View {
         content
-            .padding()
             .background(Color(.secondarySystemBackground))
-            .cornerRadius(10) // Borda arredondada padrão da Apple
-            .frame(height: 44) 
+            .cornerRadius(10)
+            .frame(height: 44)
     }
     
 }
 
 extension View {
     
-    func roundedBackgroundTextField() -> some View {
-        self.modifier(RoundedBackgroundTextFieldStyle())
+    func roundedBackgroundTextField<Suffix: View>(@ViewBuilder suffix: () -> Suffix = { EmptyView() }) -> some View {
+        self.modifier(RoundedBackgroundTextFieldStyle(suffix: suffix()))
         
     }
 }

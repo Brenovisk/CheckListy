@@ -8,58 +8,104 @@
 import Foundation
 import SwiftUI
 
-struct SignInView: View {
+struct SignInView: View, KeyboardReadable {
     
     @EnvironmentObject private var viewModel: SignInViewModel
+    @State var isKeyboardEnable = false
     
+    init() {
+        UITextField.appearance().clearButtonMode = .whileEditing
+    }
+
     var body: some View {
         VStack {
-            Text("SignIn")
-                .font(.title)
+            Images.logo.image
+                .resizable()
+                .frame(width: 80, height: 80)
             
-            TextField("Email", text: $viewModel.email)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .padding()
-                .autocapitalization(.none)
-                .keyboardType(.emailAddress)
+            VStack(alignment: .leading, spacing: 12) {
+                Texts.login.value
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                
+                Texts.plaseInsertEmail.value
+                    .font(.body)
+                    .foregroundColor(.secondary)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.top, 24)
             
-            SecureField("Senha", text: $viewModel.password)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .padding()
+            TextFieldCustom(
+                text: $viewModel.email, 
+                placeholder: Texts.email.rawValue
+            )
+            .autocapitalization(.none)
+            .keyboardType(.emailAddress)
+            .padding(.top, 24)
             
-            if viewModel.isLoading {
-                ProgressView()
-                    .padding()
-            } else {
-                Button(action: {
-                    Task {
-                        await viewModel.signIn()
-                    }
-                }) {
-                    Text("Entrar")
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .cornerRadius(8)
+            TextFieldCustom(
+                text: $viewModel.password, 
+                placeholder: Texts.password.rawValue,
+                isSecureTextfield: true
+            )
+            .padding(.top, 24)
+            
+            HStack {
+                Spacer()
+                
+                Button(action: { viewModel.navigateToForgotPasswordView() }) {
+                    Texts.forgotPassword.value
+                        .foregroundColor(Color.accentColor)
                 }
-                .padding()
-            }
+            }.padding(.top, 16)
             
-            if let errorMessage = viewModel.errorMessage {
-                Text(errorMessage)
-                    .foregroundColor(.red)
-                    .padding()
-            }
-            
-            if let isSignIn = FirebaseAuthService.shared.isSignIn, isSignIn {
-                Text("Success!")
-                    .foregroundColor(.green)
-                    .padding()
+            if !isKeyboardEnable {
+                Group {
+                    if viewModel.isLoading {
+                        ProgressView()
+                            .foregroundColor(Color.accentColor)
+                            .padding()
+                    } else {
+                        Button(action: { viewModel.signIn() }) {
+                            Text(Texts.signIn.rawValue)
+                                .frame(maxWidth: .infinity)
+                        }
+                        .filledButton()
+                    }
+                }
+                .padding(.top, 32)
+                
+                HStack {
+                    Texts.notHaveAccount.value
+                    
+                    Button(action: { viewModel.navigateToSignUpView() }) {
+                        Texts.registerYourSelf.value
+                            .foregroundColor(.accentColor)
+                    }
+                }.padding(.top, 12)
             }
         }
-        .padding()
+        .padding(.top, 80)
+        .padding(.horizontal, 16)
+        .frame(maxHeight: .infinity, alignment: .top)
+        .animatedBackground()
+        .gradientTop(color: Color.accentColor, height: 200)
+        .onReceive(keyboardPublisher) { value in
+            withAnimation {
+                isKeyboardEnable = value
+            }
+        }
+        
     }
+    
+}
+
+//MARK: typealias
+extension SignInView {
+    
+    typealias Images = ImagesHelper
+    typealias Texts  = TextsHelper
+    typealias Icons  = IconsHelper
     
 }
 
