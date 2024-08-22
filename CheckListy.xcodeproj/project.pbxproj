@@ -67,6 +67,12 @@
 		149F89DE2C7518180092F82C /* PopupHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149F89DD2C7518180092F82C /* PopupHelper.swift */; };
 		149F89E02C751F730092F82C /* PopupData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149F89DF2C751F730092F82C /* PopupData.swift */; };
 		149F89E22C7539D40092F82C /* FirebaseErrorsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149F89E12C7539D40092F82C /* FirebaseErrorsHelper.swift */; };
+		149F89E42C7542FA0092F82C /* DataFormSignIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149F89E32C7542FA0092F82C /* DataFormSignIn.swift */; };
+		149F89E72C75433D0092F82C /* ValidationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149F89E62C75433D0092F82C /* ValidationService.swift */; };
+		149F89E92C75E42F0092F82C /* ValidatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149F89E82C75E42F0092F82C /* ValidatorProtocol.swift */; };
+		149F89EC2C75E6370092F82C /* RequiredValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149F89EB2C75E6370092F82C /* RequiredValidator.swift */; };
+		149F89EE2C75E6660092F82C /* PasswordValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149F89ED2C75E6660092F82C /* PasswordValidator.swift */; };
+		149F89F02C75E7290092F82C /* EmailValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149F89EF2C75E7290092F82C /* EmailValidator.swift */; };
 		14A4CAD02C34D5AE00634E19 /* String+RemoveWord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A4CACF2C34D5AE00634E19 /* String+RemoveWord.swift */; };
 		14A4CAD22C34D71300634E19 /* String+RemoveWhiteSpaces.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A4CAD12C34D71300634E19 /* String+RemoveWhiteSpaces.swift */; };
 		14B225322C364F0F00A7F15F /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B225312C364F0F00A7F15F /* SignInView.swift */; };
@@ -181,6 +187,12 @@
 		149F89DD2C7518180092F82C /* PopupHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupHelper.swift; sourceTree = "<group>"; };
 		149F89DF2C751F730092F82C /* PopupData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupData.swift; sourceTree = "<group>"; };
 		149F89E12C7539D40092F82C /* FirebaseErrorsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseErrorsHelper.swift; sourceTree = "<group>"; };
+		149F89E32C7542FA0092F82C /* DataFormSignIn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataFormSignIn.swift; sourceTree = "<group>"; };
+		149F89E62C75433D0092F82C /* ValidationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationService.swift; sourceTree = "<group>"; };
+		149F89E82C75E42F0092F82C /* ValidatorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidatorProtocol.swift; sourceTree = "<group>"; };
+		149F89EB2C75E6370092F82C /* RequiredValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequiredValidator.swift; sourceTree = "<group>"; };
+		149F89ED2C75E6660092F82C /* PasswordValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordValidator.swift; sourceTree = "<group>"; };
+		149F89EF2C75E7290092F82C /* EmailValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailValidator.swift; sourceTree = "<group>"; };
 		14A4CACF2C34D5AE00634E19 /* String+RemoveWord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+RemoveWord.swift"; sourceTree = "<group>"; };
 		14A4CAD12C34D71300634E19 /* String+RemoveWhiteSpaces.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+RemoveWhiteSpaces.swift"; sourceTree = "<group>"; };
 		14B225312C364F0F00A7F15F /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
@@ -358,6 +370,26 @@
 			path = NavigationService;
 			sourceTree = "<group>";
 		};
+		149F89E52C7543190092F82C /* ValidationService */ = {
+			isa = PBXGroup;
+			children = (
+				149F89E82C75E42F0092F82C /* ValidatorProtocol.swift */,
+				149F89E62C75433D0092F82C /* ValidationService.swift */,
+				149F89EA2C75E62A0092F82C /* Validators */,
+			);
+			path = ValidationService;
+			sourceTree = "<group>";
+		};
+		149F89EA2C75E62A0092F82C /* Validators */ = {
+			isa = PBXGroup;
+			children = (
+				149F89EB2C75E6370092F82C /* RequiredValidator.swift */,
+				149F89ED2C75E6660092F82C /* PasswordValidator.swift */,
+				149F89EF2C75E7290092F82C /* EmailValidator.swift */,
+			);
+			path = Validators;
+			sourceTree = "<group>";
+		};
 		14B225482C36D64900A7F15F /* FirebaseAuthService */ = {
 			isa = PBXGroup;
 			children = (
@@ -480,6 +512,7 @@
 				14044F8B2C5A8F9D00FD3A73 /* ShareableItem.swift */,
 				149F89DB2C7517D70092F82C /* PopupType.swift */,
 				149F89DF2C751F730092F82C /* PopupData.swift */,
+				149F89E32C7542FA0092F82C /* DataFormSignIn.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -552,6 +585,7 @@
 		14DBB6CD2C3434220084EB23 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				149F89E52C7543190092F82C /* ValidationService */,
 				14044F852C59231800FD3A73 /* UserService */,
 				14044F822C5922C200FD3A73 /* ImageService */,
 				145707052C51AA1B007E642C /* NavigationService */,
@@ -734,8 +768,11 @@
 				14B225792C49B6C600A7F15F /* CollapseModifier.swift in Sources */,
 				149F89C92C73E10A0092F82C /* TextsHelper.swift in Sources */,
 				14044FA32C60308E00FD3A73 /* FormChangeUserPassword.swift in Sources */,
+				149F89EE2C75E6660092F82C /* PasswordValidator.swift in Sources */,
 				149F89CB2C73E3400092F82C /* FilledButtonModifier.swift in Sources */,
 				14B225532C3DF60A00A7F15F /* FirebaseDataBaseService.swift in Sources */,
+				149F89E92C75E42F0092F82C /* ValidatorProtocol.swift in Sources */,
+				149F89E72C75433D0092F82C /* ValidationService.swift in Sources */,
 				14B2255C2C3EADF900A7F15F /* ListsViewModel.swift in Sources */,
 				145706EA2C4EE5A4007E642C /* FeedbackService.swift in Sources */,
 				14B225672C45E06200A7F15F /* FormItemView.swift in Sources */,
@@ -762,6 +799,7 @@
 				149F89C52C73D9AB0092F82C /* ImagesHelper.swift in Sources */,
 				145706EF2C4F09D3007E642C /* ListCard.swift in Sources */,
 				14044F872C59233300FD3A73 /* UserService.swift in Sources */,
+				149F89E42C7542FA0092F82C /* DataFormSignIn.swift in Sources */,
 				14044F842C5922D100FD3A73 /* ImageService.swift in Sources */,
 				149F89CD2C73EF560092F82C /* AnimatedBackgroundModifier.swift in Sources */,
 				14044F8C2C5A8F9D00FD3A73 /* ShareableItem.swift in Sources */,
@@ -771,6 +809,7 @@
 				149F89DE2C7518180092F82C /* PopupHelper.swift in Sources */,
 				145707072C51AA2B007E642C /* NavigationService.swift in Sources */,
 				14B225692C46169400A7F15F /* ItemCard.swift in Sources */,
+				149F89F02C75E7290092F82C /* EmailValidator.swift in Sources */,
 				145706F22C4F0C08007E642C /* ListMode.swift in Sources */,
 				145706E42C4DDB94007E642C /* RecordButton.swift in Sources */,
 				14044F9A2C5C29D900FD3A73 /* DefaultSection.swift in Sources */,
@@ -798,6 +837,7 @@
 				149F89D12C74C8530092F82C /* IconsHelper.swift in Sources */,
 				149F89D82C7516A00092F82C /* PopupModifier.swift in Sources */,
 				149F89D52C74EC830092F82C /* TextFieldCustom.swift in Sources */,
+				149F89EC2C75E6370092F82C /* RequiredValidator.swift in Sources */,
 				14044F8E2C5A916C00FD3A73 /* ShareSheet.swift in Sources */,
 				14044F8A2C5923A900FD3A73 /* UserManager.swift in Sources */,
 				14DBB6D22C343B2C0084EB23 /* SpeechRecognizerServiceErrors.swift in Sources */,

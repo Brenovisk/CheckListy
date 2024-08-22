@@ -40,6 +40,9 @@ enum TextsHelper: String {
     case genericError                     = "Erro na operação"
     case interactionCancelledByUser       = "A interação foi cancelada pelo usuário"
     case noUserRegisteredWithThisNumber   = "Nenhum usuário cadastrado com esse número"
+    case emailInvalid                     = "Email inválido"
+    case passwordMinLength                = "A senha deve ter no mínimo 6 caracteres"
+    case requiredField                    = "Campo obrigartório"
 
     
 }

@@ -26,7 +26,7 @@ struct PopupModifier: ViewModifier {
                         .position(.bottom)
                         .animation(.spring())
                         .closeOnTapOutside(true)
-                        .autohideIn(3)
+                        .autohideIn(5)
                 }
         }
     }

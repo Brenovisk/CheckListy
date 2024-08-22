@@ -12,35 +12,61 @@ struct TextFieldCustom: View {
     
     @Binding var text: String
     @State var enableSecure: Bool = true
-    
     @FocusState private var isFocused: Bool
-
+    
     var placeholder: String = String()
+    var helperText: String?
+    var onChanged: (() -> Void)?
     var isSecureTextfield: Bool = false
-
+    
+    var showHelperText: Bool {
+        helperText != nil && !isFocused
+    }
+    
     var body: some View {
-        HStack {
-            if isSecureTextfield && enableSecure {
-                SecureField(placeholder, text: $text)
-                    .padding()
-                    .focused($isFocused)
-            } else {
-                TextField(placeholder, text: $text)
-                    .padding()
-                    .focused($isFocused)
-            }
-            
-            if isSecureTextfield {
-                Button(action: {
-                    enableSecure.toggle()
-                }) {
-                    Image(systemName: enableSecure ? "eye.slash.fill" : "eye.fill")
-                        .foregroundColor(.gray)
+        VStack(alignment: .leading) {
+            HStack {
+                if isSecureTextfield && enableSecure {
+                    SecureField(placeholder, text: $text)
+                        .focused($isFocused)
+                        .autocapitalization(.none)
+                } else {
+                    TextField(placeholder, text: $text)
+                        .focused($isFocused)
+                        .autocapitalization(.none)
                 }
-                .padding(.trailing, 16)
+                
+                if isSecureTextfield {
+                    Button(action: {
+                        enableSecure.toggle()
+                    }) {
+                        Image(systemName: enableSecure ? "eye.slash.fill" : "eye.fill")
+                            .foregroundColor(.gray)
+                    }
+                }
+            }
+            .roundedBackgroundTextField()
+            .padding(.vertical, 4)
+            .overlay(
+                RoundedRectangle(cornerRadius: 8)
+                    .stroke(isFocused ? Color.green : (!showHelperText ? Color.clear : .red), lineWidth: 1)
+                    .transition(.opacity)
+                    .animation(.easeInOut, value: helperText)
+            )
+            .cornerRadius(8)
+             
+            if showHelperText {
+                Text(helperText ?? String())
+                    .font(.caption)
+                    .foregroundColor(.red)
+                    .transition(.opacity)
+                    .animation(.easeInOut, value: helperText)
+                    .padding(.top, 4)
             }
         }
-        .roundedBackgroundTextField()
+        .onChange(of: text) {
+            onChanged?()
+        }
     }
     
 }

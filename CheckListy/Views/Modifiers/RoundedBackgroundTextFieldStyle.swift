@@ -14,6 +14,7 @@ struct RoundedBackgroundTextFieldStyle<Suffix: View>: ViewModifier {
     
     func body(content: Content) -> some View {
         content
+            .padding()
             .background(Color(.secondarySystemBackground))
             .cornerRadius(10)
             .frame(height: 44)

@@ -11,10 +11,8 @@ import SwiftUI
 
 class SignInViewModel: ObservableObject {
     
-    @Published var email: String = ""
-    @Published var password: String = ""
+    @Published var dataForm: DataFormSignIn = DataFormSignIn()
     @Published var isLoading: Bool = false
-    @Published var errorMessage: String?
     @Published var showPopup: Bool = false
     
     @Published private(set) var isSecure: Bool = false
@@ -25,14 +23,17 @@ class SignInViewModel: ObservableObject {
     
     @MainActor
     func signIn() {
+        dataForm.resetErrors()
+        guard dataForm.isValid() else { return }
+                
         Task {
             do {
                 isLoading = true
-                try await FirebaseAuthService.shared.signIn(withEmail: email, password: password)
+                try await FirebaseAuthService.shared.signIn(withEmail: dataForm.email, password: dataForm.password)
                 isLoading = false
             } catch {
-                errorMessage = FirebaseErrorsHelper.getDescription(to: error)
-                setPopupDataError(with: errorMessage ?? String())
+                let errorMessage = FirebaseErrorsHelper.getDescription(to: error)
+                setPopupDataError(with: errorMessage)
                 isLoading = false
             }
         }
@@ -58,7 +59,7 @@ class SignInViewModel: ObservableObject {
     
     func navigateToForgotPasswordView()  {
         withAnimation {
-            NavigationService.shared.navigateTo(.forgotPasswordView(email))
+            NavigationService.shared.navigateTo(.forgotPasswordView(dataForm.email))
         }
     }
     

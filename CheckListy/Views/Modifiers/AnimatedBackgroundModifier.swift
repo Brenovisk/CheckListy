@@ -16,15 +16,17 @@ struct AnimatedBackgroundModifier: ViewModifier, KeyboardReadable {
 
     func body(content: Content) -> some View {
         ZStack {
-            ImagesHelper.coloredShapesVector.image
-            .resizable()
-            .scaledToFill()
+            VStack{
+                ImagesHelper.coloredShapesVector.image
+                .resizable()
+                .scaledToFill()
+                ImagesHelper.coloredShapesVector.image
+                .resizable()
+                .scaledToFill()
+            }
             .frame(height: UIScreen.main.bounds.height)
             .offset(y: offset)
-            .opacity(opacity)
-            .onReceive(keyboardPublisher) { value in
-                startAnimation()
-            }
+            .transition(.opacity)
             .onAppear {
                 startAnimation()
             }
@@ -34,7 +36,6 @@ struct AnimatedBackgroundModifier: ViewModifier, KeyboardReadable {
     }
 
     private func startAnimation() {
-        offset = 0.0
         opacity = 1
         
         withAnimation(
