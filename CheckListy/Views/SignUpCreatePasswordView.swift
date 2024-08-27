@@ -1,14 +1,14 @@
 //
-//  SignUpView.swift
+//  SignUpCreatePasswordView.swift
 //  CheckListy
 //
-//  Created by Breno Lucas on 04/07/24.
+//  Created by Breno Lucas on 22/08/24.
 //
 
 import Foundation
 import SwiftUI
 
-struct SignUpView: View, KeyboardReadable {
+struct SignUpCreatePasswordView: View, KeyboardReadable {
     
     @EnvironmentObject private var viewModel: SignUpViewModel
     
@@ -21,11 +21,12 @@ struct SignUpView: View, KeyboardReadable {
     var body: some View {
         VStack(spacing: 24) {
             VStack(alignment: .leading, spacing: 12) {
-                Texts.letsCreateYourAccount.value
+                Texts.createASecurePassword.value
                     .font(.largeTitle)
                     .fontWeight(.bold)
+                    .fixedSize(horizontal: false, vertical: true)
                 
-                Texts.firsWeWannaKnowYou.value
+                Texts.createASecureDescription.value
                     .font(.body)
                     .foregroundColor(.secondary)
             }
@@ -33,31 +34,32 @@ struct SignUpView: View, KeyboardReadable {
             
             VStack(spacing: 16) {
                 TextFieldCustom(
-                    text: $viewModel.dataForm.name,
-                    placeholder: Texts.name.rawValue,
-                    helperText: viewModel.dataForm.nameError,
-                    onChanged: { viewModel.dataForm.nameError = nil },
+                    text: $viewModel.dataForm.password,
+                    placeholder: Texts.password.rawValue, 
+                    helperText: viewModel.dataForm.passwordError, 
+                    onChanged: { viewModel.dataForm.passwordError = nil },
+                    isSecureTextfield: true,
                     isAutoFocused: true
                 )
                 
                 TextFieldCustom(
-                    text: $viewModel.dataForm.email,
-                    placeholder: Texts.email.rawValue,
-                    helperText: viewModel.dataForm.emailError,
-                    onChanged: { viewModel.dataForm.emailError = nil }
+                    text: $viewModel.dataForm.confirmationPassword,
+                    placeholder: Texts.confirmPassword.rawValue,
+                    helperText: viewModel.dataForm.confirmationPasswordError,
+                    onChanged: { viewModel.dataForm.confirmationPasswordError = nil },
+                    isSecureTextfield: true
                 )
-                .keyboardType(.emailAddress)
             }
             
             Button(action: {
                 hideKeyboard()
-                guard viewModel.dataForm.isValidEmailAndName() else { return }
-                viewModel.navigateToSignUpAddPhotoView()
+                guard viewModel.dataForm.isValidPasswordAndConfirmation() else { return }
+                viewModel.signUp()
             }) {
-                Text(Texts.goAhead.rawValue)
+                Text(Texts.create.rawValue)
                     .frame(maxWidth: .infinity)
             }
-            .filledButton()
+            .filledButton(isLoading: $viewModel.isLoading)
         }
         .toolbar(.visible, for: .navigationBar)
         .frame(maxHeight: .infinity, alignment: .top)
@@ -75,7 +77,7 @@ struct SignUpView: View, KeyboardReadable {
 }
 
 //MARK: typealias
-extension SignUpView {
+extension SignUpCreatePasswordView {
     
     typealias Texts  = TextsHelper
     
@@ -83,7 +85,7 @@ extension SignUpView {
 
 #Preview {
     NavigationStack {
-        SignUpView()
+        SignUpCreatePasswordView()
             .environmentObject(SignUpViewModel())
     }
 }

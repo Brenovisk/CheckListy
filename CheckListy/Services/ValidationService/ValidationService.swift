@@ -25,6 +25,8 @@ enum Validators {
     case requiredValidator
     case passwordValidator
     case emailValidator
+    case maxCountValidator
+    case noEqualValues(firstValue: String)
     
 }
 
@@ -37,7 +39,11 @@ extension Validators {
         case .passwordValidator:
             return PasswordValidator(errorMessage: TextsHelper.passwordMinLength.rawValue)
         case .emailValidator:
-            return EmailValidator(errorMessage: TextsHelper.emailInvalid.rawValue)
+            return EmailValidator(errorMessage: TextsHelper.emailInvalid.rawValue) 
+        case .maxCountValidator:
+            return MaxCountValidator(errorMessage: TextsHelper.exceededMaxLimit.rawValue, maxLimit: 20)
+        case .noEqualValues(let firstValue):
+            return NoEqualValuesValidator(errorMessage: TextsHelper.differentValuesPassword.rawValue, firstValue: firstValue)
         }
     }
     

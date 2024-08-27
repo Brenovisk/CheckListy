@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 
 struct AutoFocusTextField: UIViewRepresentable {
+    
     @Binding var text: String
     var placeholder: String
     var isSecureTextEntry: Bool = false
@@ -22,9 +23,9 @@ struct AutoFocusTextField: UIViewRepresentable {
         textField.isSecureTextEntry =  isSecureTextEntry
         textField.delegate = context.coordinator
         textField.text = text
-        textField.placeholder = placeholder // Configura o placeholder
+        textField.placeholder = placeholder
 
-        DispatchQueue.main.async {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
             textField.becomeFirstResponder()
         }
         
@@ -33,11 +34,13 @@ struct AutoFocusTextField: UIViewRepresentable {
 
     func updateUIView(_ uiView: UITextField, context: Context) {
         uiView.text = text
-        uiView.placeholder = placeholder // Atualiza o placeholder se necessário
+        uiView.placeholder = placeholder
     }
+    
 }
 
 class Coordinator: NSObject, UITextFieldDelegate {
+    
     var parent: AutoFocusTextField
 
     init(parent: AutoFocusTextField) {
@@ -49,4 +52,5 @@ class Coordinator: NSObject, UITextFieldDelegate {
             self.parent.text = textField.text ?? ""
         }
     }
+    
 }

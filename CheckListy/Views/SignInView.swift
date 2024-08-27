@@ -17,47 +17,46 @@ struct SignInView: View, KeyboardReadable {
         UITextField.appearance().clearButtonMode = .whileEditing
     }
     
-    var logoSize: CGFloat {
-        isShowKeyboard ? 0 : 80
-    }
-    
     var body: some View {
         VStack(spacing: 24) {
-            Images.logo.image
-                .resizable()
-                .frame(width: logoSize, height: logoSize)
-                .transition(.scale)
-                .animation(.easeInOut, value: isShowKeyboard)
-            
-            VStack(alignment: .leading, spacing: 12) {
-                Texts.login.value
-                    .font(.largeTitle)
-                    .fontWeight(.bold)
+            HStack(spacing: 24) {
+                Images.logo.image
+                    .resizable()
+                    .frame(width: 48, height: 48)
                 
-                Texts.plaseInsertEmail.value
-                    .font(.body)
-                    .foregroundColor(.secondary)
+                Images.logoName.image
+                    .scaleEffect(1.5)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.top, 32)
+            .slideOnAppear(delay: 0.1, direction: .fromLeft)
+            .opacityOnAppear(delay: 0.4, duration: 1)
+            
+            if !isShowKeyboard {
+                Texts.plaseInsertEmail.value
+                    .fixedSize(horizontal: false, vertical: /*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/)
+                    .font(.body)
+                    .foregroundColor(.secondary)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .scaleOnAppear(isActive: isShowKeyboard)
+            }
             
             VStack(spacing: 16) {
-                VStack(spacing: 16) {
-                    TextFieldCustom(
-                        text: $viewModel.dataForm.email,
-                        placeholder: Texts.email.rawValue,
-                        helperText: viewModel.dataForm.emailError,
-                        onChanged: { viewModel.dataForm.emailError = nil }
-                    )
-                    .keyboardType(.emailAddress)
-                    
-                    TextFieldCustom(
-                        text: $viewModel.dataForm.password,
-                        placeholder: Texts.password.rawValue,
-                        helperText: viewModel.dataForm.passwordError,
-                        onChanged: { viewModel.dataForm.passwordError = nil },
-                        isSecureTextfield: true
-                    )
-                }
+                TextFieldCustom(
+                    text: $viewModel.dataForm.email,
+                    placeholder: Texts.email.rawValue,
+                    helperText: viewModel.dataForm.emailError,
+                    onChanged: { viewModel.dataForm.emailError = nil }
+                )
+                .keyboardType(.emailAddress)
+                
+                TextFieldCustom(
+                    text: $viewModel.dataForm.password,
+                    placeholder: Texts.password.rawValue,
+                    helperText: viewModel.dataForm.passwordError,
+                    onChanged: { viewModel.dataForm.passwordError = nil },
+                    isSecureTextfield: true
+                )
                 
                 HStack {
                     Button(action: { viewModel.navigateToForgotPasswordView() }) {
@@ -88,11 +87,11 @@ struct SignInView: View, KeyboardReadable {
                 }
             }
         }
-        .padding(.top, isShowKeyboard ? 32 : 80)
+        .padding(.top, isShowKeyboard ? 16 : 24)
         .frame(maxHeight: .infinity, alignment: .top)
         .scrollable() {}
         .animatedBackground()
-        .gradientTop(color: Color.accentColor, height: 200)
+        .gradientTop(color: Color.accentColor, height: 200, delay: 1)
         .popup(isPresent: $viewModel.showPopup, data: viewModel.popupData)
         .onReceive(keyboardPublisher) { value in
             withAnimation {

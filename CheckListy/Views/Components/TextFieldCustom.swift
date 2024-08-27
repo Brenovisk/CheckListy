@@ -11,13 +11,14 @@ import SwiftUI
 struct TextFieldCustom: View {
     
     @Binding var text: String
-    @State var enableSecure: Bool = true
+    @State private var enableSecure: Bool = true
     @FocusState private var isFocused: Bool
     
     var placeholder: String = String()
     var helperText: String?
     var onChanged: (() -> Void)?
     var isSecureTextfield: Bool = false
+    var isAutoFocused: Bool = false
     
     var showHelperText: Bool {
         helperText != nil && !isFocused
@@ -26,15 +27,27 @@ struct TextFieldCustom: View {
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
-                if isSecureTextfield && enableSecure {
-                    SecureField(placeholder, text: $text)
-                        .focused($isFocused)
-                        .autocapitalization(.none)
-                } else {
-                    TextField(placeholder, text: $text)
-                        .focused($isFocused)
-                        .autocapitalization(.none)
+                Group {
+                    if isAutoFocused && isSecureTextfield && enableSecure {
+                        AutoFocusTextField(
+                            text: $text,
+                            placeholder: placeholder,
+                            isSecureTextEntry: true
+                        )
+                    } else if isAutoFocused {
+                        AutoFocusTextField(
+                            text: $text,
+                            placeholder: placeholder,
+                            isSecureTextEntry: false
+                        )
+                    } else if isSecureTextfield && enableSecure {
+                        SecureField(placeholder, text: $text)
+                    } else {
+                        TextField(placeholder, text: $text)
+                    }
                 }
+                .focused($isFocused)
+                .autocapitalization(.none)
                 
                 if isSecureTextfield {
                     Button(action: {
@@ -54,7 +67,7 @@ struct TextFieldCustom: View {
                     .animation(.easeInOut, value: helperText)
             )
             .cornerRadius(8)
-             
+            
             if showHelperText {
                 Text(helperText ?? String())
                     .font(.caption)

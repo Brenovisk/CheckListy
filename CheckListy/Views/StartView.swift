@@ -20,34 +20,34 @@ struct StartView: View {
     init() {}
     
     var body: some View {
-        ZStack {
-            backgroundImage
+        VStack(spacing:.zero) {
+            logo
+                .slideOnAppear(delay: 0.4, direction: .fromLeft)
             
-            VStack(spacing:.zero) {
-                Spacer()
-                
-                logo
-                
-                Texts.slogan.value
-                    .font(.body)
-                    .foregroundColor(.white)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.top, 12)
-                
-                Button(action: { onStart?() }) {
-                    Texts.start.value
-                        .frame(maxWidth: .infinity)
-                }
-                .filledButton()
-                .padding(.top, 32)
-                
-                footer
-                    .padding(.top, 16)
-
+            Texts.slogan.value
+                .font(.body)
+                .foregroundColor(.white)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.top, 12)
+                .slideOnAppear(delay: 0.4, direction: .fromLeft)
+            
+            Button(action: { onStart?() }) {
+                Texts.start.value
+                    .frame(maxWidth: .infinity)
             }
-            .padding(.horizontal, 16)
-            .padding(.bottom, 32)
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+            .filledButton()
+            .padding(.top, 32)
+            .slideOnAppear(delay: 0.6, direction: .fromBottom)
+            
+            footer
+                .padding(.top, 16)
+                .slideOnAppear(delay: 0.6, direction: .fromBottom)
+        }
+        .padding(.horizontal, 16)
+        .padding(.bottom, 32)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
+        .background {
+            backgroundImage
         }
     }
     
@@ -65,13 +65,7 @@ struct StartView: View {
     }
     
     var backgroundImage: some View {
-        ZStack {
-            VStack {
-                Images.photoBackground.image
-                    .resizable()
-                    .scaledToFit()
-            }.frame(maxHeight: .infinity, alignment: .top)
-            
+        VStack {
             Rectangle()
                 .fill(
                     LinearGradient(
@@ -84,8 +78,17 @@ struct StartView: View {
                     )
                 )
         }
-        .ignoresSafeArea()
-        .background(Colors.background.value)
+        .background(
+            VStack {
+                Images.photoBackground.image
+                    .resizable()
+                    .scaledToFit()
+                    .opacityOnAppear(delay: 0.6, duration: 0.8)
+            }
+            .frame(maxHeight: .infinity, alignment: .top)
+            .background(Colors.background.value)
+            .ignoresSafeArea()
+        )
     }
     
     

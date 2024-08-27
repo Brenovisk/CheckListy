@@ -29,7 +29,10 @@ class SignInViewModel: ObservableObject {
         Task {
             do {
                 isLoading = true
-                try await FirebaseAuthService.shared.signIn(withEmail: dataForm.email, password: dataForm.password)
+                try await FirebaseAuthService.shared.signIn(
+                    withEmail: dataForm.email,
+                    password: dataForm.password
+                )
                 isLoading = false
             } catch {
                 let errorMessage = FirebaseErrorsHelper.getDescription(to: error)
@@ -53,7 +56,7 @@ class SignInViewModel: ObservableObject {
     
     func navigateToSignUpView()  {
         withAnimation {
-            NavigationService.shared.navigateTo(.singUpView)
+            NavigationService.shared.navigateTo(.signUpView)
         }
     }    
     

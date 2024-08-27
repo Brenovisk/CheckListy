@@ -11,7 +11,9 @@ struct ContentView: View {
     
     @StateObject private var firebaseAuthService = FirebaseAuthService.shared
     @StateObject private var navigationService = NavigationService.shared
-    var viewModel = SignInViewModel()
+    
+    @StateObject private var loginViewModel = SignInViewModel()
+    @StateObject private var signUpViewModel = SignUpViewModel()
     
     var body: some View {
         VStack {
@@ -33,12 +35,18 @@ struct ContentView: View {
                 } else {
                     NavigationStack(path: $navigationService.navigationPathAuth) {
                         AuthenticationView()
-                            .environmentObject(viewModel)
+                            .environmentObject(loginViewModel)
                             .navigationDestination(for: AppDestinationAuth.self) { destination in
                                 switch destination {
-                                case .singUpView:
+                                case .signUpView:
                                     SignUpView()
-                                        .environmentObject(SignUpViewModel())
+                                        .environmentObject(signUpViewModel)
+                                case .signUpAddPhotoView:
+                                    SignUpAddPhotoView()
+                                        .environmentObject(signUpViewModel)
+                                case .signUpCreatePasswordView:
+                                    SignUpCreatePasswordView()
+                                        .environmentObject(signUpViewModel)
                                 case .forgotPasswordView(let email):
                                     ForgotPasswordView()
                                         .environmentObject(ForgotPasswordViewModel(email: email))
@@ -83,7 +91,7 @@ struct AuthenticationView: View {
                 SignInView()
                     .environmentObject(viewModel)
             }
-        }
+        }.navigationTitle(String())
     }
     
 }

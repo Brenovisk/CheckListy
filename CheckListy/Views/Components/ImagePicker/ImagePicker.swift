@@ -15,39 +15,42 @@ struct ImagePicker: View {
     @State private var showImagePicker = false
     
     var onPick: ((UIImage) -> Void)?
+    var size: CGFloat = 100
     
-    private init(image: UIImage?, onPick: ((UIImage) -> Void)?) {
-        self.init(image: image)
+    private init(image: UIImage?, size: CGFloat = 100, onPick: ((UIImage) -> Void)?) {
+        self.init(image: image, size: size)
         self.onPick = onPick
     }
     
-    init(image: UIImage?) {
+    init(image: UIImage?, size: CGFloat = 100) {
         _image = State(initialValue: image)
         self.imageURL = imageURL
         self.showImagePicker = showImagePicker
+        self.size = size
     }
     
     var body: some View {
         VStack {
             ZStack(alignment: .bottomTrailing){
-                if let image = image {
-                    Image(uiImage: image)
-                        .resizable()
-                        .profileImage(100)
-                } else {
-                    Circle()
-                        .fill(Color.accentColor)
-                        .profileImage(100)
-                        .overlay(
-                            Image(systemName: "camera.fill")
-                                .colorInvert()
-                        )
+                Group {
+                    if let image = image {
+                        Image(uiImage: image)
+                            .resizable()
+                    } else {
+                        Circle()
+                            .fill(Color(uiColor: UIColor.gray))
+                            .overlay(
+                                Image(systemName: "camera.fill")
+                                    .scaleEffect(2.5)
+                            )
+                    }
                 }
+                .profileImage(size)
                 
                 Image(systemName: "pencil.circle.fill")
                     .resizable()
                     .frame(width: 32, height: 32)
-                    .foregroundColor(.black)
+                    .foregroundColor(Color.accentColor)
                     .background(.white)
                     .clipShape(Circle())
             }
@@ -56,7 +59,6 @@ struct ImagePicker: View {
         .onTapGesture {
             showImagePicker = true
         }
-        .padding()
         .sheet(isPresented: $showImagePicker) {
             ImagePickerController(image: $image, imageUrl: $imageURL)
         }
@@ -74,6 +76,7 @@ extension ImagePicker {
     func `onPick`(action: ((UIImage) -> Void)?) -> ImagePicker {
         ImagePicker(
             image: self.image,
+            size: self.size,
             onPick: action
         )
     }
@@ -82,5 +85,9 @@ extension ImagePicker {
 
 
 #Preview {
-    ImagePicker(image: nil)
+    HStack {
+        ImagePicker(image: nil)
+    }
+    .frame(maxWidth: .infinity)
+    .background(.black)
 }

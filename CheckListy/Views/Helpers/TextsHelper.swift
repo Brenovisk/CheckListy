@@ -43,8 +43,19 @@ enum TextsHelper: String {
     case emailInvalid                     = "Email inválido"
     case passwordMinLength                = "A senha deve ter no mínimo 6 caracteres"
     case requiredField                    = "Campo obrigartório"
+    case letsCreateYourAccount            = "Vamos criar sua conta!"
+    case firsWeWannaKnowYou               = "Primeiro gostaríamos de conhecer você melhor! Por favor, preencha seu nome e e-mail."
+    case goAhead                          = "Continuar"
+    case exceededMaxLimit                 = "Excedeu o limite máximo de caracteres"
+    case differentValuesPassword          = "Senhas não correspondem"
+    case name                             = "Nome"
+    case addProfilePhoto                  = "Adicione uma Foto de Perfil"
+    case choosePhotoDescription           = "Escolha uma foto da galeria para personalizar seu perfil. Se preferir, você pode continuar e adicionar mais tarde."
+    case createASecurePassword            = "Crie uma Senha Segura"
+    case createASecureDescription         = "Lembre-se de usar uma combinação de letras, números e caracteres especiais para maior segurança."
+    case confirmPassword                  = "Confirme sua senha"
+    case create                           = "Criar"
 
-    
 }
 
 extension TextsHelper {

@@ -15,8 +15,12 @@ struct ProfileImageModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
             .scaledToFill()
+            .foregroundColor(ColorsHelper.background.value)
             .frame(width: size, height: size)
             .clipShape(Circle())
+            .overlay(
+                Circle().stroke(Color.white, lineWidth: 6.5)
+            )
     }
     
 }

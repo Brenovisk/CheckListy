@@ -29,6 +29,12 @@ class NavigationService: ObservableObject {
         if !navigationPath.isEmpty {
             navigationPath.removeLast()
         }
+    } 
+    
+    func goBackAuth() {
+        if !navigationPathAuth.isEmpty {
+            navigationPathAuth.removeLast()
+        }
     }
     
     func resetNavigation() {
@@ -37,13 +43,6 @@ class NavigationService: ObservableObject {
     
     func resetNavigationAuth() {
         navigationPathAuth.removeLast(navigationPathAuth.count)
-    }
-    
-    func navigateToRootAndPush(_ destination: AppDestination) {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-            self.resetNavigation()
-            self.navigationPath.append(destination)
-        }
     }
     
 }

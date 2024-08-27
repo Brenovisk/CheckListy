@@ -1,14 +1,13 @@
 //
-//  SignUpView.swift
+//  SignUpAddPhotoView .swift
 //  CheckListy
 //
-//  Created by Breno Lucas on 04/07/24.
+//  Created by Breno Lucas on 22/08/24.
 //
 
-import Foundation
 import SwiftUI
 
-struct SignUpView: View, KeyboardReadable {
+struct SignUpAddPhotoView: View, KeyboardReadable {
     
     @EnvironmentObject private var viewModel: SignUpViewModel
     
@@ -21,43 +20,33 @@ struct SignUpView: View, KeyboardReadable {
     var body: some View {
         VStack(spacing: 24) {
             VStack(alignment: .leading, spacing: 12) {
-                Texts.letsCreateYourAccount.value
+                Texts.addProfilePhoto.value
+                    .fixedSize(horizontal: false, vertical: /*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/)
                     .font(.largeTitle)
                     .fontWeight(.bold)
                 
-                Texts.firsWeWannaKnowYou.value
+                Texts.choosePhotoDescription.value
                     .font(.body)
                     .foregroundColor(.secondary)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             
             VStack(spacing: 16) {
-                TextFieldCustom(
-                    text: $viewModel.dataForm.name,
-                    placeholder: Texts.name.rawValue,
-                    helperText: viewModel.dataForm.nameError,
-                    onChanged: { viewModel.dataForm.nameError = nil },
-                    isAutoFocused: true
-                )
-                
-                TextFieldCustom(
-                    text: $viewModel.dataForm.email,
-                    placeholder: Texts.email.rawValue,
-                    helperText: viewModel.dataForm.emailError,
-                    onChanged: { viewModel.dataForm.emailError = nil }
-                )
-                .keyboardType(.emailAddress)
+                ImagePicker(image: nil)
+                    .onPick { imageUrl in
+                        viewModel.dataForm.uiImage = imageUrl
+                    }
             }
             
             Button(action: {
                 hideKeyboard()
-                guard viewModel.dataForm.isValidEmailAndName() else { return }
-                viewModel.navigateToSignUpAddPhotoView()
+                viewModel.navigateToSignUpCreatePassword()
             }) {
                 Text(Texts.goAhead.rawValue)
                     .frame(maxWidth: .infinity)
             }
             .filledButton()
+            .padding(.top, 8)
         }
         .toolbar(.visible, for: .navigationBar)
         .frame(maxHeight: .infinity, alignment: .top)
@@ -70,12 +59,12 @@ struct SignUpView: View, KeyboardReadable {
                 isShowKeyboard = value
             }
         }
+        
     }
-    
 }
 
 //MARK: typealias
-extension SignUpView {
+extension SignUpAddPhotoView {
     
     typealias Texts  = TextsHelper
     
@@ -83,7 +72,7 @@ extension SignUpView {
 
 #Preview {
     NavigationStack {
-        SignUpView()
+        SignUpAddPhotoView()
             .environmentObject(SignUpViewModel())
     }
 }

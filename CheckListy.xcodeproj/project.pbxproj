@@ -73,6 +73,14 @@
 		149F89EC2C75E6370092F82C /* RequiredValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149F89EB2C75E6370092F82C /* RequiredValidator.swift */; };
 		149F89EE2C75E6660092F82C /* PasswordValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149F89ED2C75E6660092F82C /* PasswordValidator.swift */; };
 		149F89F02C75E7290092F82C /* EmailValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149F89EF2C75E7290092F82C /* EmailValidator.swift */; };
+		149F89F42C77BA050092F82C /* SignUpAddPhotoView .swift in Sources */ = {isa = PBXBuildFile; fileRef = 149F89F32C77BA050092F82C /* SignUpAddPhotoView .swift */; };
+		149F89F62C77BA280092F82C /* SignUpCreatePasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149F89F52C77BA280092F82C /* SignUpCreatePasswordView.swift */; };
+		149F89F82C782EDA0092F82C /* DataFormSignUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149F89F72C782EDA0092F82C /* DataFormSignUp.swift */; };
+		149F89FC2C78B19A0092F82C /* MaxCountValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149F89FB2C78B19A0092F82C /* MaxCountValidator.swift */; };
+		149F89FE2C78B3540092F82C /* NoEqualValuesValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149F89FD2C78B3540092F82C /* NoEqualValuesValidator.swift */; };
+		149F8A002C7D25BC0092F82C /* ScaleOnAppearModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149F89FF2C7D25BC0092F82C /* ScaleOnAppearModifier.swift */; };
+		149F8A022C7D27D30092F82C /* SlideOnAppearModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149F8A012C7D27D20092F82C /* SlideOnAppearModifier.swift */; };
+		149F8A042C7D298C0092F82C /* OpacityOnAppearModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149F8A032C7D298C0092F82C /* OpacityOnAppearModifier.swift */; };
 		14A4CAD02C34D5AE00634E19 /* String+RemoveWord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A4CACF2C34D5AE00634E19 /* String+RemoveWord.swift */; };
 		14A4CAD22C34D71300634E19 /* String+RemoveWhiteSpaces.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A4CAD12C34D71300634E19 /* String+RemoveWhiteSpaces.swift */; };
 		14B225322C364F0F00A7F15F /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B225312C364F0F00A7F15F /* SignInView.swift */; };
@@ -193,6 +201,14 @@
 		149F89EB2C75E6370092F82C /* RequiredValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequiredValidator.swift; sourceTree = "<group>"; };
 		149F89ED2C75E6660092F82C /* PasswordValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordValidator.swift; sourceTree = "<group>"; };
 		149F89EF2C75E7290092F82C /* EmailValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailValidator.swift; sourceTree = "<group>"; };
+		149F89F32C77BA050092F82C /* SignUpAddPhotoView .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SignUpAddPhotoView .swift"; sourceTree = "<group>"; };
+		149F89F52C77BA280092F82C /* SignUpCreatePasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpCreatePasswordView.swift; sourceTree = "<group>"; };
+		149F89F72C782EDA0092F82C /* DataFormSignUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataFormSignUp.swift; sourceTree = "<group>"; };
+		149F89FB2C78B19A0092F82C /* MaxCountValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaxCountValidator.swift; sourceTree = "<group>"; };
+		149F89FD2C78B3540092F82C /* NoEqualValuesValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoEqualValuesValidator.swift; sourceTree = "<group>"; };
+		149F89FF2C7D25BC0092F82C /* ScaleOnAppearModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScaleOnAppearModifier.swift; sourceTree = "<group>"; };
+		149F8A012C7D27D20092F82C /* SlideOnAppearModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideOnAppearModifier.swift; sourceTree = "<group>"; };
+		149F8A032C7D298C0092F82C /* OpacityOnAppearModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpacityOnAppearModifier.swift; sourceTree = "<group>"; };
 		14A4CACF2C34D5AE00634E19 /* String+RemoveWord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+RemoveWord.swift"; sourceTree = "<group>"; };
 		14A4CAD12C34D71300634E19 /* String+RemoveWhiteSpaces.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+RemoveWhiteSpaces.swift"; sourceTree = "<group>"; };
 		14B225312C364F0F00A7F15F /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
@@ -386,6 +402,8 @@
 				149F89EB2C75E6370092F82C /* RequiredValidator.swift */,
 				149F89ED2C75E6660092F82C /* PasswordValidator.swift */,
 				149F89EF2C75E7290092F82C /* EmailValidator.swift */,
+				149F89FB2C78B19A0092F82C /* MaxCountValidator.swift */,
+				149F89FD2C78B3540092F82C /* NoEqualValuesValidator.swift */,
 			);
 			path = Validators;
 			sourceTree = "<group>";
@@ -445,6 +463,9 @@
 				149F89CE2C73F9C70092F82C /* GradientTopModifier.swift */,
 				149F89D22C74CD520092F82C /* ToolbarDoneButton.swift */,
 				149F89D72C7516A00092F82C /* PopupModifier.swift */,
+				149F89FF2C7D25BC0092F82C /* ScaleOnAppearModifier.swift */,
+				149F8A012C7D27D20092F82C /* SlideOnAppearModifier.swift */,
+				149F8A032C7D298C0092F82C /* OpacityOnAppearModifier.swift */,
 			);
 			path = Modifiers;
 			sourceTree = "<group>";
@@ -479,10 +500,12 @@
 				14DBB6D42C3440630084EB23 /* DetailsListView.swift */,
 				14B225312C364F0F00A7F15F /* SignInView.swift */,
 				149F89C02C73D4AA0092F82C /* StartView.swift */,
-				14B2254E2C36DBA800A7F15F /* SignUpView.swift */,
 				14B225592C3EAD6E00A7F15F /* ListsView.swift */,
 				14044F912C5B24EF00FD3A73 /* ProfileView.swift */,
 				149F89BC2C6A6C400092F82C /* ForgotPasswordView.swift */,
+				14B2254E2C36DBA800A7F15F /* SignUpView.swift */,
+				149F89F32C77BA050092F82C /* SignUpAddPhotoView .swift */,
+				149F89F52C77BA280092F82C /* SignUpCreatePasswordView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -513,6 +536,7 @@
 				149F89DB2C7517D70092F82C /* PopupType.swift */,
 				149F89DF2C751F730092F82C /* PopupData.swift */,
 				149F89E32C7542FA0092F82C /* DataFormSignIn.swift */,
+				149F89F72C782EDA0092F82C /* DataFormSignUp.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -791,10 +815,12 @@
 				14B2256D2C4742C000A7F15F /* AutoFocusTextField.swift in Sources */,
 				145706E82C4EDE94007E642C /* HeaderSection.swift in Sources */,
 				14044FAA2C6A48C500FD3A73 /* ContinuousLoadingBar.swift in Sources */,
+				149F89F62C77BA280092F82C /* SignUpCreatePasswordView.swift in Sources */,
 				14044F7A2C56D1B600FD3A73 /* WelcomeView.swift in Sources */,
 				1457070D2C51EB4E007E642C /* ScrollHorizontalModifier.swift in Sources */,
 				149F89DC2C7517D70092F82C /* PopupType.swift in Sources */,
 				14044FA12C5C714E00FD3A73 /* FormUserProfile.swift in Sources */,
+				149F89FE2C78B3540092F82C /* NoEqualValuesValidator.swift in Sources */,
 				14DBB6CF2C3434560084EB23 /* SpeechRecognizerService.swift in Sources */,
 				149F89C52C73D9AB0092F82C /* ImagesHelper.swift in Sources */,
 				145706EF2C4F09D3007E642C /* ListCard.swift in Sources */,
@@ -810,12 +836,14 @@
 				145707072C51AA2B007E642C /* NavigationService.swift in Sources */,
 				14B225692C46169400A7F15F /* ItemCard.swift in Sources */,
 				149F89F02C75E7290092F82C /* EmailValidator.swift in Sources */,
+				149F8A042C7D298C0092F82C /* OpacityOnAppearModifier.swift in Sources */,
 				145706F22C4F0C08007E642C /* ListMode.swift in Sources */,
 				145706E42C4DDB94007E642C /* RecordButton.swift in Sources */,
 				14044F9A2C5C29D900FD3A73 /* DefaultSection.swift in Sources */,
 				14B225752C48B12D00A7F15F /* KeyboardReadable.swift in Sources */,
 				14B225582C3E9EE300A7F15F /* ListModel.swift in Sources */,
 				14044FA82C61BC1300FD3A73 /* ConvertibleDictionary.swift in Sources */,
+				149F89F42C77BA050092F82C /* SignUpAddPhotoView .swift in Sources */,
 				149F89C12C73D4AA0092F82C /* StartView.swift in Sources */,
 				14B225512C36DBC500A7F15F /* SignUpViewModel.swift in Sources */,
 				149F89BF2C6A6CE30092F82C /* ForgotPasswordViewModel.swift in Sources */,
@@ -826,12 +854,14 @@
 				14A4CAD22C34D71300634E19 /* String+RemoveWhiteSpaces.swift in Sources */,
 				14044F942C5B254600FD3A73 /* ProfileViewModel.swift in Sources */,
 				14044F902C5AE27F00FD3A73 /* String+ConvertToBase64.swift in Sources */,
+				149F8A002C7D25BC0092F82C /* ScaleOnAppearModifier.swift in Sources */,
 				14044F922C5B24EF00FD3A73 /* ProfileView.swift in Sources */,
 				14B225652C45C84700A7F15F /* TitleIcon.swift in Sources */,
 				14B225772C496C0A00A7F15F /* SectionModel.swift in Sources */,
 				14044F9F2C5C6E9600FD3A73 /* UserProfile.swift in Sources */,
 				149F89E02C751F730092F82C /* PopupData.swift in Sources */,
 				145707112C528DBD007E642C /* SearchButton.swift in Sources */,
+				149F89F82C782EDA0092F82C /* DataFormSignUp.swift in Sources */,
 				14B2255A2C3EAD6E00A7F15F /* ListsView.swift in Sources */,
 				149F89BD2C6A6C400092F82C /* ForgotPasswordView.swift in Sources */,
 				149F89D12C74C8530092F82C /* IconsHelper.swift in Sources */,
@@ -845,8 +875,10 @@
 				14DBB6D72C34A5500084EB23 /* ListItemModel.swift in Sources */,
 				14DBB6A42C3433560084EB23 /* CheckListyApp.swift in Sources */,
 				145706E62C4DE4E9007E642C /* AudioAnimation.swift in Sources */,
+				149F89FC2C78B19A0092F82C /* MaxCountValidator.swift in Sources */,
 				14B2255E2C3F42F800A7F15F /* FirebaseDatabasePaths.swift in Sources */,
 				14044F962C5C1ED800FD3A73 /* ProfileImageModifier.swift in Sources */,
+				149F8A022C7D27D30092F82C /* SlideOnAppearModifier.swift in Sources */,
 				149F89E22C7539D40092F82C /* FirebaseErrorsHelper.swift in Sources */,
 				14044F9C2C5C2BB300FD3A73 /* DefaultSectionOption.swift in Sources */,
 				14A4CAD02C34D5AE00634E19 /* String+RemoveWord.swift in Sources */,
