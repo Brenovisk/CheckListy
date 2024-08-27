@@ -74,7 +74,7 @@ struct SignUpView: View, KeyboardReadable {
     
 }
 
-//MARK: typealias
+// MARK: typealias
 extension SignUpView {
     
     typealias Texts  = TextsHelper

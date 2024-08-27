@@ -13,4 +13,3 @@ protocol Validator {
     var errorMessage: String? { get }
     
 }
-

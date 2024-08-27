@@ -76,7 +76,7 @@ struct HeaderSection<Item: Hashable>: View {
     }
 }
 
-//MARK: - Callbacks modifiers
+// MARK: - Callbacks modifiers
 extension HeaderSection {
     
     func `onAdd`(action: ((SectionModel<Item>) -> Void)?) -> HeaderSection {

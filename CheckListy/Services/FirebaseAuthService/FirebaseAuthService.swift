@@ -83,7 +83,7 @@ extension FirebaseAuthService {
     private func addListenerUserState() {
         guard let app = FirebaseApp.app() else { return }
         
-        Auth.auth(app: app).addStateDidChangeListener { auth, user in
+        Auth.auth(app: app).addStateDidChangeListener { _, user in
             Task { @MainActor in
                 if user != nil {
                     NavigationService.shared.resetNavigation()

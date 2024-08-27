@@ -17,7 +17,7 @@ struct PopupModifier: ViewModifier {
     func body(content: Content) -> some View {
         GeometryReader { geometry in
             content
-                .popup(isPresented: isPresent){
+                .popup(isPresented: isPresent) {
                     popupContent
                         .padding(.bottom, geometry.safeAreaInsets.bottom + 50)
                 } customize: {
@@ -32,7 +32,7 @@ struct PopupModifier: ViewModifier {
     }
     
     var popupContent: some View {
-        HStack(spacing: 8){
+        HStack(spacing: 8) {
             data.type.value.icon
                 .resizable()
                 .frame(width: 16, height: 16)
@@ -58,4 +58,3 @@ extension View {
     }
     
 }
-

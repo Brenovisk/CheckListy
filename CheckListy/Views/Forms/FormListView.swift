@@ -28,8 +28,20 @@ struct FormListView: View {
     var onSaveByCode: ((String) -> Void)?
     var onClose: (() -> Void)?
     
-    let colors: [String] = ["red", "green", "blue", "yellow", "purple"]
-    let icons: [String] = ["house.fill", "star.fill", "bell.fill", "heart.fill", "flag.fill", "book.fill", "folder.fill", "flame.fill", "bolt.fill", "leaf.fill"]
+    let colors: [String] = ["red-app", "green-app", "blue-app", "yellow-app", "purple-app"]
+    
+    let icons: [String] = [
+        "house.fill",
+        "star.fill",
+        "bell.fill",
+        "heart.fill",
+        "flag.fill",
+        "book.fill",
+        "folder.fill",
+        "flame.fill",
+        "bolt.fill",
+        "leaf.fill"
+    ]
     
     private init(item: Binding<ListModel?>, onSave: ((ListModel) -> Void)?, onClose: (() -> Void)?, onSaveByCode: ((String) -> Void)?) {
         self.init(item: item)
@@ -44,13 +56,13 @@ struct FormListView: View {
         self._item = item
         _id = State(initialValue: item.wrappedValue?.id ?? UUID())
         _name = State(initialValue: item.wrappedValue?.name ?? "")
-        _selectedColor = State(initialValue: item.wrappedValue?.color ?? "red")
+        _selectedColor = State(initialValue: item.wrappedValue?.color ?? "red-app")
         _selectedIcon = State(initialValue: item.wrappedValue?.icon ?? "house")
         _items = State(initialValue: item.wrappedValue?.items ?? [])
     }
     
     var body: some View {
-        NavigationView{
+        NavigationView {
             VStack {
                 Form {
                     Section(header: Text("Nome")) {

@@ -141,7 +141,7 @@ struct ListsView: View {
             section: viewModel.recentsSection,
             icon: "clock",
             enableAdd: false
-        ).onCollapse { section in
+        ).onCollapse { _ in
              viewModel.toggleCollapseRecentSection()
         }
     }
@@ -151,7 +151,7 @@ struct ListsView: View {
             section: viewModel.favoritesSection,
             icon: "star",
             enableAdd: false
-        ).onCollapse { section in
+        ).onCollapse { _ in
              viewModel.toggleCollapseFavoritesSection()
         }
     }

@@ -12,8 +12,8 @@ struct DataFormSignIn {
     var email: String = String()
     var password: String = String()
     
-    var emailError: String? = nil
-    var passwordError: String? = nil
+    var emailError: String? 
+    var passwordError: String? 
     
     mutating func isValid() -> Bool {
         emailError = ValidationService.validate(value: email, with: [.requiredValidator, .emailValidator])

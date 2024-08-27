@@ -28,7 +28,7 @@ class DetailsListViewModel: ObservableObject {
     }
     
     var filterItems: Array<ListItemModel> {
-        list.items.compactMap{ $0 }.filter { $0.name.lowercased().contains(searchText.lowercased()) }
+        list.items.compactMap { $0 }.filter { $0.name.lowercased().contains(searchText.lowercased()) }
     }
     
     @MainActor
@@ -43,7 +43,7 @@ class DetailsListViewModel: ObservableObject {
             .receive(on: RunLoop.main)
             .sink { [weak self] data in
                 guard let self = self else { return }
-                self.list = data.compactMap{ $0 }.first(where: { $0.id == self.list.id }) ?? self.list
+                self.list = data.compactMap { $0 }.first(where: { $0.id == self.list.id }) ?? self.list
             }
             .store(in: &cancellables)
     }
@@ -81,7 +81,7 @@ class DetailsListViewModel: ObservableObject {
             let sectionList = getSection(by: sectionName)
             return SectionModel(
                 name: sectionName,
-                items:  items,
+                items: items,
                 collapsed: sectionList?.collapsed ?? false
             )
         }
@@ -200,7 +200,7 @@ class DetailsListViewModel: ObservableObject {
 
 enum Commands: String {
     
-    case ok = "ok"
+    case ok = "ok" // swiftlint:disable:this identifier_name 
     case not = "não"
     
 }

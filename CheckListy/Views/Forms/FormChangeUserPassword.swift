@@ -20,9 +20,8 @@ struct FormChangeUserPassword: View {
     
     private init(
         isLoading: Binding<Bool>,
-        onSave: (((String,String)) -> Void)?,
-        onClose: (() -> Void)?) 
-    {
+        onSave: (((String, String)) -> Void)?,
+        onClose: (() -> Void)?) {
         self.init(isLoading: isLoading)
         self.onSave = onSave
         self.onClose = onClose
@@ -35,7 +34,7 @@ struct FormChangeUserPassword: View {
     }
     
     var body: some View {
-        NavigationView{
+        NavigationView {
             VStack {
                 Form {
                     AutoFocusTextField(text: $oldPassword, placeholder: "Senha antiga", isSecureTextEntry: true)

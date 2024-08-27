@@ -60,7 +60,7 @@ struct ProfileView: View {
                 }
                 
                 DefaultSection(title: "Geral") {
-                    VStack(spacing: 16){
+                    VStack(spacing: 16) {
                         DefaultSectionOption(
                             title: "Mudar Senha",
                             icon: "lock",
@@ -83,7 +83,7 @@ struct ProfileView: View {
                 }
                 
                 DefaultSection(title: "Suporte") {
-                    VStack(spacing: 16){
+                    VStack(spacing: 16) {
                         DefaultSectionOption(
                             title: "Precisa de Ajuda?",
                             icon: "message",
@@ -104,7 +104,7 @@ struct ProfileView: View {
                     }
                 }
             }
-            .scrollable{
+            .scrollable {
                 TitleIcon(
                     title: "Perfil",
                     iconSize: 10

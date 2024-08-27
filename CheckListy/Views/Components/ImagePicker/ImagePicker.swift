@@ -10,7 +10,7 @@ import SwiftUI
 
 struct ImagePicker: View {
     
-    @State private var image: UIImage? = nil
+    @State private var image: UIImage?
     @State private var imageURL: URL?
     @State private var showImagePicker = false
     
@@ -31,7 +31,7 @@ struct ImagePicker: View {
     
     var body: some View {
         VStack {
-            ZStack(alignment: .bottomTrailing){
+            ZStack(alignment: .bottomTrailing) {
                 Group {
                     if let image = image {
                         Image(uiImage: image)
@@ -70,7 +70,7 @@ struct ImagePicker: View {
     
 }
 
-//MARK: - Callbacks modifiers
+// MARK: - Callbacks modifiers
 extension ImagePicker {
     
     func `onPick`(action: ((UIImage) -> Void)?) -> ImagePicker {
@@ -82,7 +82,6 @@ extension ImagePicker {
     }
     
 }
-
 
 #Preview {
     HStack {

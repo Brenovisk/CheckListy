@@ -21,7 +21,7 @@ extension ListItemModel {
     
     func toNSDictionary() -> NSDictionary {
         [
-            "id" : id.uuidString,
+            "id": id.uuidString,
             "name": name,
             "description": description,
             "section": section,
@@ -31,9 +31,8 @@ extension ListItemModel {
     
     static func fromNSDictionary(_ dictionary: NSDictionary) -> ListItemModel? {
         
-        
         guard
-            let id = UUID(uuidString: dictionary["id"] as? String ?? "") ,
+            let id = UUID(uuidString: dictionary["id"] as? String ?? ""),
             let name = dictionary["name"] as? String,
             let description = dictionary["description"] as? String,
             let section = dictionary["section"] as? String,

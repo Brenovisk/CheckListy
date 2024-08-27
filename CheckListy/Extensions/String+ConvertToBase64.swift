@@ -18,7 +18,8 @@ extension String {
         guard let data = Data(base64Encoded: self) else {
             return nil
         }
-        return String(data: data, encoding: .utf8)
+
+        return String(decoding: data, as: UTF8.self)
     }
     
     func addingSuffix(_ suffix: String) -> String {

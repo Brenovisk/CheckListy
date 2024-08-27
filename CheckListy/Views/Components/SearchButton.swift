@@ -40,7 +40,7 @@ struct SearchButton: View {
     
 }
 
-//MARK: - Callback modifiers
+// MARK: - Callback modifiers
 extension SearchButton {
     
     func `onEnable`(action: (() -> Void)?) -> SearchButton {

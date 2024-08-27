@@ -92,5 +92,3 @@ extension ListModel {
         return dateFormatter.string(from: date)
     }
 }
-
-

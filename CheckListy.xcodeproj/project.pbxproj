@@ -652,6 +652,8 @@
 				14DBB69C2C3433560084EB23 /* Sources */,
 				14DBB69D2C3433560084EB23 /* Frameworks */,
 				14DBB69E2C3433560084EB23 /* Resources */,
+				149F8A052C7E4F400092F82C /* Run SwiftLint */,
+				149F8A062C7E51920092F82C /* Run SwiftFormat */,
 			);
 			buildRules = (
 			);
@@ -780,6 +782,46 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		149F8A052C7E4F400092F82C /* Run SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 12;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Run SwiftLint";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+		149F8A062C7E51920092F82C /* Run SwiftFormat */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Run SwiftFormat";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftformat > /dev/null; then\n    swiftformat .\nelse\n    echo \"warning: SwiftFormat not installed, download from https://github.com/nicklockwood/SwiftFormat\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		14DBB69C2C3433560084EB23 /* Sources */ = {
@@ -1049,6 +1091,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"CheckListy/App/Resources\"";
 				DEVELOPMENT_TEAM = QLU3R732N5;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "“Audio is recorded to transcribe. Audio recordings are discarded after transcription.”";
 				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "\"You can check list items with your voice\"";
@@ -1080,6 +1123,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"CheckListy/App/Resources\"";
 				DEVELOPMENT_TEAM = QLU3R732N5;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "“Audio is recorded to transcribe. Audio recordings are discarded after transcription.”";
 				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "\"You can check list items with your voice\"";

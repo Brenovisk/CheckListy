@@ -90,7 +90,7 @@ struct FormItemView: View, KeyboardReadable {
                 onClose?()
             }
         }
-        .onChange(of: name){
+        .onChange(of: name) {
             withAnimation {
                 isActionButton = !name.isEmpty
             }

@@ -38,11 +38,11 @@ class SignUpViewModel: ObservableObject {
         }
     }
     
-    func navigateToSignUpAddPhotoView()  {
+    func navigateToSignUpAddPhotoView() {
         NavigationService.shared.navigateTo(.signUpAddPhotoView)
     }
     
-    func navigateToSignUpCreatePassword()  {
+    func navigateToSignUpCreatePassword() {
         NavigationService.shared.navigateTo(.signUpCreatePasswordView)
     }
     

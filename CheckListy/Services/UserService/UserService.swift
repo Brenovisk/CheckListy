@@ -73,7 +73,7 @@ class UserService {
         FirebaseDatabase.shared.delete(path: pathUser)
     }
     
-    static func removeFromFirebaseAuth(_ user: User) async throws  {
+    static func removeFromFirebaseAuth(_ user: User) async throws {
         try await FirebaseAuthService.shared.deleteAuthUser(user)
     }
     
@@ -88,7 +88,6 @@ extension UserService {
         try await user.reauthenticate(with: authCredential)
     }
 
-    
     private static func updateProfile(_ user: User, with changes: ChangeRequest) async throws {
          let changeRequest = user.createProfileChangeRequest()
          changes(changeRequest)
@@ -156,4 +155,3 @@ extension UserService {
     typealias ChangeRequest = (UserProfileChangeRequest) -> Void
     
 }
-

@@ -12,25 +12,25 @@ import Combine
 class ListsViewModel: ObservableObject {
     
     @Published var lists: [ListModel?] = []
-    @Published var listToEdit: ListModel? = nil
+    @Published var listToEdit: ListModel?
     @Published var contentToShare: Array<Any> = []
-    @Published var selectedList: ListModel? = nil
+    @Published var selectedList: ListModel?
     @Published var visualizationMode: ListMode = .list
     @Published var showSearchBar: Bool = false
     @Published var searchText: String = String()
     @Published var recentsSection: SectionModel<String> = SectionModel(name: "Recentes", items: [])
     @Published var favoritesSection: SectionModel<ListModel> = SectionModel(name: "Favoritos", items: [])
     
-    @Published var userImage: UIImage? = nil
-    @Published var userName: String? = nil
+    @Published var userImage: UIImage?
+    @Published var userName: String?
     private var cancellables = Set<AnyCancellable>()
     
     var filterLists: Array<ListModel> {
-        lists.compactMap{ $0 }.filter { $0.name.lowercased().contains(searchText.lowercased()) }
+        lists.compactMap { $0 }.filter { $0.name.lowercased().contains(searchText.lowercased()) }
     }
     
-    var favorites: Array<ListModel>  {
-        lists.compactMap{ $0 }.filter { $0.isFavorite }
+    var favorites: Array<ListModel> {
+        lists.compactMap { $0 }.filter { $0.isFavorite }
     }
     
     var firebaseDatabase = FirebaseDatabase.shared
@@ -48,7 +48,7 @@ class ListsViewModel: ObservableObject {
             .receive(on: RunLoop.main)
             .sink { [weak self] data in
                 guard let self = self else { return }
-                self.lists = data.compactMap{ $0 }.filter { $0.users.contains(user.uid) }
+                self.lists = data.compactMap { $0 }.filter { $0.users.contains(user.uid) }
             }.store(in: &cancellables)
     }
     
@@ -172,4 +172,3 @@ extension ListsViewModel {
     typealias Paths = FirebaseDatabasePaths
     
 }
-

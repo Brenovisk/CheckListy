@@ -34,7 +34,7 @@ struct AudioAnimation: View {
                 }
             }
             .frame(maxWidth: .infinity)
-            .onAppear{
+            .onAppear {
                 drawingHeight.toggle()
             }
         }

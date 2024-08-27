@@ -27,7 +27,7 @@ struct GridModifier: ViewModifier {
     }
 
     func body(content: Content) -> some View {
-        LazyVGrid(columns: getColumns() , spacing: 0) {
+        LazyVGrid(columns: getColumns(), spacing: 0) {
             content
         }
     }

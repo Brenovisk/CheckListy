@@ -14,7 +14,7 @@ struct TitleIcon: View {
     var icon: String?
     var color: Color?
     var iconSize: CGFloat = 16
-    var subtitle: String? = nil
+    var subtitle: String?
     
     var body: some View {
         HStack(alignment: .center) {
@@ -23,7 +23,6 @@ struct TitleIcon: View {
                     Circle()
                         .fill(color)
                         .frame(width: 2 * iconSize, height: 2 * iconSize)
-                    
                     
                     Image(systemName: icon)
                         .foregroundColor(Color.black)

@@ -104,11 +104,23 @@ actor SpeechRecognizerService: ObservableObject {
         request.shouldReportPartialResults = true
         
         let audioSession = AVAudioSession.sharedInstance()
-        try audioSession.setCategory(.playAndRecord, mode: .default, options: [.defaultToSpeaker, .allowBluetooth, .allowBluetoothA2DP, .mixWithOthers])
+        
+        try audioSession.setCategory(
+            .playAndRecord,
+            mode: .default,
+            options: [
+                .defaultToSpeaker,
+                .allowBluetooth,
+                .allowBluetoothA2DP,
+                .mixWithOthers
+            ]
+        )
+        
         try audioSession.setActive(true, options: .notifyOthersOnDeactivation)
         let inputNode = audioEngine.inputNode
         
         let recordingFormat = inputNode.outputFormat(forBus: 0)
+        // swiftlint:disable:next unused_closure_parameter
         inputNode.installTap(onBus: 0, bufferSize: 1024, format: recordingFormat) { (buffer: AVAudioPCMBuffer, when: AVAudioTime) in
             request.append(buffer)
         }

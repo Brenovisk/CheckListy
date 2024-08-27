@@ -63,7 +63,7 @@ struct SignUpAddPhotoView: View, KeyboardReadable {
     }
 }
 
-//MARK: typealias
+// MARK: typealias
 extension SignUpAddPhotoView {
     
     typealias Texts  = TextsHelper

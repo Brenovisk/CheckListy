@@ -112,10 +112,10 @@ struct DetailsListView: View {
         }
         .sheet(isPresented: $isShowForm) {
             FormListView(item: listOptionalBinding)
-                .onSave() { newList in
+                .onSave { newList in
                     viewModel.updateList(with: newList)
                 }
-                .onClose() {
+                .onClose {
                     isShowForm.toggle()
                 }
         }
@@ -124,14 +124,14 @@ struct DetailsListView: View {
                 item: $viewModel.itemToEdit,
                 section: $viewModel.sectionSelected
             )
-            .onSave() { item in
+            .onSave { item in
                 if viewModel.itemToEdit != nil {
                     viewModel.update(item)
                     return
                 }
                 viewModel.add(item)
             }
-            .onClose() {
+            .onClose {
                 isShowFormItem = false
                 viewModel.sectionSelected = String()
             }
@@ -157,7 +157,6 @@ struct DetailsListView: View {
                 viewModel.remove(item)
             }
     }
-    
     
     func headerSection(_ sectionList: SectionModel<ListItemModel>) -> some View {
         HeaderSection<ListItemModel>(section: sectionList, subtitle: viewModel.getCheckedItemBy(section: sectionList))
@@ -214,7 +213,7 @@ struct DetailsListView: View {
             .environmentObject(
                 DetailsListViewModel(
                     ListModel(
-                        name: "List name" ,
+                        name: "List name",
                         color: "green",
                         icon: "checkmark",
                         items: [
@@ -247,7 +246,7 @@ struct DetailsListView: View {
                                 description: "",
                                 section: "Ahhh",
                                 isCheck: true
-                            ),
+                            )
                         ]
                     )
                 )

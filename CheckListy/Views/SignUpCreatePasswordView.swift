@@ -76,7 +76,7 @@ struct SignUpCreatePasswordView: View, KeyboardReadable {
     
 }
 
-//MARK: typealias
+// MARK: typealias
 extension SignUpCreatePasswordView {
     
     typealias Texts  = TextsHelper

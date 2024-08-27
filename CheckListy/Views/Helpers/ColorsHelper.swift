@@ -10,7 +10,7 @@ import SwiftUI
 
 enum ColorsHelper: String {
     
-    case background = "background"
+    case background = "background" // swiftlint:disable:this redundant_string_enum_value 
     
 }
 

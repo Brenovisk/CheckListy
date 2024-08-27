@@ -42,25 +42,25 @@ class SignInViewModel: ObservableObject {
         }
     }
     
-    func setShowStartView(to value: Bool)  {
+    func setShowStartView(to value: Bool) {
         withAnimation(.easeInOut(duration: 0.5)) {
             showStartView = value
         }
     }    
     
-    func setIsSecureToggle()  {
+    func setIsSecureToggle() {
         withAnimation {
             isSecure.toggle()
         }
     }
     
-    func navigateToSignUpView()  {
+    func navigateToSignUpView() {
         withAnimation {
             NavigationService.shared.navigateTo(.signUpView)
         }
     }    
     
-    func navigateToForgotPasswordView()  {
+    func navigateToForgotPasswordView() {
         withAnimation {
             NavigationService.shared.navigateTo(.forgotPasswordView(dataForm.email))
         }

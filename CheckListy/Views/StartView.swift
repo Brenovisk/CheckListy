@@ -20,7 +20,7 @@ struct StartView: View {
     init() {}
     
     var body: some View {
-        VStack(spacing:.zero) {
+        VStack(spacing: .zero) {
             logo
                 .slideOnAppear(delay: 0.4, direction: .fromLeft)
             
@@ -52,7 +52,7 @@ struct StartView: View {
     }
     
     var logo: some View {
-        VStack(alignment: .leading, spacing: 24){
+        VStack(alignment: .leading, spacing: 24) {
             Images.logo.image
                 .resizable()
                 .frame(width: 80, height: 80)
@@ -70,8 +70,8 @@ struct StartView: View {
                 .fill(
                     LinearGradient(
                         gradient: Gradient(stops: [
-                            .init(color:Colors.background.value.opacity(0), location: 0),
-                            .init(color:Colors.background.value.opacity(1), location: 0.57)
+                            .init(color: Colors.background.value.opacity(0), location: 0),
+                            .init(color: Colors.background.value.opacity(1), location: 0.57)
                         ]),
                         startPoint: .top,
                         endPoint: .bottom
@@ -90,7 +90,6 @@ struct StartView: View {
             .ignoresSafeArea()
         )
     }
-    
     
     var footer: some View {
         HStack {
@@ -125,7 +124,7 @@ extension StartView {
     
 }
 
-//MARK: typealias
+// MARK: typealias
 extension StartView {
     
     typealias Colors = ColorsHelper

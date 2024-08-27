@@ -16,7 +16,7 @@ struct AnimatedBackgroundModifier: ViewModifier, KeyboardReadable {
 
     func body(content: Content) -> some View {
         ZStack {
-            VStack{
+            VStack {
                 ImagesHelper.coloredShapesVector.image
                 .resizable()
                 .scaledToFill()

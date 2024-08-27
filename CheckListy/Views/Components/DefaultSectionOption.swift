@@ -6,14 +6,12 @@
 //
 
 import Foundation
-
-import Foundation
 import SwiftUI
 
 struct DefaultSectionOption: View {
     
     var title: String
-    var icon: String? = nil
+    var icon: String?
     var navigable: Bool = false
     var destructive: Bool = false
     

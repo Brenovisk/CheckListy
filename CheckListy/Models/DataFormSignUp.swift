@@ -14,22 +14,22 @@ struct DataFormSignUp {
     var email: String = String()
     var password: String = String()
     var confirmationPassword: String = String()
-    var uiImage: UIImage? = nil
+    var uiImage: UIImage?
     
-    var nameError: String? = nil
-    var emailError: String? = nil
-    var passwordError: String? = nil
-    var confirmationPasswordError: String? = nil
+    var nameError: String?
+    var emailError: String?
+    var passwordError: String?
+    var confirmationPasswordError: String?
     
     mutating func isValidEmailAndName() -> Bool {
         nameError = ValidationService.validate(
             value: name,
-            with: [.requiredValidator,.maxCountValidator]
+            with: [.requiredValidator, .maxCountValidator]
         )
         
         emailError = ValidationService.validate(
             value: email,
-            with: [.requiredValidator,.emailValidator]
+            with: [.requiredValidator, .emailValidator]
         )
         
         return [nameError, emailError].allSatisfy { $0 == nil }
@@ -38,18 +38,17 @@ struct DataFormSignUp {
     mutating func isValidPasswordAndConfirmation() -> Bool {
         passwordError = ValidationService.validate(
             value: password,
-            with: [.requiredValidator,.passwordValidator]
+            with: [.requiredValidator, .passwordValidator]
         )
         
         confirmationPasswordError = ValidationService.validate(
             value: confirmationPassword,
-            with: [.requiredValidator,.noEqualValues(firstValue: password)]
+            with: [.requiredValidator, .noEqualValues(firstValue: password)]
         )
         
         return [passwordError, confirmationPasswordError].allSatisfy { $0 == nil }
     }
 
-    
     mutating func resetErrors() {
         nameError = nil
         emailError = nil

@@ -31,7 +31,9 @@ enum TextsHelper: String {
     case wrongPassword                    = "A senha é inválida ou o usuário não tem uma senha"
     case tooManyRequests                  = "Muitas tentativas de login foram feitas muito recentemente. Tente novamente mais tarde"
     case userNotFound                     = "Não há registro de usuário correspondente a este identificador. O usuário pode ter sido excluído"
+    // swiftlint:disable:next line_length
     case accountExistsDifferentCredential = "A conta já existe com o mesmo endereço de e-mail, mas com diferentes credenciais de autenticação. Faça login usando um provedor associado a este endereço de e-mail"
+    // swiftlint:disable:next line_length
     case requiresRecentLogin              = "Esta operação é sensível e requer uma autenticação recente. Faça login novamente antes de tentar novamente esta solicitação"
     case providerAlreadyLinked            = "Esta conta já está associada a outro usuário"
     case noSuchProvider                   = "Não existe nenhum provedor de autenticação associado com o email fornecido"
@@ -50,6 +52,7 @@ enum TextsHelper: String {
     case differentValuesPassword          = "Senhas não correspondem"
     case name                             = "Nome"
     case addProfilePhoto                  = "Adicione uma Foto de Perfil"
+    // swiftlint:disable:next line_length
     case choosePhotoDescription           = "Escolha uma foto da galeria para personalizar seu perfil. Se preferir, você pode continuar e adicionar mais tarde."
     case createASecurePassword            = "Crie uma Senha Segura"
     case createASecureDescription         = "Lembre-se de usar uma combinação de letras, números e caracteres especiais para maior segurança."

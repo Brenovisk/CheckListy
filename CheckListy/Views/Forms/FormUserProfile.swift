@@ -44,7 +44,7 @@ struct FormUserProfile: View {
     }
     
     var body: some View {
-        NavigationView{
+        NavigationView {
             VStack {
                 ImagePicker(image: image)
                     .onPick { uiImage in
@@ -52,7 +52,7 @@ struct FormUserProfile: View {
                     }
                     .padding(.top, 16)
                 
-                Form{
+                Form {
                     AutoFocusTextField(text: $name, placeholder: String())
                 }
                 .navigationTitle("Editar Perfil")

@@ -40,5 +40,3 @@ struct WelcomeView: View {
         .frame(maxWidth: .infinity, alignment: .leading)
     }
 }
-
-

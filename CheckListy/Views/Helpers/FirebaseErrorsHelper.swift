@@ -89,9 +89,7 @@ extension FirebaseErrorsHelper {
         return firebaseError
     }
        
-    
 }
-
 
 struct FirebaseAuthError {
     

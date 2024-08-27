@@ -54,7 +54,7 @@ extension UserDatabase {
 
         let userDict = self.toNSDictionary()
 
-        let _ : () = try await withCheckedThrowingContinuation { continuation in
+        let _: () = try await withCheckedThrowingContinuation { continuation in
             dbRef.child("users").child(self.id).setValue(userDict) { error, _ in
                 if let error = error {
                     continuation.resume(throwing: error)

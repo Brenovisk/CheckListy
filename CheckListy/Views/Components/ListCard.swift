@@ -30,7 +30,7 @@ struct ListCard: View {
         self.onShare = onShare
     }
     
-    init(list: ListModel, mode:(Binding<ListMode>)? = nil) {
+    init(list: ListModel, mode: (Binding<ListMode>)? = nil) {
         self.list = list
         self._mode = mode ?? Binding.constant(.grid)
     }
@@ -63,7 +63,6 @@ struct ListCard: View {
                     menu
                 }
                 
-                
                 HStack(alignment: .center) {
                     VStack(alignment: .leading) {
                         Text(list.name)
@@ -71,7 +70,7 @@ struct ListCard: View {
                             .font(.body)
                             .foregroundColor(colorScheme == .dark ? Color.white : Color.black)
                         
-                        if !list.description.isEmpty  {
+                        if !list.description.isEmpty {
                             Text(list.description)
                                 .lineLimit(1)
                                 .font(.subheadline)
@@ -97,7 +96,6 @@ struct ListCard: View {
         .cornerRadius(12)
     }
     
-    
     var listCard: some View {
         HStack {
             HStack(alignment: .center, spacing: .zero) {
@@ -110,7 +108,7 @@ struct ListCard: View {
                         .font(.body)
                         .foregroundColor(colorScheme == .dark ? Color.white : Color.black)
                     
-                    if !list.description.isEmpty  {
+                    if !list.description.isEmpty {
                         Text(list.description)
                             .lineLimit(1)
                             .font(.subheadline)
@@ -140,7 +138,6 @@ struct ListCard: View {
             .foregroundColor(Color(list.color))
             .fontWeight(.semibold)
     }
-    
     
     var icon: some View {
         ZStack {
@@ -187,7 +184,7 @@ struct ListCard: View {
     }
 }
 
-//MARK: - Callbacks modifiers
+// MARK: - Callbacks modifiers
 extension ListCard {
     
     func `onEdit`(action: ((ListModel) -> Void)?) -> ListCard {

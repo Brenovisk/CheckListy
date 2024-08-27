@@ -23,7 +23,7 @@ class ImageService {
         let metadata = StorageMetadata()
         metadata.contentType = "image/jpeg"
         
-        let _ : StorageMetadata? = try await withCheckedThrowingContinuation { continuation in
+        let _: StorageMetadata? = try await withCheckedThrowingContinuation { continuation in
             storageRef.putData(data, metadata: metadata) { metadata, error in
                 if let error = error {
                     continuation.resume(throwing: error)
@@ -64,7 +64,7 @@ class ImageService {
     static func deletePhoto(name: String) async throws {
         let storageRef = Storage.storage().reference().child("profile_images").child("\(name).jpg")
         
-        let _:() = try await withCheckedThrowingContinuation { continuation in
+        let _: () = try await withCheckedThrowingContinuation { continuation in
             storageRef.delete { error in
                 if let error = error {
                     continuation.resume(throwing: error)
@@ -75,7 +75,7 @@ class ImageService {
         }
     }
     
-    static func convertToUImage(from imageData: Data) throws -> UIImage{
+    static func convertToUImage(from imageData: Data) throws -> UIImage {
         guard let image = UIImage(data: imageData) else {
             throw NSError(domain: "ImageDataError", code: -1, userInfo: nil)
         }

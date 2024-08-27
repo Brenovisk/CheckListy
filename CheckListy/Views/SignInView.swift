@@ -67,8 +67,8 @@ struct SignInView: View, KeyboardReadable {
                 .frame(maxWidth: .infinity, alignment: .trailing)
             }
             
-            VStack(spacing: 12){
-                Button(action: { 
+            VStack(spacing: 12) {
+                Button(action: {
                     hideKeyboard()
                     viewModel.signIn()
                 }) {
@@ -89,7 +89,7 @@ struct SignInView: View, KeyboardReadable {
         }
         .padding(.top, isShowKeyboard ? 16 : 24)
         .frame(maxHeight: .infinity, alignment: .top)
-        .scrollable() {}
+        .scrollable {}
         .animatedBackground()
         .gradientTop(color: Color.accentColor, height: 200, delay: 1)
         .popup(isPresent: $viewModel.showPopup, data: viewModel.popupData)
@@ -102,7 +102,7 @@ struct SignInView: View, KeyboardReadable {
     
 }
 
-//MARK: typealias
+// MARK: typealias
 extension SignInView {
     
     typealias Images = ImagesHelper

@@ -21,7 +21,7 @@ struct ItemCard: View {
     var onCheck: ((ListItemModel) -> Void)?
     var onMove: ((ListItemModel, SectionModel<ListItemModel>) -> Void)?
     
-    private init(item: ListItemModel, list: ListModel, sections: Array<SectionModel<ListItemModel>>, onEdit: ((ListItemModel) -> Void)?, onDelete: ((ListItemModel) -> Void)?,onMove: ((ListItemModel, SectionModel<ListItemModel>) -> Void)?, onCheck: ((ListItemModel) -> Void)? ) {
+    private init(item: ListItemModel, list: ListModel, sections: Array<SectionModel<ListItemModel>>, onEdit: ((ListItemModel) -> Void)?, onDelete: ((ListItemModel) -> Void)?, onMove: ((ListItemModel, SectionModel<ListItemModel>) -> Void)?, onCheck: ((ListItemModel) -> Void)? ) {
         self.init(item: item, list: list, sections: sections)
         
         self.onEdit = onEdit
@@ -57,7 +57,7 @@ struct ItemCard: View {
                             .font(.body)
                             .foregroundColor(colorScheme == .dark ? Color.white : Color.black)
                         
-                        if !item.description.isEmpty  {
+                        if !item.description.isEmpty {
                             Text(item.description)
                                 .lineLimit(1)
                                 .font(.subheadline)
@@ -111,7 +111,7 @@ struct ItemCard: View {
     }
 }
 
-//MARK: - Helper methods
+// MARK: - Helper methods
 extension ItemCard {
     
     var isShowMoveButton: Bool {
@@ -121,7 +121,7 @@ extension ItemCard {
     
 }
 
-//MARK: - Callbacks modifiers
+// MARK: - Callbacks modifiers
 extension ItemCard {
     
     func `onCheck`(action: ((ListItemModel) -> Void)?) -> ItemCard {

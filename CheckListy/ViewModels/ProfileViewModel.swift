@@ -59,7 +59,7 @@ class ProfileViewModel: ObservableObject {
     @MainActor
     func signOut() {
         do {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5){
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 FirebaseDatabase.shared.removeListeners()
                 UserDefaultsService.clearAll()
                 FirebaseDatabase.shared.clearData()
@@ -98,7 +98,7 @@ extension ProfileViewModel {
     
     @MainActor
     private func updateImageIfNeeded(_ user: UserProfile) async throws {
-        if let image = user.profileImage, image != userProfile?.profileImage  {
+        if let image = user.profileImage, image != userProfile?.profileImage {
             try await UserManager.uploadProfile(image, for: user)
             await getUserProfile()
         }
@@ -116,4 +116,3 @@ extension ProfileViewModel {
         try FirebaseAuthService.shared.getAuthUser()
     }
 }
-
