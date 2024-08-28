@@ -18,28 +18,14 @@ struct ForgotPasswordConfirmationView: View {
     }
 
     var body: some View {
-        VStack(spacing: 24) {
-            Images.messageReceivedVector.image
-
-            VStack(spacing: 12) {
-                Texts.sentEmail.value
-                    .font(.largeTitle)
-                    .fontWeight(.bold)
-
-                Texts.sentEmailDescription.value
-                    .font(.body)
-                    .foregroundColor(.secondary)
-                    .multilineTextAlignment(.center)
-            }
-            .frame(maxWidth: .infinity, alignment: .center)
-
-            Button(action: {
-                viewModel.navigateToLogin()
-            }) {
-                Text(Texts.login.rawValue)
-                    .frame(maxWidth: .infinity)
-            }
-            .filledButton()
+        MessageWithImageView(
+            image: Images.messageReceivedVector.image,
+            title: Texts.sentEmail.rawValue,
+            description: Texts.sentEmailDescription.rawValue,
+            buttonText: Texts.login.rawValue
+        )
+        .onAction {
+            viewModel.navigateToLogin()
         }
         .toolbar(.visible, for: .navigationBar)
         .padding(.horizontal, 16)
@@ -52,7 +38,6 @@ struct ForgotPasswordConfirmationView: View {
 }
 
 // MARK: typealias
-
 extension ForgotPasswordConfirmationView {
 
     typealias Texts = TextsHelper

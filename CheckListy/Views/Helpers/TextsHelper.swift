@@ -58,9 +58,11 @@ enum TextsHelper: String {
     case confirmPassword = "Confirme sua senha"
     case create = "Criar"
     case recoverPassword = "Recuperar Senha"
+    // swiftlint:disable:next line_length
     case recoverPasswordDescription = "Insira seu e-mail abaixo para receber instruções sobre como redefinir sua senha. Você receberá um e-mail com o passo a passo"
     case send = "Enviar"
     case sentEmail = "Email enviado!"
+    // swiftlint:disable:next line_length
     case sentEmailDescription = "Um e-mail foi enviado com as instruções para redefinir sua senha. Após concluir o processo, você poderá fazer login novamente."
 
 }

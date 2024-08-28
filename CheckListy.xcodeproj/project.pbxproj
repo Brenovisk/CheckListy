@@ -33,6 +33,7 @@
 		14044FAA2C6A48C500FD3A73 /* ContinuousLoadingBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14044FA92C6A48C500FD3A73 /* ContinuousLoadingBar.swift */; };
 		143F922C2C7F6C9800751AD0 /* ForgotPasswordConfirmationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143F922B2C7F6C9800751AD0 /* ForgotPasswordConfirmationView.swift */; };
 		143F922E2C7F7AC200751AD0 /* DataFormForgotPassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143F922D2C7F7AC200751AD0 /* DataFormForgotPassword.swift */; };
+		143F92302C7F85C200751AD0 /* MessageWithImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143F922F2C7F85C200751AD0 /* MessageWithImageView.swift */; };
 		145706E42C4DDB94007E642C /* RecordButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145706E32C4DDB94007E642C /* RecordButton.swift */; };
 		145706E62C4DE4E9007E642C /* AudioAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145706E52C4DE4E9007E642C /* AudioAnimation.swift */; };
 		145706E82C4EDE94007E642C /* HeaderSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145706E72C4EDE94007E642C /* HeaderSection.swift */; };
@@ -164,6 +165,7 @@
 		14044FA92C6A48C500FD3A73 /* ContinuousLoadingBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContinuousLoadingBar.swift; sourceTree = "<group>"; };
 		143F922B2C7F6C9800751AD0 /* ForgotPasswordConfirmationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordConfirmationView.swift; sourceTree = "<group>"; };
 		143F922D2C7F7AC200751AD0 /* DataFormForgotPassword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataFormForgotPassword.swift; sourceTree = "<group>"; };
+		143F922F2C7F85C200751AD0 /* MessageWithImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageWithImageView.swift; sourceTree = "<group>"; };
 		145706E32C4DDB94007E642C /* RecordButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordButton.swift; sourceTree = "<group>"; };
 		145706E52C4DE4E9007E642C /* AudioAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioAnimation.swift; sourceTree = "<group>"; };
 		145706E72C4EDE94007E642C /* HeaderSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderSection.swift; sourceTree = "<group>"; };
@@ -448,6 +450,7 @@
 				14044FA92C6A48C500FD3A73 /* ContinuousLoadingBar.swift */,
 				149F89D42C74EC830092F82C /* TextFieldCustom.swift */,
 				143F922B2C7F6C9800751AD0 /* ForgotPasswordConfirmationView.swift */,
+				143F922F2C7F85C200751AD0 /* MessageWithImageView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -904,6 +907,7 @@
 				14B2254F2C36DBA800A7F15F /* SignUpView.swift in Sources */,
 				14DBB6D72C34A5500084EB23 /* ListItemModel.swift in Sources */,
 				14DBB6A42C3433560084EB23 /* CheckListyApp.swift in Sources */,
+				143F92302C7F85C200751AD0 /* MessageWithImageView.swift in Sources */,
 				145706E62C4DE4E9007E642C /* AudioAnimation.swift in Sources */,
 				149F89FC2C78B19A0092F82C /* MaxCountValidator.swift in Sources */,
 				14B2255E2C3F42F800A7F15F /* FirebaseDatabasePaths.swift in Sources */,
