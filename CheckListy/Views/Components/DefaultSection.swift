@@ -9,15 +9,14 @@ import Foundation
 import SwiftUI
 
 struct DefaultSection<Content: View>: View {
-    
     var title: String
     var content: Content
-    
+
     init(title: String, @ViewBuilder content: () -> Content) {
         self.title = title
         self.content = content()
     }
-    
+
     var body: some View {
         VStack(alignment: .leading) {
             Text(title.uppercased())
@@ -25,7 +24,7 @@ struct DefaultSection<Content: View>: View {
                 .fontWeight(.semibold)
                 .padding(0)
                 .foregroundColor(Color(.lightGray))
-            
+
             VStack {
                 content
             }
@@ -34,5 +33,4 @@ struct DefaultSection<Content: View>: View {
         }
         .frame(maxWidth: .infinity, alignment: .leading)
     }
-    
 }

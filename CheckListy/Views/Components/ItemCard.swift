@@ -9,33 +9,32 @@ import Foundation
 import SwiftUI
 
 struct ItemCard: View {
-    
     var item: ListItemModel
     var list: ListModel
-    var sections: Array<SectionModel<ListItemModel>>
-    
+    var sections: [SectionModel<ListItemModel>]
+
     @Environment(\.colorScheme) var colorScheme
-    
+
     var onEdit: ((ListItemModel) -> Void)?
     var onDelete: ((ListItemModel) -> Void)?
     var onCheck: ((ListItemModel) -> Void)?
     var onMove: ((ListItemModel, SectionModel<ListItemModel>) -> Void)?
-    
-    private init(item: ListItemModel, list: ListModel, sections: Array<SectionModel<ListItemModel>>, onEdit: ((ListItemModel) -> Void)?, onDelete: ((ListItemModel) -> Void)?, onMove: ((ListItemModel, SectionModel<ListItemModel>) -> Void)?, onCheck: ((ListItemModel) -> Void)? ) {
+
+    private init(item: ListItemModel, list: ListModel, sections: [SectionModel<ListItemModel>], onEdit: ((ListItemModel) -> Void)?, onDelete: ((ListItemModel) -> Void)?, onMove: ((ListItemModel, SectionModel<ListItemModel>) -> Void)?, onCheck: ((ListItemModel) -> Void)?) {
         self.init(item: item, list: list, sections: sections)
-        
+
         self.onEdit = onEdit
         self.onDelete = onDelete
         self.onCheck = onCheck
         self.onMove = onMove
     }
-    
-    init(item: ListItemModel, list: ListModel, sections: Array<SectionModel<ListItemModel>>) {
+
+    init(item: ListItemModel, list: ListModel, sections: [SectionModel<ListItemModel>]) {
         self.item = item
         self.list = list
         self.sections = sections
     }
-    
+
     var body: some View {
         VStack {
             HStack {
@@ -48,7 +47,7 @@ struct ItemCard: View {
                         .onTapGesture {
                             self.onCheck?(item)
                         }
-                    
+
                     VStack(alignment: .leading) {
                         Text(item.name)
                             .strikethrough(item.isCheck)
@@ -56,7 +55,7 @@ struct ItemCard: View {
                             .lineLimit(1)
                             .font(.body)
                             .foregroundColor(colorScheme == .dark ? Color.white : Color.black)
-                        
+
                         if !item.description.isEmpty {
                             Text(item.description)
                                 .lineLimit(1)
@@ -71,18 +70,18 @@ struct ItemCard: View {
                     }
                 }
                 .padding(.vertical, 4)
-                
+
                 Menu {
                     Button(role: .destructive, action: { self.onDelete?(item) }) {
                         Label("Deletar", systemImage: "trash")
                     }
-                    
+
                     Button(action: {
                         self.onEdit?(item)
                     }) {
                         Label("Editar", systemImage: "pencil")
                     }
-                    
+
                     if isShowMoveButton {
                         Menu("Mover para...") {
                             ForEach(sections, id: \.id) { section in
@@ -104,7 +103,7 @@ struct ItemCard: View {
             }
             .background(Color(.secondarySystemBackground))
             .cornerRadius(12)
-            
+
             Spacer()
                 .frame(height: 8)
         }
@@ -112,66 +111,64 @@ struct ItemCard: View {
 }
 
 // MARK: - Helper methods
+
 extension ItemCard {
-    
     var isShowMoveButton: Bool {
         let sectionWithName = sections.filter { !$0.name.isEmpty }
         return sectionWithName.count > 1
     }
-    
 }
 
 // MARK: - Callbacks modifiers
+
 extension ItemCard {
-    
-    func `onCheck`(action: ((ListItemModel) -> Void)?) -> ItemCard {
+    func onCheck(action: ((ListItemModel) -> Void)?) -> ItemCard {
         ItemCard(
-            item: self.item,
-            list: self.list,
-            sections: self.sections,
-            onEdit: self.onEdit,
-            onDelete: self.onDelete,
-            onMove: self.onMove,
+            item: item,
+            list: list,
+            sections: sections,
+            onEdit: onEdit,
+            onDelete: onDelete,
+            onMove: onMove,
             onCheck: action
         )
     }
-    
-    func `onEdit`(action: ((ListItemModel) -> Void)?) -> ItemCard {
+
+    func onEdit(action: ((ListItemModel) -> Void)?) -> ItemCard {
         ItemCard(
-            item: self.item,
-            list: self.list,
-            sections: self.sections,
+            item: item,
+            list: list,
+            sections: sections,
             onEdit: action,
-            onDelete: self.onDelete,
-            onMove: self.onMove,
-            onCheck: self.onCheck
+            onDelete: onDelete,
+            onMove: onMove,
+            onCheck: onCheck
         )
     }
-    
-    func `onDelete`(action: ((ListItemModel) -> Void)?) -> ItemCard {
+
+    func onDelete(action: ((ListItemModel) -> Void)?) -> ItemCard {
         ItemCard(
-            item: self.item,
-            list: self.list,
-            sections: self.sections,
-            onEdit: self.onEdit,
+            item: item,
+            list: list,
+            sections: sections,
+            onEdit: onEdit,
             onDelete: action,
-            onMove: self.onMove,
-            onCheck: self.onCheck
+            onMove: onMove,
+            onCheck: onCheck
         )
     }
-    
-    func `onMove`(action: ((ListItemModel, SectionModel<ListItemModel>) -> Void)?) -> ItemCard {
+
+    func onMove(action: ((ListItemModel, SectionModel<ListItemModel>) -> Void)?) -> ItemCard {
         ItemCard(
-            item: self.item,
-            list: self.list,
-            sections: self.sections,
-            onEdit: self.onEdit,
-            onDelete: self.onDelete,
+            item: item,
+            list: list,
+            sections: sections,
+            onEdit: onEdit,
+            onDelete: onDelete,
             onMove: action,
-            onCheck: self.onCheck
+            onCheck: onCheck
         )
     }
-    
 }
 
 #Preview {

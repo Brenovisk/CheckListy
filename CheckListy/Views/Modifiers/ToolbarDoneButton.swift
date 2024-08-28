@@ -10,7 +10,6 @@ import SwiftUI
 import UIKit
 
 struct DoneButtonModifier: ViewModifier {
-    
     func body(content: Content) -> some View {
         content
             .toolbar {
@@ -23,13 +22,10 @@ struct DoneButtonModifier: ViewModifier {
                 }
             }
     }
-    
 }
 
 extension View {
-    
     func doneButtonToolbar() -> some View {
-        self.modifier(DoneButtonModifier())
+        modifier(DoneButtonModifier())
     }
-    
 }

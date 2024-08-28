@@ -9,21 +9,20 @@ import Foundation
 import SwiftUI
 
 struct TextFieldCustom: View {
-    
     @Binding var text: String
     @State private var enableSecure: Bool = true
     @FocusState private var isFocused: Bool
-    
-    var placeholder: String = String()
+
+    var placeholder: String = .init()
     var helperText: String?
     var onChanged: (() -> Void)?
     var isSecureTextfield: Bool = false
     var isAutoFocused: Bool = false
-    
+
     var showHelperText: Bool {
         helperText != nil && !isFocused
     }
-    
+
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
@@ -48,7 +47,7 @@ struct TextFieldCustom: View {
                 }
                 .focused($isFocused)
                 .autocapitalization(.none)
-                
+
                 if isSecureTextfield {
                     Button(action: {
                         enableSecure.toggle()
@@ -67,7 +66,7 @@ struct TextFieldCustom: View {
                     .animation(.easeInOut, value: helperText)
             )
             .cornerRadius(8)
-            
+
             if showHelperText {
                 Text(helperText ?? String())
                     .font(.caption)
@@ -81,5 +80,4 @@ struct TextFieldCustom: View {
             onChanged?()
         }
     }
-    
 }

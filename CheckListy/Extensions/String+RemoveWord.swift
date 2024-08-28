@@ -8,9 +8,7 @@
 import Foundation
 
 extension String {
-    
     func remove(_ word: String) -> String {
-        self.replacingOccurrences(of: word, with: "")
+        replacingOccurrences(of: word, with: "")
     }
-    
 }

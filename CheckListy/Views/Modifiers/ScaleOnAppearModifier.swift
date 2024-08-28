@@ -9,7 +9,6 @@ import Foundation
 import SwiftUI
 
 struct ScaleOnAppearModifier: ViewModifier {
-    
     var isActive: Bool
     var animation: Animation
     var scaleEffect: CGFloat
@@ -20,13 +19,10 @@ struct ScaleOnAppearModifier: ViewModifier {
             .animation(animation, value: isActive)
             .transition(.scale)
     }
-    
 }
 
 extension View {
-    
     func scaleOnAppear(isActive: Bool, scaleEffect: CGFloat = 1.0, animation: Animation = .spring()) -> some View {
-        self.modifier(ScaleOnAppearModifier(isActive: isActive, animation: animation, scaleEffect: scaleEffect))
+        modifier(ScaleOnAppearModifier(isActive: isActive, animation: animation, scaleEffect: scaleEffect))
     }
-    
 }

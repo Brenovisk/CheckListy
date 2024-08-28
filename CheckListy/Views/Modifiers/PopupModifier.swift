@@ -6,14 +6,13 @@
 //
 
 import Foundation
-import SwiftUI
 import PopupView
+import SwiftUI
 
 struct PopupModifier: ViewModifier {
-    
     var data: PopupData
     var isPresent: Binding<Bool>
-    
+
     func body(content: Content) -> some View {
         GeometryReader { geometry in
             content
@@ -30,17 +29,16 @@ struct PopupModifier: ViewModifier {
                 }
         }
     }
-    
+
     var popupContent: some View {
         HStack(spacing: 8) {
             data.type.value.icon
                 .resizable()
                 .frame(width: 16, height: 16)
                 .fontWeight(.bold)
-            
+
             Text(data.message)
                 .lineLimit(2)
-                
         }
         .padding()
         .foregroundColor(Color.black)
@@ -48,13 +46,10 @@ struct PopupModifier: ViewModifier {
         .background(data.type.value.color)
         .cornerRadius(12)
     }
-    
 }
 
 extension View {
-    
     func popup(isPresent: Binding<Bool>, data: PopupData) -> some View {
         modifier(PopupModifier(data: data, isPresent: isPresent))
     }
-    
 }

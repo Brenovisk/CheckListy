@@ -8,8 +8,6 @@
 import Foundation
 
 protocol Validator {
-    
     func validate(_ value: String) -> String?
     var errorMessage: String? { get }
-    
 }

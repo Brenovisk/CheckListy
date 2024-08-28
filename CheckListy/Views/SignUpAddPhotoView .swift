@@ -8,15 +8,14 @@
 import SwiftUI
 
 struct SignUpAddPhotoView: View, KeyboardReadable {
-    
     @EnvironmentObject private var viewModel: SignUpViewModel
-    
+
     @State var isShowKeyboard = false
-    
+
     init() {
         UITextField.appearance().clearButtonMode = .whileEditing
     }
-    
+
     var body: some View {
         VStack(spacing: 24) {
             VStack(alignment: .leading, spacing: 12) {
@@ -24,20 +23,20 @@ struct SignUpAddPhotoView: View, KeyboardReadable {
                     .fixedSize(horizontal: false, vertical: /*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/)
                     .font(.largeTitle)
                     .fontWeight(.bold)
-                
+
                 Texts.choosePhotoDescription.value
                     .font(.body)
                     .foregroundColor(.secondary)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
-            
+
             VStack(spacing: 16) {
                 ImagePicker(image: nil)
                     .onPick { imageUrl in
                         viewModel.dataForm.uiImage = imageUrl
                     }
             }
-            
+
             Button(action: {
                 hideKeyboard()
                 viewModel.navigateToSignUpCreatePassword()
@@ -59,15 +58,13 @@ struct SignUpAddPhotoView: View, KeyboardReadable {
                 isShowKeyboard = value
             }
         }
-        
     }
 }
 
 // MARK: typealias
+
 extension SignUpAddPhotoView {
-    
-    typealias Texts  = TextsHelper
-    
+    typealias Texts = TextsHelper
 }
 
 #Preview {

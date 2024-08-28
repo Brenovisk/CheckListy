@@ -9,15 +9,14 @@ import Foundation
 import SwiftUI
 
 struct SignUpCreatePasswordView: View, KeyboardReadable {
-    
     @EnvironmentObject private var viewModel: SignUpViewModel
-    
+
     @State var isShowKeyboard = false
-    
+
     init() {
         UITextField.appearance().clearButtonMode = .whileEditing
     }
-    
+
     var body: some View {
         VStack(spacing: 24) {
             VStack(alignment: .leading, spacing: 12) {
@@ -25,23 +24,23 @@ struct SignUpCreatePasswordView: View, KeyboardReadable {
                     .font(.largeTitle)
                     .fontWeight(.bold)
                     .fixedSize(horizontal: false, vertical: true)
-                
+
                 Texts.createASecureDescription.value
                     .font(.body)
                     .foregroundColor(.secondary)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
-            
+
             VStack(spacing: 16) {
                 TextFieldCustom(
                     text: $viewModel.dataForm.password,
-                    placeholder: Texts.password.rawValue, 
-                    helperText: viewModel.dataForm.passwordError, 
+                    placeholder: Texts.password.rawValue,
+                    helperText: viewModel.dataForm.passwordError,
                     onChanged: { viewModel.dataForm.passwordError = nil },
                     isSecureTextfield: true,
                     isAutoFocused: true
                 )
-                
+
                 TextFieldCustom(
                     text: $viewModel.dataForm.confirmationPassword,
                     placeholder: Texts.confirmPassword.rawValue,
@@ -50,7 +49,7 @@ struct SignUpCreatePasswordView: View, KeyboardReadable {
                     isSecureTextfield: true
                 )
             }
-            
+
             Button(action: {
                 hideKeyboard()
                 guard viewModel.dataForm.isValidPasswordAndConfirmation() else { return }
@@ -73,14 +72,12 @@ struct SignUpCreatePasswordView: View, KeyboardReadable {
             }
         }
     }
-    
 }
 
 // MARK: typealias
+
 extension SignUpCreatePasswordView {
-    
-    typealias Texts  = TextsHelper
-    
+    typealias Texts = TextsHelper
 }
 
 #Preview {

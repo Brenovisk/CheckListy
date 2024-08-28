@@ -9,28 +9,27 @@ import Foundation
 import SwiftUI
 
 struct SignUpView: View, KeyboardReadable {
-    
     @EnvironmentObject private var viewModel: SignUpViewModel
-    
+
     @State var isShowKeyboard = false
-    
+
     init() {
         UITextField.appearance().clearButtonMode = .whileEditing
     }
-    
+
     var body: some View {
         VStack(spacing: 24) {
             VStack(alignment: .leading, spacing: 12) {
                 Texts.letsCreateYourAccount.value
                     .font(.largeTitle)
                     .fontWeight(.bold)
-                
+
                 Texts.firsWeWannaKnowYou.value
                     .font(.body)
                     .foregroundColor(.secondary)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
-            
+
             VStack(spacing: 16) {
                 TextFieldCustom(
                     text: $viewModel.dataForm.name,
@@ -39,7 +38,7 @@ struct SignUpView: View, KeyboardReadable {
                     onChanged: { viewModel.dataForm.nameError = nil },
                     isAutoFocused: true
                 )
-                
+
                 TextFieldCustom(
                     text: $viewModel.dataForm.email,
                     placeholder: Texts.email.rawValue,
@@ -48,7 +47,7 @@ struct SignUpView: View, KeyboardReadable {
                 )
                 .keyboardType(.emailAddress)
             }
-            
+
             Button(action: {
                 hideKeyboard()
                 guard viewModel.dataForm.isValidEmailAndName() else { return }
@@ -71,14 +70,12 @@ struct SignUpView: View, KeyboardReadable {
             }
         }
     }
-    
 }
 
 // MARK: typealias
+
 extension SignUpView {
-    
-    typealias Texts  = TextsHelper
-    
+    typealias Texts = TextsHelper
 }
 
 #Preview {

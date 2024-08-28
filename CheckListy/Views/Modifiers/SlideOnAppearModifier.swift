@@ -9,7 +9,6 @@ import Foundation
 import SwiftUI
 
 struct SlideOnAppearModifier: ViewModifier {
-    
     var delay: Double
     var animation: Animation
     var direction: SlideDirection
@@ -49,6 +48,6 @@ enum SlideDirection {
 
 extension View {
     func slideOnAppear(delay: Double = 0, animation: Animation = .easeInOut(duration: 0.5), direction: SlideDirection = .fromBottom) -> some View {
-        self.modifier(SlideOnAppearModifier(delay: delay, animation: animation, direction: direction))
+        modifier(SlideOnAppearModifier(delay: delay, animation: animation, direction: direction))
     }
 }

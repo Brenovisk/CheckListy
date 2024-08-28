@@ -8,12 +8,10 @@
 import Foundation
 
 struct RequiredValidator: Validator {
-    
     var errorMessage: String?
     var defaultErrorMessage = "This field cannot be empty"
-    
+
     func validate(_ value: String) -> String? {
         !value.isEmpty ? nil : (errorMessage ?? defaultErrorMessage)
     }
-    
 }

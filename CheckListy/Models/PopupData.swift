@@ -9,8 +9,6 @@ import Foundation
 import SwiftUI
 
 struct PopupData {
-    
     var type: PopupTypes = .error
-    var message: String = String()
-    
+    var message: String = .init()
 }

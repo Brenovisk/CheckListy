@@ -9,21 +9,20 @@ import Foundation
 import SwiftUI
 
 struct SignInView: View, KeyboardReadable {
-    
     @EnvironmentObject private var viewModel: SignInViewModel
     @State var isShowKeyboard = false
-    
+
     init() {
         UITextField.appearance().clearButtonMode = .whileEditing
     }
-    
+
     var body: some View {
         VStack(spacing: 24) {
             HStack(spacing: 24) {
                 Images.logo.image
                     .resizable()
                     .frame(width: 48, height: 48)
-                
+
                 Images.logoName.image
                     .scaleEffect(1.5)
             }
@@ -31,7 +30,7 @@ struct SignInView: View, KeyboardReadable {
             .padding(.top, 32)
             .slideOnAppear(delay: 0.1, direction: .fromLeft)
             .opacityOnAppear(delay: 0.4, duration: 1)
-            
+
             if !isShowKeyboard {
                 Texts.plaseInsertEmail.value
                     .fixedSize(horizontal: false, vertical: /*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/)
@@ -40,7 +39,7 @@ struct SignInView: View, KeyboardReadable {
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .scaleOnAppear(isActive: isShowKeyboard)
             }
-            
+
             VStack(spacing: 16) {
                 TextFieldCustom(
                     text: $viewModel.dataForm.email,
@@ -49,7 +48,7 @@ struct SignInView: View, KeyboardReadable {
                     onChanged: { viewModel.dataForm.emailError = nil }
                 )
                 .keyboardType(.emailAddress)
-                
+
                 TextFieldCustom(
                     text: $viewModel.dataForm.password,
                     placeholder: Texts.password.rawValue,
@@ -57,7 +56,7 @@ struct SignInView: View, KeyboardReadable {
                     onChanged: { viewModel.dataForm.passwordError = nil },
                     isSecureTextfield: true
                 )
-                
+
                 HStack {
                     Button(action: { viewModel.navigateToForgotPasswordView() }) {
                         Texts.forgotPassword.value
@@ -66,7 +65,7 @@ struct SignInView: View, KeyboardReadable {
                 }
                 .frame(maxWidth: .infinity, alignment: .trailing)
             }
-            
+
             VStack(spacing: 12) {
                 Button(action: {
                     hideKeyboard()
@@ -76,10 +75,10 @@ struct SignInView: View, KeyboardReadable {
                         .frame(maxWidth: .infinity)
                 }
                 .filledButton(isLoading: $viewModel.isLoading)
-                
+
                 HStack {
                     Texts.notHaveAccount.value
-                    
+
                     Button(action: { viewModel.navigateToSignUpView() }) {
                         Texts.registerYourSelf.value
                             .foregroundColor(.accentColor)
@@ -99,16 +98,14 @@ struct SignInView: View, KeyboardReadable {
             }
         }
     }
-    
 }
 
 // MARK: typealias
+
 extension SignInView {
-    
     typealias Images = ImagesHelper
-    typealias Texts  = TextsHelper
-    typealias Icons  = IconsHelper
-    
+    typealias Texts = TextsHelper
+    typealias Icons = IconsHelper
 }
 
 #Preview {

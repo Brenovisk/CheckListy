@@ -9,23 +9,22 @@ import Foundation
 import SwiftUI
 
 struct ForgotPasswordView: View {
-    
     @EnvironmentObject private var viewModel: ForgotPasswordViewModel
-    
+
     var body: some View {
         VStack {
             Text("Forgot Password")
                 .font(.title)
-            
+
             Text("Will send a email to make a redefinition password")
                 .font(.subheadline)
-            
+
             TextField("Email", text: $viewModel.email)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .padding()
                 .autocapitalization(.none)
                 .keyboardType(.emailAddress)
-            
+
             if viewModel.isLoading {
                 ProgressView()
                     .padding()
@@ -44,13 +43,13 @@ struct ForgotPasswordView: View {
                 }
                 .padding()
             }
-            
+
             if let errorMessage = viewModel.errorMessage {
                 Text(errorMessage)
                     .foregroundColor(.red)
                     .padding()
             }
-            
+
             if let isSignIn = FirebaseAuthService.shared.isSignIn, isSignIn {
                 Text("Success!")
                     .foregroundColor(.green)
@@ -59,7 +58,6 @@ struct ForgotPasswordView: View {
         }
         .padding()
     }
-    
 }
 
 #Preview {

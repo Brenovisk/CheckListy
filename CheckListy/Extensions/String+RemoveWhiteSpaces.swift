@@ -8,9 +8,7 @@
 import Foundation
 
 extension String {
-    
-     func removeWhiteSpaces() -> String {
-        self.trimmingCharacters(in: .whitespaces)
+    func removeWhiteSpaces() -> String {
+        trimmingCharacters(in: .whitespaces)
     }
-    
 }

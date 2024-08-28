@@ -9,8 +9,6 @@ import Foundation
 import SwiftUI
 
 struct PopupType {
-    
     var color: Color
     var icon: Image
-    
 }

@@ -9,16 +9,12 @@ import Foundation
 import SwiftUI
 
 enum IconsHelper: String {
-    
     case eyeSlashFill = "eye.slash.fill"
-    case eyeFill      = "eye.fill"
-    
+    case eyeFill = "eye.fill"
 }
 
 extension IconsHelper {
-    
     var value: Image {
-        Image(systemName: self.rawValue)
+        Image(systemName: rawValue)
     }
-    
 }

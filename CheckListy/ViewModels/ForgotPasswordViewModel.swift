@@ -8,15 +8,14 @@
 import Foundation
 
 class ForgotPasswordViewModel: ObservableObject {
-    
     @Published var email: String = ""
     @Published var isLoading: Bool = false
     @Published var errorMessage: String?
-    
+
     init(email: String) {
         self.email = email
     }
-    
+
     func resetPassword() async {
         do {
             isLoading = true
@@ -27,5 +26,4 @@ class ForgotPasswordViewModel: ObservableObject {
             isLoading = false
         }
     }
-    
 }

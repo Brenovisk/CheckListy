@@ -8,19 +8,17 @@
 import Foundation
 
 extension Array where Element: Hashable {
-    
     func removingDuplicates() -> [Element] {
         var seen = Set<Element>()
-        
-        return self.filter { element in
+
+        return filter { element in
             guard !seen.contains(element) else { return false }
             seen.insert(element)
             return true
         }
     }
-    
+
     mutating func removeDuplicates() {
-        self = self.removingDuplicates()
+        self = removingDuplicates()
     }
-    
 }

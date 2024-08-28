@@ -2,14 +2,17 @@ disabled_rules:
   - trailing_whitespace
   - syntactic_sugar
   - multiple_closures_with_trailing_closure
+
 opt_in_rules:
   - empty_count
   - empty_string
+
 excluded:
   - Carthage
   - Pods
   - SwiftLint/Common/3rdPartyLib
   - GeneratedAssetSymbols.swift
+
 line_length:
   warning: 150
   error: 200

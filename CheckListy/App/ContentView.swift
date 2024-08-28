@@ -8,13 +8,12 @@
 import SwiftUI
 
 struct ContentView: View {
-    
     @StateObject private var firebaseAuthService = FirebaseAuthService.shared
     @StateObject private var navigationService = NavigationService.shared
-    
+
     @StateObject private var loginViewModel = SignInViewModel()
     @StateObject private var signUpViewModel = SignUpViewModel()
-    
+
     var body: some View {
         VStack {
             if let isSignIn = firebaseAuthService.isSignIn {
@@ -23,7 +22,7 @@ struct ContentView: View {
                         MainView()
                             .navigationDestination(for: AppDestination.self) { destination in
                                 switch destination {
-                                case .detailsListView(let list):
+                                case let .detailsListView(list):
                                     DetailsListView()
                                         .environmentObject(DetailsListViewModel(list))
                                 case .profileView:
@@ -47,7 +46,7 @@ struct ContentView: View {
                                 case .signUpCreatePasswordView:
                                     SignUpCreatePasswordView()
                                         .environmentObject(signUpViewModel)
-                                case .forgotPasswordView(let email):
+                                case let .forgotPasswordView(email):
                                     ForgotPasswordView()
                                         .environmentObject(ForgotPasswordViewModel(email: email))
                                 }
@@ -58,24 +57,19 @@ struct ContentView: View {
                 ProgressView()
             }
         }
-        
     }
 }
 
 struct MainView: View {
-    
     var body: some View {
         ListsView()
             .environmentObject(ListsViewModel())
-        
     }
-    
 }
 
 struct AuthenticationView: View {
-    
     @EnvironmentObject var viewModel: SignInViewModel
-    
+
     var body: some View {
         VStack {
             if viewModel.showStartView {
@@ -93,7 +87,6 @@ struct AuthenticationView: View {
             }
         }.navigationTitle(String())
     }
-    
 }
 
 #Preview {

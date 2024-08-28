@@ -1,23 +1,22 @@
 //
-//  DetailsList.swift
+//  DetailsListView.swift
 //  CheckListy
 //
 //  Created by Breno Lucas on 02/07/24.
 //
 
-import SwiftUI
 import FirebaseDatabase
+import SwiftUI
 
 struct DetailsListView: View {
-    
     @StateObject var speechRecognizer = SpeechRecognizerService()
     @EnvironmentObject var viewModel: DetailsListViewModel
-    
+
     @State private var isPressed = false
     @State private var isShowForm = false
     @State private var isShowFormItem = false
     @State private var multiSelection = Set<UUID>()
- 
+
     var body: some View {
         VStack {
             TitleIcon(
@@ -28,17 +27,17 @@ struct DetailsListView: View {
             )
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.bottom, 24)
-            
+
             if viewModel.showSearchBar {
                 AutoFocusTextField(text: $viewModel.searchText, placeholder: "Pesquisar...")
                     .roundedBackgroundTextField()
                     .padding(.bottom, 24)
-                
+
                 ForEach(viewModel.getItems(), id: \.id) { item in
                     card(item)
                 }
             }
-            
+
             if !viewModel.showSearchBar {
                 ForEach(viewModel.sections, id: \.id) { sectionList in
                     Section(header: headerSection(sectionList)) {
@@ -53,7 +52,6 @@ struct DetailsListView: View {
                         .padding(.bottom, 16)
                         .collapse(isCollapsed: sectionList.name.isEmpty ? false : sectionList.collapsed)
                     }
-                    
                 }
             }
         }
@@ -74,14 +72,14 @@ struct DetailsListView: View {
                         viewModel.toggleSearchBar()
                     }
             }
-            
+
             ToolbarItemGroup(placement: .primaryAction) {
                 Button(action: { isShowForm.toggle() }) {
                     Image(systemName: "gear")
                         .foregroundColor(Color.accentColor)
                 }
             }
-            
+
             ToolbarItemGroup(placement: .bottomBar) {
                 ZStack(alignment: .center) {
                     HStack {
@@ -95,7 +93,7 @@ struct DetailsListView: View {
                             }
                         }
                     }.frame(maxWidth: .infinity, alignment: .leading)
-                    
+
                     RecordButton(
                         transcript: $speechRecognizer.transcript,
                         isPressed: $isPressed,
@@ -136,9 +134,8 @@ struct DetailsListView: View {
                 viewModel.sectionSelected = String()
             }
         }
-        
     }
-    
+
     func card(_ item: ListItemModel) -> ItemCard {
         ItemCard(item: item, list: viewModel.list, sections: viewModel.sections)
             .onCheck { item in
@@ -157,7 +154,7 @@ struct DetailsListView: View {
                 viewModel.remove(item)
             }
     }
-    
+
     func headerSection(_ sectionList: SectionModel<ListItemModel>) -> some View {
         HeaderSection<ListItemModel>(section: sectionList, subtitle: viewModel.getCheckedItemBy(section: sectionList))
             .onAdd { section in
@@ -173,7 +170,7 @@ struct DetailsListView: View {
                 }
             }
     }
-    
+
     var listOptionalBinding: Binding<ListModel?> {
         Binding<ListModel?>(
             get: { viewModel.list },
@@ -184,7 +181,7 @@ struct DetailsListView: View {
             }
         )
     }
-    
+
     private func startRecord() {
         if !isPressed {
             withAnimation {
@@ -194,7 +191,7 @@ struct DetailsListView: View {
             }
         }
     }
-    
+
     private func endRecord() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             withAnimation {
@@ -204,7 +201,6 @@ struct DetailsListView: View {
             }
         }
     }
-    
 }
 
 #Preview {

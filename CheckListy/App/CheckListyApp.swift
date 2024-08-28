@@ -5,8 +5,8 @@
 //  Created by Breno Lucas on 02/07/24.
 //
 
-import SwiftUI
 import FirebaseCore
+import SwiftUI
 
 @main
 struct CheckListyApp: App {
@@ -14,20 +14,18 @@ struct CheckListyApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
 
     var body: some Scene {
-      WindowGroup {
-        NavigationView {
-            ContentView()
-                .preferredColorScheme(.dark)
+        WindowGroup {
+            NavigationView {
+                ContentView()
+                    .preferredColorScheme(.dark)
+            }
         }
-      }
     }
 }
 
 class AppDelegate: NSObject, UIApplicationDelegate {
-    
-  func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
-    FirebaseApp.configure()
-    return true
-  }
-    
+    func application(_: UIApplication, didFinishLaunchingWithOptions _: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
+        FirebaseApp.configure()
+        return true
+    }
 }

@@ -9,7 +9,6 @@ import Foundation
 import SwiftUI
 
 struct OpacityOnAppearModifier: ViewModifier {
-    
     var delay: Double
     var duration: Double
 
@@ -23,13 +22,10 @@ struct OpacityOnAppearModifier: ViewModifier {
                 isVisible = true
             }
     }
-    
 }
 
 extension View {
-    
     func opacityOnAppear(delay: Double = 0, duration: Double = 0.5) -> some View {
-        self.modifier(OpacityOnAppearModifier(delay: delay, duration: duration))
+        modifier(OpacityOnAppearModifier(delay: delay, duration: duration))
     }
-    
 }

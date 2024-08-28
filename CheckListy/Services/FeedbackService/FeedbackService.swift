@@ -6,16 +6,15 @@
 //
 
 import AudioToolbox
-import SwiftUI
 import AVFAudio
+import SwiftUI
 
 class FeedbackService {
-    
     static var shared = FeedbackService()
     private init() {}
-    
+
     var audioPlayer: AVAudioPlayer?
-    
+
     func provideHapticFeedback() {
         DispatchQueue.main.async {
             let generator = UIImpactFeedbackGenerator(style: .heavy)
@@ -28,15 +27,13 @@ class FeedbackService {
             AudioServicesPlaySystemSound(SystemSoundID(soundID))
         }
     }
-    
+
     func playCheckSoundFeedback() {
         playSound(named: "check")
     }
-    
 }
 
 extension FeedbackService {
-    
     private func playSound(named soundName: String, withExtension ext: String = "mp3") {
         if let soundURL = Bundle.main.url(forResource: soundName, withExtension: ext) {
             do {
@@ -47,5 +44,4 @@ extension FeedbackService {
             }
         }
     }
-    
 }

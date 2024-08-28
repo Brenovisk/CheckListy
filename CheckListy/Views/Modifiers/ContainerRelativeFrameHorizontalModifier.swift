@@ -9,9 +9,8 @@ import Foundation
 import SwiftUI
 
 struct ContainerRelativeFrameHorizontalModifier: ViewModifier {
-    
     @Environment(\.verticalSizeClass) var verticalSizeClass
-    
+
     var regularCount: Int
     var compactCount: Int
     var spacing: CGFloat
@@ -31,7 +30,7 @@ extension View {
         _ compactCount: Int = 4,
         _ spacing: CGFloat = 16
     ) -> some View {
-        self.modifier(ContainerRelativeFrameHorizontalModifier(
+        modifier(ContainerRelativeFrameHorizontalModifier(
             regularCount: regularCount,
             compactCount: compactCount,
             spacing: spacing

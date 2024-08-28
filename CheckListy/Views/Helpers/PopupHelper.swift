@@ -9,15 +9,12 @@ import Foundation
 import SwiftUI
 
 enum PopupTypes {
-    
     case error
     case warning
     case success
-    
 }
 
 extension PopupTypes {
-    
     var value: PopupType {
         switch self {
         case .error:
@@ -37,5 +34,4 @@ extension PopupTypes {
             )
         }
     }
-    
 }

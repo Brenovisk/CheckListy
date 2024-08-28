@@ -9,15 +9,11 @@ import Foundation
 import SwiftUI
 
 enum ColorsHelper: String {
-    
-    case background = "background" // swiftlint:disable:this redundant_string_enum_value 
-    
+    case background
 }
 
 extension ColorsHelper {
-    
     var value: Color {
-        Color(self.rawValue)
+        Color(rawValue)
     }
-    
 }

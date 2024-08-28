@@ -9,13 +9,12 @@ import Foundation
 import SwiftUI
 
 struct FilledButtonModifier: ViewModifier {
-    
     @Binding var isLoading: Bool
-    
+
     init(isLoading: Binding<Bool>) {
-        self._isLoading = isLoading
+        _isLoading = isLoading
     }
-    
+
     func body(content: Content) -> some View {
         Group {
             if isLoading {
@@ -32,13 +31,10 @@ struct FilledButtonModifier: ViewModifier {
         .cornerRadius(14)
         .font(.headline)
     }
-    
 }
 
 extension View {
-    
     func filledButton(isLoading: Binding<Bool>? = nil) -> some View {
-        self.modifier(FilledButtonModifier( isLoading: isLoading ?? Binding.constant(false)))
+        modifier(FilledButtonModifier(isLoading: isLoading ?? Binding.constant(false)))
     }
-    
 }

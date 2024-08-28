@@ -9,26 +9,25 @@ import Foundation
 import SwiftUI
 
 struct ImagePicker: View {
-    
     @State private var image: UIImage?
     @State private var imageURL: URL?
     @State private var showImagePicker = false
-    
+
     var onPick: ((UIImage) -> Void)?
     var size: CGFloat = 100
-    
+
     private init(image: UIImage?, size: CGFloat = 100, onPick: ((UIImage) -> Void)?) {
         self.init(image: image, size: size)
         self.onPick = onPick
     }
-    
+
     init(image: UIImage?, size: CGFloat = 100) {
         _image = State(initialValue: image)
-        self.imageURL = imageURL
-        self.showImagePicker = showImagePicker
+        imageURL = imageURL
+        showImagePicker = showImagePicker
         self.size = size
     }
-    
+
     var body: some View {
         VStack {
             ZStack(alignment: .bottomTrailing) {
@@ -46,7 +45,7 @@ struct ImagePicker: View {
                     }
                 }
                 .profileImage(size)
-                
+
                 Image(systemName: "pencil.circle.fill")
                     .resizable()
                     .frame(width: 32, height: 32)
@@ -54,7 +53,6 @@ struct ImagePicker: View {
                     .background(.white)
                     .clipShape(Circle())
             }
-            
         }
         .onTapGesture {
             showImagePicker = true
@@ -67,20 +65,18 @@ struct ImagePicker: View {
             onPick?(image)
         }
     }
-    
 }
 
 // MARK: - Callbacks modifiers
+
 extension ImagePicker {
-    
-    func `onPick`(action: ((UIImage) -> Void)?) -> ImagePicker {
+    func onPick(action: ((UIImage) -> Void)?) -> ImagePicker {
         ImagePicker(
-            image: self.image,
-            size: self.size,
+            image: image,
+            size: size,
             onPick: action
         )
     }
-    
 }
 
 #Preview {

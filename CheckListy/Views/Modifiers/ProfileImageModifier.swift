@@ -9,9 +9,8 @@ import Foundation
 import SwiftUI
 
 struct ProfileImageModifier: ViewModifier {
-    
     var size: CGFloat = 40
-    
+
     func body(content: Content) -> some View {
         content
             .scaledToFill()
@@ -22,13 +21,10 @@ struct ProfileImageModifier: ViewModifier {
                 Circle().stroke(Color.white, lineWidth: 6.5)
             )
     }
-    
 }
 
 extension View {
-    
     func profileImage(_ size: CGFloat = 40) -> some View {
-        self.modifier(ProfileImageModifier(size: size))
+        modifier(ProfileImageModifier(size: size))
     }
-    
 }

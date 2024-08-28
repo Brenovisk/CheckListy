@@ -8,29 +8,28 @@
 import SwiftUI
 
 struct StartView: View {
-    
     var onStart: (() -> Void)?
     var onRegister: (() -> Void)?
-    
+
     private init(onStart: (() -> Void)?, onRegister: (() -> Void)?) {
         self.onStart = onStart
         self.onRegister = onRegister
     }
-    
+
     init() {}
-    
+
     var body: some View {
         VStack(spacing: .zero) {
             logo
                 .slideOnAppear(delay: 0.4, direction: .fromLeft)
-            
+
             Texts.slogan.value
                 .font(.body)
                 .foregroundColor(.white)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.top, 12)
                 .slideOnAppear(delay: 0.4, direction: .fromLeft)
-            
+
             Button(action: { onStart?() }) {
                 Texts.start.value
                     .frame(maxWidth: .infinity)
@@ -38,7 +37,7 @@ struct StartView: View {
             .filledButton()
             .padding(.top, 32)
             .slideOnAppear(delay: 0.6, direction: .fromBottom)
-            
+
             footer
                 .padding(.top, 16)
                 .slideOnAppear(delay: 0.6, direction: .fromBottom)
@@ -50,20 +49,20 @@ struct StartView: View {
             backgroundImage
         }
     }
-    
+
     var logo: some View {
         VStack(alignment: .leading, spacing: 24) {
             Images.logo.image
                 .resizable()
                 .frame(width: 80, height: 80)
-            
+
             Images.logoName.image
                 .resizable()
                 .frame(width: 199, height: 116)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
     }
-    
+
     var backgroundImage: some View {
         VStack {
             Rectangle()
@@ -90,47 +89,44 @@ struct StartView: View {
             .ignoresSafeArea()
         )
     }
-    
+
     var footer: some View {
         HStack {
             Texts.notHaveAccount.value
                 .foregroundColor(.white)
-            
+
             Button(action: { onRegister?() }) {
                 Texts.registerYourSelf.value
                     .foregroundColor(.accentColor)
             }
         }
     }
-    
 }
 
 // MARK: - StartView modifiers
+
 extension StartView {
-    
-    func `onStart`(action: (() -> Void)?) -> StartView {
+    func onStart(action: (() -> Void)?) -> StartView {
         StartView(
             onStart: action,
-            onRegister: self.onRegister
+            onRegister: onRegister
         )
     }
-    
-    func `onRegister`(action: (() -> Void)?) -> StartView {
+
+    func onRegister(action: (() -> Void)?) -> StartView {
         StartView(
-            onStart: self.onStart,
+            onStart: onStart,
             onRegister: action
         )
     }
-    
 }
 
 // MARK: typealias
+
 extension StartView {
-    
     typealias Colors = ColorsHelper
     typealias Images = ImagesHelper
-    typealias Texts  = TextsHelper
-    
+    typealias Texts = TextsHelper
 }
 
 #Preview {

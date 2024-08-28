@@ -13,7 +13,7 @@ struct GradientTopModifier: ViewModifier {
     var color: Color
     var finalHeight: CGFloat
     var delay: CGFloat = 0.1
-    
+
     func body(content: Content) -> some View {
         content
             .background(
@@ -43,9 +43,8 @@ struct GradientTopModifier: ViewModifier {
 }
 
 extension View {
-    
     func gradientTop(color: Color, height: CGFloat, delay: CGFloat = 0.1) -> some View {
-        self.modifier(
+        modifier(
             GradientTopModifier(
                 color: color,
                 finalHeight: height,
@@ -53,5 +52,4 @@ extension View {
             )
         )
     }
-    
 }

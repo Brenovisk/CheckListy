@@ -9,12 +9,10 @@ import Foundation
 import SwiftUI
 
 struct ViewOffsetKey: PreferenceKey {
-    
     typealias Value = CGFloat
     static var defaultValue: CGFloat = 0
-    
+
     static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
         value = nextValue()
     }
-    
 }

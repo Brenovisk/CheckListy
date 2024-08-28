@@ -9,9 +9,8 @@ import Foundation
 import SwiftUI
 
 struct ScrollHorizontalModifier: ViewModifier {
-    
     var padding: CGFloat
-    
+
     func body(content: Content) -> some View {
         ScrollView(.horizontal) {
             HStack {
@@ -23,9 +22,7 @@ struct ScrollHorizontalModifier: ViewModifier {
 }
 
 extension View {
-    
     func scrollHorizontal(padding: CGFloat = 8) -> some View {
-        self.modifier(ScrollHorizontalModifier(padding: padding))
+        modifier(ScrollHorizontalModifier(padding: padding))
     }
-    
 }

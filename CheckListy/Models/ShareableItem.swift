@@ -10,19 +10,15 @@ import SwiftUI
 import UniformTypeIdentifiers
 
 struct ShareableItem: Transferable, Codable {
-    
     let id: UUID
-    
+
     static var transferRepresentation: some TransferRepresentation {
         CodableRepresentation(for: ShareableItem.self, contentType: .shareableItem)
     }
-    
 }
 
 extension UTType {
-    
     static var shareableItem: UTType {
         UTType(exportedAs: "com.alecrimLabs.checkListy")
     }
-    
 }

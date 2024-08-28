@@ -5,19 +5,18 @@
 //  Created by Breno Lucas on 04/07/24.
 //
 
-import Foundation
 import Combine
+import Foundation
 import UIKit
 
 class SignUpViewModel: ObservableObject {
-    
     @Published var isLoading: Bool = false
-    @Published var dataForm: DataFormSignUp = DataFormSignUp()
+    @Published var dataForm: DataFormSignUp = .init()
     @Published var showPopup: Bool = false
     @Published private(set) var popupData: PopupData = .init()
-    
+
     private var cancellables = Set<AnyCancellable>()
-    
+
     func signUp() {
         Task {
             do {
@@ -37,15 +36,15 @@ class SignUpViewModel: ObservableObject {
             }
         }
     }
-    
+
     func navigateToSignUpAddPhotoView() {
         NavigationService.shared.navigateTo(.signUpAddPhotoView)
     }
-    
+
     func navigateToSignUpCreatePassword() {
         NavigationService.shared.navigateTo(.signUpCreatePasswordView)
     }
-    
+
     func setPopupDataError(with message: String) {
         popupData = PopupData(
             type: .error,
@@ -53,5 +52,4 @@ class SignUpViewModel: ObservableObject {
         )
         showPopup = true
     }
-    
 }

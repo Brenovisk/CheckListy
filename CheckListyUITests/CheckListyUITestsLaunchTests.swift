@@ -8,7 +8,6 @@
 import XCTest
 
 final class CheckListyUITestsLaunchTests: XCTestCase {
-
     override static var runsForEachTargetApplicationUIConfiguration: Bool {
         true
     }

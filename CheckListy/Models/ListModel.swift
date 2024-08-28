@@ -8,22 +8,19 @@
 import Foundation
 
 struct ListModel: Identifiable, Hashable {
-    
-    var id: UUID = UUID()
-    var name: String = String()
-    var description: String = String()
-    var color: String = String()
-    var icon: String = String()
-    var items: Array<ListItemModel> = []
+    var id: UUID = .init()
+    var name: String = .init()
+    var description: String = .init()
+    var color: String = .init()
+    var icon: String = .init()
+    var items: [ListItemModel] = []
     var isFavorite: Bool = false
-    var createdAt: Date = Date()
-    var editedAt: Date = Date()
+    var createdAt: Date = .init()
+    var editedAt: Date = .init()
     var users: [String] = []
-    
 }
 
 extension ListModel {
-    
     func toNSDictionary() -> NSDictionary {
         [
             "id": id.uuidString,
@@ -38,15 +35,15 @@ extension ListModel {
             "users": users.map { $0 }
         ]
     }
-    
+
     static func fromNSDictionary(_ dictionary: NSDictionary) -> ListModel? {
-        let items = (dictionary["items"] as? Array<NSDictionary>)?.compactMap { ListItemModel.fromNSDictionary($0) } ?? []
-        
+        let items = (dictionary["items"] as? [NSDictionary])?.compactMap { ListItemModel.fromNSDictionary($0) } ?? []
+
         let isFavorite = dictionary["isFavorite"] as? Bool ?? false
         let createdAt = Date(timeIntervalSince1970: dictionary["createdAt"] as? TimeInterval ?? 0)
         let editedAt = Date(timeIntervalSince1970: dictionary["editedAt"] as? TimeInterval ?? 0)
         let users = (dictionary["users"] as? [String])?.compactMap { $0 } ?? []
-        
+
         guard
             let id = UUID(uuidString: dictionary["id"] as? String ?? ""),
             let name = dictionary["name"] as? String,
@@ -56,7 +53,7 @@ extension ListModel {
         else {
             return nil
         }
-        
+
         return ListModel(
             id: id,
             name: name,
@@ -70,21 +67,21 @@ extension ListModel {
             users: users
         )
     }
-    
+
     var checkItems: String {
         let total = items.count
         let checkedItems = items.filter { $0.isCheck }.count
         return "\(checkedItems)/\(total)"
     }
-    
+
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
     }
-    
+
     static func == (lhs: ListModel, rhs: ListModel) -> Bool {
         lhs.id == rhs.id
     }
-    
+
     func formattedDateUTC(_ date: Date) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
