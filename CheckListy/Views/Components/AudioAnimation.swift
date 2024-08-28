@@ -9,18 +9,17 @@ import Foundation
 import SwiftUI
 
 struct AudioAnimation: View {
- 
     @State private var drawingHeight = true
     var color: Color = .indigo
- 
+
     var animation: Animation {
         .linear(duration: 0.5).repeatForever()
     }
- 
+
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
-                ForEach(0..<6) {_ in
+                ForEach(0 ..< 6) { _ in
                     bar(low: 0.4)
                         .animation(animation.speed(1.5), value: drawingHeight)
                     bar(low: 0.3)
@@ -34,12 +33,12 @@ struct AudioAnimation: View {
                 }
             }
             .frame(maxWidth: .infinity)
-            .onAppear{
+            .onAppear {
                 drawingHeight.toggle()
             }
         }
     }
- 
+
     func bar(low: CGFloat = 0.0, high: CGFloat = 1.0) -> some View {
         RoundedRectangle(cornerRadius: 3)
             .fill(color)

@@ -8,7 +8,6 @@
 import Foundation
 
 enum UserServiceErrors: Error {
-    
     case noAuthenticatedUser
     case unableToGetDatabaseReference
     case dataFetchError
@@ -23,11 +22,9 @@ enum UserServiceErrors: Error {
     case unknownError
     case updateError(String)
     case userNotFound
-    
 }
 
 extension UserServiceErrors: LocalizedError {
-    
     var errorDescription: String? {
         switch self {
         case .noAuthenticatedUser:
@@ -50,16 +47,14 @@ extension UserServiceErrors: LocalizedError {
             return "Password update error."
         case .urlError:
             return "Invalid URL."
-        case .databaseError(let message):
+        case let .databaseError(message):
             return message
         case .unknownError:
             return "Unknown error."
         case .userNotFound:
             return "No authenticated user found."
-        case .updateError(let message):
+        case let .updateError(message):
             return message
         }
     }
 }
-
-

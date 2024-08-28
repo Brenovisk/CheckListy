@@ -5,30 +5,27 @@
 //  Created by Breno Lucas on 02/07/24.
 //
 
-import SwiftUI
 import FirebaseCore
+import SwiftUI
 
 @main
 struct CheckListyApp: App {
     // register app delegate for Firebase setup
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
 
-
     var body: some Scene {
-      WindowGroup {
-        NavigationView {
-          ContentView()
+        WindowGroup {
+            NavigationView {
+                ContentView()
+                    .preferredColorScheme(.dark)
+            }
         }
-      }
     }
 }
 
-
 class AppDelegate: NSObject, UIApplicationDelegate {
-    
-  func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-    FirebaseApp.configure()
-    return true
-  }
-    
+    func application(_: UIApplication, didFinishLaunchingWithOptions _: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
+        FirebaseApp.configure()
+        return true
+    }
 }

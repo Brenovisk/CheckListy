@@ -8,9 +8,7 @@
 import Foundation
 
 enum UserDefaultsServiceKeys: String {
-    
-    case recents = "recents"
+    case recents
     case userName = "user-name"
     case userProfileImage = "user-profile-image"
-    
 }

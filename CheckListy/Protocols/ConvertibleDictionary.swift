@@ -8,8 +8,6 @@
 import Foundation
 
 protocol ConvertibleDictionary {
-    
     func toNSDictionary() -> NSDictionary
     static func fromNSDictionary(_ dictionary: NSDictionary) -> Self?
-    
 }

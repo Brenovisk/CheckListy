@@ -8,19 +8,16 @@
 import Foundation
 
 enum SpeechRecognizerServiceErrors: Error, LocalizedError {
-    
     case nilRecognizer
     case notAuthorizedToRecognize
     case notPermittedToRecord
     case recognizerIsUnavailable
-    
 }
 
 extension SpeechRecognizerServiceErrors: CustomStringConvertible {
-    
     var description: String {
         switch self {
-        case .nilRecognizer: 
+        case .nilRecognizer:
             return "Can't initialize speech recognizer"
         case .notAuthorizedToRecognize:
             return "Not authorized to recognize speech"
@@ -30,5 +27,4 @@ extension SpeechRecognizerServiceErrors: CustomStringConvertible {
             return "Recognizer is unavailable"
         }
     }
-    
 }

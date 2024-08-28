@@ -9,13 +9,12 @@ import Foundation
 import SwiftUI
 
 struct TitleIcon: View {
-    
-    var title: String = String()
+    var title: String = .init()
     var icon: String?
     var color: Color?
     var iconSize: CGFloat = 16
-    var subtitle: String? = nil
-    
+    var subtitle: String?
+
     var body: some View {
         HStack(alignment: .center) {
             if let icon, let color {
@@ -23,21 +22,19 @@ struct TitleIcon: View {
                     Circle()
                         .fill(color)
                         .frame(width: 2 * iconSize, height: 2 * iconSize)
-                    
-                    
+
                     Image(systemName: icon)
                         .foregroundColor(Color.black)
                         .font(.system(size: iconSize))
-                    
                 }
             }
-            
+
             HStack(alignment: .bottom) {
                 Text(title)
                     .lineLimit(1)
                     .font(iconSize < 16 ? .headline : .largeTitle)
                     .fontWeight(.bold)
-                
+
                 if let subtitle {
                     Text(subtitle)
                         .font(iconSize < 16 ? .system(size: iconSize) : .headline)
@@ -47,7 +44,6 @@ struct TitleIcon: View {
             }
         }
     }
-    
 }
 
 #Preview {

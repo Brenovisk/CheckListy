@@ -9,7 +9,6 @@ import Foundation
 import SwiftUI
 
 struct HeaderSection<Item: Hashable>: View {
-    
     var section: SectionModel<Item>
     var onAdd: ((SectionModel<Item>) -> Void)?
     var onCollapse: ((SectionModel<Item>) -> Void)?
@@ -17,13 +16,13 @@ struct HeaderSection<Item: Hashable>: View {
     var icon: String?
     var enableAdd: Bool = true
     var enableCollapse: Bool = true
-    
+
     private init(section: SectionModel<Item>, subtitle: String? = nil, icon: String? = nil, enableAdd: Bool = true, enableCollapse: Bool = true, onAdd: ((SectionModel<Item>) -> Void)?, onCollapse: ((SectionModel<Item>) -> Void)?) {
         self.init(section: section, subtitle: subtitle, icon: icon, enableAdd: enableAdd, enableCollapse: enableCollapse)
         self.onAdd = onAdd
         self.onCollapse = onCollapse
     }
-    
+
     init(section: SectionModel<Item>, subtitle: String? = nil, icon: String? = nil, enableAdd: Bool = true, enableCollapse: Bool = true) {
         self.section = section
         self.subtitle = subtitle
@@ -38,29 +37,29 @@ struct HeaderSection<Item: Hashable>: View {
                 Image(systemName: icon)
                     .foregroundColor(Color(.lightGray))
             }
-            
+
             if !section.name.isEmpty {
                 Text(section.name.uppercased())
                     .font(.subheadline)
                     .fontWeight(.semibold)
                     .padding(0)
                     .foregroundColor(Color(.lightGray))
-                
+
                 if let subtitle {
                     Text(subtitle)
                         .font(.subheadline)
                         .foregroundColor(Color(.lightGray))
                 }
-                
+
                 Spacer()
-                
+
                 HStack(spacing: 24) {
                     if enableAdd {
                         Button(action: { onAdd?(section) }) {
                             Image(systemName: "plus")
                         }
                     }
-                    
+
                     if enableCollapse {
                         Button(action: { onCollapse?(section) }) {
                             Image(systemName: "chevron.right")
@@ -76,33 +75,32 @@ struct HeaderSection<Item: Hashable>: View {
     }
 }
 
-//MARK: - Callbacks modifiers
+// MARK: - Callbacks modifiers
+
 extension HeaderSection {
-    
-    func `onAdd`(action: ((SectionModel<Item>) -> Void)?) -> HeaderSection {
+    func onAdd(action: ((SectionModel<Item>) -> Void)?) -> HeaderSection {
         HeaderSection(
-            section: self.section,
-            subtitle: self.subtitle,
-            icon: self.icon,
-            enableAdd: self.enableAdd,
-            enableCollapse: self.enableCollapse, 
+            section: section,
+            subtitle: subtitle,
+            icon: icon,
+            enableAdd: enableAdd,
+            enableCollapse: enableCollapse,
             onAdd: action,
-            onCollapse: self.onCollapse
+            onCollapse: onCollapse
         )
     }
-    
-    func `onCollapse`(action: ((SectionModel<Item>) -> Void)?) -> HeaderSection {
+
+    func onCollapse(action: ((SectionModel<Item>) -> Void)?) -> HeaderSection {
         HeaderSection(
-            section: self.section,
-            subtitle: self.subtitle,
-            icon: self.icon,
-            enableAdd: self.enableAdd,
-            enableCollapse: self.enableCollapse,
-            onAdd: self.onAdd,
+            section: section,
+            subtitle: subtitle,
+            icon: icon,
+            enableAdd: enableAdd,
+            enableCollapse: enableCollapse,
+            onAdd: onAdd,
             onCollapse: action
         )
     }
-    
 }
 
 #Preview {

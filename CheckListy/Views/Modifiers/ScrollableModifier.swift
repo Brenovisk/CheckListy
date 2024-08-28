@@ -9,10 +9,9 @@ import Foundation
 import SwiftUI
 
 struct ScrollableModifier<TitleView: View>: ViewModifier {
-    
     let titleView: TitleView
     @State private var showTitle = false
-    
+
     func body(content: Content) -> some View {
         ScrollView {
             ZStack {
@@ -37,7 +36,7 @@ struct ScrollableModifier<TitleView: View>: ViewModifier {
             }
         }
     }
-    
+
     private func handleScrollValue(_ value: ViewOffsetKey.Value) {
         withAnimation {
             showTitle = value < -30
@@ -47,6 +46,6 @@ struct ScrollableModifier<TitleView: View>: ViewModifier {
 
 extension View {
     func scrollable<TitleView: View>(@ViewBuilder title: () -> TitleView) -> some View {
-        self.modifier(ScrollableModifier(titleView: title()))
+        modifier(ScrollableModifier(titleView: title()))
     }
 }

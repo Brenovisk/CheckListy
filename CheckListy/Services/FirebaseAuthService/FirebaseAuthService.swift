@@ -7,24 +7,23 @@
 
 import Combine
 import Firebase
-import FirebaseStorage
 import FirebaseFirestore
+import FirebaseStorage
 import UIKit
 
 @MainActor
 class FirebaseAuthService: ObservableObject {
-    
     static let shared = FirebaseAuthService()
-    
-    var auth: Auth = Auth.auth()
-    
+
+    var auth: Auth = .auth()
+
     @Published var isSignIn: Bool?
     @Published var isEnable: Bool = true
-    
+
     private init() {
         addListenerUserState()
     }
-    
+
     @MainActor
     func signIn(withEmail email: String, password: String) async throws {
         do {
@@ -34,7 +33,7 @@ class FirebaseAuthService: ObservableObject {
             throw error
         }
     }
-    
+
     @MainActor
     func signUp(withEmail email: String, password: String, name: String, uiImage: UIImage?, completion: (Bool) -> Void) async throws {
         do {
@@ -48,52 +47,50 @@ class FirebaseAuthService: ObservableObject {
             throw error
         }
     }
-    
+
     func signOut() throws {
         do {
             try auth.signOut()
-            self.isSignIn = false
+            isSignIn = false
         } catch {
             throw error
         }
     }
-    
+
     func getAuthUser() throws -> User {
         guard let user = auth.currentUser else {
-           throw NSError(domain: "no User", code: -1, userInfo: nil)
-       }
-       
+            throw NSError(domain: "no User", code: -1, userInfo: nil)
+        }
+
         return user
     }
-    
+
     func deleteAuthUser(_ user: User) async throws {
         try await user.delete()
     }
-    
+
     @MainActor
     func resetPassword(with email: String) async throws {
         try await auth.sendPasswordReset(withEmail: email)
     }
-    
 }
 
 // MARK: - Helper methods
+
 extension FirebaseAuthService {
-    
     private func addListenerUserState() {
         guard let app = FirebaseApp.app() else { return }
-        
-        Auth.auth(app: app).addStateDidChangeListener { auth, user in
+
+        Auth.auth(app: app).addStateDidChangeListener { _, user in
             Task { @MainActor in
                 if user != nil {
                     NavigationService.shared.resetNavigation()
                 } else {
                     NavigationService.shared.resetNavigationAuth()
                 }
-                
+
                 self.isSignIn = (user != nil)
             }
         }
     }
-    
 }

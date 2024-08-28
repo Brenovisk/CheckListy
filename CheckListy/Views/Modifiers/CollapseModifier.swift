@@ -9,7 +9,6 @@ import Foundation
 import SwiftUI
 
 struct CollapseModifier: ViewModifier {
-    
     var isCollapsed: Bool
 
     func body(content: Content) -> some View {
@@ -19,13 +18,10 @@ struct CollapseModifier: ViewModifier {
             AnyView(content)
         }
     }
-    
 }
 
 extension View {
-    
     func collapse(isCollapsed: Bool) -> some View {
-        self.modifier(CollapseModifier(isCollapsed: isCollapsed))
+        modifier(CollapseModifier(isCollapsed: isCollapsed))
     }
-    
 }

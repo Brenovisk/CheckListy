@@ -1,6 +1,7 @@
 {
-  "colors" : [
+  "images" : [
     {
+      "filename" : "message-received-vector.pdf",
       "idiom" : "universal"
     }
   ],

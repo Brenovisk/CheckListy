@@ -8,65 +8,82 @@
 import Foundation
 import SwiftUI
 
-struct SignUpView: View {
-    
+struct SignUpView: View, KeyboardReadable {
+
     @EnvironmentObject private var viewModel: SignUpViewModel
-    
+
+    @State var isShowKeyboard = false
+
+    init() {
+        UITextField.appearance().clearButtonMode = .whileEditing
+    }
+
     var body: some View {
-        VStack {
-            Text("SignUp")
-                .font(.title)
-            
-            ImagePicker(image: nil)
-                .onPick { imageUrl in
-                    viewModel.uiImage = imageUrl
-                }
-            
-            TextField("Nome", text: $viewModel.name)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .padding()
-            
-            TextField("Email", text: $viewModel.email)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .padding()
-                .autocapitalization(.none)
-                .keyboardType(.emailAddress)
-            
-            SecureField("Senha", text: $viewModel.password)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .padding()
-            
-            if viewModel.isLoading {
-                ProgressView()
-                    .padding()
-            } else {
-                Button(action: {
-                    Task {
-                        await viewModel.signUp()
-                    }
-                }) {
-                    Text("Cadastrar")
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .cornerRadius(8)
-                }
-                .padding()
+        VStack(spacing: 24) {
+            VStack(alignment: .leading, spacing: 12) {
+                Texts.letsCreateYourAccount.value
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+
+                Texts.firsWeWannaKnowYou.value
+                    .font(.body)
+                    .foregroundColor(.secondary)
             }
-            
-            if let errorMessage = viewModel.errorMessage {
-                Text(errorMessage)
-                    .foregroundColor(.red)
-                    .padding()
+            .frame(maxWidth: .infinity, alignment: .leading)
+
+            VStack(spacing: 16) {
+                TextFieldCustom(
+                    text: $viewModel.dataForm.name,
+                    placeholder: Texts.name.rawValue,
+                    helperText: viewModel.dataForm.nameError,
+                    onChanged: { viewModel.dataForm.nameError = nil },
+                    isAutoFocused: true
+                )
+
+                TextFieldCustom(
+                    text: $viewModel.dataForm.email,
+                    placeholder: Texts.email.rawValue,
+                    helperText: viewModel.dataForm.emailError,
+                    onChanged: { viewModel.dataForm.emailError = nil }
+                )
+                .keyboardType(.emailAddress)
+            }
+
+            Button(action: {
+                hideKeyboard()
+                guard viewModel.dataForm.isValidEmailAndName() else { return }
+                viewModel.navigateToSignUpAddPhotoView()
+            }) {
+                Text(Texts.goAhead.rawValue)
+                    .frame(maxWidth: .infinity)
+            }
+            .filledButton()
+        }
+        .toolbar(.visible, for: .navigationBar)
+        .frame(maxHeight: .infinity, alignment: .top)
+        .scrollable {}
+        .animatedBackground()
+        .gradientTop(color: Color.accentColor, height: 164)
+        .popup(isPresent: $viewModel.showPopup, data: viewModel.popupData)
+        .onReceive(keyboardPublisher) { value in
+            withAnimation {
+                isShowKeyboard = value
             }
         }
-        .padding()
     }
-    
+
+}
+
+// MARK: typealias
+extension SignUpView {
+
+    typealias Texts = TextsHelper
+
 }
 
 #Preview {
-    SignUpView()
-        .environmentObject(SignUpViewModel())
+    NavigationStack {
+        SignUpView()
+            .environmentObject(SignUpViewModel())
+    }
 }

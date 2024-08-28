@@ -9,7 +9,6 @@ import Foundation
 import SwiftUI
 
 struct FormUserProfile: View {
-    
     @Binding var user: UserProfile?
     @Binding var isLoading: Bool
     @State private var id: String
@@ -17,10 +16,10 @@ struct FormUserProfile: View {
     @State private var email: String
     @State private var image: UIImage?
     @State private var termsAccepted = false
-    
+
     var onSave: ((UserProfile) -> Void)?
     var onClose: (() -> Void)?
-    
+
     private init(
         user: Binding<UserProfile?>,
         isLoading: Binding<Bool>,
@@ -30,29 +29,29 @@ struct FormUserProfile: View {
         self.init(user: user, isLoading: isLoading)
         self.onSave = onSave
         self.onClose = onClose
-        
+
         UITextField.appearance().clearButtonMode = .whileEditing
     }
-    
+
     init(user: Binding<UserProfile?>, isLoading: Binding<Bool>) {
-        self._user = user
-        self._isLoading = isLoading
+        _user = user
+        _isLoading = isLoading
         _id = State(initialValue: user.wrappedValue?.id ?? String())
         _name = State(initialValue: user.wrappedValue?.name ?? String())
         _email = State(initialValue: user.wrappedValue?.email ?? String())
         _image = State(initialValue: user.wrappedValue?.profileImage)
     }
-    
+
     var body: some View {
-        NavigationView{
+        NavigationView {
             VStack {
                 ImagePicker(image: image)
                     .onPick { uiImage in
                         self.image = uiImage
                     }
                     .padding(.top, 16)
-                
-                Form{
+
+                Form {
                     AutoFocusTextField(text: $name, placeholder: String())
                 }
                 .navigationTitle("Editar Perfil")
@@ -61,25 +60,24 @@ struct FormUserProfile: View {
                         Text("Cancelar")
                     },
                     trailing:
-                        Button(action: {
-                            let user = UserProfile(
-                                id: id,
-                                name: name,
-                                urlProfileImage: user?.urlProfileImage,
-                                profileImage: image,
-                                email: email
-                            )
-                            
-                            onSave?(user)
-                        }) {
-                            if isLoading {
-                                ProgressView()
-                            } else {
-                                Text("Editar")
-                            }
+                    Button(action: {
+                        let user = UserProfile(
+                            id: id,
+                            name: name,
+                            urlProfileImage: user?.urlProfileImage,
+                            profileImage: image,
+                            email: email
+                        )
+
+                        onSave?(user)
+                    }) {
+                        if isLoading {
+                            ProgressView()
+                        } else {
+                            Text("Editar")
                         }
+                    }
                 )
-                
             }
             .interactiveDismissDisabled(!termsAccepted && isLoading)
         }
@@ -88,25 +86,25 @@ struct FormUserProfile: View {
 
 // MARK: - Callbacks modifiers
 extension FormUserProfile {
-    
-    func `onSave`(action: ((UserProfile) -> Void)?) -> FormUserProfile {
+
+    func onSave(action: ((UserProfile) -> Void)?) -> FormUserProfile {
         FormUserProfile(
-            user: self.$user,
-            isLoading: self.$isLoading,
+            user: $user,
+            isLoading: $isLoading,
             onSave: action,
-            onClose: self.onClose
+            onClose: onClose
         )
     }
-    
-    func `onClose`(action: (() -> Void)?) -> FormUserProfile {
+
+    func onClose(action: (() -> Void)?) -> FormUserProfile {
         FormUserProfile(
-            user: self.$user,
-            isLoading: self.$isLoading,
-            onSave: self.onSave,
+            user: $user,
+            isLoading: $isLoading,
+            onSave: onSave,
             onClose: action
         )
     }
-    
+
 }
 
 #Preview {

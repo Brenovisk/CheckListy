@@ -9,9 +9,8 @@ import Foundation
 import SwiftUI
 
 struct FormItemView: View, KeyboardReadable {
-    
     @Binding var item: ListItemModel?
-    
+
     @State private var id: UUID
     @State private var description: String
     @State private var section: String
@@ -19,33 +18,33 @@ struct FormItemView: View, KeyboardReadable {
     @State private var isCheck: Bool
     @State private var sheetHeight: CGFloat = .zero
     @State private var isActionButton: Bool = false
-    
+
     var onSave: ((ListItemModel) -> Void)?
     var onClose: (() -> Void)?
-    
+
     private init(item: Binding<ListItemModel?>, section: Binding<String> = Binding.constant(String()), onSave: ((ListItemModel) -> Void)?, onClose: (() -> Void)?) {
         self.init(item: item, section: section)
         self.onSave = onSave
         self.onClose = onClose
     }
-    
+
     init(item: Binding<ListItemModel?>, section: Binding<String> = Binding.constant(String())) {
-        self._item = item
+        _item = item
         _id = State(initialValue: item.wrappedValue?.id ?? UUID())
         _name = State(initialValue: item.wrappedValue?.name ?? String())
         _description = State(initialValue: item.wrappedValue?.description ?? String())
         _section = State(initialValue: !section.wrappedValue.isEmpty ? section.wrappedValue : (item.wrappedValue?.section ?? String()))
         _isCheck = State(initialValue: item.wrappedValue?.isCheck ?? false)
-        
+
         UITextField.appearance().clearButtonMode = .whileEditing
     }
-    
+
     var body: some View {
         VStack {
             HStack {
                 AutoFocusTextField(text: $name, placeholder: "Nome do Item")
                     .roundedBackgroundTextField()
-                
+
                 if isActionButton || item != nil {
                     Button(action: {
                         let item = ListItemModel(
@@ -55,7 +54,7 @@ struct FormItemView: View, KeyboardReadable {
                             section: section,
                             isCheck: isCheck
                         )
-                        
+
                         onSave?(item)
                         onClose?()
                     }) {
@@ -65,11 +64,11 @@ struct FormItemView: View, KeyboardReadable {
                     }
                 }
             }.padding(.bottom, 8)
-            
+
             TextField("Descrição do Item", text: $description)
                 .roundedBackgroundTextField()
                 .padding(.bottom, 8)
-            
+
             TextField("Seção do Item", text: $section)
                 .roundedBackgroundTextField()
                 .padding(.bottom, 8)
@@ -90,7 +89,7 @@ struct FormItemView: View, KeyboardReadable {
                 onClose?()
             }
         }
-        .onChange(of: name){
+        .onChange(of: name) {
             withAnimation {
                 isActionButton = !name.isEmpty
             }
@@ -99,36 +98,33 @@ struct FormItemView: View, KeyboardReadable {
 }
 
 struct InnerHeightPreferenceKey: PreferenceKey {
-    
     static let defaultValue: CGFloat = .zero
-    
+
     static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
         value = nextValue()
     }
-    
 }
 
 // MARK: - Callbacks modifiers
+
 extension FormItemView {
-    
-    func `onSave`(action: ((ListItemModel) -> Void)?) -> FormItemView {
+    func onSave(action: ((ListItemModel) -> Void)?) -> FormItemView {
         FormItemView(
-            item: self.$item,
-            section: self.$section,
+            item: $item,
+            section: $section,
             onSave: action,
-            onClose: self.onClose
+            onClose: onClose
         )
     }
-    
-    func `onClose`(action: (() -> Void)?) -> FormItemView {
+
+    func onClose(action: (() -> Void)?) -> FormItemView {
         FormItemView(
-            item: self.$item,
-            section: self.$section,
-            onSave: self.onSave,
+            item: $item,
+            section: $section,
+            onSave: onSave,
             onClose: action
         )
     }
-    
 }
 
 #Preview {

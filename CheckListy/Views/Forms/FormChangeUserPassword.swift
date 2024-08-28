@@ -9,37 +9,36 @@ import Foundation
 import SwiftUI
 
 struct FormChangeUserPassword: View {
-    
-    @State private var newPassword: String = String()
-    @State private var oldPassword: String = String()
+    @State private var newPassword: String = .init()
+    @State private var oldPassword: String = .init()
     @Binding var isLoading: Bool
     @State private var termsAccepted = false
-    
+
     var onSave: (((String, String)) -> Void)?
     var onClose: (() -> Void)?
-    
+
     private init(
         isLoading: Binding<Bool>,
-        onSave: (((String,String)) -> Void)?,
-        onClose: (() -> Void)?) 
-    {
+        onSave: (((String, String)) -> Void)?,
+        onClose: (() -> Void)?
+    ) {
         self.init(isLoading: isLoading)
         self.onSave = onSave
         self.onClose = onClose
-        
+
         UITextField.appearance().clearButtonMode = .whileEditing
     }
-    
+
     init(isLoading: Binding<Bool>) {
-        self._isLoading = isLoading
+        _isLoading = isLoading
     }
-    
+
     var body: some View {
-        NavigationView{
+        NavigationView {
             VStack {
                 Form {
                     AutoFocusTextField(text: $oldPassword, placeholder: "Senha antiga", isSecureTextEntry: true)
-                    
+
                     SecureField("Nova Senha", text: $newPassword)
                 }
                 .navigationTitle("Mudar Senha")
@@ -48,15 +47,15 @@ struct FormChangeUserPassword: View {
                         Text("Cancelar")
                     },
                     trailing:
-                        Button(action: {
-                            onSave?((oldPassword, newPassword))
-                        }) {
-                            if isLoading {
-                                ProgressView()
-                            } else {
-                                Text("Mudar")
-                            }
+                    Button(action: {
+                        onSave?((oldPassword, newPassword))
+                    }) {
+                        if isLoading {
+                            ProgressView()
+                        } else {
+                            Text("Mudar")
                         }
+                    }
                 )
             }
             .interactiveDismissDisabled(!termsAccepted && isLoading)
@@ -65,24 +64,23 @@ struct FormChangeUserPassword: View {
 }
 
 // MARK: - Callbacks modifiers
+
 extension FormChangeUserPassword {
-    
-    func `onSave`(action: (((String, String)) -> Void)?) -> FormChangeUserPassword {
+    func onSave(action: (((String, String)) -> Void)?) -> FormChangeUserPassword {
         FormChangeUserPassword(
-            isLoading: self.$isLoading,
+            isLoading: $isLoading,
             onSave: action,
-            onClose: self.onClose
+            onClose: onClose
         )
     }
-    
-    func `onClose`(action: (() -> Void)?) -> FormChangeUserPassword {
+
+    func onClose(action: (() -> Void)?) -> FormChangeUserPassword {
         FormChangeUserPassword(
-            isLoading: self.$isLoading,
-            onSave: self.onSave,
+            isLoading: $isLoading,
+            onSave: onSave,
             onClose: action
         )
     }
-    
 }
 
 #Preview {

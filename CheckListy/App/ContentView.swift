@@ -8,11 +8,14 @@
 import SwiftUI
 
 struct ContentView: View {
-    
+
     @StateObject private var firebaseAuthService = FirebaseAuthService.shared
     @StateObject private var navigationService = NavigationService.shared
-    var viewModel = SignInViewModel()
-    
+
+    @StateObject private var loginViewModel = SignInViewModel()
+    @StateObject private var signUpViewModel = SignUpViewModel()
+    @StateObject private var forgotPasswordViewModel = ForgotPasswordViewModel()
+
     var body: some View {
         VStack {
             if let isSignIn = firebaseAuthService.isSignIn {
@@ -21,7 +24,7 @@ struct ContentView: View {
                         MainView()
                             .navigationDestination(for: AppDestination.self) { destination in
                                 switch destination {
-                                case .detailsListView(let list):
+                                case let .detailsListView(list):
                                     DetailsListView()
                                         .environmentObject(DetailsListViewModel(list))
                                 case .profileView:
@@ -33,15 +36,24 @@ struct ContentView: View {
                 } else {
                     NavigationStack(path: $navigationService.navigationPathAuth) {
                         AuthenticationView()
-                            .environmentObject(viewModel)
+                            .environmentObject(loginViewModel)
                             .navigationDestination(for: AppDestinationAuth.self) { destination in
                                 switch destination {
-                                case .singUpView:
+                                case .signUpView:
                                     SignUpView()
-                                        .environmentObject(SignUpViewModel())
-                                case .forgotPasswordView(let email):
-                                    ForgotPasswordView()
-                                        .environmentObject(ForgotPasswordViewModel(email: email))
+                                        .environmentObject(signUpViewModel)
+                                case .signUpAddPhotoView:
+                                    SignUpAddPhotoView()
+                                        .environmentObject(signUpViewModel)
+                                case .signUpCreatePasswordView:
+                                    SignUpCreatePasswordView()
+                                        .environmentObject(signUpViewModel)
+                                case let .forgotPasswordView(email):
+                                    ForgotPasswordView(with: email)
+                                        .environmentObject(forgotPasswordViewModel)
+                                case .forgotPasswordConfirmationView:
+                                    ForgotPasswordConfirmationView()
+                                        .environmentObject(forgotPasswordViewModel)
                                 }
                             }
                     }
@@ -50,40 +62,41 @@ struct ContentView: View {
                 ProgressView()
             }
         }
-        
     }
+
 }
 
 struct MainView: View {
-    
+
     var body: some View {
         ListsView()
             .environmentObject(ListsViewModel())
-        
     }
-    
+
 }
 
 struct AuthenticationView: View {
-    
-    @State private var showSignUp = false
+
     @EnvironmentObject var viewModel: SignInViewModel
-    
+
     var body: some View {
         VStack {
-            SignInView()
-                .environmentObject(viewModel)
-            
-            Button(action: { NavigationService.shared.navigateTo(.singUpView) }) {
-                Text("Se cadastrar")
+            if viewModel.showStartView {
+                StartView()
+                    .onStart {
+                        viewModel.setShowStartView(to: false)
+                    }
+                    .onRegister {
+                        viewModel.navigateToSignUpView()
+                    }
+                    .transition(.move(edge: .top))
+            } else {
+                SignInView()
+                    .environmentObject(viewModel)
             }
-            
-            Button(action: { NavigationService.shared.navigateTo(.forgotPasswordView(viewModel.email)) }) {
-                Text("Esqueci a senha")
-            }
-        }
+        }.navigationTitle(String())
     }
-    
+
 }
 
 #Preview {

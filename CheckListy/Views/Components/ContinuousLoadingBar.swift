@@ -11,10 +11,10 @@ import SwiftUI
 
 struct ContinuousLoadingBar: View {
     @State private var isAnimating = false
-    
+
     let heightBar = 4.0
     let widthBar = 100.0
-    let coloBar: Color = Color.accentColor
+    let coloBar: Color = .accentColor
 
     var body: some View {
         ZStack(alignment: .leading) {

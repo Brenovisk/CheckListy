@@ -31,6 +31,9 @@
 		14044FA52C61AF2B00FD3A73 /* UserServiceErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14044FA42C61AF2B00FD3A73 /* UserServiceErrors.swift */; };
 		14044FA82C61BC1300FD3A73 /* ConvertibleDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14044FA72C61BC1300FD3A73 /* ConvertibleDictionary.swift */; };
 		14044FAA2C6A48C500FD3A73 /* ContinuousLoadingBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14044FA92C6A48C500FD3A73 /* ContinuousLoadingBar.swift */; };
+		143F922C2C7F6C9800751AD0 /* ForgotPasswordConfirmationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143F922B2C7F6C9800751AD0 /* ForgotPasswordConfirmationView.swift */; };
+		143F922E2C7F7AC200751AD0 /* DataFormForgotPassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143F922D2C7F7AC200751AD0 /* DataFormForgotPassword.swift */; };
+		143F92302C7F85C200751AD0 /* MessageWithImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143F922F2C7F85C200751AD0 /* MessageWithImageView.swift */; };
 		145706E42C4DDB94007E642C /* RecordButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145706E32C4DDB94007E642C /* RecordButton.swift */; };
 		145706E62C4DE4E9007E642C /* AudioAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145706E52C4DE4E9007E642C /* AudioAnimation.swift */; };
 		145706E82C4EDE94007E642C /* HeaderSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145706E72C4EDE94007E642C /* HeaderSection.swift */; };
@@ -50,6 +53,37 @@
 		145707112C528DBD007E642C /* SearchButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145707102C528DBC007E642C /* SearchButton.swift */; };
 		149F89BD2C6A6C400092F82C /* ForgotPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149F89BC2C6A6C400092F82C /* ForgotPasswordView.swift */; };
 		149F89BF2C6A6CE30092F82C /* ForgotPasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149F89BE2C6A6CE30092F82C /* ForgotPasswordViewModel.swift */; };
+		149F89C12C73D4AA0092F82C /* StartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149F89C02C73D4AA0092F82C /* StartView.swift */; };
+		149F89C32C73D5C30092F82C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 149F89C22C73D5C30092F82C /* Images.xcassets */; };
+		149F89C52C73D9AB0092F82C /* ImagesHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149F89C42C73D9AB0092F82C /* ImagesHelper.swift */; };
+		149F89C72C73DC3B0092F82C /* ColorsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149F89C62C73DC3B0092F82C /* ColorsHelper.swift */; };
+		149F89C92C73E10A0092F82C /* TextsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149F89C82C73E10A0092F82C /* TextsHelper.swift */; };
+		149F89CB2C73E3400092F82C /* FilledButtonModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149F89CA2C73E3400092F82C /* FilledButtonModifier.swift */; };
+		149F89CD2C73EF560092F82C /* AnimatedBackgroundModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149F89CC2C73EF560092F82C /* AnimatedBackgroundModifier.swift */; };
+		149F89CF2C73F9C70092F82C /* GradientTopModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149F89CE2C73F9C70092F82C /* GradientTopModifier.swift */; };
+		149F89D12C74C8530092F82C /* IconsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149F89D02C74C8530092F82C /* IconsHelper.swift */; };
+		149F89D32C74CD520092F82C /* ToolbarDoneButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149F89D22C74CD520092F82C /* ToolbarDoneButton.swift */; };
+		149F89D52C74EC830092F82C /* TextFieldCustom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149F89D42C74EC830092F82C /* TextFieldCustom.swift */; };
+		149F89D82C7516A00092F82C /* PopupModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149F89D72C7516A00092F82C /* PopupModifier.swift */; };
+		149F89DA2C7517350092F82C /* PopupView in Frameworks */ = {isa = PBXBuildFile; productRef = 149F89D92C7517350092F82C /* PopupView */; };
+		149F89DC2C7517D70092F82C /* PopupType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149F89DB2C7517D70092F82C /* PopupType.swift */; };
+		149F89DE2C7518180092F82C /* PopupHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149F89DD2C7518180092F82C /* PopupHelper.swift */; };
+		149F89E02C751F730092F82C /* PopupData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149F89DF2C751F730092F82C /* PopupData.swift */; };
+		149F89E22C7539D40092F82C /* FirebaseErrorsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149F89E12C7539D40092F82C /* FirebaseErrorsHelper.swift */; };
+		149F89E42C7542FA0092F82C /* DataFormSignIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149F89E32C7542FA0092F82C /* DataFormSignIn.swift */; };
+		149F89E72C75433D0092F82C /* ValidationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149F89E62C75433D0092F82C /* ValidationService.swift */; };
+		149F89E92C75E42F0092F82C /* ValidatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149F89E82C75E42F0092F82C /* ValidatorProtocol.swift */; };
+		149F89EC2C75E6370092F82C /* RequiredValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149F89EB2C75E6370092F82C /* RequiredValidator.swift */; };
+		149F89EE2C75E6660092F82C /* PasswordValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149F89ED2C75E6660092F82C /* PasswordValidator.swift */; };
+		149F89F02C75E7290092F82C /* EmailValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149F89EF2C75E7290092F82C /* EmailValidator.swift */; };
+		149F89F42C77BA050092F82C /* SignUpAddPhotoView .swift in Sources */ = {isa = PBXBuildFile; fileRef = 149F89F32C77BA050092F82C /* SignUpAddPhotoView .swift */; };
+		149F89F62C77BA280092F82C /* SignUpCreatePasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149F89F52C77BA280092F82C /* SignUpCreatePasswordView.swift */; };
+		149F89F82C782EDA0092F82C /* DataFormSignUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149F89F72C782EDA0092F82C /* DataFormSignUp.swift */; };
+		149F89FC2C78B19A0092F82C /* MaxCountValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149F89FB2C78B19A0092F82C /* MaxCountValidator.swift */; };
+		149F89FE2C78B3540092F82C /* NoEqualValuesValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149F89FD2C78B3540092F82C /* NoEqualValuesValidator.swift */; };
+		149F8A002C7D25BC0092F82C /* ScaleOnAppearModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149F89FF2C7D25BC0092F82C /* ScaleOnAppearModifier.swift */; };
+		149F8A022C7D27D30092F82C /* SlideOnAppearModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149F8A012C7D27D20092F82C /* SlideOnAppearModifier.swift */; };
+		149F8A042C7D298C0092F82C /* OpacityOnAppearModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149F8A032C7D298C0092F82C /* OpacityOnAppearModifier.swift */; };
 		14A4CAD02C34D5AE00634E19 /* String+RemoveWord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A4CACF2C34D5AE00634E19 /* String+RemoveWord.swift */; };
 		14A4CAD22C34D71300634E19 /* String+RemoveWhiteSpaces.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A4CAD12C34D71300634E19 /* String+RemoveWhiteSpaces.swift */; };
 		14B225322C364F0F00A7F15F /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B225312C364F0F00A7F15F /* SignInView.swift */; };
@@ -77,7 +111,7 @@
 		14B225792C49B6C600A7F15F /* CollapseModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B225782C49B6C600A7F15F /* CollapseModifier.swift */; };
 		14DBB6A42C3433560084EB23 /* CheckListyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DBB6A32C3433560084EB23 /* CheckListyApp.swift */; };
 		14DBB6A62C3433560084EB23 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DBB6A52C3433560084EB23 /* ContentView.swift */; };
-		14DBB6A82C3433570084EB23 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 14DBB6A72C3433570084EB23 /* Assets.xcassets */; };
+		14DBB6A82C3433570084EB23 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 14DBB6A72C3433570084EB23 /* Colors.xcassets */; };
 		14DBB6AB2C3433570084EB23 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 14DBB6AA2C3433570084EB23 /* Preview Assets.xcassets */; };
 		14DBB6B52C3433570084EB23 /* CheckListyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DBB6B42C3433570084EB23 /* CheckListyTests.swift */; };
 		14DBB6BF2C3433570084EB23 /* CheckListyUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DBB6BE2C3433570084EB23 /* CheckListyUITests.swift */; };
@@ -129,6 +163,9 @@
 		14044FA42C61AF2B00FD3A73 /* UserServiceErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserServiceErrors.swift; sourceTree = "<group>"; };
 		14044FA72C61BC1300FD3A73 /* ConvertibleDictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConvertibleDictionary.swift; sourceTree = "<group>"; };
 		14044FA92C6A48C500FD3A73 /* ContinuousLoadingBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContinuousLoadingBar.swift; sourceTree = "<group>"; };
+		143F922B2C7F6C9800751AD0 /* ForgotPasswordConfirmationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordConfirmationView.swift; sourceTree = "<group>"; };
+		143F922D2C7F7AC200751AD0 /* DataFormForgotPassword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataFormForgotPassword.swift; sourceTree = "<group>"; };
+		143F922F2C7F85C200751AD0 /* MessageWithImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageWithImageView.swift; sourceTree = "<group>"; };
 		145706E32C4DDB94007E642C /* RecordButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordButton.swift; sourceTree = "<group>"; };
 		145706E52C4DE4E9007E642C /* AudioAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioAnimation.swift; sourceTree = "<group>"; };
 		145706E72C4EDE94007E642C /* HeaderSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderSection.swift; sourceTree = "<group>"; };
@@ -148,6 +185,36 @@
 		145707102C528DBC007E642C /* SearchButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchButton.swift; sourceTree = "<group>"; };
 		149F89BC2C6A6C400092F82C /* ForgotPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordView.swift; sourceTree = "<group>"; };
 		149F89BE2C6A6CE30092F82C /* ForgotPasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewModel.swift; sourceTree = "<group>"; };
+		149F89C02C73D4AA0092F82C /* StartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartView.swift; sourceTree = "<group>"; };
+		149F89C22C73D5C30092F82C /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		149F89C42C73D9AB0092F82C /* ImagesHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesHelper.swift; sourceTree = "<group>"; };
+		149F89C62C73DC3B0092F82C /* ColorsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorsHelper.swift; sourceTree = "<group>"; };
+		149F89C82C73E10A0092F82C /* TextsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextsHelper.swift; sourceTree = "<group>"; };
+		149F89CA2C73E3400092F82C /* FilledButtonModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilledButtonModifier.swift; sourceTree = "<group>"; };
+		149F89CC2C73EF560092F82C /* AnimatedBackgroundModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedBackgroundModifier.swift; sourceTree = "<group>"; };
+		149F89CE2C73F9C70092F82C /* GradientTopModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientTopModifier.swift; sourceTree = "<group>"; };
+		149F89D02C74C8530092F82C /* IconsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconsHelper.swift; sourceTree = "<group>"; };
+		149F89D22C74CD520092F82C /* ToolbarDoneButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarDoneButton.swift; sourceTree = "<group>"; };
+		149F89D42C74EC830092F82C /* TextFieldCustom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldCustom.swift; sourceTree = "<group>"; };
+		149F89D72C7516A00092F82C /* PopupModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupModifier.swift; sourceTree = "<group>"; };
+		149F89DB2C7517D70092F82C /* PopupType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupType.swift; sourceTree = "<group>"; };
+		149F89DD2C7518180092F82C /* PopupHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupHelper.swift; sourceTree = "<group>"; };
+		149F89DF2C751F730092F82C /* PopupData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupData.swift; sourceTree = "<group>"; };
+		149F89E12C7539D40092F82C /* FirebaseErrorsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseErrorsHelper.swift; sourceTree = "<group>"; };
+		149F89E32C7542FA0092F82C /* DataFormSignIn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataFormSignIn.swift; sourceTree = "<group>"; };
+		149F89E62C75433D0092F82C /* ValidationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationService.swift; sourceTree = "<group>"; };
+		149F89E82C75E42F0092F82C /* ValidatorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidatorProtocol.swift; sourceTree = "<group>"; };
+		149F89EB2C75E6370092F82C /* RequiredValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequiredValidator.swift; sourceTree = "<group>"; };
+		149F89ED2C75E6660092F82C /* PasswordValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordValidator.swift; sourceTree = "<group>"; };
+		149F89EF2C75E7290092F82C /* EmailValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailValidator.swift; sourceTree = "<group>"; };
+		149F89F32C77BA050092F82C /* SignUpAddPhotoView .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SignUpAddPhotoView .swift"; sourceTree = "<group>"; };
+		149F89F52C77BA280092F82C /* SignUpCreatePasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpCreatePasswordView.swift; sourceTree = "<group>"; };
+		149F89F72C782EDA0092F82C /* DataFormSignUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataFormSignUp.swift; sourceTree = "<group>"; };
+		149F89FB2C78B19A0092F82C /* MaxCountValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaxCountValidator.swift; sourceTree = "<group>"; };
+		149F89FD2C78B3540092F82C /* NoEqualValuesValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoEqualValuesValidator.swift; sourceTree = "<group>"; };
+		149F89FF2C7D25BC0092F82C /* ScaleOnAppearModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScaleOnAppearModifier.swift; sourceTree = "<group>"; };
+		149F8A012C7D27D20092F82C /* SlideOnAppearModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideOnAppearModifier.swift; sourceTree = "<group>"; };
+		149F8A032C7D298C0092F82C /* OpacityOnAppearModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpacityOnAppearModifier.swift; sourceTree = "<group>"; };
 		14A4CACF2C34D5AE00634E19 /* String+RemoveWord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+RemoveWord.swift"; sourceTree = "<group>"; };
 		14A4CAD12C34D71300634E19 /* String+RemoveWhiteSpaces.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+RemoveWhiteSpaces.swift"; sourceTree = "<group>"; };
 		14B225312C364F0F00A7F15F /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
@@ -174,7 +241,7 @@
 		14DBB6A02C3433560084EB23 /* CheckListy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CheckListy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		14DBB6A32C3433560084EB23 /* CheckListyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckListyApp.swift; sourceTree = "<group>"; };
 		14DBB6A52C3433560084EB23 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		14DBB6A72C3433570084EB23 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		14DBB6A72C3433570084EB23 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		14DBB6AA2C3433570084EB23 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		14DBB6B02C3433570084EB23 /* CheckListyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CheckListyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		14DBB6B42C3433570084EB23 /* CheckListyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckListyTests.swift; sourceTree = "<group>"; };
@@ -195,6 +262,7 @@
 			files = (
 				14B225552C3DF62600A7F15F /* FirebaseDatabase in Frameworks */,
 				14044F7F2C571B1300FD3A73 /* FirebaseFirestore in Frameworks */,
+				149F89DA2C7517350092F82C /* PopupView in Frameworks */,
 				14B2254D2C36D78500A7F15F /* FirebaseAuth in Frameworks */,
 				14044F7D2C571AA800FD3A73 /* FirebaseStorage in Frameworks */,
 			);
@@ -296,6 +364,12 @@
 			isa = PBXGroup;
 			children = (
 				145706F12C4F0C08007E642C /* ListMode.swift */,
+				149F89C42C73D9AB0092F82C /* ImagesHelper.swift */,
+				149F89C62C73DC3B0092F82C /* ColorsHelper.swift */,
+				149F89C82C73E10A0092F82C /* TextsHelper.swift */,
+				149F89D02C74C8530092F82C /* IconsHelper.swift */,
+				149F89DD2C7518180092F82C /* PopupHelper.swift */,
+				149F89E12C7539D40092F82C /* FirebaseErrorsHelper.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -316,6 +390,28 @@
 				145707082C51AA57007E642C /* AppDestination.swift */,
 			);
 			path = NavigationService;
+			sourceTree = "<group>";
+		};
+		149F89E52C7543190092F82C /* ValidationService */ = {
+			isa = PBXGroup;
+			children = (
+				149F89E82C75E42F0092F82C /* ValidatorProtocol.swift */,
+				149F89E62C75433D0092F82C /* ValidationService.swift */,
+				149F89EA2C75E62A0092F82C /* Validators */,
+			);
+			path = ValidationService;
+			sourceTree = "<group>";
+		};
+		149F89EA2C75E62A0092F82C /* Validators */ = {
+			isa = PBXGroup;
+			children = (
+				149F89EB2C75E6370092F82C /* RequiredValidator.swift */,
+				149F89ED2C75E6660092F82C /* PasswordValidator.swift */,
+				149F89EF2C75E7290092F82C /* EmailValidator.swift */,
+				149F89FB2C78B19A0092F82C /* MaxCountValidator.swift */,
+				149F89FD2C78B3540092F82C /* NoEqualValuesValidator.swift */,
+			);
+			path = Validators;
 			sourceTree = "<group>";
 		};
 		14B225482C36D64900A7F15F /* FirebaseAuthService */ = {
@@ -352,6 +448,9 @@
 				14044F992C5C29D900FD3A73 /* DefaultSection.swift */,
 				14044F9B2C5C2BB300FD3A73 /* DefaultSectionOption.swift */,
 				14044FA92C6A48C500FD3A73 /* ContinuousLoadingBar.swift */,
+				149F89D42C74EC830092F82C /* TextFieldCustom.swift */,
+				143F922B2C7F6C9800751AD0 /* ForgotPasswordConfirmationView.swift */,
+				143F922F2C7F85C200751AD0 /* MessageWithImageView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -367,6 +466,14 @@
 				1457070E2C51EF5C007E642C /* ContainerRelativeFrameHorizontalModifier.swift */,
 				14044F952C5C1ED800FD3A73 /* ProfileImageModifier.swift */,
 				14044F972C5C214500FD3A73 /* SectionModifier.swift */,
+				149F89CA2C73E3400092F82C /* FilledButtonModifier.swift */,
+				149F89CC2C73EF560092F82C /* AnimatedBackgroundModifier.swift */,
+				149F89CE2C73F9C70092F82C /* GradientTopModifier.swift */,
+				149F89D22C74CD520092F82C /* ToolbarDoneButton.swift */,
+				149F89D72C7516A00092F82C /* PopupModifier.swift */,
+				149F89FF2C7D25BC0092F82C /* ScaleOnAppearModifier.swift */,
+				149F8A012C7D27D20092F82C /* SlideOnAppearModifier.swift */,
+				149F8A032C7D298C0092F82C /* OpacityOnAppearModifier.swift */,
 			);
 			path = Modifiers;
 			sourceTree = "<group>";
@@ -400,10 +507,13 @@
 				14B225612C45C08C00A7F15F /* Components */,
 				14DBB6D42C3440630084EB23 /* DetailsListView.swift */,
 				14B225312C364F0F00A7F15F /* SignInView.swift */,
-				14B2254E2C36DBA800A7F15F /* SignUpView.swift */,
+				149F89C02C73D4AA0092F82C /* StartView.swift */,
 				14B225592C3EAD6E00A7F15F /* ListsView.swift */,
 				14044F912C5B24EF00FD3A73 /* ProfileView.swift */,
 				149F89BC2C6A6C400092F82C /* ForgotPasswordView.swift */,
+				14B2254E2C36DBA800A7F15F /* SignUpView.swift */,
+				149F89F32C77BA050092F82C /* SignUpAddPhotoView .swift */,
+				149F89F52C77BA280092F82C /* SignUpCreatePasswordView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -431,6 +541,11 @@
 				14B225622C45C0B800A7F15F /* ViewOffsetKey.swift */,
 				14B225762C496C0A00A7F15F /* SectionModel.swift */,
 				14044F8B2C5A8F9D00FD3A73 /* ShareableItem.swift */,
+				149F89DB2C7517D70092F82C /* PopupType.swift */,
+				149F89DF2C751F730092F82C /* PopupData.swift */,
+				149F89E32C7542FA0092F82C /* DataFormSignIn.swift */,
+				149F89F72C782EDA0092F82C /* DataFormSignUp.swift */,
+				143F922D2C7F7AC200751AD0 /* DataFormForgotPassword.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -440,7 +555,8 @@
 			children = (
 				145706EC2C4EF2F6007E642C /* check.mp3 */,
 				14DBB6AA2C3433570084EB23 /* Preview Assets.xcassets */,
-				14DBB6A72C3433570084EB23 /* Assets.xcassets */,
+				14DBB6A72C3433570084EB23 /* Colors.xcassets */,
+				149F89C22C73D5C30092F82C /* Images.xcassets */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -502,6 +618,7 @@
 		14DBB6CD2C3434220084EB23 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				149F89E52C7543190092F82C /* ValidationService */,
 				14044F852C59231800FD3A73 /* UserService */,
 				14044F822C5922C200FD3A73 /* ImageService */,
 				145707052C51AA1B007E642C /* NavigationService */,
@@ -544,6 +661,7 @@
 				14DBB69C2C3433560084EB23 /* Sources */,
 				14DBB69D2C3433560084EB23 /* Frameworks */,
 				14DBB69E2C3433560084EB23 /* Resources */,
+				14F1ABE62C7E6A1E00C2CF77 /* Run SwiftLint + SwiftFormat */,
 			);
 			buildRules = (
 			);
@@ -555,6 +673,7 @@
 				14B225542C3DF62600A7F15F /* FirebaseDatabase */,
 				14044F7C2C571AA800FD3A73 /* FirebaseStorage */,
 				14044F7E2C571B1300FD3A73 /* FirebaseFirestore */,
+				149F89D92C7517350092F82C /* PopupView */,
 			);
 			productName = CheckListy;
 			productReference = 14DBB6A02C3433560084EB23 /* CheckListy.app */;
@@ -630,6 +749,7 @@
 			mainGroup = 14DBB6972C3433560084EB23;
 			packageReferences = (
 				14B225352C36D1BE00A7F15F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				149F89D62C7515C60092F82C /* XCRemoteSwiftPackageReference "PopupView" */,
 			);
 			productRefGroup = 14DBB6A12C3433560084EB23 /* Products */;
 			projectDirPath = "";
@@ -648,7 +768,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				14DBB6AB2C3433570084EB23 /* Preview Assets.xcassets in Resources */,
-				14DBB6A82C3433570084EB23 /* Assets.xcassets in Resources */,
+				149F89C32C73D5C30092F82C /* Images.xcassets in Resources */,
+				14DBB6A82C3433570084EB23 /* Colors.xcassets in Resources */,
 				14B225472C36D30600A7F15F /* GoogleService-Info.plist in Resources */,
 				145706ED2C4EF2F6007E642C /* check.mp3 in Resources */,
 			);
@@ -670,6 +791,28 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		14F1ABE62C7E6A1E00C2CF77 /* Run SwiftLint + SwiftFormat */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Run SwiftLint + SwiftFormat";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./.lint_and_format.sh\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		14DBB69C2C3433560084EB23 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -679,8 +822,14 @@
 				14B225322C364F0F00A7F15F /* SignInView.swift in Sources */,
 				14044F782C56CDB200FD3A73 /* ImagePicker.swift in Sources */,
 				14B225792C49B6C600A7F15F /* CollapseModifier.swift in Sources */,
+				149F89C92C73E10A0092F82C /* TextsHelper.swift in Sources */,
+				143F922E2C7F7AC200751AD0 /* DataFormForgotPassword.swift in Sources */,
 				14044FA32C60308E00FD3A73 /* FormChangeUserPassword.swift in Sources */,
+				149F89EE2C75E6660092F82C /* PasswordValidator.swift in Sources */,
+				149F89CB2C73E3400092F82C /* FilledButtonModifier.swift in Sources */,
 				14B225532C3DF60A00A7F15F /* FirebaseDataBaseService.swift in Sources */,
+				149F89E92C75E42F0092F82C /* ValidatorProtocol.swift in Sources */,
+				149F89E72C75433D0092F82C /* ValidationService.swift in Sources */,
 				14B2255C2C3EADF900A7F15F /* ListsViewModel.swift in Sources */,
 				145706EA2C4EE5A4007E642C /* FeedbackService.swift in Sources */,
 				14B225672C45E06200A7F15F /* FormItemView.swift in Sources */,
@@ -694,55 +843,81 @@
 				1457070F2C51EF5C007E642C /* ContainerRelativeFrameHorizontalModifier.swift in Sources */,
 				14B2254A2C36D66C00A7F15F /* FirebaseAuthService.swift in Sources */,
 				14B225702C47490200A7F15F /* RoundedBackgroundTextFieldStyle.swift in Sources */,
+				149F89D32C74CD520092F82C /* ToolbarDoneButton.swift in Sources */,
 				145707012C4FE3B1007E642C /* Array+RemoveDuplicates.swift in Sources */,
 				14B2256D2C4742C000A7F15F /* AutoFocusTextField.swift in Sources */,
 				145706E82C4EDE94007E642C /* HeaderSection.swift in Sources */,
 				14044FAA2C6A48C500FD3A73 /* ContinuousLoadingBar.swift in Sources */,
+				149F89F62C77BA280092F82C /* SignUpCreatePasswordView.swift in Sources */,
 				14044F7A2C56D1B600FD3A73 /* WelcomeView.swift in Sources */,
 				1457070D2C51EB4E007E642C /* ScrollHorizontalModifier.swift in Sources */,
+				149F89DC2C7517D70092F82C /* PopupType.swift in Sources */,
 				14044FA12C5C714E00FD3A73 /* FormUserProfile.swift in Sources */,
+				149F89FE2C78B3540092F82C /* NoEqualValuesValidator.swift in Sources */,
 				14DBB6CF2C3434560084EB23 /* SpeechRecognizerService.swift in Sources */,
+				149F89C52C73D9AB0092F82C /* ImagesHelper.swift in Sources */,
 				145706EF2C4F09D3007E642C /* ListCard.swift in Sources */,
 				14044F872C59233300FD3A73 /* UserService.swift in Sources */,
+				149F89E42C7542FA0092F82C /* DataFormSignIn.swift in Sources */,
 				14044F842C5922D100FD3A73 /* ImageService.swift in Sources */,
+				149F89CD2C73EF560092F82C /* AnimatedBackgroundModifier.swift in Sources */,
 				14044F8C2C5A8F9D00FD3A73 /* ShareableItem.swift in Sources */,
 				14044F742C56CD4100FD3A73 /* ImagePickerController.swift in Sources */,
+				149F89CF2C73F9C70092F82C /* GradientTopModifier.swift in Sources */,
 				145706FD2C4FC975007E642C /* UserDefaultsService.swift in Sources */,
+				149F89DE2C7518180092F82C /* PopupHelper.swift in Sources */,
 				145707072C51AA2B007E642C /* NavigationService.swift in Sources */,
 				14B225692C46169400A7F15F /* ItemCard.swift in Sources */,
+				149F89F02C75E7290092F82C /* EmailValidator.swift in Sources */,
+				149F8A042C7D298C0092F82C /* OpacityOnAppearModifier.swift in Sources */,
 				145706F22C4F0C08007E642C /* ListMode.swift in Sources */,
 				145706E42C4DDB94007E642C /* RecordButton.swift in Sources */,
 				14044F9A2C5C29D900FD3A73 /* DefaultSection.swift in Sources */,
 				14B225752C48B12D00A7F15F /* KeyboardReadable.swift in Sources */,
 				14B225582C3E9EE300A7F15F /* ListModel.swift in Sources */,
 				14044FA82C61BC1300FD3A73 /* ConvertibleDictionary.swift in Sources */,
+				149F89F42C77BA050092F82C /* SignUpAddPhotoView .swift in Sources */,
+				149F89C12C73D4AA0092F82C /* StartView.swift in Sources */,
 				14B225512C36DBC500A7F15F /* SignUpViewModel.swift in Sources */,
 				149F89BF2C6A6CE30092F82C /* ForgotPasswordViewModel.swift in Sources */,
 				145706FA2C4F59C5007E642C /* GridModifier.swift in Sources */,
 				145706FF2C4FC9F6007E642C /* UserDefaultsServiceKeys.swift in Sources */,
+				149F89C72C73DC3B0092F82C /* ColorsHelper.swift in Sources */,
 				14B225632C45C0B800A7F15F /* ViewOffsetKey.swift in Sources */,
 				14A4CAD22C34D71300634E19 /* String+RemoveWhiteSpaces.swift in Sources */,
 				14044F942C5B254600FD3A73 /* ProfileViewModel.swift in Sources */,
 				14044F902C5AE27F00FD3A73 /* String+ConvertToBase64.swift in Sources */,
+				149F8A002C7D25BC0092F82C /* ScaleOnAppearModifier.swift in Sources */,
 				14044F922C5B24EF00FD3A73 /* ProfileView.swift in Sources */,
 				14B225652C45C84700A7F15F /* TitleIcon.swift in Sources */,
 				14B225772C496C0A00A7F15F /* SectionModel.swift in Sources */,
 				14044F9F2C5C6E9600FD3A73 /* UserProfile.swift in Sources */,
+				149F89E02C751F730092F82C /* PopupData.swift in Sources */,
 				145707112C528DBD007E642C /* SearchButton.swift in Sources */,
+				149F89F82C782EDA0092F82C /* DataFormSignUp.swift in Sources */,
 				14B2255A2C3EAD6E00A7F15F /* ListsView.swift in Sources */,
 				149F89BD2C6A6C400092F82C /* ForgotPasswordView.swift in Sources */,
+				149F89D12C74C8530092F82C /* IconsHelper.swift in Sources */,
+				149F89D82C7516A00092F82C /* PopupModifier.swift in Sources */,
+				149F89D52C74EC830092F82C /* TextFieldCustom.swift in Sources */,
+				149F89EC2C75E6370092F82C /* RequiredValidator.swift in Sources */,
 				14044F8E2C5A916C00FD3A73 /* ShareSheet.swift in Sources */,
 				14044F8A2C5923A900FD3A73 /* UserManager.swift in Sources */,
 				14DBB6D22C343B2C0084EB23 /* SpeechRecognizerServiceErrors.swift in Sources */,
 				14B2254F2C36DBA800A7F15F /* SignUpView.swift in Sources */,
 				14DBB6D72C34A5500084EB23 /* ListItemModel.swift in Sources */,
 				14DBB6A42C3433560084EB23 /* CheckListyApp.swift in Sources */,
+				143F92302C7F85C200751AD0 /* MessageWithImageView.swift in Sources */,
 				145706E62C4DE4E9007E642C /* AudioAnimation.swift in Sources */,
+				149F89FC2C78B19A0092F82C /* MaxCountValidator.swift in Sources */,
 				14B2255E2C3F42F800A7F15F /* FirebaseDatabasePaths.swift in Sources */,
 				14044F962C5C1ED800FD3A73 /* ProfileImageModifier.swift in Sources */,
+				149F8A022C7D27D30092F82C /* SlideOnAppearModifier.swift in Sources */,
+				149F89E22C7539D40092F82C /* FirebaseErrorsHelper.swift in Sources */,
 				14044F9C2C5C2BB300FD3A73 /* DefaultSectionOption.swift in Sources */,
 				14A4CAD02C34D5AE00634E19 /* String+RemoveWord.swift in Sources */,
 				14044F812C591B7800FD3A73 /* UserDatabase.swift in Sources */,
+				143F922C2C7F6C9800751AD0 /* ForgotPasswordConfirmationView.swift in Sources */,
 				14DBB6D92C34ABC60084EB23 /* DetailsListViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -909,6 +1084,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"CheckListy/App/Resources\"";
 				DEVELOPMENT_TEAM = QLU3R732N5;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "“Audio is recorded to transcribe. Audio recordings are discarded after transcription.”";
 				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "\"You can check list items with your voice\"";
@@ -940,6 +1116,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"CheckListy/App/Resources\"";
 				DEVELOPMENT_TEAM = QLU3R732N5;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "“Audio is recorded to transcribe. Audio recordings are discarded after transcription.”";
 				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "\"You can check list items with your voice\"";
@@ -1079,6 +1256,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		149F89D62C7515C60092F82C /* XCRemoteSwiftPackageReference "PopupView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/exyte/PopupView.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.6;
+			};
+		};
 		14B225352C36D1BE00A7F15F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
@@ -1099,6 +1284,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 14B225352C36D1BE00A7F15F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestore;
+		};
+		149F89D92C7517350092F82C /* PopupView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 149F89D62C7515C60092F82C /* XCRemoteSwiftPackageReference "PopupView" */;
+			productName = PopupView;
 		};
 		14B2254C2C36D78500A7F15F /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;

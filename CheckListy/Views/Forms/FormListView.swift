@@ -9,54 +9,66 @@ import Foundation
 import SwiftUI
 
 struct FormListView: View {
-    
+
     @Binding var item: ListModel?
     @State private var id: UUID
     @State private var name: String
-    @State private var listCode: String = String()
+    @State private var listCode: String = .init()
     @State private var selectedColor: String
     @State private var selectedIcon: String
-    @State private var items: Array<ListItemModel>
+    @State private var items: [ListItemModel]
     @State private var showAddListByCode: Bool = false
-    
+
     let layoutIcon = [
         GridItem(.flexible()),
         GridItem(.flexible())
     ]
-    
+
     var onSave: ((ListModel) -> Void)?
     var onSaveByCode: ((String) -> Void)?
     var onClose: (() -> Void)?
-    
-    let colors: [String] = ["red", "green", "blue", "yellow", "purple"]
-    let icons: [String] = ["house.fill", "star.fill", "bell.fill", "heart.fill", "flag.fill", "book.fill", "folder.fill", "flame.fill", "bolt.fill", "leaf.fill"]
-    
+
+    let colors: [String] = ["red-app", "green-app", "blue-app", "yellow-app", "purple-app"]
+
+    let icons: [String] = [
+        "house.fill",
+        "star.fill",
+        "bell.fill",
+        "heart.fill",
+        "flag.fill",
+        "book.fill",
+        "folder.fill",
+        "flame.fill",
+        "bolt.fill",
+        "leaf.fill"
+    ]
+
     private init(item: Binding<ListModel?>, onSave: ((ListModel) -> Void)?, onClose: (() -> Void)?, onSaveByCode: ((String) -> Void)?) {
         self.init(item: item)
         self.onSave = onSave
         self.onClose = onClose
         self.onSaveByCode = onSaveByCode
-        
+
         UITextField.appearance().clearButtonMode = .whileEditing
     }
-    
+
     init(item: Binding<ListModel?>) {
-        self._item = item
+        _item = item
         _id = State(initialValue: item.wrappedValue?.id ?? UUID())
         _name = State(initialValue: item.wrappedValue?.name ?? "")
-        _selectedColor = State(initialValue: item.wrappedValue?.color ?? "red")
+        _selectedColor = State(initialValue: item.wrappedValue?.color ?? "red-app")
         _selectedIcon = State(initialValue: item.wrappedValue?.icon ?? "house")
         _items = State(initialValue: item.wrappedValue?.items ?? [])
     }
-    
+
     var body: some View {
-        NavigationView{
+        NavigationView {
             VStack {
                 Form {
                     Section(header: Text("Nome")) {
                         TextField("Nome da Lista", text: $name)
                     }
-                    
+
                     Section(header: Text("Cor")) {
                         LazyHStack(spacing: 24) {
                             ForEach(colors, id: \.self) { color in
@@ -74,7 +86,7 @@ struct FormListView: View {
                             }
                         }
                     }
-                    
+
                     Section(header: Text("Ícone")) {
                         ScrollView {
                             LazyHGrid(rows: layoutIcon, spacing: 24) {
@@ -93,12 +105,12 @@ struct FormListView: View {
                             }
                         }.padding(.top, 16)
                     }
-                    
+
                     Toggle(isOn: $showAddListByCode) {
                         Text("Adicionar lista por código")
                             .foregroundColor(.secondary)
                     }
-                    
+
                     if showAddListByCode {
                         TextField("Código", text: $listCode)
                     }
@@ -109,65 +121,64 @@ struct FormListView: View {
                         Text("Cancelar")
                     },
                     trailing:
-                        Button(action: {
-                            guard let user = try? FirebaseAuthService.shared.getAuthUser() else { return }
-                            if listCode.isEmpty {
-                                let newItem = ListModel(
-                                    id: id,
-                                    name: name,
-                                    color: selectedColor,
-                                    icon: selectedIcon,
-                                    items: items,
-                                    createdAt: item?.createdAt ?? Date(),
-                                    editedAt: Date(),
-                                    users: item?.users ?? [user.uid]
-                                )
-                                
-                                onSave?(newItem)
-                            } else {
-                                onSaveByCode?(listCode)
-                            }
-                            onClose?()
-                        }) {
-                            Text(item == nil ? "Criar" : "Editar")
+                    Button(action: {
+                        guard let user = try? FirebaseAuthService.shared.getAuthUser() else { return }
+                        if listCode.isEmpty {
+                            let newItem = ListModel(
+                                id: id,
+                                name: name,
+                                color: selectedColor,
+                                icon: selectedIcon,
+                                items: items,
+                                createdAt: item?.createdAt ?? Date(),
+                                editedAt: Date(),
+                                users: item?.users ?? [user.uid]
+                            )
+
+                            onSave?(newItem)
+                        } else {
+                            onSaveByCode?(listCode)
                         }
+                        onClose?()
+                    }) {
+                        Text(item == nil ? "Criar" : "Editar")
+                    }
                 )
-                
             }
         }
     }
 }
 
 // MARK: - Callbacks modifiers
+
 extension FormListView {
-    
-    func `onSave`(action: ((ListModel) -> Void)?) -> FormListView {
+    func onSave(action: ((ListModel) -> Void)?) -> FormListView {
         FormListView(
-            item: self.$item,
+            item: $item,
             onSave: action,
-            onClose: self.onClose,
-            onSaveByCode: self.onSaveByCode
-        )
-    } 
-    
-    func `onClose`(action: (() -> Void)?) -> FormListView {
-        FormListView(
-            item: self.$item,
-            onSave: self.onSave,
-            onClose: action,
-            onSaveByCode: self.onSaveByCode
+            onClose: onClose,
+            onSaveByCode: onSaveByCode
         )
     }
-    
-    func `onSaveByCode`(action: ((String) -> Void)?) -> FormListView {
+
+    func onClose(action: (() -> Void)?) -> FormListView {
         FormListView(
-            item: self.$item,
-            onSave: self.onSave,
-            onClose: self.onClose,
+            item: $item,
+            onSave: onSave,
+            onClose: action,
+            onSaveByCode: onSaveByCode
+        )
+    }
+
+    func onSaveByCode(action: ((String) -> Void)?) -> FormListView {
+        FormListView(
+            item: $item,
+            onSave: onSave,
+            onClose: onClose,
             onSaveByCode: action
         )
     }
-    
+
 }
 
 #Preview {

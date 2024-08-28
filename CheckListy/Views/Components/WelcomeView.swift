@@ -18,9 +18,9 @@ struct WelcomeView: View {
                 .lineLimit(1)
                 .font(.title2)
                 .fontWeight(.bold)
-            
+
             Spacer()
-            
+
             if let uiImage {
                 Image(uiImage: uiImage)
                     .resizable()
@@ -35,10 +35,7 @@ struct WelcomeView: View {
                     .frame(width: 40, height: 40)
                     .clipShape(Circle())
             }
-            
         }
         .frame(maxWidth: .infinity, alignment: .leading)
     }
 }
-
-

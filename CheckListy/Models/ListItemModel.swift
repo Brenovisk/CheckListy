@@ -8,32 +8,27 @@
 import SwiftUI
 
 struct ListItemModel: Identifiable, Hashable {
-    
-    var id: UUID = UUID()
+    var id: UUID = .init()
     var name: String
-    var description: String = String()
-    var section: String = String()
+    var description: String = .init()
+    var section: String = .init()
     var isCheck: Bool
-    
 }
 
 extension ListItemModel {
-    
     func toNSDictionary() -> NSDictionary {
         [
-            "id" : id.uuidString,
+            "id": id.uuidString,
             "name": name,
             "description": description,
             "section": section,
             "isCheck": isCheck
         ]
     }
-    
+
     static func fromNSDictionary(_ dictionary: NSDictionary) -> ListItemModel? {
-        
-        
         guard
-            let id = UUID(uuidString: dictionary["id"] as? String ?? "") ,
+            let id = UUID(uuidString: dictionary["id"] as? String ?? ""),
             let name = dictionary["name"] as? String,
             let description = dictionary["description"] as? String,
             let section = dictionary["section"] as? String,
@@ -41,7 +36,7 @@ extension ListItemModel {
         else {
             return nil
         }
-        
+
         return ListItemModel(
             id: id,
             name: name,
@@ -50,9 +45,8 @@ extension ListItemModel {
             isCheck: isCheck
         )
     }
-    
+
     public static func == (lhs: ListItemModel, rhs: ListItemModel) -> Bool {
-        lhs.id == rhs.id && lhs.name == rhs.name &&  lhs.section == rhs.section
+        lhs.id == rhs.id && lhs.name == rhs.name && lhs.section == rhs.section
     }
-    
 }

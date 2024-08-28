@@ -9,17 +9,16 @@ import Foundation
 import SwiftUI
 
 struct SearchButton: View {
-    
     var onEnable: (() -> Void)?
     @Binding var isEnable: Bool
-    
+
     private init(isEnable: Binding<Bool>, onEnable: (() -> Void)?) {
         self.init(isEnable: isEnable)
         self.onEnable = onEnable
     }
-    
+
     init(isEnable: Binding<Bool>) {
-        self._isEnable = isEnable
+        _isEnable = isEnable
     }
 
     var body: some View {
@@ -37,17 +36,15 @@ struct SearchButton: View {
             }
         }
     }
-    
 }
 
-//MARK: - Callback modifiers
+// MARK: - Callback modifiers
+
 extension SearchButton {
-    
-    func `onEnable`(action: (() -> Void)?) -> SearchButton {
+    func onEnable(action: (() -> Void)?) -> SearchButton {
         SearchButton(
-            isEnable: self.$isEnable,
+            isEnable: $isEnable,
             onEnable: action
         )
     }
-    
 }

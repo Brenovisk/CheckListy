@@ -8,15 +8,14 @@
 import Foundation
 
 enum AppDestination: Hashable {
-    
     case detailsListView(list: ListModel)
     case profileView
-    
 }
 
 enum AppDestinationAuth: Hashable {
-    
-    case singUpView
+    case signUpView
+    case signUpAddPhotoView
+    case signUpCreatePasswordView
     case forgotPasswordView(String)
-    
+    case forgotPasswordConfirmationView
 }

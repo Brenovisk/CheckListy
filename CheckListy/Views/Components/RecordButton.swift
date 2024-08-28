@@ -5,33 +5,32 @@
 //  Created by Breno Lucas on 21/07/24.
 //
 
+import AudioToolbox
 import Foundation
 import SwiftUI
-import AudioToolbox
 
 struct RecordButton: View {
-    
     @Binding var transcript: String
     @Binding var isPressed: Bool
     @State private var timer: Timer?
     @State private var showTranscript: Bool = false
-    
+
     var color: Color = .primary
     var onStartRecord: (() -> Void)?
     var onEndRecord: (() -> Void)?
-    
+
     private init(transcript: Binding<String>, isPressed: Binding<Bool>, color: Color = .primary, onStartRecord: (() -> Void)?, onEndRecord: (() -> Void)?) {
         self.init(transcript: transcript, isPressed: isPressed, color: color)
         self.onStartRecord = onStartRecord
         self.onEndRecord = onEndRecord
     }
-    
+
     init(transcript: Binding<String>, isPressed: Binding<Bool>, color: Color = .primary) {
-        self._transcript = transcript
-        self._isPressed = isPressed
+        _transcript = transcript
+        _isPressed = isPressed
         self.color = color
     }
-    
+
     var body: some View {
         ZStack {
             HStack {
@@ -51,7 +50,7 @@ struct RecordButton: View {
                 .simultaneousGesture(
                     DragGesture(minimumDistance: .zero)
                         .onChanged { _ in
-                           startRecording()
+                            startRecording()
                         }
                         .onEnded { _ in
                             stopRecording()
@@ -60,7 +59,7 @@ struct RecordButton: View {
             }
             .frame(maxWidth: .infinity, alignment: .trailing)
             .padding(.trailing, 8)
-            
+
             if (isPressed || !transcript.isEmpty) && showTranscript {
                 VStack {
                     HStack {
@@ -85,24 +84,23 @@ struct RecordButton: View {
             }
         }
     }
-    
 }
 
 // MARK: - Helper methods
+
 extension RecordButton {
-    
     private func startRecording() {
         onStartRecord?()
-        self.showTranscript = true
+        showTranscript = true
         resetTimer()
         FeedbackService.shared.provideHapticFeedback()
     }
-    
+
     private func stopRecording() {
         onEndRecord?()
         FeedbackService.shared.provideHapticFeedback()
     }
-    
+
     private func setupTimer() {
         timer?.invalidate()
         timer = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: false) { _ in
@@ -111,36 +109,34 @@ extension RecordButton {
             }
         }
     }
-    
+
     private func resetTimer() {
         setupTimer()
     }
-    
 }
 
 // MARK: - Callbacks modifiers
+
 extension RecordButton {
-    
-    func `onStartRecord`(action: (() -> Void)?) -> RecordButton {
+    func onStartRecord(action: (() -> Void)?) -> RecordButton {
         RecordButton(
-            transcript: self.$transcript,
-            isPressed: self.$isPressed,
-            color: self.color,
+            transcript: $transcript,
+            isPressed: $isPressed,
+            color: color,
             onStartRecord: action,
-            onEndRecord: self.onEndRecord
+            onEndRecord: onEndRecord
         )
     }
-    
-    func `onEndRecord`(action: (() -> Void)?) -> RecordButton {
+
+    func onEndRecord(action: (() -> Void)?) -> RecordButton {
         RecordButton(
-            transcript: self.$transcript,
-            isPressed: self.$isPressed,
-            color: self.color,
-            onStartRecord: self.onStartRecord,
+            transcript: $transcript,
+            isPressed: $isPressed,
+            color: color,
+            onStartRecord: onStartRecord,
             onEndRecord: action
         )
     }
-    
 }
 
 #Preview {

@@ -9,17 +9,16 @@ import Foundation
 import SwiftUI
 
 struct ListsView: View {
-    
     @Environment(\.verticalSizeClass) var verticalSizeClass
     @EnvironmentObject var viewModel: ListsViewModel
-    
+
     @State var showCreateListForm: Bool = false
     @State var showSheetShare: Bool = false
-    
+
     init() {
         UITextField.appearance().clearButtonMode = .whileEditing
     }
-    
+
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             WelcomeView(
@@ -34,15 +33,15 @@ struct ListsView: View {
             .onTapGesture {
                 NavigationService.shared.navigateTo(.profileView)
             }
-            
+
             TitleIcon(title: "Minhas Listas", subtitle: "\(viewModel.lists.count)").padding(.bottom, 24)
-            
+
             if viewModel.showSearchBar {
                 AutoFocusTextField(text: $viewModel.searchText, placeholder: "Pesquisar...")
                     .roundedBackgroundTextField()
                     .padding(.bottom, 24)
             }
-            
+
             if !viewModel.recentsSection.items.isEmpty && !viewModel.showSearchBar {
                 Section(header: recentsHeaderSection) {
                     ForEach($viewModel.recentsSection.items, id: \.self) { listId in
@@ -53,9 +52,9 @@ struct ListsView: View {
                     }
                     .scrollHorizontal()
                     .collapse(isCollapsed: viewModel.recentsSection.collapsed)
-                }.padding(.bottom, viewModel.recentsSection.collapsed ? 0 : 16 )
+                }.padding(.bottom, viewModel.recentsSection.collapsed ? 0 : 16)
             }
-            
+
             if !viewModel.favorites.isEmpty && !viewModel.showSearchBar {
                 Section(header: favoritesHeaderSection) {
                     ForEach(viewModel.favorites, id: \.self) { list in
@@ -64,9 +63,9 @@ struct ListsView: View {
                     }
                     .scrollHorizontal()
                     .collapse(isCollapsed: viewModel.favoritesSection.collapsed)
-                }.padding(.bottom, viewModel.favoritesSection.collapsed ? 0 : 16 )
+                }.padding(.bottom, viewModel.favoritesSection.collapsed ? 0 : 16)
             }
-            
+
             ForEach(viewModel.getLists(), id: \.self) { list in
                 if let list {
                     card(list, visualization: $viewModel.visualizationMode)
@@ -88,13 +87,13 @@ struct ListsView: View {
                         viewModel.toggleSearchBar()
                     }
             }
-            
+
             ToolbarItemGroup(placement: .primaryAction) {
                 Button(action: { viewModel.toggleVisualization() }) {
-                    Image(systemName: viewModel.visualizationMode == .list ?  "rectangle.grid.1x2" : "square.grid.2x2")
+                    Image(systemName: viewModel.visualizationMode == .list ? "rectangle.grid.1x2" : "square.grid.2x2")
                 }
             }
-            
+
             ToolbarItemGroup(placement: .bottomBar) {
                 HStack {
                     Button(action: {
@@ -132,31 +131,30 @@ struct ListsView: View {
             viewModel.recentsSection.items = viewModel.getRecents()
         }.onChange(of: verticalSizeClass) {
             viewModel.setVisualizationMode(according: verticalSizeClass)
-           
         }
     }
-    
+
     var recentsHeaderSection: some View {
         HeaderSection(
             section: viewModel.recentsSection,
             icon: "clock",
             enableAdd: false
-        ).onCollapse { section in
-             viewModel.toggleCollapseRecentSection()
+        ).onCollapse { _ in
+            viewModel.toggleCollapseRecentSection()
         }
     }
-    
+
     var favoritesHeaderSection: some View {
         HeaderSection(
             section: viewModel.favoritesSection,
             icon: "star",
             enableAdd: false
-        ).onCollapse { section in
-             viewModel.toggleCollapseFavoritesSection()
+        ).onCollapse { _ in
+            viewModel.toggleCollapseFavoritesSection()
         }
     }
-    
-    func card(_ list: ListModel, visualization: (Binding<ListMode>)? = nil) -> some View {
+
+    func card(_ list: ListModel, visualization: Binding<ListMode>? = nil) -> some View {
         ListCard(list: list, mode: visualization)
             .onEdit { list in
                 viewModel.listToEdit = list
@@ -175,30 +173,30 @@ struct ListsView: View {
                 handleOnShare(list)
             }
     }
-    
+
     func handleEdit(_ list: ListModel) {
         withAnimation {
             viewModel.listToEdit = list
             showCreateListForm = true
         }
     }
-    
+
     func handleDelete(_ list: ListModel) {
         withAnimation {
             viewModel.delete(list: list)
         }
     }
-    
+
     func handleRedirect(_ list: ListModel) {
         NavigationService.shared.navigateTo(.detailsListView(list: list))
     }
-    
+
     func handleOnFavorite(_ list: ListModel) {
         withAnimation {
             viewModel.toggleIsFavorite(to: list)
         }
     }
-    
+
     func handleOnShare(_ list: ListModel) {
         withAnimation {
             withAnimation {
