@@ -19,6 +19,7 @@ struct AnimatedBackgroundModifier: ViewModifier, KeyboardReadable {
                 ImagesHelper.coloredShapesVector.image
                     .resizable()
                     .scaledToFill()
+
                 ImagesHelper.coloredShapesVector.image
                     .resizable()
                     .scaledToFill()

@@ -9,6 +9,7 @@ import Speech
 import SwiftUI
 
 actor SpeechRecognizerService: ObservableObject {
+
     @MainActor @Published var transcript: String = ""
 
     private var audioEngine: AVAudioEngine?
@@ -159,9 +160,11 @@ actor SpeechRecognizerService: ObservableObject {
             transcript = "<< \(errorMessage) >>"
         }
     }
+
 }
 
 extension SFSpeechRecognizer {
+
     static func hasAuthorizationToRecognize() async -> Bool {
         await withCheckedContinuation { continuation in
             requestAuthorization { status in
@@ -169,9 +172,11 @@ extension SFSpeechRecognizer {
             }
         }
     }
+
 }
 
 extension AVAudioSession {
+
     func hasPermissionToRecord() async -> Bool {
         if await AVAudioApplication.requestRecordPermission() {
             return true
@@ -179,8 +184,11 @@ extension AVAudioSession {
             return false
         }
     }
+
 }
 
 extension SpeechRecognizerService {
+
     typealias Errors = SpeechRecognizerServiceErrors
+
 }

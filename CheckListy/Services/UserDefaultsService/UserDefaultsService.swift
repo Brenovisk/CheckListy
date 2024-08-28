@@ -24,7 +24,7 @@ class UserDefaultsService {
     }
 
     static func loadItem(_ key: Keys) -> String {
-        var currentArray = load(key)
+        var _ = load(key)
         let items = load(key)
         return items.isEmpty ? String() : items[0]
     }

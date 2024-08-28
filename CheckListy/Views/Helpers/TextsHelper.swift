@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 
 enum TextsHelper: String {
+
     case slogan = "Transforme sua rotina diaria em uma sinfonia de produtividade e motivação."
     case start = "Começar"
     case notHaveAccount = "Ainda não tem conta?"
@@ -56,10 +57,18 @@ enum TextsHelper: String {
     case createASecureDescription = "Lembre-se de usar uma combinação de letras, números e caracteres especiais para maior segurança."
     case confirmPassword = "Confirme sua senha"
     case create = "Criar"
+    case recoverPassword = "Recuperar Senha"
+    case recoverPasswordDescription = "Insira seu e-mail abaixo para receber instruções sobre como redefinir sua senha. Você receberá um e-mail com o passo a passo"
+    case send = "Enviar"
+    case sentEmail = "Email enviado!"
+    case sentEmailDescription = "Um e-mail foi enviado com as instruções para redefinir sua senha. Após concluir o processo, você poderá fazer login novamente."
+
 }
 
 extension TextsHelper {
+
     var value: Text {
         Text(rawValue)
     }
+
 }

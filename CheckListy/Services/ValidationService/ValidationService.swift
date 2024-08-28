@@ -8,6 +8,7 @@
 import Foundation
 
 class ValidationService {
+
     static func validate(value: String, with validators: [Validators]) -> String? {
         for validator in validators {
             if let error = validator.value.validate(value) {
@@ -16,6 +17,7 @@ class ValidationService {
         }
         return nil
     }
+
 }
 
 enum Validators {

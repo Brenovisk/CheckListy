@@ -10,6 +10,7 @@ import Foundation
 import SwiftUI
 
 class SignInViewModel: ObservableObject {
+
     @Published var dataForm: DataFormSignIn = .init()
     @Published var isLoading: Bool = false
     @Published var showPopup: Bool = false
@@ -72,4 +73,5 @@ class SignInViewModel: ObservableObject {
         )
         showPopup = true
     }
+
 }

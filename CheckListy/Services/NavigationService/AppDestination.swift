@@ -17,4 +17,5 @@ enum AppDestinationAuth: Hashable {
     case signUpAddPhotoView
     case signUpCreatePasswordView
     case forgotPasswordView(String)
+    case forgotPasswordConfirmationView
 }

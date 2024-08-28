@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 
 class SignUpViewModel: ObservableObject {
+
     @Published var isLoading: Bool = false
     @Published var dataForm: DataFormSignUp = .init()
     @Published var showPopup: Bool = false
@@ -52,4 +53,5 @@ class SignUpViewModel: ObservableObject {
         )
         showPopup = true
     }
+
 }

@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 
 struct FormListView: View {
+
     @Binding var item: ListModel?
     @State private var id: UUID
     @State private var name: String
@@ -177,6 +178,7 @@ extension FormListView {
             onSaveByCode: action
         )
     }
+
 }
 
 #Preview {

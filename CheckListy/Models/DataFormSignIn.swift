@@ -8,6 +8,7 @@
 import Foundation
 
 struct DataFormSignIn {
+
     var email: String = .init()
     var password: String = .init()
 
@@ -24,4 +25,5 @@ struct DataFormSignIn {
         emailError = nil
         passwordError = nil
     }
+
 }

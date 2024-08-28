@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 
 struct SignUpView: View, KeyboardReadable {
+
     @EnvironmentObject private var viewModel: SignUpViewModel
 
     @State var isShowKeyboard = false
@@ -70,12 +71,14 @@ struct SignUpView: View, KeyboardReadable {
             }
         }
     }
+
 }
 
 // MARK: typealias
-
 extension SignUpView {
+
     typealias Texts = TextsHelper
+
 }
 
 #Preview {

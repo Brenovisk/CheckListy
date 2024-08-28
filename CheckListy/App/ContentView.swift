@@ -8,11 +8,13 @@
 import SwiftUI
 
 struct ContentView: View {
+
     @StateObject private var firebaseAuthService = FirebaseAuthService.shared
     @StateObject private var navigationService = NavigationService.shared
 
     @StateObject private var loginViewModel = SignInViewModel()
     @StateObject private var signUpViewModel = SignUpViewModel()
+    @StateObject private var forgotPasswordViewModel = ForgotPasswordViewModel()
 
     var body: some View {
         VStack {
@@ -47,8 +49,11 @@ struct ContentView: View {
                                     SignUpCreatePasswordView()
                                         .environmentObject(signUpViewModel)
                                 case let .forgotPasswordView(email):
-                                    ForgotPasswordView()
-                                        .environmentObject(ForgotPasswordViewModel(email: email))
+                                    ForgotPasswordView(with: email)
+                                        .environmentObject(forgotPasswordViewModel)
+                                case .forgotPasswordConfirmationView:
+                                    ForgotPasswordConfirmationView()
+                                        .environmentObject(forgotPasswordViewModel)
                                 }
                             }
                     }
@@ -58,16 +63,20 @@ struct ContentView: View {
             }
         }
     }
+
 }
 
 struct MainView: View {
+
     var body: some View {
         ListsView()
             .environmentObject(ListsViewModel())
     }
+
 }
 
 struct AuthenticationView: View {
+
     @EnvironmentObject var viewModel: SignInViewModel
 
     var body: some View {
@@ -87,6 +96,7 @@ struct AuthenticationView: View {
             }
         }.navigationTitle(String())
     }
+
 }
 
 #Preview {
