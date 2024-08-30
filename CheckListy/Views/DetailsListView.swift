@@ -9,8 +9,9 @@ import FirebaseDatabase
 import SwiftUI
 
 struct DetailsListView: View {
+
     @StateObject var speechRecognizer = SpeechRecognizerService()
-    @EnvironmentObject var viewModel: DetailsListViewModel
+    @StateObject var viewModel: DetailsListViewModel
 
     @State private var isPressed = false
     @State private var isShowForm = false
@@ -205,47 +206,44 @@ struct DetailsListView: View {
 
 #Preview {
     NavigationStack {
-        DetailsListView()
-            .environmentObject(
-                DetailsListViewModel(
-                    ListModel(
-                        name: "List name",
-                        color: "green",
-                        icon: "checkmark",
-                        items: [
-                            ListItemModel(
-                                name: "Teste ",
-                                description: "asdf",
-                                section: "B",
-                                isCheck: true
-                            ),
-                            ListItemModel(
-                                name: "Teste",
-                                description: "",
-                                section: "",
-                                isCheck: true
-                            ),
-                            ListItemModel(
-                                name: "Teste",
-                                description: "",
-                                section: "",
-                                isCheck: true
-                            ),
-                            ListItemModel(
-                                name: "Teste",
-                                description: "",
-                                section: "",
-                                isCheck: true
-                            ),
-                            ListItemModel(
-                                name: "Teste",
-                                description: "",
-                                section: "Ahhh",
-                                isCheck: true
-                            )
-                        ]
+        DetailsListView(viewModel: DetailsListViewModel(
+            ListModel(
+                name: "List name",
+                color: "green",
+                icon: "checkmark",
+                items: [
+                    ListItemModel(
+                        name: "Teste ",
+                        description: "asdf",
+                        section: "B",
+                        isCheck: true
+                    ),
+                    ListItemModel(
+                        name: "Teste",
+                        description: "",
+                        section: "",
+                        isCheck: true
+                    ),
+                    ListItemModel(
+                        name: "Teste",
+                        description: "",
+                        section: "",
+                        isCheck: true
+                    ),
+                    ListItemModel(
+                        name: "Teste",
+                        description: "",
+                        section: "",
+                        isCheck: true
+                    ),
+                    ListItemModel(
+                        name: "Teste",
+                        description: "",
+                        section: "Ahhh",
+                        isCheck: true
                     )
-                )
+                ]
             )
+        ))
     }
 }

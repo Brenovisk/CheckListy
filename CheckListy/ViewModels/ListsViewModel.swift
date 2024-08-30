@@ -122,7 +122,7 @@ class ListsViewModel: ObservableObject {
     }
 
     func create(list: ListModel) {
-        guard let authUser else { return }
+        guard authUser != nil else { return }
 
         let pathNewList = "\(Paths.lists.description)/\(list.id.uuidString)"
         firebaseDatabase.add(path: pathNewList, data: list.toNSDictionary())
@@ -152,7 +152,7 @@ class ListsViewModel: ObservableObject {
 
         let pathUserLists = "\(Paths.users.description)/\(authUser.uid)/lists"
         var listsId = lists.compactMap { $0?.id.uuidString }
-        listsId.append(code)
+        listsId.append(listId)
 
         firebaseDatabase.update(path: pathUserLists, data: listsId.toNSDictionary())
         firebaseDatabase.addObserverList(with: listId)

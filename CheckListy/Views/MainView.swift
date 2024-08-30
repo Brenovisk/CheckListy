@@ -20,8 +20,7 @@ struct MainView: View {
                 .navigationDestination(for: AppDestination.self) { destination in
                     switch destination {
                     case let .detailsListView(list):
-                        DetailsListView()
-                            .environmentObject(DetailsListViewModel(list))
+                        DetailsListView(viewModel: DetailsListViewModel(list))
                     case .profileView:
                         ProfileView()
                             .environmentObject(profileViewModel)
