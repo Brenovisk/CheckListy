@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 
 struct ListsView: View {
+
     @Environment(\.verticalSizeClass) var verticalSizeClass
     @EnvironmentObject var viewModel: ListsViewModel
 
@@ -121,7 +122,7 @@ struct ListsView: View {
                     showCreateListForm.toggle()
                 }
                 .onSaveByCode { code in
-                    viewModel.add(by: code)
+                    viewModel.addList(by: code)
                 }
         }
         .sheet(isPresented: $showSheetShare) {
@@ -205,6 +206,7 @@ struct ListsView: View {
             }
         }
     }
+
 }
 
 #Preview {

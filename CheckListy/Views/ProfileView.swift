@@ -76,7 +76,7 @@ struct ProfileView: View {
                             navigable: true,
                             destructive: true
                         ).onPress {
-                            viewModel.removeUserData()
+                            viewModel.navigateToDeleteAccountView()
                         }
                     }
                 }
@@ -114,6 +114,7 @@ struct ProfileView: View {
             }
             .padding(.bottom, 24)
         }
+        .popup(isPresent: $viewModel.showPopup, data: viewModel.popupData)
         .sheet(isPresented: $isEditProfileForm) {
             FormUserProfile(user: $viewModel.userProfile, isLoading: $isExecutingFormAction)
                 .onSave { userEdited in

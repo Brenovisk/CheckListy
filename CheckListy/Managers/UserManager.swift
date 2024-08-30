@@ -11,6 +11,7 @@ import Foundation
 import UIKit
 
 class UserManager {
+
     var authUser: User
 
     init(authUser: User) {
@@ -25,15 +26,11 @@ class UserManager {
         try await UserService.update(authUser, oldPassword: oldPassword, to: newPassword)
     }
 
-    func removeUserData() async throws {
+    func removeUserData(with password: String) async throws {
+        try await UserService.reauthtenticateWithFirebaseAuth(authUser, with: password)
         try await UserService.removeLists(of: authUser)
-        let urlImage = try await getUrlProfileImage()
-
-        if urlImage != nil {
-            try await UserService.removePhoto(of: authUser)
-        }
-
-        UserService.removeFromDataBase(authUser)
+        try await UserService.removeProfileImage(of: authUser)
+        try await UserService.removeFromDataBase(authUser)
         try await UserService.removeFromFirebaseAuth(authUser)
     }
 
@@ -61,6 +58,10 @@ class UserManager {
         try UserService.getEmail(of: authUser)
     }
 
+    func getId() -> String {
+        authUser.uid
+    }
+
     func getName() -> String {
         let storedName = UserDefaultsService.loadItem(.userName)
 
@@ -84,4 +85,5 @@ class UserManager {
         UserDefaultsService.addImage(.userProfileImage, image)
         return image
     }
+
 }

@@ -6,10 +6,12 @@
 //
 
 import Combine
+import Firebase
 import Foundation
 import SwiftUI
 
 class ListsViewModel: ObservableObject {
+
     @Published var lists: [ListModel?] = []
     @Published var listToEdit: ListModel?
     @Published var contentToShare: [Any] = []
@@ -19,9 +21,11 @@ class ListsViewModel: ObservableObject {
     @Published var searchText: String = .init()
     @Published var recentsSection: SectionModel<String> = SectionModel(name: "Recentes", items: [])
     @Published var favoritesSection: SectionModel<ListModel> = SectionModel(name: "Favoritos", items: [])
-
     @Published var userImage: UIImage?
     @Published var userName: String?
+
+    var authUser: User?
+
     private var cancellables = Set<AnyCancellable>()
 
     var filterLists: [ListModel] {
@@ -36,18 +40,24 @@ class ListsViewModel: ObservableObject {
 
     @MainActor
     init() {
-        firebaseDatabase.setupIfNeeded()
+        setupDataBase()
         subscribeToDatabaseChanges()
     }
 
     @MainActor
-    func subscribeToDatabaseChanges() {
+    func setupDataBase() {
         guard let user = try? FirebaseAuthService.shared.getAuthUser() else { return }
+        authUser = user
+        firebaseDatabase.observeUserLists(userId: user.uid)
+    }
+
+    @MainActor
+    func subscribeToDatabaseChanges() {
         firebaseDatabase.dataChanged
             .receive(on: RunLoop.main)
             .sink { [weak self] data in
                 guard let self = self else { return }
-                self.lists = data.compactMap { $0 }.filter { $0.users.contains(user.uid) }
+                self.lists = data
             }.store(in: &cancellables)
     }
 
@@ -112,8 +122,22 @@ class ListsViewModel: ObservableObject {
     }
 
     func create(list: ListModel) {
+        guard let authUser else { return }
+
         let pathNewList = "\(Paths.lists.description)/\(list.id.uuidString)"
         firebaseDatabase.add(path: pathNewList, data: list.toNSDictionary())
+
+        createUser(list: list)
+        firebaseDatabase.addObserverList(with: list.id.uuidString)
+    }
+
+    func createUser(list: ListModel) {
+        guard let authUser else { return }
+
+        let pathUserLists = "\(Paths.users.description)/\(authUser.uid)/lists"
+        var listsId = lists.compactMap { $0?.id.uuidString }
+        listsId.append(list.id.uuidString)
+        firebaseDatabase.update(path: pathUserLists, data: listsId.toNSDictionary())
     }
 
     func update(list: ListModel) {
@@ -122,25 +146,33 @@ class ListsViewModel: ObservableObject {
     }
 
     @MainActor
-    func add(by code: String) {
-        guard let user = try? FirebaseAuthService.shared.getAuthUser() else { return }
+    func addList(by code: String) {
         guard let listId = code.removingSuffix(".co").fromBase64Code(),
-              let list = getFirebaseList(by: listId)
-        else {
-            return
-        }
+              let authUser else { return }
 
-        let pathNewList = "\(Paths.lists.description)/\(listId)"
+        let pathUserLists = "\(Paths.users.description)/\(authUser.uid)/lists"
+        var listsId = lists.compactMap { $0?.id.uuidString }
+        listsId.append(code)
 
-        var listToEdit = list
-        listToEdit.users.append(user.uid)
-
-        firebaseDatabase.update(path: pathNewList, data: listToEdit.toNSDictionary())
+        firebaseDatabase.update(path: pathUserLists, data: listsId.toNSDictionary())
+        firebaseDatabase.addObserverList(with: listId)
     }
 
     func delete(list: ListModel) {
         let pathNewList = "\(Paths.lists.description)/\(list.id.uuidString)"
         firebaseDatabase.delete(path: pathNewList)
+        deleteUser(list)
+    }
+
+    func deleteUser(_ list: ListModel) {
+        guard let authUser else { return }
+        let pathUserLists = "\(Paths.users.description)/\(authUser.uid)/lists"
+
+        guard let indexItem = getIndex(of: list) else { return }
+        lists.remove(at: indexItem)
+
+        let listsId = lists.compactMap { $0?.id.uuidString }
+        firebaseDatabase.update(path: pathUserLists, data: listsId.toNSDictionary())
     }
 
     func toggleVisualization() {
@@ -164,10 +196,21 @@ class ListsViewModel: ObservableObject {
         """
         contentToShare = [shareMessage]
     }
+
+}
+
+// MARK: - Helper methods
+extension ListsViewModel {
+
+    private func getIndex(of list: ListModel) -> Int? {
+        lists.firstIndex(where: { $0?.id == list.id })
+    }
+
 }
 
 // MARK: - Typealias
-
 extension ListsViewModel {
+
     typealias Paths = FirebaseDatabasePaths
+
 }

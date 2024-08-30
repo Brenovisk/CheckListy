@@ -13,6 +13,7 @@ import UIKit
 
 @MainActor
 class FirebaseAuthService: ObservableObject {
+
     static let shared = FirebaseAuthService()
 
     var auth: Auth = .auth()
@@ -22,6 +23,14 @@ class FirebaseAuthService: ObservableObject {
 
     private init() {
         addListenerUserState()
+    }
+
+    var authenticationState: AuthenticationState {
+        if let isSignIn = isSignIn {
+            return isSignIn && isEnable ? .authenticated : .unauthenticated
+        } else {
+            return .loading
+        }
     }
 
     @MainActor
@@ -65,6 +74,12 @@ class FirebaseAuthService: ObservableObject {
         return user
     }
 
+    func reauthenticateAuthUser(_ user: User, with password: String) async throws {
+        let credential = EmailAuthProvider.credential(withEmail: user.email ?? "", password: password)
+
+        try await user.reauthenticate(with: credential)
+    }
+
     func deleteAuthUser(_ user: User) async throws {
         try await user.delete()
     }
@@ -73,11 +88,13 @@ class FirebaseAuthService: ObservableObject {
     func resetPassword(with email: String) async throws {
         try await auth.sendPasswordReset(withEmail: email)
     }
+
 }
 
 // MARK: - Helper methods
 
 extension FirebaseAuthService {
+
     private func addListenerUserState() {
         guard let app = FirebaseApp.app() else { return }
 
@@ -93,4 +110,5 @@ extension FirebaseAuthService {
             }
         }
     }
+
 }

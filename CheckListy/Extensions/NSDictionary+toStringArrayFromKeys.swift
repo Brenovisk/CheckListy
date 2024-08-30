@@ -6,3 +6,11 @@
 //
 
 import Foundation
+
+extension NSDictionary {
+
+    func toStringArrayFromKeys() -> [String] {
+        allKeys.compactMap { $0 as? String }
+    }
+
+}

@@ -8,19 +8,19 @@
 import Foundation
 import SwiftUI
 
-struct MessageWithImageView: View {
+struct MessageWithImageView<T: View>: View {
 
-    var image: Image
+    var image: T
     var title: String
     var description: String
     var buttonText: String?
     var onAction: (() -> Void)?
 
     private init(
-        image: Image,
+        image: T,
         title: String,
         description: String,
-        buttonText: String?,
+        buttonText: String? = nil,
         onAction: (() -> Void)?
     ) {
         self.init(
@@ -32,7 +32,7 @@ struct MessageWithImageView: View {
         self.onAction = onAction
     }
 
-    init(image: Image, title: String, description: String, buttonText: String?) {
+    init(image: T, title: String, description: String, buttonText: String? = nil) {
         self.image = image
         self.title = title
         self.description = description
@@ -47,10 +47,13 @@ struct MessageWithImageView: View {
                 Text(title)
                     .font(.largeTitle)
                     .fontWeight(.bold)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .multilineTextAlignment(.center)
 
                 Text(description)
                     .font(.body)
                     .foregroundColor(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
                     .multilineTextAlignment(.center)
             }
             .frame(maxWidth: .infinity, alignment: .center)

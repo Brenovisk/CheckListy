@@ -30,6 +30,7 @@ struct FilledButtonModifier: ViewModifier {
         .foregroundColor(.background)
         .cornerRadius(14)
         .font(.headline)
+        .disabled(isLoading)
     }
 }
 

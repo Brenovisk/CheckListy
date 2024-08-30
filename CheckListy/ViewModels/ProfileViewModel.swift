@@ -10,11 +10,17 @@ import Foundation
 import UIKit
 
 class ProfileViewModel: ObservableObject {
+
+    @Published var isLoading: Bool = false
     @Published var userProfile: UserProfile?
+    @Published var dataForm: DataFormDeleteAccount = .init()
+    @Published var showPopup: Bool = false
+    @Published private(set) var popupData: PopupData = .init()
 
     @MainActor
     func getUserProfile() async {
         do {
+            isLoading = true
             let user = try getAuthUser()
             let userManager = UserManager(authUser: user)
 
@@ -25,29 +31,41 @@ class ProfileViewModel: ObservableObject {
                 profileImage: userManager.getImage(),
                 email: userManager.getEmail()
             )
+
+            isLoading = false
         } catch {
-            debugPrint(error)
+            let errorMessage = FirebaseErrorsHelper.getDescription(to: error)
+            setPopupDataError(with: errorMessage)
+            isLoading = false
         }
     }
 
     func update(user: UserProfile) async throws {
         do {
+            isLoading = true
             guard hasChangeData(of: user) else { return }
             try await updateNameIfNeeded(user)
             try await updateImageIfNeeded(user)
             await getUserProfile()
+            isLoading = false
         } catch {
-            debugPrint(error)
+            let errorMessage = FirebaseErrorsHelper.getDescription(to: error)
+            setPopupDataError(with: errorMessage)
+            isLoading = false
         }
     }
 
     func update(_ oldPassword: String, to newPassword: String) async throws {
         do {
+            isLoading = true
             let userManager = try await getUserManager()
             guard !newPassword.isEmpty, !oldPassword.isEmpty else { return }
             try await userManager.update(oldPassword: oldPassword, to: newPassword)
+            isLoading = false
         } catch {
-            debugPrint(error)
+            let errorMessage = FirebaseErrorsHelper.getDescription(to: error)
+            setPopupDataError(with: errorMessage)
+            isLoading = false
         }
     }
 
@@ -58,32 +76,45 @@ class ProfileViewModel: ObservableObject {
     @MainActor
     func signOut() {
         do {
+            isLoading = true
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                FirebaseDatabase.shared.removeListeners()
                 UserDefaultsService.clearAll()
                 FirebaseDatabase.shared.clearData()
             }
-
+            isLoading = false
             try FirebaseAuthService.shared.signOut()
         } catch {
-            debugPrint(error.localizedDescription)
+            let errorMessage = FirebaseErrorsHelper.getDescription(to: error)
+            setPopupDataError(with: errorMessage)
+            isLoading = false
         }
     }
 
+    @MainActor
     func removeUserData() {
         Task {
             do {
-                let userManager = try await getUserManager()
-                try await userManager.removeUserData()
-                await signOut()
+                isLoading = true
+                let userManager = try getUserManager()
+                try await userManager.removeUserData(with: dataForm.password)
+                isLoading = false
+                signOut()
             } catch {
-                debugPrint(error.localizedDescription)
+                let errorMessage = FirebaseErrorsHelper.getDescription(to: error)
+                setPopupDataError(with: errorMessage)
+                isLoading = false
             }
         }
     }
+
+    func navigateToDeleteAccountView() {
+        NavigationService.shared.navigateTo(.deleteAccountView)
+    }
+
 }
 
 extension ProfileViewModel {
+
     @MainActor
     private func updateNameIfNeeded(_ user: UserProfile) async throws {
         if user.name != userProfile?.name {
@@ -111,4 +142,13 @@ extension ProfileViewModel {
     private func getAuthUser() throws -> User {
         try FirebaseAuthService.shared.getAuthUser()
     }
+
+    private func setPopupDataError(with message: String) {
+        popupData = PopupData(
+            type: .error,
+            message: message
+        )
+        showPopup = true
+    }
+
 }

@@ -10,6 +10,7 @@ import Foundation
 enum AppDestination: Hashable {
     case detailsListView(list: ListModel)
     case profileView
+    case deleteAccountView
 }
 
 enum AppDestinationAuth: Hashable {

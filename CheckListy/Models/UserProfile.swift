@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 
 class UserProfile: UserDatabase {
+
     var profileImage: UIImage?
     var email: String
 
@@ -18,7 +19,7 @@ class UserProfile: UserDatabase {
         super.init(id: id, name: name, urlProfileImage: urlProfileImage)
     }
 
-    required init(id: String, name: String, urlProfileImage: URL?) {
+    required init(id: String, name: String, urlProfileImage: URL?, lists _: [String] = []) {
         profileImage = nil
         email = ""
         super.init(id: id, name: name, urlProfileImage: urlProfileImage)
@@ -27,4 +28,5 @@ class UserProfile: UserDatabase {
     convenience init(id: String, name: String, email: String) {
         self.init(id: id, name: name, urlProfileImage: nil, profileImage: nil, email: email)
     }
+
 }

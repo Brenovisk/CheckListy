@@ -10,11 +10,13 @@ import SwiftUI
 struct MainView: View {
 
     @StateObject private var navigationService = NavigationService.shared
+    @StateObject private var listsViewModel = ListsViewModel()
+    @StateObject private var profileViewModel = ProfileViewModel()
 
     var body: some View {
         NavigationStack(path: $navigationService.navigationPath) {
             ListsView()
-                .environmentObject(ListsViewModel())
+                .environmentObject(listsViewModel)
                 .navigationDestination(for: AppDestination.self) { destination in
                     switch destination {
                     case let .detailsListView(list):
@@ -22,7 +24,10 @@ struct MainView: View {
                             .environmentObject(DetailsListViewModel(list))
                     case .profileView:
                         ProfileView()
-                            .environmentObject(ProfileViewModel())
+                            .environmentObject(profileViewModel)
+                    case .deleteAccountView:
+                        DeleteAccountView()
+                            .environmentObject(profileViewModel)
                     }
                 }
         }

@@ -10,22 +10,40 @@ import SwiftUI
 
 @main
 struct CheckListyApp: App {
-    // register app delegate for Firebase setup
+
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+    @StateObject private var firebaseAuthService = FirebaseAuthService.shared
 
     var body: some Scene {
         WindowGroup {
-            NavigationView {
-                ContentView()
-                    .preferredColorScheme(.dark)
-            }
+            content()
+                .preferredColorScheme(.dark)
         }
     }
+
+}
+
+extension CheckListyApp {
+
+    @ViewBuilder
+    private func content() -> some View {
+        switch firebaseAuthService.authenticationState {
+        case .authenticated:
+            MainView()
+        case .unauthenticated:
+            AuthenticationView()
+        case .loading:
+            ProgressView()
+        }
+    }
+
 }
 
 class AppDelegate: NSObject, UIApplicationDelegate {
+
     func application(_: UIApplication, didFinishLaunchingWithOptions _: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
         FirebaseApp.configure()
         return true
     }
+
 }

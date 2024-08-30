@@ -8,6 +8,7 @@
 import Foundation
 
 struct ListModel: Identifiable, Hashable {
+
     var id: UUID = .init()
     var name: String = .init()
     var description: String = .init()
@@ -17,10 +18,11 @@ struct ListModel: Identifiable, Hashable {
     var isFavorite: Bool = false
     var createdAt: Date = .init()
     var editedAt: Date = .init()
-    var users: [String] = []
+
 }
 
 extension ListModel {
+
     func toNSDictionary() -> NSDictionary {
         [
             "id": id.uuidString,
@@ -31,14 +33,12 @@ extension ListModel {
             "items": items.map { $0.toNSDictionary() },
             "isFavorite": isFavorite,
             "createdAt": formattedDateUTC(createdAt),
-            "editedAt": formattedDateUTC(editedAt),
-            "users": users.map { $0 }
+            "editedAt": formattedDateUTC(editedAt)
         ]
     }
 
     static func fromNSDictionary(_ dictionary: NSDictionary) -> ListModel? {
         let items = (dictionary["items"] as? [NSDictionary])?.compactMap { ListItemModel.fromNSDictionary($0) } ?? []
-
         let isFavorite = dictionary["isFavorite"] as? Bool ?? false
         let createdAt = Date(timeIntervalSince1970: dictionary["createdAt"] as? TimeInterval ?? 0)
         let editedAt = Date(timeIntervalSince1970: dictionary["editedAt"] as? TimeInterval ?? 0)
@@ -63,8 +63,7 @@ extension ListModel {
             items: items,
             isFavorite: isFavorite,
             createdAt: createdAt,
-            editedAt: editedAt,
-            users: users
+            editedAt: editedAt
         )
     }
 
@@ -88,4 +87,5 @@ extension ListModel {
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
         return dateFormatter.string(from: date)
     }
+
 }

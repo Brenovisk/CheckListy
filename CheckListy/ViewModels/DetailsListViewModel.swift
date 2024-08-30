@@ -11,6 +11,7 @@ import Foundation
 import SwiftUI
 
 class DetailsListViewModel: ObservableObject {
+
     private let firebaseDataBase = FirebaseDatabase.shared
     private var cancellables = Set<AnyCancellable>()
 
@@ -194,6 +195,7 @@ class DetailsListViewModel: ObservableObject {
         FeedbackService.shared.provideHapticFeedback()
         FeedbackService.shared.playCheckSoundFeedback()
     }
+
 }
 
 enum Commands: String {

@@ -14,6 +14,7 @@ enum ImagesHelper: String {
     case photoBackground = "initial-photo-image"
     case coloredShapesVector = "colored-shapes-vector"
     case messageReceivedVector = "message-received-vector"
+    case deleteAccountVector = "delete-account-vector"
 
 }
 

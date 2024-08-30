@@ -8,23 +8,29 @@
 import Foundation
 
 class UserDatabase: ConvertibleDictionary {
+
     var id: String
     var name: String
     var urlProfileImage: URL?
+    var lists: [String]
 
-    required init(id: String, name: String, urlProfileImage: URL?) {
+    required init(id: String, name: String, urlProfileImage: URL?, lists: [String] = []) {
         self.id = id
         self.name = name
         self.urlProfileImage = urlProfileImage
+        self.lists = lists
     }
+
 }
 
 extension UserDatabase {
+
     func toNSDictionary() -> NSDictionary {
         return [
             "id": id,
             "name": name,
-            "urlProfileImage": urlProfileImage?.absoluteString ?? String()
+            "urlProfileImage": urlProfileImage?.absoluteString ?? String(),
+            "lists": lists.toNSDictionary()
         ] as NSDictionary
     }
 
@@ -37,12 +43,11 @@ extension UserDatabase {
         }
 
         let urlProfileImage = URL(string: urlString)
+        let lists = (dictionary["lists"] as? NSDictionary)?.toStringArrayFromValues() ?? []
 
-        return Self(id: id, name: name, urlProfileImage: urlProfileImage)
+        return Self(id: id, name: name, urlProfileImage: urlProfileImage, lists: lists)
     }
-}
 
-extension UserDatabase {
     func saveToDatabase() async throws {
         guard let dbRef = FirebaseDatabase.shared.databaseRef else {
             throw NSError(domain: "DatabaseError", code: -1, userInfo: [NSLocalizedDescriptionKey: "Unable to get database reference"])
@@ -60,4 +65,5 @@ extension UserDatabase {
             }
         }
     }
+
 }

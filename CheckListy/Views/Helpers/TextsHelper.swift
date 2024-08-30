@@ -64,6 +64,10 @@ enum TextsHelper: String {
     case sentEmail = "Email enviado!"
     // swiftlint:disable:next line_length
     case sentEmailDescription = "Um e-mail foi enviado com as instruções para redefinir sua senha. Após concluir o processo, você poderá fazer login novamente."
+    case deleteAccount = "Deseja apagar seus dados?"
+    // swiftlint:disable:next line_length
+    case deleteAccountDescription = "Ao continuar, sua conta, incluindo suas listas, foto de perfil e dados de acesso, serão apagados.. Se tiver certeza e estiver pronto para seguir em frente, por favor, insira sua senha para confirmar. Lembre-se, essa decisão é permanente."
+    case erase = "Apagar"
 
 }
 

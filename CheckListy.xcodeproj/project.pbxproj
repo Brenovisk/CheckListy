@@ -31,9 +31,14 @@
 		14044FA52C61AF2B00FD3A73 /* UserServiceErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14044FA42C61AF2B00FD3A73 /* UserServiceErrors.swift */; };
 		14044FA82C61BC1300FD3A73 /* ConvertibleDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14044FA72C61BC1300FD3A73 /* ConvertibleDictionary.swift */; };
 		14044FAA2C6A48C500FD3A73 /* ContinuousLoadingBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14044FA92C6A48C500FD3A73 /* ContinuousLoadingBar.swift */; };
+		142CA1B02C811414004531D4 /* DataFormDeleteAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142CA1AF2C811414004531D4 /* DataFormDeleteAccount.swift */; };
 		143F922C2C7F6C9800751AD0 /* ForgotPasswordConfirmationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143F922B2C7F6C9800751AD0 /* ForgotPasswordConfirmationView.swift */; };
 		143F922E2C7F7AC200751AD0 /* DataFormForgotPassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143F922D2C7F7AC200751AD0 /* DataFormForgotPassword.swift */; };
 		143F92302C7F85C200751AD0 /* MessageWithImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143F922F2C7F85C200751AD0 /* MessageWithImageView.swift */; };
+		143F92342C7FA6BC00751AD0 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143F92332C7FA6BC00751AD0 /* MainView.swift */; };
+		143F92362C7FA74100751AD0 /* AuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143F92352C7FA74100751AD0 /* AuthenticationView.swift */; };
+		143F92382C7FA8B900751AD0 /* AuthenticateState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143F92372C7FA8B900751AD0 /* AuthenticateState.swift */; };
+		143F923A2C7FABAA00751AD0 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143F92392C7FABAA00751AD0 /* SplashView.swift */; };
 		145706E42C4DDB94007E642C /* RecordButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145706E32C4DDB94007E642C /* RecordButton.swift */; };
 		145706E62C4DE4E9007E642C /* AudioAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145706E52C4DE4E9007E642C /* AudioAnimation.swift */; };
 		145706E82C4EDE94007E642C /* HeaderSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145706E72C4EDE94007E642C /* HeaderSection.swift */; };
@@ -110,7 +115,6 @@
 		14B225772C496C0A00A7F15F /* SectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B225762C496C0A00A7F15F /* SectionModel.swift */; };
 		14B225792C49B6C600A7F15F /* CollapseModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B225782C49B6C600A7F15F /* CollapseModifier.swift */; };
 		14DBB6A42C3433560084EB23 /* CheckListyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DBB6A32C3433560084EB23 /* CheckListyApp.swift */; };
-		14DBB6A62C3433560084EB23 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DBB6A52C3433560084EB23 /* ContentView.swift */; };
 		14DBB6A82C3433570084EB23 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 14DBB6A72C3433570084EB23 /* Colors.xcassets */; };
 		14DBB6AB2C3433570084EB23 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 14DBB6AA2C3433570084EB23 /* Preview Assets.xcassets */; };
 		14DBB6B52C3433570084EB23 /* CheckListyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DBB6B42C3433570084EB23 /* CheckListyTests.swift */; };
@@ -121,6 +125,10 @@
 		14DBB6D52C3440630084EB23 /* DetailsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DBB6D42C3440630084EB23 /* DetailsListView.swift */; };
 		14DBB6D72C34A5500084EB23 /* ListItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DBB6D62C34A5500084EB23 /* ListItemModel.swift */; };
 		14DBB6D92C34ABC60084EB23 /* DetailsListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14DBB6D82C34ABC60084EB23 /* DetailsListViewModel.swift */; };
+		14F041E42C80A1BA000B7D58 /* Array+toNSDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F041E32C80A1BA000B7D58 /* Array+toNSDictionary.swift */; };
+		14F041E62C80AA69000B7D58 /* NSDictionary+toStringArrayFromKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F041E52C80AA69000B7D58 /* NSDictionary+toStringArrayFromKeys.swift */; };
+		14F041E82C80AA8D000B7D58 /* NSDictionary+toStringArrayFromValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F041E72C80AA8D000B7D58 /* NSDictionary+toStringArrayFromValues.swift */; };
+		14F041EA2C810B0C000B7D58 /* DeleteAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F041E92C810B0C000B7D58 /* DeleteAccountView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -163,9 +171,14 @@
 		14044FA42C61AF2B00FD3A73 /* UserServiceErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserServiceErrors.swift; sourceTree = "<group>"; };
 		14044FA72C61BC1300FD3A73 /* ConvertibleDictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConvertibleDictionary.swift; sourceTree = "<group>"; };
 		14044FA92C6A48C500FD3A73 /* ContinuousLoadingBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContinuousLoadingBar.swift; sourceTree = "<group>"; };
+		142CA1AF2C811414004531D4 /* DataFormDeleteAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataFormDeleteAccount.swift; sourceTree = "<group>"; };
 		143F922B2C7F6C9800751AD0 /* ForgotPasswordConfirmationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordConfirmationView.swift; sourceTree = "<group>"; };
 		143F922D2C7F7AC200751AD0 /* DataFormForgotPassword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataFormForgotPassword.swift; sourceTree = "<group>"; };
 		143F922F2C7F85C200751AD0 /* MessageWithImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageWithImageView.swift; sourceTree = "<group>"; };
+		143F92332C7FA6BC00751AD0 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		143F92352C7FA74100751AD0 /* AuthenticationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationView.swift; sourceTree = "<group>"; };
+		143F92372C7FA8B900751AD0 /* AuthenticateState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticateState.swift; sourceTree = "<group>"; };
+		143F92392C7FABAA00751AD0 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		145706E32C4DDB94007E642C /* RecordButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordButton.swift; sourceTree = "<group>"; };
 		145706E52C4DE4E9007E642C /* AudioAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioAnimation.swift; sourceTree = "<group>"; };
 		145706E72C4EDE94007E642C /* HeaderSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderSection.swift; sourceTree = "<group>"; };
@@ -240,7 +253,6 @@
 		14B225782C49B6C600A7F15F /* CollapseModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollapseModifier.swift; sourceTree = "<group>"; };
 		14DBB6A02C3433560084EB23 /* CheckListy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CheckListy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		14DBB6A32C3433560084EB23 /* CheckListyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckListyApp.swift; sourceTree = "<group>"; };
-		14DBB6A52C3433560084EB23 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		14DBB6A72C3433570084EB23 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		14DBB6AA2C3433570084EB23 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		14DBB6B02C3433570084EB23 /* CheckListyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CheckListyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -253,6 +265,10 @@
 		14DBB6D42C3440630084EB23 /* DetailsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsListView.swift; sourceTree = "<group>"; };
 		14DBB6D62C34A5500084EB23 /* ListItemModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListItemModel.swift; sourceTree = "<group>"; };
 		14DBB6D82C34ABC60084EB23 /* DetailsListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsListViewModel.swift; sourceTree = "<group>"; };
+		14F041E32C80A1BA000B7D58 /* Array+toNSDictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+toNSDictionary.swift"; sourceTree = "<group>"; };
+		14F041E52C80AA69000B7D58 /* NSDictionary+toStringArrayFromKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSDictionary+toStringArrayFromKeys.swift"; sourceTree = "<group>"; };
+		14F041E72C80AA8D000B7D58 /* NSDictionary+toStringArrayFromValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSDictionary+toStringArrayFromValues.swift"; sourceTree = "<group>"; };
+		14F041E92C810B0C000B7D58 /* DeleteAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -299,13 +315,6 @@
 				14044F772C56CDB200FD3A73 /* ImagePicker.swift */,
 			);
 			path = ImagePicker;
-			sourceTree = "<group>";
-		};
-		14044F7B2C571AA700FD3A73 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		14044F822C5922C200FD3A73 /* ImageService */ = {
@@ -418,6 +427,7 @@
 			isa = PBXGroup;
 			children = (
 				14B225492C36D66C00A7F15F /* FirebaseAuthService.swift */,
+				143F92372C7FA8B900751AD0 /* AuthenticateState.swift */,
 			);
 			path = FirebaseAuthService;
 			sourceTree = "<group>";
@@ -490,7 +500,6 @@
 			isa = PBXGroup;
 			children = (
 				14B225462C36D30600A7F15F /* GoogleService-Info.plist */,
-				14DBB6A52C3433560084EB23 /* ContentView.swift */,
 				14DBB6A32C3433560084EB23 /* CheckListyApp.swift */,
 				14CEA8872C36460100E3CAED /* Resources */,
 			);
@@ -500,20 +509,24 @@
 		14CEA8842C36457000E3CAED /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				143F92332C7FA6BC00751AD0 /* MainView.swift */,
+				143F92352C7FA74100751AD0 /* AuthenticationView.swift */,
+				143F92392C7FABAA00751AD0 /* SplashView.swift */,
+				149F89C02C73D4AA0092F82C /* StartView.swift */,
+				14B225312C364F0F00A7F15F /* SignInView.swift */,
+				14B2254E2C36DBA800A7F15F /* SignUpView.swift */,
+				149F89F32C77BA050092F82C /* SignUpAddPhotoView .swift */,
+				149F89F52C77BA280092F82C /* SignUpCreatePasswordView.swift */,
+				149F89BC2C6A6C400092F82C /* ForgotPasswordView.swift */,
+				14B225592C3EAD6E00A7F15F /* ListsView.swift */,
+				14DBB6D42C3440630084EB23 /* DetailsListView.swift */,
+				14044F912C5B24EF00FD3A73 /* ProfileView.swift */,
+				14F041E92C810B0C000B7D58 /* DeleteAccountView.swift */,
 				14044F9D2C5C6E3200FD3A73 /* Forms */,
 				145706F02C4F0BEB007E642C /* Helpers */,
 				14B225732C48B11600A7F15F /* Protocol */,
 				14B2256E2C4748ED00A7F15F /* Modifiers */,
 				14B225612C45C08C00A7F15F /* Components */,
-				14DBB6D42C3440630084EB23 /* DetailsListView.swift */,
-				14B225312C364F0F00A7F15F /* SignInView.swift */,
-				149F89C02C73D4AA0092F82C /* StartView.swift */,
-				14B225592C3EAD6E00A7F15F /* ListsView.swift */,
-				14044F912C5B24EF00FD3A73 /* ProfileView.swift */,
-				149F89BC2C6A6C400092F82C /* ForgotPasswordView.swift */,
-				14B2254E2C36DBA800A7F15F /* SignUpView.swift */,
-				149F89F32C77BA050092F82C /* SignUpAddPhotoView .swift */,
-				149F89F52C77BA280092F82C /* SignUpCreatePasswordView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -546,6 +559,7 @@
 				149F89E32C7542FA0092F82C /* DataFormSignIn.swift */,
 				149F89F72C782EDA0092F82C /* DataFormSignUp.swift */,
 				143F922D2C7F7AC200751AD0 /* DataFormForgotPassword.swift */,
+				142CA1AF2C811414004531D4 /* DataFormDeleteAccount.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -569,7 +583,6 @@
 				14DBB6BD2C3433570084EB23 /* CheckListyUITests */,
 				14DBB6A12C3433560084EB23 /* Products */,
 				07C3842D8BE9A3C3C2C74EE4 /* Pods */,
-				14044F7B2C571AA700FD3A73 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -647,6 +660,9 @@
 				14A4CAD12C34D71300634E19 /* String+RemoveWhiteSpaces.swift */,
 				145707002C4FE3B1007E642C /* Array+RemoveDuplicates.swift */,
 				14044F8F2C5AE27F00FD3A73 /* String+ConvertToBase64.swift */,
+				14F041E32C80A1BA000B7D58 /* Array+toNSDictionary.swift */,
+				14F041E52C80AA69000B7D58 /* NSDictionary+toStringArrayFromKeys.swift */,
+				14F041E72C80AA8D000B7D58 /* NSDictionary+toStringArrayFromValues.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -827,6 +843,7 @@
 				14044FA32C60308E00FD3A73 /* FormChangeUserPassword.swift in Sources */,
 				149F89EE2C75E6660092F82C /* PasswordValidator.swift in Sources */,
 				149F89CB2C73E3400092F82C /* FilledButtonModifier.swift in Sources */,
+				143F92362C7FA74100751AD0 /* AuthenticationView.swift in Sources */,
 				14B225532C3DF60A00A7F15F /* FirebaseDataBaseService.swift in Sources */,
 				149F89E92C75E42F0092F82C /* ValidatorProtocol.swift in Sources */,
 				149F89E72C75433D0092F82C /* ValidationService.swift in Sources */,
@@ -839,7 +856,6 @@
 				145706F42C4F4774007E642C /* ScrollableModifier.swift in Sources */,
 				14044F982C5C214500FD3A73 /* SectionModifier.swift in Sources */,
 				145707092C51AA57007E642C /* AppDestination.swift in Sources */,
-				14DBB6A62C3433560084EB23 /* ContentView.swift in Sources */,
 				1457070F2C51EF5C007E642C /* ContainerRelativeFrameHorizontalModifier.swift in Sources */,
 				14B2254A2C36D66C00A7F15F /* FirebaseAuthService.swift in Sources */,
 				14B225702C47490200A7F15F /* RoundedBackgroundTextFieldStyle.swift in Sources */,
@@ -848,6 +864,7 @@
 				14B2256D2C4742C000A7F15F /* AutoFocusTextField.swift in Sources */,
 				145706E82C4EDE94007E642C /* HeaderSection.swift in Sources */,
 				14044FAA2C6A48C500FD3A73 /* ContinuousLoadingBar.swift in Sources */,
+				14F041E62C80AA69000B7D58 /* NSDictionary+toStringArrayFromKeys.swift in Sources */,
 				149F89F62C77BA280092F82C /* SignUpCreatePasswordView.swift in Sources */,
 				14044F7A2C56D1B600FD3A73 /* WelcomeView.swift in Sources */,
 				1457070D2C51EB4E007E642C /* ScrollHorizontalModifier.swift in Sources */,
@@ -863,6 +880,7 @@
 				149F89CD2C73EF560092F82C /* AnimatedBackgroundModifier.swift in Sources */,
 				14044F8C2C5A8F9D00FD3A73 /* ShareableItem.swift in Sources */,
 				14044F742C56CD4100FD3A73 /* ImagePickerController.swift in Sources */,
+				142CA1B02C811414004531D4 /* DataFormDeleteAccount.swift in Sources */,
 				149F89CF2C73F9C70092F82C /* GradientTopModifier.swift in Sources */,
 				145706FD2C4FC975007E642C /* UserDefaultsService.swift in Sources */,
 				149F89DE2C7518180092F82C /* PopupHelper.swift in Sources */,
@@ -876,6 +894,7 @@
 				14B225752C48B12D00A7F15F /* KeyboardReadable.swift in Sources */,
 				14B225582C3E9EE300A7F15F /* ListModel.swift in Sources */,
 				14044FA82C61BC1300FD3A73 /* ConvertibleDictionary.swift in Sources */,
+				14F041EA2C810B0C000B7D58 /* DeleteAccountView.swift in Sources */,
 				149F89F42C77BA050092F82C /* SignUpAddPhotoView .swift in Sources */,
 				149F89C12C73D4AA0092F82C /* StartView.swift in Sources */,
 				14B225512C36DBC500A7F15F /* SignUpViewModel.swift in Sources */,
@@ -889,20 +908,25 @@
 				14044F902C5AE27F00FD3A73 /* String+ConvertToBase64.swift in Sources */,
 				149F8A002C7D25BC0092F82C /* ScaleOnAppearModifier.swift in Sources */,
 				14044F922C5B24EF00FD3A73 /* ProfileView.swift in Sources */,
+				143F92382C7FA8B900751AD0 /* AuthenticateState.swift in Sources */,
 				14B225652C45C84700A7F15F /* TitleIcon.swift in Sources */,
+				143F923A2C7FABAA00751AD0 /* SplashView.swift in Sources */,
 				14B225772C496C0A00A7F15F /* SectionModel.swift in Sources */,
 				14044F9F2C5C6E9600FD3A73 /* UserProfile.swift in Sources */,
 				149F89E02C751F730092F82C /* PopupData.swift in Sources */,
 				145707112C528DBD007E642C /* SearchButton.swift in Sources */,
 				149F89F82C782EDA0092F82C /* DataFormSignUp.swift in Sources */,
 				14B2255A2C3EAD6E00A7F15F /* ListsView.swift in Sources */,
+				14F041E82C80AA8D000B7D58 /* NSDictionary+toStringArrayFromValues.swift in Sources */,
 				149F89BD2C6A6C400092F82C /* ForgotPasswordView.swift in Sources */,
+				143F92342C7FA6BC00751AD0 /* MainView.swift in Sources */,
 				149F89D12C74C8530092F82C /* IconsHelper.swift in Sources */,
 				149F89D82C7516A00092F82C /* PopupModifier.swift in Sources */,
 				149F89D52C74EC830092F82C /* TextFieldCustom.swift in Sources */,
 				149F89EC2C75E6370092F82C /* RequiredValidator.swift in Sources */,
 				14044F8E2C5A916C00FD3A73 /* ShareSheet.swift in Sources */,
 				14044F8A2C5923A900FD3A73 /* UserManager.swift in Sources */,
+				14F041E42C80A1BA000B7D58 /* Array+toNSDictionary.swift in Sources */,
 				14DBB6D22C343B2C0084EB23 /* SpeechRecognizerServiceErrors.swift in Sources */,
 				14B2254F2C36DBA800A7F15F /* SignUpView.swift in Sources */,
 				14DBB6D72C34A5500084EB23 /* ListItemModel.swift in Sources */,

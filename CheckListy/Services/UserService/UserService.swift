@@ -58,7 +58,15 @@ class UserService {
     static func removeLists(of user: User) async throws {
         let id = user.uid
         let userLists = findLists(by: id)
-        try await remove(userLists, by: id)
+        try await remove(userLists)
+    }
+
+    static func removeProfileImage(of user: User) async throws {
+        let urlImage = try await getUrlProfileImage(of: user.uid)
+
+        if urlImage != nil {
+            try await removePhoto(of: user)
+        }
     }
 
     static func removePhoto(of user: User) async throws {
@@ -66,10 +74,16 @@ class UserService {
         try await ImageService.deletePhoto(name: id)
     }
 
-    static func removeFromDataBase(_ user: User) {
+    static func removeFromDataBase(_ user: User) async throws {
+        try await removeLists(of: user)
+
         let id = user.uid
         let pathUser = "\(Paths.users)/\(id)"
         FirebaseDatabase.shared.delete(path: pathUser)
+    }
+
+    static func reauthtenticateWithFirebaseAuth(_ user: User, with password: String) async throws {
+        try await FirebaseAuthService.shared.reauthenticateAuthUser(user, with: password)
     }
 
     static func removeFromFirebaseAuth(_ user: User) async throws {
@@ -107,38 +121,29 @@ extension UserService {
 }
 
 // MARK: Helper Find methods
-
 extension UserService {
-    private static func findLists(by userId: String) -> [ListModel] {
-        FirebaseDatabase.shared.data.compactMap { $0 }.filter { $0.users.contains(userId) }
+
+    private static func findLists(by _: String) -> [String] {
+        FirebaseDatabase.shared.data.compactMap { $0?.id.uuidString }
     }
 
     private static func findList(by listId: String) -> ListModel? {
         FirebaseDatabase.shared.data.first { $0?.id.uuidString == listId } ?? nil
     }
+
 }
 
 // MARK: Helper Remove methods
 
 extension UserService {
-    private static func remove(_ lists: [ListModel], by userId: String) async throws {
-        for list in lists {
-            let pathList = "\(Paths.lists.description)/\(list.id)"
-            if list.users.count == 1 {
-                FirebaseDatabase.shared.delete(path: pathList)
-            } else {
-                try await remove(list, for: userId, with: pathList)
-            }
+
+    private static func remove(_ lists: [String]) async throws {
+        for listId in lists {
+            let pathList = "\(Paths.lists.description)/\(listId)"
+            FirebaseDatabase.shared.delete(path: pathList)
         }
     }
 
-    private static func remove(_ list: ListModel, for userId: String, with path: String) async throws {
-        guard var list = findList(by: list.id.uuidString),
-              let index = list.users.firstIndex(where: { $0 == userId }) else { return }
-
-        list.users.remove(at: index)
-        FirebaseDatabase.shared.update(path: path, data: list.toNSDictionary())
-    }
 }
 
 // MARK: - Typealias
