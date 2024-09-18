@@ -8,8 +8,8 @@
 import Foundation
 import SwiftUI
 
-struct FormUserProfile: View {
-    @Binding var user: UserProfile?
+struct FormUserDatabase: View {
+    @Binding var user: UserDatabase?
     @Binding var isLoading: Bool
     @State private var id: String
     @State private var name: String
@@ -17,13 +17,13 @@ struct FormUserProfile: View {
     @State private var image: UIImage?
     @State private var termsAccepted = false
 
-    var onSave: ((UserProfile) -> Void)?
+    var onSave: ((UserDatabase) -> Void)?
     var onClose: (() -> Void)?
 
     private init(
-        user: Binding<UserProfile?>,
+        user: Binding<UserDatabase?>,
         isLoading: Binding<Bool>,
-        onSave: ((UserProfile) -> Void)?,
+        onSave: ((UserDatabase) -> Void)?,
         onClose: (() -> Void)?
     ) {
         self.init(user: user, isLoading: isLoading)
@@ -33,7 +33,7 @@ struct FormUserProfile: View {
         UITextField.appearance().clearButtonMode = .whileEditing
     }
 
-    init(user: Binding<UserProfile?>, isLoading: Binding<Bool>) {
+    init(user: Binding<UserDatabase?>, isLoading: Binding<Bool>) {
         _user = user
         _isLoading = isLoading
         _id = State(initialValue: user.wrappedValue?.id ?? String())
@@ -61,11 +61,11 @@ struct FormUserProfile: View {
                     },
                     trailing:
                     Button(action: {
-                        let user = UserProfile(
+                        let user = UserDatabase(
                             id: id,
                             name: name,
                             urlProfileImage: user?.urlProfileImage,
-                            profileImage: image,
+                            lists: user?.lists ?? [], profileImage: image,
                             email: email
                         )
 
@@ -85,10 +85,10 @@ struct FormUserProfile: View {
 }
 
 // MARK: - Callbacks modifiers
-extension FormUserProfile {
+extension FormUserDatabase {
 
-    func onSave(action: ((UserProfile) -> Void)?) -> FormUserProfile {
-        FormUserProfile(
+    func onSave(action: ((UserDatabase) -> Void)?) -> FormUserDatabase {
+        FormUserDatabase(
             user: $user,
             isLoading: $isLoading,
             onSave: action,
@@ -96,8 +96,8 @@ extension FormUserProfile {
         )
     }
 
-    func onClose(action: (() -> Void)?) -> FormUserProfile {
-        FormUserProfile(
+    func onClose(action: (() -> Void)?) -> FormUserDatabase {
+        FormUserDatabase(
             user: $user,
             isLoading: $isLoading,
             onSave: onSave,
@@ -109,6 +109,6 @@ extension FormUserProfile {
 
 #Preview {
     NavigationView {
-        FormUserProfile(user: Binding.constant(UserProfile(id: String(), name: "Teste", email: "test@gmail.com")), isLoading: Binding.constant(false))
+        FormUserDatabase(user: Binding.constant(UserDatabase(id: String(), name: "Teste", lists: [], email: "test@gmail.com")), isLoading: Binding.constant(false))
     }
 }

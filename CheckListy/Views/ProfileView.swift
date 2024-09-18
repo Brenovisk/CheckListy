@@ -22,7 +22,7 @@ struct ProfileView: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
 
                 HStack(spacing: .zero) {
-                    if let image = viewModel.userProfile?.profileImage {
+                    if let image = viewModel.userDatabase?.profileImage {
                         Image(uiImage: image)
                             .resizable()
                             .profileImage(60)
@@ -35,11 +35,11 @@ struct ProfileView: View {
                     }
 
                     VStack(alignment: .leading) {
-                        Text(viewModel.userProfile?.name ?? String())
+                        Text(viewModel.userDatabase?.name ?? String())
                             .font(.headline)
                             .lineLimit(1)
 
-                        Text(viewModel.userProfile?.email ?? String())
+                        Text(viewModel.userDatabase?.email ?? String())
                             .font(.subheadline)
                             .foregroundStyle(Color(uiColor: UIColor.secondaryLabel))
                             .lineLimit(1)
@@ -55,7 +55,7 @@ struct ProfileView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .section()
                 .task {
-                    await viewModel.getUserProfile()
+                    await viewModel.getUserDatabase()
                 }
 
                 DefaultSection(title: "Geral") {
@@ -116,7 +116,7 @@ struct ProfileView: View {
         }
         .popup(isPresent: $viewModel.showPopup, data: viewModel.popupData)
         .sheet(isPresented: $isEditProfileForm) {
-            FormUserProfile(user: $viewModel.userProfile, isLoading: $isExecutingFormAction)
+            FormUserDatabase(user: $viewModel.userDatabase, isLoading: $isExecutingFormAction)
                 .onSave { userEdited in
                     Task {
                         isExecutingFormAction = true

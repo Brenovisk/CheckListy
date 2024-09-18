@@ -6,35 +6,31 @@
 //
 
 import Foundation
+import UIKit
 
-class UserDatabase: ConvertibleDictionary {
+struct UserDatabase: ConvertibleDictionary {
 
     var id: String
     var name: String
     var urlProfileImage: URL?
-    var lists: [String]
-
-    required init(id: String, name: String, urlProfileImage: URL?, lists: [String] = []) {
-        self.id = id
-        self.name = name
-        self.urlProfileImage = urlProfileImage
-        self.lists = lists
-    }
+    var lists: [String] = []
+    var profileImage: UIImage?
+    var email: String = .init()
 
 }
 
 extension UserDatabase {
 
     func toNSDictionary() -> NSDictionary {
-        return [
+        [
             "id": id,
             "name": name,
             "urlProfileImage": urlProfileImage?.absoluteString ?? String(),
-            "lists": lists.toNSDictionary()
+            "lists": lists
         ] as NSDictionary
     }
 
-    static func fromNSDictionary(_ dictionary: NSDictionary) -> Self? {
+    static func fromNSDictionary(_ dictionary: NSDictionary) -> UserDatabase? {
         guard let id = dictionary["id"] as? String,
               let name = dictionary["name"] as? String,
               let urlString = dictionary["urlProfileImage"] as? String
@@ -43,9 +39,14 @@ extension UserDatabase {
         }
 
         let urlProfileImage = URL(string: urlString)
-        let lists = (dictionary["lists"] as? NSDictionary)?.toStringArrayFromValues() ?? []
+        let lists = (dictionary["lists"] as? [String]) ?? []
 
-        return Self(id: id, name: name, urlProfileImage: urlProfileImage, lists: lists)
+        return UserDatabase(
+            id: id,
+            name: name,
+            urlProfileImage: urlProfileImage,
+            lists: lists
+        )
     }
 
     func saveToDatabase() async throws {

@@ -10,5 +10,5 @@ import Foundation
 enum UserDefaultsServiceKeys: String {
     case recents
     case userName = "user-name"
-    case userProfileImage = "user-profile-image"
+    case userDatabaseImage = "user-profile-image"
 }

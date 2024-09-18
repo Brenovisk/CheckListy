@@ -12,23 +12,23 @@ import UIKit
 class ProfileViewModel: ObservableObject {
 
     @Published var isLoading: Bool = false
-    @Published var userProfile: UserProfile?
+    @Published var userDatabase: UserDatabase?
     @Published var dataForm: DataFormDeleteAccount = .init()
     @Published var showPopup: Bool = false
     @Published private(set) var popupData: PopupData = .init()
 
     @MainActor
-    func getUserProfile() async {
+    func getUserDatabase() async {
         do {
             isLoading = true
             let user = try getAuthUser()
             let userManager = UserManager(authUser: user)
 
-            userProfile = try await UserProfile(
+            userDatabase = try await CheckListy.UserDatabase(
                 id: user.uid,
                 name: userManager.getName(),
                 urlProfileImage: userManager.getUrlProfileImage(),
-                profileImage: userManager.getImage(),
+                lists: userManager.getList(), profileImage: userManager.getImage(),
                 email: userManager.getEmail()
             )
 
@@ -40,13 +40,13 @@ class ProfileViewModel: ObservableObject {
         }
     }
 
-    func update(user: UserProfile) async throws {
+    func update(user: UserDatabase) async throws {
         do {
             isLoading = true
             guard hasChangeData(of: user) else { return }
             try await updateNameIfNeeded(user)
             try await updateImageIfNeeded(user)
-            await getUserProfile()
+            await getUserDatabase()
             isLoading = false
         } catch {
             let errorMessage = FirebaseErrorsHelper.getDescription(to: error)
@@ -69,8 +69,8 @@ class ProfileViewModel: ObservableObject {
         }
     }
 
-    func hasChangeData(of user: UserProfile) -> Bool {
-        user.name != userProfile?.name || user.profileImage != userProfile?.profileImage
+    func hasChangeData(of user: UserDatabase) -> Bool {
+        user.name != userDatabase?.name || user.profileImage != userDatabase?.profileImage
     }
 
     @MainActor
@@ -116,19 +116,19 @@ class ProfileViewModel: ObservableObject {
 extension ProfileViewModel {
 
     @MainActor
-    private func updateNameIfNeeded(_ user: UserProfile) async throws {
-        if user.name != userProfile?.name {
+    private func updateNameIfNeeded(_ user: UserDatabase) async throws {
+        if user.name != userDatabase?.name {
             let userManager = try getUserManager()
-            try await userManager.update(name: user.name)
-            await getUserProfile()
+            try await userManager.update(name: user.name, of: user)
+            await getUserDatabase()
         }
     }
 
     @MainActor
-    private func updateImageIfNeeded(_ user: UserProfile) async throws {
-        if let image = user.profileImage, image != userProfile?.profileImage {
+    private func updateImageIfNeeded(_ user: UserDatabase) async throws {
+        if let image = user.profileImage, image != userDatabase?.profileImage {
             try await UserManager.uploadProfile(image, for: user)
-            await getUserProfile()
+            await getUserDatabase()
         }
     }
 

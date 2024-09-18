@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ListModel: Identifiable, Hashable {
+struct ListModel: Identifiable, Hashable, ConvertibleDictionary {
 
     var id: UUID = .init()
     var name: String = .init()
@@ -18,6 +18,8 @@ struct ListModel: Identifiable, Hashable {
     var isFavorite: Bool = false
     var createdAt: Date = .init()
     var editedAt: Date = .init()
+    var owner: String = .init()
+    var usersShared: [String] = []
 
 }
 
@@ -33,7 +35,9 @@ extension ListModel {
             "items": items.map { $0.toNSDictionary() },
             "isFavorite": isFavorite,
             "createdAt": formattedDateUTC(createdAt),
-            "editedAt": formattedDateUTC(editedAt)
+            "editedAt": formattedDateUTC(editedAt),
+            "owner": owner,
+            "usersShared": usersShared.toNSDictionary()
         ]
     }
 
@@ -42,14 +46,15 @@ extension ListModel {
         let isFavorite = dictionary["isFavorite"] as? Bool ?? false
         let createdAt = Date(timeIntervalSince1970: dictionary["createdAt"] as? TimeInterval ?? 0)
         let editedAt = Date(timeIntervalSince1970: dictionary["editedAt"] as? TimeInterval ?? 0)
-        let users = (dictionary["users"] as? [String])?.compactMap { $0 } ?? []
+        let usersShared = (dictionary["usersShared"] as? [String])?.compactMap { $0 } ?? []
 
         guard
             let id = UUID(uuidString: dictionary["id"] as? String ?? ""),
             let name = dictionary["name"] as? String,
             let description = dictionary["description"] as? String,
             let color = dictionary["color"] as? String,
-            let icon = dictionary["icon"] as? String
+            let icon = dictionary["icon"] as? String,
+            let owner = dictionary["owner"] as? String
         else {
             return nil
         }
@@ -63,7 +68,9 @@ extension ListModel {
             items: items,
             isFavorite: isFavorite,
             createdAt: createdAt,
-            editedAt: editedAt
+            editedAt: editedAt,
+            owner: owner,
+            usersShared: usersShared
         )
     }
 

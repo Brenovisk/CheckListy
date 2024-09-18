@@ -18,8 +18,12 @@ class UserManager {
         self.authUser = authUser
     }
 
-    func update(name: String) async throws {
+    func update(name: String, of user: UserDatabase) async throws {
         try await UserService.update(authUser, displayName: name)
+
+        let updatedUserDatabase = UserDatabase(id: user.id, name: name, urlProfileImage: user.urlProfileImage, lists: user.lists)
+
+        try await updatedUserDatabase.saveToDatabase()
     }
 
     func update(oldPassword: String, to newPassword: String) async throws {
@@ -47,7 +51,7 @@ class UserManager {
     }
 
     func getProfileImage() async throws -> UIImage? {
-        try await UserService.getUserProfileImage(for: authUser.uid)
+        try await UserService.getUserDatabaseImage(for: authUser.uid)
     }
 
     func getUrlProfileImage() async throws -> URL? {
@@ -56,6 +60,12 @@ class UserManager {
 
     func getEmail() throws -> String {
         try UserService.getEmail(of: authUser)
+    }
+
+    @MainActor
+    func getList() async throws -> [String] {
+        let user: UserDatabase = try await FirebaseDatabase.shared.getData(from: .users, with: authUser.uid)
+        return user.lists
     }
 
     func getId() -> String {
@@ -75,14 +85,14 @@ class UserManager {
     }
 
     func getImage() async throws -> UIImage? {
-        let storedImage = UserDefaultsService.loadImage(.userProfileImage)
+        let storedImage = UserDefaultsService.loadImage(.userDatabaseImage)
 
         if let storedImage {
             return storedImage
         }
 
-        let image = try await UserService.getUserProfileImage(for: authUser.uid)
-        UserDefaultsService.addImage(.userProfileImage, image)
+        let image = try await UserService.getUserDatabaseImage(for: authUser.uid)
+        UserDefaultsService.addImage(.userDatabaseImage, image)
         return image
     }
 

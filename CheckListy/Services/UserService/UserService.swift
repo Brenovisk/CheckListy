@@ -10,12 +10,13 @@ import Foundation
 import UIKit
 
 class UserService {
+
     static func updateProfile(_ image: UIImage, for user: UserDatabase) async throws {
         let imageData = try ImageService.convertImageToData(image)
         let downloadURL = try await ImageService.uploadImageData(imageData, for: user.id)
-        let updatedUserDatabase = UserDatabase(id: user.id, name: user.name, urlProfileImage: downloadURL)
+        let updatedUserDatabase = UserDatabase(id: user.id, name: user.name, urlProfileImage: downloadURL, lists: user.lists)
         try await updatedUserDatabase.saveToDatabase()
-        UserDefaultsService.addImage(.userProfileImage, image)
+        UserDefaultsService.addImage(.userDatabaseImage, image)
     }
 
     static func update(_ user: User, displayName: String) async throws {
@@ -35,7 +36,7 @@ class UserService {
         try await user.updatePassword(to: newPassword)
     }
 
-    static func getUserProfileImage(for userId: String) async throws -> UIImage? {
+    static func getUserDatabaseImage(for userId: String) async throws -> UIImage? {
         guard let url = try await getUrlProfileImage(of: userId) else { return nil }
         let imageData = try await ImageService.downloadImage(fromURL: url)
         let image = try ImageService.convertToUImage(from: imageData)
@@ -57,7 +58,7 @@ class UserService {
 
     static func removeLists(of user: User) async throws {
         let id = user.uid
-        let userLists = findLists(by: id)
+        let userLists = findLists(user: user, by: id)
         try await remove(userLists)
     }
 
@@ -89,11 +90,13 @@ class UserService {
     static func removeFromFirebaseAuth(_ user: User) async throws {
         try await FirebaseAuthService.shared.deleteAuthUser(user)
     }
+
 }
 
 // MARK: Help method
 
 extension UserService {
+
     private static func reauthenticate(_ user: User, with password: String) async throws {
         let email = try getEmail(of: user)
         let authCredential = EmailAuthProvider.credential(withEmail: email, password: password)
@@ -110,21 +113,24 @@ extension UserService {
             throw Errors.updateError(error.localizedDescription)
         }
     }
+
 }
 
 // MARK: Helper Get methods
 
 extension UserService {
+
     private static func getUserFromDatabase(with id: String) async throws -> UserDatabase {
         try await FirebaseDatabase.shared.getData(from: .users, with: id)
     }
+
 }
 
 // MARK: Helper Find methods
 extension UserService {
 
-    private static func findLists(by _: String) -> [String] {
-        FirebaseDatabase.shared.data.compactMap { $0?.id.uuidString }
+    private static func findLists(user: User, by _: String) -> [String] {
+        FirebaseDatabase.shared.data.filter { $0?.owner == user.uid }.compactMap { $0?.id.uuidString }
     }
 
     private static func findList(by listId: String) -> ListModel? {
@@ -149,6 +155,7 @@ extension UserService {
 // MARK: - Typealias
 
 extension UserService {
+
     typealias Paths = FirebaseDatabasePaths
     typealias Errors = UserServiceErrors
     typealias ChangeRequest = (UserProfileChangeRequest) -> Void

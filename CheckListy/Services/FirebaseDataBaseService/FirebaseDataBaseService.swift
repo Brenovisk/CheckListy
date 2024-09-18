@@ -25,7 +25,7 @@ class FirebaseDatabase {
 
     var dataChanged = PassthroughSubject<[ListModel?], Never>()
 
-    private var listObservers: [DatabaseHandle] = []
+    private var listObservers: [String: DatabaseHandle] = [:]
 
     private var childAddedHandle: DatabaseHandle?
     private var childChangedHandle: DatabaseHandle?
@@ -43,10 +43,8 @@ class FirebaseDatabase {
         userRef.observe(.value) { [weak self] snapshot, _ in
             guard let self = self else { return }
             guard let value = snapshot.value as? NSDictionary else { return }
-
-            if let listIds = value["lists"] as? [String] {
-                self.observeLists(listIds: listIds)
-            }
+            let listIds = value["lists"] as? [String] ?? []
+            self.observeLists(listIds: listIds)
         }
     }
 
@@ -89,6 +87,18 @@ class FirebaseDatabase {
         data = []
     }
 
+    @MainActor
+    func deleteFromDataLocal(_ list: ListModel) throws {
+        guard let index = data.firstIndex(where: { $0?.id == list.id }) else {
+            throw NSError(domain: String(), code: 0)
+        }
+
+        var dataToUpdate = data
+        dataToUpdate.remove(at: index)
+
+        data = dataToUpdate
+    }
+
 }
 
 // MARK: - Helper methods
@@ -128,7 +138,18 @@ extension FirebaseDatabase {
             self.updateList(with: listItem)
         }
 
-        listObservers.append(addedHandle)
+        listObservers[listId] = addedHandle
+    }
+
+    @MainActor
+    func removeObserverList(with listId: String) throws {
+        guard let handle = listObservers[listId] else {
+            throw FirebaseError.observerNotFound(listId: listId)
+        }
+
+        let listRef = databaseRef.child(Paths.lists.description).child(listId)
+        listRef.removeObserver(withHandle: handle)
+        listObservers.removeValue(forKey: listId)
     }
 
     private func updateList(with newItem: ListModel?) {
@@ -143,10 +164,10 @@ extension FirebaseDatabase {
     }
 
     private func removeListObservers() {
-        for handle in listObservers {
-            databaseRef.child(Paths.lists.description).removeObserver(withHandle: handle)
+        for (listId, handle) in listObservers {
+            databaseRef.child(Paths.lists.description).child(listId).removeObserver(withHandle: handle)
         }
-        listObservers = []
+        listObservers.removeAll()
     }
 
 }
@@ -163,5 +184,11 @@ enum DataError: Error {
     case fetchError
     case parseError
     case invalidPath
+
+}
+
+enum FirebaseError: Error {
+
+    case observerNotFound(listId: String)
 
 }

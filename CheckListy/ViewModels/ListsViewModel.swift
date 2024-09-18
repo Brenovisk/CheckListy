@@ -147,32 +147,37 @@ class ListsViewModel: ObservableObject {
 
     @MainActor
     func addList(by code: String) {
-        guard let listId = code.removingSuffix(".co").fromBase64Code(),
-              let authUser else { return }
+        Task {
+            do {
+                guard let listId = code.removingSuffix(".co").fromBase64Code(),
+                      let authUser else { return }
 
-        let pathUserLists = "\(Paths.users.description)/\(authUser.uid)/lists"
-        var listsId = lists.compactMap { $0?.id.uuidString }
-        listsId.append(listId)
-
-        firebaseDatabase.update(path: pathUserLists, data: listsId.toNSDictionary())
-        firebaseDatabase.addObserverList(with: listId)
+                addList(with: listId, in: authUser)
+                try await addUserShared(with: authUser.uid, from: listId)
+                firebaseDatabase.addObserverList(with: listId)
+            } catch {
+                print(error)
+            }
+        }
     }
 
     func delete(list: ListModel) {
-        let pathNewList = "\(Paths.lists.description)/\(list.id.uuidString)"
-        firebaseDatabase.delete(path: pathNewList)
-        deleteUser(list)
-    }
+        Task {
+            do {
+                guard let authUser else { return }
+                let isOwner = list.owner == authUser.uid
 
-    func deleteUser(_ list: ListModel) {
-        guard let authUser else { return }
-        let pathUserLists = "\(Paths.users.description)/\(authUser.uid)/lists"
+                if !isOwner {
+                    try await deleteUserShared(with: authUser.uid, from: list)
+                }
 
-        guard let indexItem = getIndex(of: list) else { return }
-        lists.remove(at: indexItem)
-
-        let listsId = lists.compactMap { $0?.id.uuidString }
-        firebaseDatabase.update(path: pathUserLists, data: listsId.toNSDictionary())
+                try await deleteList(with: list.id.uuidString, in: authUser.uid)
+                try await deleteListFromDatabaseIfNeeded(list)
+                await setupDataBase()
+            } catch {
+                print(error)
+            }
+        }
     }
 
     func toggleVisualization() {
@@ -204,6 +209,73 @@ extension ListsViewModel {
 
     private func getIndex(of list: ListModel) -> Int? {
         lists.firstIndex(where: { $0?.id == list.id })
+    }
+
+    @MainActor
+    private func getUsersSharedList(with id: String) async throws -> [String] {
+        let list: ListModel = try await firebaseDatabase.getData(from: .lists, with: id)
+        return list.usersShared
+    }
+
+    @MainActor
+    private func getListsUser(with id: String) async throws -> [String] {
+        let user: UserDatabase = try await firebaseDatabase.getData(from: .users, with: id)
+        return user.lists
+    }
+
+    @MainActor
+    private func addList(with id: String, in user: User) {
+        let pathUserLists = "\(Paths.users.description)/\(user.uid)/lists"
+
+        var listsId = lists.compactMap { $0?.id.uuidString }
+        listsId.append(id)
+        firebaseDatabase.update(path: pathUserLists, data: listsId.toNSDictionary())
+    }
+
+    @MainActor
+    private func deleteListFromAllUsersShared(_ list: ListModel) async throws {
+        let usersShared = try await getUsersSharedList(with: list.id.uuidString)
+
+        for userId in usersShared {
+            try await deleteList(with: list.id.uuidString, in: userId)
+        }
+    }
+
+    @MainActor
+    private func deleteListFromDatabaseIfNeeded(_ list: ListModel) async throws {
+        let usersShared = try await getUsersSharedList(with: list.id.uuidString)
+        guard usersShared.isEmpty else { return }
+        let pathList = "\(Paths.lists.description)/\(list.id.uuidString)"
+        firebaseDatabase.delete(path: pathList)
+    }
+
+    @MainActor
+    private func deleteList(with id: String, in userId: String) async throws {
+        let pathUserLists = "\(Paths.users.description)/\(userId)/lists"
+        var userLists = try await getListsUser(with: userId)
+        userLists.removeAll { $0 == id }
+
+        firebaseDatabase.update(path: pathUserLists, data: userLists.toNSDictionary())
+    }
+
+    @MainActor
+    private func addUserShared(with id: String, from listId: String) async throws {
+        var usersShared = try await getUsersSharedList(with: listId)
+        usersShared.append(id)
+        updateUsersShared(of: listId, with: usersShared)
+    }
+
+    @MainActor
+    private func deleteUserShared(with id: String, from list: ListModel) async throws {
+        var usersShared = try await getUsersSharedList(with: list.id.uuidString)
+        usersShared.removeAll { $0 == id }
+        updateUsersShared(of: list.id.uuidString, with: usersShared)
+    }
+
+    @MainActor
+    private func updateUsersShared(of listId: String, with usersId: [String]) {
+        let pathUsersSharedOfList = "\(FirebaseDatabasePaths.lists.description)/\(listId)/usersShared"
+        firebaseDatabase.update(path: pathUsersSharedOfList, data: usersId.toNSDictionary())
     }
 
 }

@@ -18,6 +18,7 @@ class SignUpViewModel: ObservableObject {
 
     private var cancellables = Set<AnyCancellable>()
 
+    @MainActor
     func signUp() {
         Task {
             do {

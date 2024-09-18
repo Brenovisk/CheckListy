@@ -1,10 +1,8 @@
---indent 4                # Set indentation to 4 spaces
---allman false            # Use K&R style (braces on the same line)
---self remove             # Remove unnecessary 'self' usage
---lineaftermarks false    # No Insert blank line before and after MARK: comments.
+--indent 4 # Set indentation to 4 spaces
+--allman false # Use K&R style (braces on the same line)
+--self remove # Remove unnecessary 'self' usage
+--lineaftermarks false # No Insert blank line before and after MARK: comments.
 --typeblanklines preserve #" remove" (default) or "preserve" blank lines from types
 
-
---disable \               # Disable specific formatting rules
-trailingCommas, \         # Disable the rule that allows trailing commas
-
+--disable \ # Disable specific formatting rules
+trailingCommas, \ # Disable the rule that allows trailing commas

@@ -131,7 +131,8 @@ struct FormListView: View {
                                 icon: selectedIcon,
                                 items: items,
                                 createdAt: item?.createdAt ?? Date(),
-                                editedAt: Date()
+                                editedAt: Date(),
+                                owner: user.uid
                             )
 
                             onSave?(newItem)
