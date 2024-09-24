@@ -26,11 +26,11 @@ struct ListsView: View {
                 userName: viewModel.userName ?? String(),
                 uiImage: viewModel.userImage
             )
+            .padding(.top, 8)
             .task {
                 viewModel.getUserName()
                 await viewModel.getUserImage()
             }
-            .padding(.top, 8)
             .onTapGesture {
                 NavigationService.shared.navigateTo(.profileView)
             }
@@ -81,19 +81,20 @@ struct ListsView: View {
                 subtitle: "\(viewModel.lists.count)"
             )
         }
+        .gradientTop(color: Color.accentColor, height: 164)
         .toolbar {
-            ToolbarItemGroup(placement: .primaryAction) {
-                SearchButton(isEnable: $viewModel.showSearchBar)
-                    .onEnable {
-                        viewModel.toggleSearchBar()
-                    }
-            }
-
-            ToolbarItemGroup(placement: .primaryAction) {
-                Button(action: { viewModel.toggleVisualization() }) {
-                    Image(systemName: viewModel.visualizationMode == .list ? "rectangle.grid.1x2" : "square.grid.2x2")
-                }
-            }
+//            ToolbarItemGroup(placement: .primaryAction) {
+//                SearchButton(isEnable: $viewModel.showSearchBar)
+//                    .onEnable {
+//                        viewModel.toggleSearchBar()
+//                    }
+//            }
+//
+//            ToolbarItemGroup(placement: .primaryAction) {
+//                Button(action: { viewModel.toggleVisualization() }) {
+//                    Image(systemName: viewModel.visualizationMode == .list ? "rectangle.grid.1x2" : "square.grid.2x2")
+//                }
+//            }
 
             ToolbarItemGroup(placement: .bottomBar) {
                 HStack {
@@ -155,7 +156,12 @@ struct ListsView: View {
         }
     }
 
-    func card(_ list: ListModel, visualization: Binding<ListMode>? = nil) -> some View {
+}
+
+// MARK: - Helper methods
+extension ListsView {
+
+    private func card(_ list: ListModel, visualization: Binding<ListMode>? = nil) -> some View {
         ListCard(list: list, mode: visualization)
             .onEdit { list in
                 viewModel.listToEdit = list
@@ -175,30 +181,30 @@ struct ListsView: View {
             }
     }
 
-    func handleEdit(_ list: ListModel) {
+    private func handleEdit(_ list: ListModel) {
         withAnimation {
             viewModel.listToEdit = list
             showCreateListForm = true
         }
     }
 
-    func handleDelete(_ list: ListModel) {
+    private func handleDelete(_ list: ListModel) {
         withAnimation {
             viewModel.delete(list: list)
         }
     }
 
-    func handleRedirect(_ list: ListModel) {
+    private func handleRedirect(_ list: ListModel) {
         NavigationService.shared.navigateTo(.detailsListView(list: list))
     }
 
-    func handleOnFavorite(_ list: ListModel) {
+    private func handleOnFavorite(_ list: ListModel) {
         withAnimation {
             viewModel.toggleIsFavorite(to: list)
         }
     }
 
-    func handleOnShare(_ list: ListModel) {
+    private func handleOnShare(_ list: ListModel) {
         withAnimation {
             withAnimation {
                 viewModel.setContentToShared(to: list)

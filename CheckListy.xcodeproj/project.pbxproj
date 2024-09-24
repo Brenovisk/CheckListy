@@ -129,6 +129,8 @@
 		14F041E62C80AA69000B7D58 /* NSDictionary+toStringArrayFromKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F041E52C80AA69000B7D58 /* NSDictionary+toStringArrayFromKeys.swift */; };
 		14F041E82C80AA8D000B7D58 /* NSDictionary+toStringArrayFromValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F041E72C80AA8D000B7D58 /* NSDictionary+toStringArrayFromValues.swift */; };
 		14F041EA2C810B0C000B7D58 /* DeleteAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F041E92C810B0C000B7D58 /* DeleteAccountView.swift */; };
+		14F4396A2CA3624600946D18 /* TimeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F439692CA3623F00946D18 /* TimeService.swift */; };
+		14F4396D2CA362CF00946D18 /* PeriodsDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F4396C2CA362C800946D18 /* PeriodsDay.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -269,6 +271,8 @@
 		14F041E52C80AA69000B7D58 /* NSDictionary+toStringArrayFromKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSDictionary+toStringArrayFromKeys.swift"; sourceTree = "<group>"; };
 		14F041E72C80AA8D000B7D58 /* NSDictionary+toStringArrayFromValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSDictionary+toStringArrayFromValues.swift"; sourceTree = "<group>"; };
 		14F041E92C810B0C000B7D58 /* DeleteAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountView.swift; sourceTree = "<group>"; };
+		14F439692CA3623F00946D18 /* TimeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeService.swift; sourceTree = "<group>"; };
+		14F4396C2CA362C800946D18 /* PeriodsDay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeriodsDay.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -631,6 +635,7 @@
 		14DBB6CD2C3434220084EB23 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				14F4396B2CA3624B00946D18 /* TimeService */,
 				149F89E52C7543190092F82C /* ValidationService */,
 				14044F852C59231800FD3A73 /* UserService */,
 				14044F822C5922C200FD3A73 /* ImageService */,
@@ -665,6 +670,15 @@
 				14F041E72C80AA8D000B7D58 /* NSDictionary+toStringArrayFromValues.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		14F4396B2CA3624B00946D18 /* TimeService */ = {
+			isa = PBXGroup;
+			children = (
+				14F4396C2CA362C800946D18 /* PeriodsDay.swift */,
+				14F439692CA3623F00946D18 /* TimeService.swift */,
+			);
+			path = TimeService;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -880,10 +894,12 @@
 				149F89CD2C73EF560092F82C /* AnimatedBackgroundModifier.swift in Sources */,
 				14044F8C2C5A8F9D00FD3A73 /* ShareableItem.swift in Sources */,
 				14044F742C56CD4100FD3A73 /* ImagePickerController.swift in Sources */,
+				14F4396A2CA3624600946D18 /* TimeService.swift in Sources */,
 				142CA1B02C811414004531D4 /* DataFormDeleteAccount.swift in Sources */,
 				149F89CF2C73F9C70092F82C /* GradientTopModifier.swift in Sources */,
 				145706FD2C4FC975007E642C /* UserDefaultsService.swift in Sources */,
 				149F89DE2C7518180092F82C /* PopupHelper.swift in Sources */,
+				14F4396D2CA362CF00946D18 /* PeriodsDay.swift in Sources */,
 				145707072C51AA2B007E642C /* NavigationService.swift in Sources */,
 				14B225692C46169400A7F15F /* ItemCard.swift in Sources */,
 				149F89F02C75E7290092F82C /* EmailValidator.swift in Sources */,
