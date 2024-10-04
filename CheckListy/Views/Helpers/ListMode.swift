@@ -8,6 +8,8 @@
 import Foundation
 
 enum ListMode {
+
     case grid
     case list
+
 }

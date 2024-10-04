@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct ListCard: View {
-    var list: ListModel
-    @Binding var mode: ListMode
 
+    @Binding var mode: ListMode
     @Environment(\.colorScheme) var colorScheme
 
+    var list: ListModel
     var onEdit: ((ListModel) -> Void)?
     var onDelete: ((ListModel) -> Void)?
     var onRedirect: ((ListModel) -> Void)?
@@ -32,6 +32,14 @@ struct ListCard: View {
     init(list: ListModel, mode: Binding<ListMode>? = nil) {
         self.list = list
         _mode = mode ?? Binding.constant(.grid)
+    }
+
+    var subTitleColor: Color {
+        colorScheme == .dark ? Color(.lightGray) : Color(.darkGray)
+    }
+
+    var titleColor: Color {
+        colorScheme == .dark ? Color.white : Color.black
     }
 
     var body: some View {
@@ -63,18 +71,10 @@ struct ListCard: View {
                 }
 
                 HStack(alignment: .center) {
-                    VStack(alignment: .leading) {
-                        Text(list.name)
-                            .lineLimit(1)
-                            .font(.body)
-                            .foregroundColor(colorScheme == .dark ? Color.white : Color.black)
+                    VStack(alignment: .leading, spacing: 2) {
+                        listName
 
-                        if !list.description.isEmpty {
-                            Text(list.description)
-                                .lineLimit(1)
-                                .font(.subheadline)
-                                .foregroundColor(colorScheme == .dark ? Color(.lightGray) : Color(.darkGray))
-                        }
+                        createdDate
                     }
 
                     Spacer()
@@ -100,17 +100,11 @@ struct ListCard: View {
                 icon
                     .padding(.horizontal, 16)
 
-                VStack(alignment: .leading) {
-                    Text(list.name)
-                        .lineLimit(1)
-                        .font(.body)
-                        .foregroundColor(colorScheme == .dark ? Color.white : Color.black)
+                VStack(alignment: .leading, spacing: 2) {
+                    listName
 
-                    if !list.description.isEmpty {
-                        Text(list.description)
-                            .lineLimit(1)
-                            .font(.subheadline)
-                            .foregroundColor(colorScheme == .dark ? Color(.lightGray) : Color(.darkGray))
+                    HStack {
+                        createdDate
                     }
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -128,6 +122,27 @@ struct ListCard: View {
         }
         .background(Color(.secondarySystemBackground))
         .cornerRadius(12)
+    }
+
+    var listName: some View {
+        Text(list.name)
+            .lineLimit(1)
+            .font(.body)
+            .foregroundColor(titleColor)
+    }
+
+    var createdDate: some View {
+        HStack {
+            IconsHelper.calendar.value
+                .resizable()
+                .frame(width: 12, height: 12)
+                .foregroundColor(subTitleColor)
+
+            Text(list.createdDate)
+                .lineLimit(1)
+                .font(.subheadline)
+                .foregroundColor(subTitleColor)
+        }
     }
 
     var checkedItems: some View {
