@@ -15,18 +15,17 @@ class ForgotPasswordViewModel: ObservableObject {
 
     @Published private(set) var popupData: PopupData = .init()
 
-    func resetPassword() {
-        Task {
-            do {
-                isLoading = true
-                try await FirebaseAuthService.shared.resetPassword(with: dataForm.email)
-                isLoading = false
-                navigateToForgotPasswordConfirmationView()
-            } catch {
-                let errorMessage = FirebaseErrorsHelper.getDescription(to: error)
-                setPopupDataError(with: errorMessage)
-                isLoading = false
-            }
+    @MainActor
+    func resetPassword() async {
+        do {
+            isLoading = true
+            try await FirebaseAuthService.shared.resetPassword(with: dataForm.email)
+            isLoading = false
+            navigateToForgotPasswordConfirmationView()
+        } catch {
+            let errorMessage = FirebaseErrorsHelper.getDescription(to: error)
+            setPopupDataError(with: errorMessage)
+            isLoading = false
         }
     }
 

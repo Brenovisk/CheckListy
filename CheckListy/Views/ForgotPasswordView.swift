@@ -12,6 +12,7 @@ struct ForgotPasswordView: View, KeyboardReadable {
 
     @EnvironmentObject private var viewModel: ForgotPasswordViewModel
     @State var isShowKeyboard = false
+    @State var scrollOffset: CGFloat = 0
 
     var email: String
 
@@ -47,7 +48,9 @@ struct ForgotPasswordView: View, KeyboardReadable {
             Button(action: {
                 hideKeyboard()
                 guard viewModel.dataForm.isValid() else { return }
-                viewModel.resetPassword()
+                Task {
+                    await viewModel.resetPassword()
+                }
             }) {
                 Text(Texts.send.rawValue)
                     .frame(maxWidth: .infinity)
@@ -56,9 +59,9 @@ struct ForgotPasswordView: View, KeyboardReadable {
         }
         .toolbar(.visible, for: .navigationBar)
         .frame(maxHeight: .infinity, alignment: .top)
-        .scrollable {}
+        .scrollable(scrollOffset: $scrollOffset) {}
         .animatedBackground()
-        .gradientTop(color: Color.accentColor, height: 164)
+        .gradientTopDynamic(color: Color.accentColor, height: 164, scrollOffset: $scrollOffset)
         .popup(isPresent: $viewModel.showPopup, data: viewModel.popupData)
         .onReceive(keyboardPublisher) { value in
             withAnimation {

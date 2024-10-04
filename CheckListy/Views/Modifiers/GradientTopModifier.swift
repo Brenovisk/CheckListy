@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 
 struct GradientTopModifier: ViewModifier {
+
     @State private var height: CGFloat = 0
     var color: Color
     var finalHeight: CGFloat
@@ -40,9 +41,11 @@ struct GradientTopModifier: ViewModifier {
                 .ignoresSafeArea(edges: .top)
             )
     }
+
 }
 
 extension View {
+
     func gradientTop(color: Color, height: CGFloat, delay: CGFloat = 0.1) -> some View {
         modifier(
             GradientTopModifier(
@@ -52,4 +55,5 @@ extension View {
             )
         )
     }
+
 }

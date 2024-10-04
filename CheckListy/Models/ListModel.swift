@@ -80,6 +80,12 @@ extension ListModel {
         return "\(checkedItems)/\(total)"
     }
 
+    var isComplete: Bool {
+        let total = items.count
+        let checkedItems = items.filter { $0.isCheck }.count
+        return total == checkedItems
+    }
+
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
     }

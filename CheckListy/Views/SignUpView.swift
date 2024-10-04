@@ -13,6 +13,7 @@ struct SignUpView: View, KeyboardReadable {
     @EnvironmentObject private var viewModel: SignUpViewModel
 
     @State var isShowKeyboard = false
+    @State var scrollOffset: CGFloat = 0
 
     init() {
         UITextField.appearance().clearButtonMode = .whileEditing
@@ -61,9 +62,9 @@ struct SignUpView: View, KeyboardReadable {
         }
         .toolbar(.visible, for: .navigationBar)
         .frame(maxHeight: .infinity, alignment: .top)
-        .scrollable {}
+        .scrollable(scrollOffset: $scrollOffset) {}
         .animatedBackground()
-        .gradientTop(color: Color.accentColor, height: 164)
+        .gradientTopDynamic(color: Color.accentColor, height: 164, scrollOffset: $scrollOffset)
         .popup(isPresent: $viewModel.showPopup, data: viewModel.popupData)
         .onReceive(keyboardPublisher) { value in
             withAnimation {

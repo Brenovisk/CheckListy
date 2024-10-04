@@ -9,13 +9,18 @@ import Foundation
 import SwiftUI
 
 struct ScrollableModifier<TitleView: View>: ViewModifier {
+
+    var padding: Double = 16
     let titleView: TitleView
+    var scrollOffset: Binding<CGFloat>?
+
     @State private var showTitle = false
 
     func body(content: Content) -> some View {
-        ScrollView {
+        ScrollView(showsIndicators: false) {
             ZStack {
                 content
+
                 GeometryReader { geometry in
                     Color.clear
                         .preference(key: ViewOffsetKey.self, value: geometry.frame(in: .named("scroll")).minY)
@@ -23,7 +28,7 @@ struct ScrollableModifier<TitleView: View>: ViewModifier {
             }
         }
         .coordinateSpace(name: "scroll")
-        .padding(.horizontal, 16)
+        .padding(.horizontal, padding)
         .onPreferenceChange(ViewOffsetKey.self) { value in
             handleScrollValue(value)
         }
@@ -40,12 +45,30 @@ struct ScrollableModifier<TitleView: View>: ViewModifier {
     private func handleScrollValue(_ value: ViewOffsetKey.Value) {
         withAnimation {
             showTitle = value < -30
+
+            if let scrollOffset = scrollOffset {
+                scrollOffset.wrappedValue = value
+                return
+            }
         }
     }
+
 }
 
 extension View {
-    func scrollable<TitleView: View>(@ViewBuilder title: () -> TitleView) -> some View {
-        modifier(ScrollableModifier(titleView: title()))
+
+    func scrollable<TitleView: View>(
+        padding: Double = 16,
+        scrollOffset: Binding<CGFloat>? = nil,
+        @ViewBuilder title: () -> TitleView
+    ) -> some View {
+        modifier(
+            ScrollableModifier(
+                padding: padding,
+                titleView: title(),
+                scrollOffset: scrollOffset
+            )
+        )
     }
+
 }

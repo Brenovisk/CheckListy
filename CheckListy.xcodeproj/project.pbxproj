@@ -31,7 +31,10 @@
 		14044FA52C61AF2B00FD3A73 /* UserServiceErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14044FA42C61AF2B00FD3A73 /* UserServiceErrors.swift */; };
 		14044FA82C61BC1300FD3A73 /* ConvertibleDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14044FA72C61BC1300FD3A73 /* ConvertibleDictionary.swift */; };
 		14044FAA2C6A48C500FD3A73 /* ContinuousLoadingBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14044FA92C6A48C500FD3A73 /* ContinuousLoadingBar.swift */; };
+		142C2E6B2CAF4C1E002CB0D4 /* SegmentPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142C2E6A2CAF4C16002CB0D4 /* SegmentPicker.swift */; };
 		142CA1B02C811414004531D4 /* DataFormDeleteAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142CA1AF2C811414004531D4 /* DataFormDeleteAccount.swift */; };
+		143568EB2CAF8BFE00CDDE22 /* Segment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143568EA2CAF8BFC00CDDE22 /* Segment.swift */; };
+		143568EF2CB0475C00CDDE22 /* GradientTopDynamicModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143568EE2CB0474400CDDE22 /* GradientTopDynamicModifier.swift */; };
 		143F922C2C7F6C9800751AD0 /* ForgotPasswordConfirmationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143F922B2C7F6C9800751AD0 /* ForgotPasswordConfirmationView.swift */; };
 		143F922E2C7F7AC200751AD0 /* DataFormForgotPassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143F922D2C7F7AC200751AD0 /* DataFormForgotPassword.swift */; };
 		143F92302C7F85C200751AD0 /* MessageWithImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143F922F2C7F85C200751AD0 /* MessageWithImageView.swift */; };
@@ -173,7 +176,10 @@
 		14044FA42C61AF2B00FD3A73 /* UserServiceErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserServiceErrors.swift; sourceTree = "<group>"; };
 		14044FA72C61BC1300FD3A73 /* ConvertibleDictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConvertibleDictionary.swift; sourceTree = "<group>"; };
 		14044FA92C6A48C500FD3A73 /* ContinuousLoadingBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContinuousLoadingBar.swift; sourceTree = "<group>"; };
+		142C2E6A2CAF4C16002CB0D4 /* SegmentPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentPicker.swift; sourceTree = "<group>"; };
 		142CA1AF2C811414004531D4 /* DataFormDeleteAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataFormDeleteAccount.swift; sourceTree = "<group>"; };
+		143568EA2CAF8BFC00CDDE22 /* Segment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Segment.swift; sourceTree = "<group>"; };
+		143568EE2CB0474400CDDE22 /* GradientTopDynamicModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientTopDynamicModifier.swift; sourceTree = "<group>"; };
 		143F922B2C7F6C9800751AD0 /* ForgotPasswordConfirmationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordConfirmationView.swift; sourceTree = "<group>"; };
 		143F922D2C7F7AC200751AD0 /* DataFormForgotPassword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataFormForgotPassword.swift; sourceTree = "<group>"; };
 		143F922F2C7F85C200751AD0 /* MessageWithImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageWithImageView.swift; sourceTree = "<group>"; };
@@ -448,6 +454,7 @@
 		14B225612C45C08C00A7F15F /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				142C2E6A2CAF4C16002CB0D4 /* SegmentPicker.swift */,
 				14044F752C56CD7E00FD3A73 /* ImagePicker */,
 				14B225642C45C84700A7F15F /* TitleIcon.swift */,
 				14B225682C46169400A7F15F /* ItemCard.swift */,
@@ -463,7 +470,6 @@
 				14044F9B2C5C2BB300FD3A73 /* DefaultSectionOption.swift */,
 				14044FA92C6A48C500FD3A73 /* ContinuousLoadingBar.swift */,
 				149F89D42C74EC830092F82C /* TextFieldCustom.swift */,
-				143F922B2C7F6C9800751AD0 /* ForgotPasswordConfirmationView.swift */,
 				143F922F2C7F85C200751AD0 /* MessageWithImageView.swift */,
 			);
 			path = Components;
@@ -476,6 +482,7 @@
 				14B225782C49B6C600A7F15F /* CollapseModifier.swift */,
 				145706F32C4F4774007E642C /* ScrollableModifier.swift */,
 				145706F92C4F59C5007E642C /* GridModifier.swift */,
+				143568EE2CB0474400CDDE22 /* GradientTopDynamicModifier.swift */,
 				1457070C2C51EB4E007E642C /* ScrollHorizontalModifier.swift */,
 				1457070E2C51EF5C007E642C /* ContainerRelativeFrameHorizontalModifier.swift */,
 				14044F952C5C1ED800FD3A73 /* ProfileImageModifier.swift */,
@@ -522,6 +529,7 @@
 				149F89F32C77BA050092F82C /* SignUpAddPhotoView .swift */,
 				149F89F52C77BA280092F82C /* SignUpCreatePasswordView.swift */,
 				149F89BC2C6A6C400092F82C /* ForgotPasswordView.swift */,
+				143F922B2C7F6C9800751AD0 /* ForgotPasswordConfirmationView.swift */,
 				14B225592C3EAD6E00A7F15F /* ListsView.swift */,
 				14DBB6D42C3440630084EB23 /* DetailsListView.swift */,
 				14044F912C5B24EF00FD3A73 /* ProfileView.swift */,
@@ -557,6 +565,7 @@
 				14B225572C3E9EE300A7F15F /* ListModel.swift */,
 				14B225622C45C0B800A7F15F /* ViewOffsetKey.swift */,
 				14B225762C496C0A00A7F15F /* SectionModel.swift */,
+				143568EA2CAF8BFC00CDDE22 /* Segment.swift */,
 				14044F8B2C5A8F9D00FD3A73 /* ShareableItem.swift */,
 				149F89DB2C7517D70092F82C /* PopupType.swift */,
 				149F89DF2C751F730092F82C /* PopupData.swift */,
@@ -852,6 +861,7 @@
 				14B225322C364F0F00A7F15F /* SignInView.swift in Sources */,
 				14044F782C56CDB200FD3A73 /* ImagePicker.swift in Sources */,
 				14B225792C49B6C600A7F15F /* CollapseModifier.swift in Sources */,
+				143568EB2CAF8BFE00CDDE22 /* Segment.swift in Sources */,
 				149F89C92C73E10A0092F82C /* TextsHelper.swift in Sources */,
 				143F922E2C7F7AC200751AD0 /* DataFormForgotPassword.swift in Sources */,
 				14044FA32C60308E00FD3A73 /* FormChangeUserPassword.swift in Sources */,
@@ -909,6 +919,7 @@
 				14044F9A2C5C29D900FD3A73 /* DefaultSection.swift in Sources */,
 				14B225752C48B12D00A7F15F /* KeyboardReadable.swift in Sources */,
 				14B225582C3E9EE300A7F15F /* ListModel.swift in Sources */,
+				143568EF2CB0475C00CDDE22 /* GradientTopDynamicModifier.swift in Sources */,
 				14044FA82C61BC1300FD3A73 /* ConvertibleDictionary.swift in Sources */,
 				14F041EA2C810B0C000B7D58 /* DeleteAccountView.swift in Sources */,
 				149F89F42C77BA050092F82C /* SignUpAddPhotoView .swift in Sources */,
@@ -927,6 +938,7 @@
 				143F92382C7FA8B900751AD0 /* AuthenticateState.swift in Sources */,
 				14B225652C45C84700A7F15F /* TitleIcon.swift in Sources */,
 				143F923A2C7FABAA00751AD0 /* SplashView.swift in Sources */,
+				142C2E6B2CAF4C1E002CB0D4 /* SegmentPicker.swift in Sources */,
 				14B225772C496C0A00A7F15F /* SectionModel.swift in Sources */,
 				14044F9F2C5C6E9600FD3A73 /* UserProfile.swift in Sources */,
 				149F89E02C751F730092F82C /* PopupData.swift in Sources */,

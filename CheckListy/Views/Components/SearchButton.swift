@@ -9,22 +9,28 @@ import Foundation
 import SwiftUI
 
 struct SearchButton: View {
-    var onEnable: (() -> Void)?
+
     @Binding var isEnable: Bool
 
-    private init(isEnable: Binding<Bool>, onEnable: (() -> Void)?) {
-        self.init(isEnable: isEnable)
+    var onEnable: (() -> Void)?
+    var size: Double
+
+    private init(isEnable: Binding<Bool>, size: Double = 24, onEnable: (() -> Void)?) {
+        self.init(isEnable: isEnable, size: size)
         self.onEnable = onEnable
     }
 
-    init(isEnable: Binding<Bool>) {
+    init(isEnable: Binding<Bool>, size: Double = 24) {
         _isEnable = isEnable
+        self.size = size
     }
 
     var body: some View {
         Button(action: { onEnable?() }) {
             if isEnable {
                 Image(systemName: "magnifyingglass")
+                    .resizable()
+                    .frame(width: size, height: size)
                     .foregroundColor(Color(uiColor: .secondarySystemBackground))
                     .background {
                         Circle()
@@ -33,18 +39,23 @@ struct SearchButton: View {
                     }
             } else {
                 Image(systemName: "magnifyingglass")
+                    .resizable()
+                    .frame(width: size, height: size)
             }
         }
     }
+
 }
 
 // MARK: - Callback modifiers
-
 extension SearchButton {
+
     func onEnable(action: (() -> Void)?) -> SearchButton {
         SearchButton(
             isEnable: $isEnable,
+            size: size,
             onEnable: action
         )
     }
+
 }

@@ -9,8 +9,10 @@ import Foundation
 import SwiftUI
 
 struct SignInView: View, KeyboardReadable {
+
     @EnvironmentObject private var viewModel: SignInViewModel
     @State var isShowKeyboard = false
+    @State var scrollOffset: CGFloat = 0
 
     init() {
         UITextField.appearance().clearButtonMode = .whileEditing
@@ -88,9 +90,9 @@ struct SignInView: View, KeyboardReadable {
         }
         .padding(.top, isShowKeyboard ? 16 : 24)
         .frame(maxHeight: .infinity, alignment: .top)
-        .scrollable {}
+        .scrollable(scrollOffset: $scrollOffset) {}
         .animatedBackground()
-        .gradientTop(color: Color.accentColor, height: 200, delay: 1)
+        .gradientTopDynamic(color: Color.accentColor, height: 200, scrollOffset: $scrollOffset)
         .popup(isPresent: $viewModel.showPopup, data: viewModel.popupData)
         .onReceive(keyboardPublisher) { value in
             withAnimation {

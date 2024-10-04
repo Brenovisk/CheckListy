@@ -36,7 +36,33 @@ class ListsViewModel: ObservableObject {
         lists.compactMap { $0 }.filter { $0.isFavorite }
     }
 
+    var recents: [ListModel] {
+        recentsSection.items.compactMap { listId in
+            getList(by: listId)
+        }
+    }
+
+    var allLists: [ListModel] {
+        (searchText.isEmpty ? lists : filterLists).compactMap { $0 }
+    }
+
+    var incompleteLists: [ListModel] {
+        lists.compactMap { $0 }.filter { !$0.isComplete }
+    }
+
+    var completeLists: [ListModel] {
+        lists.compactMap { $0 }.filter { $0.isComplete }
+    }
+
     var firebaseDatabase = FirebaseDatabase.shared
+
+    var showRecentSection: Bool {
+        !recentsSection.items.isEmpty && !showSearchBar && !lists.isEmpty
+    }
+
+    var showFavoriteSection: Bool {
+        !favorites.isEmpty && !showSearchBar && !lists.isEmpty
+    }
 
     @MainActor
     init() {
@@ -75,10 +101,6 @@ class ListsViewModel: ObservableObject {
         userImage = try? await userManager.getImage()
     }
 
-    func getLists() -> [ListModel?] {
-        searchText.isEmpty ? lists : filterLists
-    }
-
     func toggleIsFavorite(to list: ListModel) {
         withAnimation {
             var listToEdit = list
@@ -90,6 +112,8 @@ class ListsViewModel: ObservableObject {
     func toggleSearchBar() {
         withAnimation {
             showSearchBar.toggle()
+            guard !showSearchBar else { return }
+            searchText = String()
         }
     }
 
@@ -105,10 +129,6 @@ class ListsViewModel: ObservableObject {
         }
     }
 
-    func addRecent(listId: String) {
-        UserDefaultsService.addItem(key: .recents, listId)
-    }
-
     func getList(by id: String) -> ListModel? {
         lists.compactMap { $0 }.first(where: { $0.id.uuidString == id })
     }
@@ -117,7 +137,7 @@ class ListsViewModel: ObservableObject {
         FirebaseDatabase.shared.data.compactMap { $0 }.first(where: { $0.id.uuidString == id })
     }
 
-    func getRecents() -> [String] {
+    func getRecentsListId() -> [String] {
         UserDefaultsService.load(.recents).removingDuplicates()
     }
 
@@ -173,6 +193,7 @@ class ListsViewModel: ObservableObject {
 
                 try await deleteList(with: list.id.uuidString, in: authUser.uid)
                 try await deleteListFromDatabaseIfNeeded(list)
+                deleteFromRecentsIfNeeded(list: list)
                 await setupDataBase()
             } catch {
                 print(error)
@@ -247,6 +268,13 @@ extension ListsViewModel {
         guard usersShared.isEmpty else { return }
         let pathList = "\(Paths.lists.description)/\(list.id.uuidString)"
         firebaseDatabase.delete(path: pathList)
+    }
+
+    private func deleteFromRecentsIfNeeded(list: ListModel) {
+        recentsSection.items.removeAll { $0 == list.id.uuidString }
+        var persistedRecentLists = getRecentsListId()
+        persistedRecentLists.removeAll { $0 == list.id.uuidString }
+        UserDefaultsService.save(.recents, persistedRecentLists)
     }
 
     @MainActor

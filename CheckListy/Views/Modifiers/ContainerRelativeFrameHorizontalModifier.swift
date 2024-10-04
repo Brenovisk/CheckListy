@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 
 struct ContainerRelativeFrameHorizontalModifier: ViewModifier {
+
     @Environment(\.verticalSizeClass) var verticalSizeClass
 
     var regularCount: Int
@@ -22,9 +23,11 @@ struct ContainerRelativeFrameHorizontalModifier: ViewModifier {
             spacing: spacing
         )
     }
+
 }
 
 extension View {
+
     func containerRelativeHorizontal(
         _ regularCount: Int = 2,
         _ compactCount: Int = 4,
@@ -36,4 +39,5 @@ extension View {
             spacing: spacing
         ))
     }
+
 }

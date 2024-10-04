@@ -76,17 +76,12 @@ class ProfileViewModel: ObservableObject {
     @MainActor
     func signOut() {
         do {
-            isLoading = true
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                UserDefaultsService.clearAll()
-                FirebaseDatabase.shared.clearData()
-            }
-            isLoading = false
+            UserDefaultsService.clearAll()
+            FirebaseDatabase.shared.clearData()
             try FirebaseAuthService.shared.signOut()
         } catch {
             let errorMessage = FirebaseErrorsHelper.getDescription(to: error)
             setPopupDataError(with: errorMessage)
-            isLoading = false
         }
     }
 
