@@ -35,6 +35,7 @@
 		142CA1B02C811414004531D4 /* DataFormDeleteAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142CA1AF2C811414004531D4 /* DataFormDeleteAccount.swift */; };
 		143568EB2CAF8BFE00CDDE22 /* Segment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143568EA2CAF8BFC00CDDE22 /* Segment.swift */; };
 		143568EF2CB0475C00CDDE22 /* GradientTopDynamicModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143568EE2CB0474400CDDE22 /* GradientTopDynamicModifier.swift */; };
+		143568F12CB07B8C00CDDE22 /* CircularProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143568F02CB07B8200CDDE22 /* CircularProgressBar.swift */; };
 		143F922C2C7F6C9800751AD0 /* ForgotPasswordConfirmationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143F922B2C7F6C9800751AD0 /* ForgotPasswordConfirmationView.swift */; };
 		143F922E2C7F7AC200751AD0 /* DataFormForgotPassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143F922D2C7F7AC200751AD0 /* DataFormForgotPassword.swift */; };
 		143F92302C7F85C200751AD0 /* MessageWithImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143F922F2C7F85C200751AD0 /* MessageWithImageView.swift */; };
@@ -180,6 +181,7 @@
 		142CA1AF2C811414004531D4 /* DataFormDeleteAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataFormDeleteAccount.swift; sourceTree = "<group>"; };
 		143568EA2CAF8BFC00CDDE22 /* Segment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Segment.swift; sourceTree = "<group>"; };
 		143568EE2CB0474400CDDE22 /* GradientTopDynamicModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientTopDynamicModifier.swift; sourceTree = "<group>"; };
+		143568F02CB07B8200CDDE22 /* CircularProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularProgressBar.swift; sourceTree = "<group>"; };
 		143F922B2C7F6C9800751AD0 /* ForgotPasswordConfirmationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordConfirmationView.swift; sourceTree = "<group>"; };
 		143F922D2C7F7AC200751AD0 /* DataFormForgotPassword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataFormForgotPassword.swift; sourceTree = "<group>"; };
 		143F922F2C7F85C200751AD0 /* MessageWithImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageWithImageView.swift; sourceTree = "<group>"; };
@@ -454,8 +456,7 @@
 		14B225612C45C08C00A7F15F /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				142C2E6A2CAF4C16002CB0D4 /* SegmentPicker.swift */,
-				14044F752C56CD7E00FD3A73 /* ImagePicker */,
+				143568F02CB07B8200CDDE22 /* CircularProgressBar.swift */,
 				14B225642C45C84700A7F15F /* TitleIcon.swift */,
 				14B225682C46169400A7F15F /* ItemCard.swift */,
 				14B2256C2C4742C000A7F15F /* AutoFocusTextField.swift */,
@@ -464,6 +465,7 @@
 				145706E72C4EDE94007E642C /* HeaderSection.swift */,
 				145706EE2C4F09D3007E642C /* ListCard.swift */,
 				145707102C528DBC007E642C /* SearchButton.swift */,
+				142C2E6A2CAF4C16002CB0D4 /* SegmentPicker.swift */,
 				14044F792C56D1B600FD3A73 /* WelcomeView.swift */,
 				14044F8D2C5A916C00FD3A73 /* ShareSheet.swift */,
 				14044F992C5C29D900FD3A73 /* DefaultSection.swift */,
@@ -471,6 +473,7 @@
 				14044FA92C6A48C500FD3A73 /* ContinuousLoadingBar.swift */,
 				149F89D42C74EC830092F82C /* TextFieldCustom.swift */,
 				143F922F2C7F85C200751AD0 /* MessageWithImageView.swift */,
+				14044F752C56CD7E00FD3A73 /* ImagePicker */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -865,6 +868,7 @@
 				149F89C92C73E10A0092F82C /* TextsHelper.swift in Sources */,
 				143F922E2C7F7AC200751AD0 /* DataFormForgotPassword.swift in Sources */,
 				14044FA32C60308E00FD3A73 /* FormChangeUserPassword.swift in Sources */,
+				143568F12CB07B8C00CDDE22 /* CircularProgressBar.swift in Sources */,
 				149F89EE2C75E6660092F82C /* PasswordValidator.swift in Sources */,
 				149F89CB2C73E3400092F82C /* FilledButtonModifier.swift in Sources */,
 				143F92362C7FA74100751AD0 /* AuthenticationView.swift in Sources */,

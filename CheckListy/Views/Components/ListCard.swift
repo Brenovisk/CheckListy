@@ -70,7 +70,7 @@ struct ListCard: View {
                     menu
                 }
 
-                HStack(alignment: .center) {
+                HStack(alignment: .bottom) {
                     VStack(alignment: .leading, spacing: 2) {
                         listName
 
@@ -79,8 +79,14 @@ struct ListCard: View {
 
                     Spacer()
 
-                    checkedItems
-                        .padding(.trailing, 12)
+                    VStack(spacing: 4) {
+                        if list.progressCompleted > 0.0 {
+                            progressBar
+                        }
+
+                        checkedItems
+                    }
+                    .padding(.trailing, 12)
                 }
                 .frame(maxWidth: .infinity)
                 .background(Color(.secondarySystemBackground))
@@ -109,7 +115,13 @@ struct ListCard: View {
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
 
-                checkedItems
+                HStack(spacing: 6) {
+                    checkedItems
+
+                    if list.progressCompleted > 0.0 {
+                        progressBar
+                    }
+                }
             }
             .padding(.vertical, 16)
             .frame(maxWidth: .infinity, alignment: .leading)
@@ -132,7 +144,7 @@ struct ListCard: View {
     }
 
     var createdDate: some View {
-        HStack {
+        HStack(spacing: 4) {
             IconsHelper.calendar.value
                 .resizable()
                 .frame(width: 12, height: 12)
@@ -150,6 +162,15 @@ struct ListCard: View {
             .font(.body)
             .foregroundColor(Color(list.color))
             .fontWeight(.semibold)
+    }
+
+    var progressBar: some View {
+        CircularProgressBar(
+            progress: list.progressCompleted,
+            color: Color(list.color),
+            lineWidth: 1,
+            size: 12
+        )
     }
 
     var icon: some View {

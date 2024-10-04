@@ -42,6 +42,17 @@ extension ListModel {
         formattedDateToCard(createdAt)
     }
 
+    var progressCompleted: Double {
+        let total = items.count
+        let checkedItems = items.filter { $0.isCheck }.count
+
+        guard total != .zero else {
+            return .zero
+        }
+
+        return Double(checkedItems) / Double(total)
+    }
+
 }
 
 // MARK: Helper methods
