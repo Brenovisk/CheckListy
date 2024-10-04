@@ -71,14 +71,18 @@ struct ListsView: View {
                     .padding(.bottom, viewModel.recentsSection.collapsed ? 0 : 16)
                 }
 
-                SegmentPicker(
-                    selectedIndex: $selectedSegmentIndex,
-                    segments: segments
-                )
-                .padding(.bottom, 24)
-                .padding(.top, 8)
+                if !viewModel.showSearchBar {
+                    SegmentPicker(
+                        selectedIndex: $selectedSegmentIndex,
+                        segments: segments
+                    )
+                    .padding(.bottom, 24)
+                    .padding(.top, 8)
 
-                segments[selectedSegmentIndex].content
+                    segments[selectedSegmentIndex].content
+                } else {
+                    allLists
+                }
             }
             .scrollable(padding: .zero, scrollOffset: $scrollOffset) {
                 TitleIcon(
