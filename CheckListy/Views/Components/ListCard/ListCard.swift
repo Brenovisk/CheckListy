@@ -42,6 +42,14 @@ struct ListCard: View {
         colorScheme == .dark ? Color.white : Color.black
     }
 
+    var showProgressBar: Bool {
+        list.progressCompleted > 0.0
+    }
+
+    var showCheckIcon: Bool {
+        list.isComplete && !list.items.isEmpty
+    }
+
     var body: some View {
         VStack {
             if mode == .list {
@@ -72,7 +80,17 @@ struct ListCard: View {
 
                 HStack(alignment: .bottom) {
                     VStack(alignment: .leading, spacing: 2) {
-                        listName
+                        HStack(spacing: 6) {
+                            if list.isFavorite {
+                                ListCardStatusIcon.favorite.value
+                            }
+
+                            if showCheckIcon {
+                                ListCardStatusIcon.complete.value
+                            }
+
+                            listName
+                        }
 
                         createdDate
                     }
@@ -80,7 +98,7 @@ struct ListCard: View {
                     Spacer()
 
                     VStack(spacing: 4) {
-                        if list.progressCompleted > 0.0 {
+                        if showProgressBar {
                             progressBar
                         }
 
@@ -109,8 +127,16 @@ struct ListCard: View {
                 VStack(alignment: .leading, spacing: 2) {
                     listName
 
-                    HStack {
+                    HStack(spacing: 6) {
                         createdDate
+
+                        if list.isFavorite {
+                            ListCardStatusIcon.favorite.value
+                        }
+
+                        if showCheckIcon {
+                            ListCardStatusIcon.complete.value
+                        }
                     }
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -118,7 +144,7 @@ struct ListCard: View {
                 HStack(spacing: 6) {
                     checkedItems
 
-                    if list.progressCompleted > 0.0 {
+                    if showProgressBar {
                         progressBar
                     }
                 }
@@ -219,8 +245,8 @@ struct ListCard: View {
 }
 
 // MARK: - Callbacks modifiers
-
 extension ListCard {
+
     func onEdit(action: ((ListModel) -> Void)?) -> ListCard {
         ListCard(
             list: list,
@@ -280,6 +306,7 @@ extension ListCard {
             onShare: action
         )
     }
+
 }
 
 #Preview {
