@@ -22,6 +22,7 @@ enum IconsHelper: String {
     case checkmark
     case xmark
     case calendar
+    case person2Fill = "person.2.fill"
 
 }
 

@@ -11,6 +11,7 @@ struct ListCard: View {
 
     @Binding var mode: ListMode
     @Environment(\.colorScheme) var colorScheme
+    @State var userSharedImages = [UIImage]()
 
     var list: ListModel
     var onEdit: ((ListModel) -> Void)?
@@ -75,7 +76,16 @@ struct ListCard: View {
                         onRedirect?(list)
                     }
 
-                    menu
+                    HStack(spacing: 0) {
+                        if list.isShared {
+                            UsersPhoto(images: userSharedImages)
+                                .task {
+                                    userSharedImages = await list.getUsersSharedImagesProfile()
+                                }
+                        }
+
+                        menu
+                    }
                 }
 
                 HStack(alignment: .bottom) {
@@ -129,6 +139,10 @@ struct ListCard: View {
 
                     HStack(spacing: 6) {
                         createdDate
+
+                        if list.isShared {
+                            ListCardStatusIcon.shared.value
+                        }
 
                         if list.isFavorite {
                             ListCardStatusIcon.favorite.value

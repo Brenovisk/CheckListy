@@ -11,6 +11,7 @@ enum ListCardStatusIcon {
 
     case complete
     case favorite
+    case shared
 
 }
 
@@ -28,6 +29,11 @@ extension ListCardStatusIcon {
                 .resizable()
                 .frame(width: 12, height: 12)
                 .foregroundColor(.yellowApp)
+        case .shared:
+            IconsHelper.person2Fill.value
+                .resizable()
+                .frame(width: 16, height: 12)
+                .foregroundColor(.secondary)
         }
     }
 

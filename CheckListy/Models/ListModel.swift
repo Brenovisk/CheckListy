@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 struct ListModel: Identifiable, Hashable, ConvertibleDictionary {
 
@@ -36,6 +37,10 @@ extension ListModel {
         let total = items.count
         let checkedItems = items.filter { $0.isCheck }.count
         return total == checkedItems
+    }
+
+    var isShared: Bool {
+        usersShared.count > .zero
     }
 
     var createdDate: String {
@@ -141,6 +146,22 @@ extension ListModel {
         }
 
         return date
+    }
+
+    func getUsersSharedImagesProfile() async -> [UIImage] {
+        var images = [UIImage]()
+        var usersSharedWithOwner = usersShared
+        usersSharedWithOwner.insert(owner, at: 0)
+
+        for id in usersSharedWithOwner {
+            guard let image = try? await UserService.getUserDatabaseImage(for: id) else {
+                continue
+            }
+
+            images.append(image)
+        }
+
+        return images
     }
 
 }

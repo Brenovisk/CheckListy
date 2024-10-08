@@ -23,7 +23,7 @@ struct GradientTopDynamicModifier: ViewModifier {
                 startPoint: .top,
                 endPoint: .bottom
             )
-            .frame(height: scrollOffset.wrappedValue >= 0 ? scrollOffset.wrappedValue + heightLocal : 0)
+            .frame(height: scrollOffset.wrappedValue + heightLocal)
             .edgesIgnoringSafeArea(.top)
 
             content
