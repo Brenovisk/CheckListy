@@ -23,6 +23,7 @@ class ListsViewModel: ObservableObject {
     @Published var favoritesSection: SectionModel<ListModel> = SectionModel(name: "Favoritos", items: [])
     @Published var userImage: UIImage?
     @Published var userName: String?
+    @Published var isLoading: Bool = true
 
     var authUser: User?
 
@@ -84,6 +85,9 @@ class ListsViewModel: ObservableObject {
             .sink { [weak self] data in
                 guard let self = self else { return }
                 self.lists = data
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                    self.isLoading = false
+                }
             }.store(in: &cancellables)
     }
 

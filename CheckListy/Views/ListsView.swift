@@ -59,29 +59,36 @@ struct ListsView: View {
                         .padding(.horizontal, 16)
                 }
 
-                if viewModel.showRecentSection {
-                    Section(header: recentsHeaderSection) {
-                        ForEach(viewModel.recents, id: \.self) { list in
-                            card(list, visualization: Binding.constant(.grid))
-                                .containerRelativeHorizontal()
-                        }
-                        .scrollHorizontal(padding: 16)
-                        .collapse(isCollapsed: viewModel.recentsSection.collapsed)
-                    }
-                    .padding(.bottom, viewModel.recentsSection.collapsed ? 0 : 16)
-                }
-
-                if !viewModel.showSearchBar {
-                    SegmentPicker(
-                        selectedIndex: $selectedSegmentIndex,
-                        segments: segments
+                if viewModel.isLoading {
+                    Skeleton(
+                        hasRecents: !viewModel.recentsSection.items.isEmpty,
+                        hasSegment: true
                     )
-                    .padding(.bottom, 24)
-                    .padding(.top, 8)
-
-                    segments[selectedSegmentIndex].content
                 } else {
-                    allLists
+                    if viewModel.showRecentSection {
+                        Section(header: recentsHeaderSection) {
+                            ForEach(viewModel.recents, id: \.self) { list in
+                                card(list, visualization: Binding.constant(.grid))
+                                    .containerRelativeHorizontal()
+                            }
+                            .scrollHorizontal(padding: 16)
+                            .collapse(isCollapsed: viewModel.recentsSection.collapsed)
+                        }
+                        .padding(.bottom, viewModel.recentsSection.collapsed ? 0 : 16)
+                    }
+
+                    if !viewModel.showSearchBar {
+                        SegmentPicker(
+                            selectedIndex: $selectedSegmentIndex,
+                            segments: segments
+                        )
+                        .padding(.bottom, 24)
+                        .padding(.top, 8)
+
+                        segments[selectedSegmentIndex].content
+                    } else {
+                        allLists
+                    }
                 }
             }
             .scrollable(padding: .zero, scrollOffset: $scrollOffset) {
