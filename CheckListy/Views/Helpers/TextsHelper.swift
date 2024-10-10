@@ -65,8 +65,14 @@ enum TextsHelper: String {
     case deleteAccountDescription         = "Ao continuar, sua conta, incluindo suas listas, foto de perfil e dados de acesso, serão apagados.. Se tiver certeza e estiver pronto para seguir em frente, por favor, insira sua senha para confirmar. Lembre-se, essa decisão é permanente." // swiftlint:disable:this line_length
     case erase                            = "Apagar"
     case emptyLists                       = "Sem Listas Ainda?"
-    case emptyListsDescription            = "Parece que você ainda não adicionou nenhuma lista. Comece a organizar suas tarefas agora mesmo clicando no botão abaixo!"
+    case emptyListsDescription            = "Parece que você ainda não adicionou nenhuma lista. Comece a organizar suas tarefas agora mesmo clicando no botão abaixo!" // swiftlint:disable:this line_length
     case myLists                          = "Minhas Listas"
+    case search                           = "Pesquisar..."
+    case addList                          = "Adicionar Lista"
+    case all                              = "Todas"
+    case favorites                        = "Favoritos"
+    case incompletes                      = "Incompletas"
+    case completes                        = "Completas"
 
 }
 

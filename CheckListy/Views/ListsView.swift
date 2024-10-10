@@ -41,7 +41,7 @@ struct ListsView: View {
                     .padding(.vertical, 24)
 
                     HStack(alignment: .center) {
-                        TitleIcon(title: "Minhas Listas")
+                        TitleIcon(title: TextsHelper.myLists.rawValue)
 
                         Spacer()
 
@@ -53,7 +53,7 @@ struct ListsView: View {
                 .padding(.bottom, 24)
 
                 if viewModel.showSearchBar {
-                    AutoFocusTextField(text: $viewModel.searchText, placeholder: "Pesquisar...")
+                    AutoFocusTextField(text: $viewModel.searchText, placeholder: TextsHelper.search.rawValue)
                         .roundedBackgroundTextField()
                         .padding(.vertical, 12)
                         .padding(.horizontal, 16)
@@ -70,7 +70,7 @@ struct ListsView: View {
             }
             .scrollable(padding: .zero, scrollOffset: $scrollOffset) {
                 TitleIcon(
-                    title: "Minhas Listas",
+                    title: TextsHelper.myLists.rawValue,
                     iconSize: 10,
                     subtitle: "\(viewModel.lists.count)"
                 )
@@ -225,7 +225,7 @@ struct ListsView: View {
             }) {
                 HStack {
                     IconsHelper.plus.value
-                    Text("Adicionar Lista")
+                    Text(TextsHelper.addList.rawValue)
                 }
             }
         }.frame(maxWidth: .infinity, alignment: .leading)
@@ -239,7 +239,7 @@ extension ListsView {
     private var segments: [SegmentCustom] {
         [
             SegmentCustom(
-                title: "Todas",
+                title: TextsHelper.all.rawValue,
                 icon: IconsHelper.listBullet.value,
                 color: Color(.blueApp),
                 number: viewModel.allLists.count
@@ -247,7 +247,7 @@ extension ListsView {
                 allLists
             },
             SegmentCustom(
-                title: "Favoritos",
+                title: TextsHelper.favorites.rawValue,
                 icon: IconsHelper.star.value,
                 color: Color(.yellowApp),
                 number: viewModel.favorites.count
@@ -255,7 +255,7 @@ extension ListsView {
                 favoriteLists
             },
             SegmentCustom(
-                title: "Incompletas",
+                title: TextsHelper.incompletes.rawValue,
                 icon: IconsHelper.xmark.value,
                 color: Color(.redApp),
                 number: viewModel.incompleteLists.count
@@ -263,7 +263,7 @@ extension ListsView {
                 incompleteLists
             },
             SegmentCustom(
-                title: "Completas",
+                title: TextsHelper.completes.rawValue,
                 icon: IconsHelper.checkmark.value,
                 color: .accentColor,
                 number: viewModel.completeLists.count
