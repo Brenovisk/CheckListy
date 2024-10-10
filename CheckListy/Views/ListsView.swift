@@ -65,30 +65,7 @@ struct ListsView: View {
                         hasSegment: true
                     )
                 } else {
-                    if viewModel.showRecentSection {
-                        Section(header: recentsHeaderSection) {
-                            ForEach(viewModel.recents, id: \.self) { list in
-                                card(list, visualization: Binding.constant(.grid))
-                                    .containerRelativeHorizontal()
-                            }
-                            .scrollHorizontal(padding: 16)
-                            .collapse(isCollapsed: viewModel.recentsSection.collapsed)
-                        }
-                        .padding(.bottom, viewModel.recentsSection.collapsed ? 0 : 16)
-                    }
-
-                    if !viewModel.showSearchBar {
-                        SegmentPicker(
-                            selectedIndex: $selectedSegmentIndex,
-                            segments: segments
-                        )
-                        .padding(.bottom, 24)
-                        .padding(.top, 8)
-
-                        segments[selectedSegmentIndex].content
-                    } else {
-                        allLists
-                    }
+                    contentLists
                 }
             }
             .scrollable(padding: .zero, scrollOffset: $scrollOffset) {
@@ -124,6 +101,43 @@ struct ListsView: View {
             viewModel.recentsSection.items = viewModel.getRecentsListId()
         }.onChange(of: verticalSizeClass) {
             viewModel.setVisualizationMode(according: verticalSizeClass)
+        }
+    }
+
+    var contentLists: some View {
+        Group {
+            if viewModel.lists.isEmpty {
+                MessageWithImageView(
+                    image: ImagesHelper.emptyListsVector.image,
+                    title: TextsHelper.emptyLists.rawValue,
+                    description: TextsHelper.emptyListsDescription.rawValue
+                )
+            } else {
+                if viewModel.showRecentSection {
+                    Section(header: recentsHeaderSection) {
+                        ForEach(viewModel.recents, id: \.self) { list in
+                            card(list, visualization: Binding.constant(.grid))
+                                .containerRelativeHorizontal()
+                        }
+                        .scrollHorizontal(padding: 16)
+                        .collapse(isCollapsed: viewModel.recentsSection.collapsed)
+                    }
+                    .padding(.bottom, viewModel.recentsSection.collapsed ? 0 : 16)
+                }
+
+                if !viewModel.showSearchBar {
+                    SegmentPicker(
+                        selectedIndex: $selectedSegmentIndex,
+                        segments: segments
+                    )
+                    .padding(.bottom, 24)
+                    .padding(.top, 8)
+
+                    segments[selectedSegmentIndex].content
+                } else {
+                    allLists
+                }
+            }
         }
     }
 
