@@ -60,7 +60,7 @@ extension ListModel {
 
 }
 
-// MARK: Helper methods
+// MARK: Model methods
 extension ListModel {
 
     func toNSDictionary() -> NSDictionary {
@@ -80,9 +80,7 @@ extension ListModel {
     }
 
     static func fromNSDictionary(_ dictionary: NSDictionary) -> ListModel? {
-        let items = (dictionary["items"] as? [NSDictionary])?.compactMap { ListItemModel.fromNSDictionary($0) } ?? []
-        let isFavorite = dictionary["isFavorite"] as? Bool ?? false
-        let usersShared = (dictionary["usersShared"] as? [String])?.compactMap { $0 } ?? []
+        let timeService = TimeService()
 
         guard
             let id = UUID(uuidString: dictionary["id"] as? String ?? ""),
@@ -91,11 +89,15 @@ extension ListModel {
             let color = dictionary["color"] as? String,
             let icon = dictionary["icon"] as? String,
             let owner = dictionary["owner"] as? String,
-            let createdAt = convertToDate(string: dictionary["createdAt"] as? String ?? String()),
-            let editedAt = convertToDate(string: dictionary["editedAt"] as? String ?? String())
+            let createdAt = timeService.convertToDate(string: dictionary["createdAt"] as? String ?? String()),
+            let editedAt = timeService.convertToDate(string: dictionary["editedAt"] as? String ?? String())
         else {
             return nil
         }
+
+        let items = (dictionary["items"] as? [NSDictionary])?.compactMap { ListItemModel.fromNSDictionary($0) } ?? []
+        let isFavorite = dictionary["isFavorite"] as? Bool ?? false
+        let usersShared = (dictionary["usersShared"] as? [String])?.compactMap { $0 } ?? []
 
         return ListModel(
             id: id,
@@ -112,42 +114,6 @@ extension ListModel {
         )
     }
 
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(id)
-    }
-
-    static func == (lhs: ListModel, rhs: ListModel) -> Bool {
-        lhs.id == rhs.id
-    }
-
-    func formattedDateUTC(_ date: Date) -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
-        return dateFormatter.string(from: date)
-    }
-
-    func formattedDateToCard(_ date: Date) -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale.current
-        dateFormatter.timeZone = TimeZone.current
-        dateFormatter.dateFormat = "dd/MM/yyyy"
-        return dateFormatter.string(from: date)
-    }
-
-    private static func convertToDate(string: String) -> Date? {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'h:mm:ss aZ"
-        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
-        dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
-
-        guard let date = dateFormatter.date(from: string) else {
-            return nil
-        }
-
-        return date
-    }
-
     func getUsersSharedImagesProfile() async -> [UIImage] {
         var images = [UIImage]()
         var usersSharedWithOwner = usersShared
@@ -162,6 +128,27 @@ extension ListModel {
         }
 
         return images
+    }
+
+}
+
+// MARK: - Helper methods
+extension ListModel {
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+
+    static func == (lhs: ListModel, rhs: ListModel) -> Bool {
+        lhs.id == rhs.id
+    }
+
+    private func formattedDateUTC(_ date: Date) -> String {
+        TimeService().getDateString(from: date)
+    }
+
+    private func formattedDateToCard(_ date: Date) -> String {
+        TimeService().getDateString(from: date, format: "dd/MM/yyyy")
     }
 
 }

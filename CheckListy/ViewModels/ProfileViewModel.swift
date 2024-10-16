@@ -79,10 +79,16 @@ class ProfileViewModel: ObservableObject {
             UserDefaultsService.clearAll()
             FirebaseDatabase.shared.clearData()
             try FirebaseAuthService.shared.signOut()
+            deleteDocumentsDirectory()
         } catch {
             let errorMessage = FirebaseErrorsHelper.getDescription(to: error)
             setPopupDataError(with: errorMessage)
         }
+    }
+
+    func deleteDocumentsDirectory() {
+        let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        try? FileManager.default.removeItem(at: documentsDirectory)
     }
 
     @MainActor

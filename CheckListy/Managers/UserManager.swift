@@ -85,14 +85,7 @@ class UserManager {
     }
 
     func getImage() async throws -> UIImage? {
-        let storedImage = UserDefaultsService.loadImage(.userDatabaseImage)
-
-        if let storedImage {
-            return storedImage
-        }
-
         let image = try await UserService.getUserDatabaseImage(for: authUser.uid)
-        UserDefaultsService.addImage(.userDatabaseImage, image)
         return image
     }
 

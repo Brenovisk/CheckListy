@@ -23,7 +23,7 @@ class ListsViewModel: ObservableObject {
     @Published var favoritesSection: SectionModel<ListModel> = SectionModel(name: "Favoritos", items: [])
     @Published var userImage: UIImage?
     @Published var userName: String?
-    @Published var isLoading: Bool = true
+    @Published var isLoading: Bool = false
 
     var authUser: User?
 
@@ -174,7 +174,10 @@ class ListsViewModel: ObservableObject {
         Task {
             do {
                 guard let listId = code.removingSuffix(".co").fromBase64Code(),
-                      let authUser else { return }
+                      let authUser
+                else {
+                    return
+                }
 
                 addList(with: listId, in: authUser)
                 try await addUserShared(with: authUser.uid, from: listId)
@@ -185,6 +188,7 @@ class ListsViewModel: ObservableObject {
         }
     }
 
+    @MainActor
     func delete(list: ListModel) {
         Task {
             do {
@@ -198,7 +202,7 @@ class ListsViewModel: ObservableObject {
                 try await deleteList(with: list.id.uuidString, in: authUser.uid)
                 try await deleteListFromDatabaseIfNeeded(list)
                 deleteFromRecentsIfNeeded(list: list)
-                await setupDataBase()
+                setupDataBase()
             } catch {
                 print(error)
             }
@@ -269,9 +273,27 @@ extension ListsViewModel {
     @MainActor
     private func deleteListFromDatabaseIfNeeded(_ list: ListModel) async throws {
         let usersShared = try await getUsersSharedList(with: list.id.uuidString)
-        guard usersShared.isEmpty else { return }
+        let ownerStillHasList = try await has(listId: list.id.uuidString, to: list.owner)
+        guard usersShared.isEmpty, !ownerStillHasList else { return }
         let pathList = "\(Paths.lists.description)/\(list.id.uuidString)"
         firebaseDatabase.delete(path: pathList)
+    }
+
+    private func has(listId: String, to userId: String) async throws -> Bool {
+        var lists = [String]()
+
+        for index in 0 ..< 2 {
+            do {
+                let response = try await getListsUser(with: userId)
+                try await Task.sleep(nanoseconds: 500_000_000)
+                guard index == 1 else { continue }
+                lists = response
+            } catch {
+                throw error
+            }
+        }
+
+        return lists.contains(listId)
     }
 
     private func deleteFromRecentsIfNeeded(list: ListModel) {

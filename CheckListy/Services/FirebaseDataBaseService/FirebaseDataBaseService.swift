@@ -67,6 +67,7 @@ class FirebaseDatabase {
 
     func getData<T: ConvertibleDictionary>(from path: Paths, with childId: String) async throws -> T {
         return try await withCheckedThrowingContinuation { continuation in
+
             self.databaseRef.child(path.description).child(childId).observeSingleEvent(of: .value) { snapshot, _ in
                 guard let value = snapshot.value as? NSDictionary else {
                     continuation.resume(throwing: DataError.fetchError)

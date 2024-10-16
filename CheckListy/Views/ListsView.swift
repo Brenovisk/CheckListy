@@ -111,7 +111,7 @@ struct ListsView: View {
                     image: ImagesHelper.emptyListsVector.image,
                     title: TextsHelper.emptyLists.rawValue,
                     description: TextsHelper.emptyListsDescription.rawValue
-                )
+                ).opacityOnAppear(delay: 0.5, duration: 0.5)
             } else {
                 if viewModel.showRecentSection {
                     Section(header: recentsHeaderSection) {

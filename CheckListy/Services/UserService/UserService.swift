@@ -37,10 +37,45 @@ class UserService {
     }
 
     static func getUserDatabaseImage(for userId: String) async throws -> UIImage? {
+        if let imageStored = getImageStoredIfExist(for: userId) {
+            return imageStored
+        }
+
         guard let url = try await getUrlProfileImage(of: userId) else { return nil }
         let imageData = try await ImageService.downloadImage(fromURL: url)
         let image = try ImageService.convertToUImage(from: imageData)
+        try store(imageData, for: userId)
         return image
+    }
+
+    static func getUrlLocalImage(for userId: String) -> URL {
+        let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        return documentsDirectory.appendingPathComponent("\(userId).png")
+    }
+
+    static func getImageStoredIfExist(for userId: String) -> UIImage? {
+        let imageFileUrl = getUrlLocalImage(for: userId)
+
+        guard FileManager.default.fileExists(atPath: imageFileUrl.path),
+              let imageData = try? Data(contentsOf: imageFileUrl),
+              let image = UIImage(data: imageData)
+
+        else {
+            return nil
+        }
+
+        return image
+    }
+
+    static func store(_ imageData: Data, for userId: String) throws {
+        let imageFileUrl = getUrlLocalImage(for: userId)
+
+        do {
+            try imageData.write(to: imageFileUrl)
+            debugPrint("Image Stored: \(imageFileUrl.path)")
+        } catch {
+            throw Errors.storeImage
+        }
     }
 
     static func getUrlProfileImage(of userId: String) async throws -> URL? {

@@ -22,6 +22,7 @@ enum UserServiceErrors: Error {
     case unknownError
     case updateError(String)
     case userNotFound
+    case storeImage
 }
 
 extension UserServiceErrors: LocalizedError {
@@ -55,6 +56,8 @@ extension UserServiceErrors: LocalizedError {
             return "No authenticated user found."
         case let .updateError(message):
             return message
+        case .storeImage:
+            return "Error store image"
         }
     }
 }
