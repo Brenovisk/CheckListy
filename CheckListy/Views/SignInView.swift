@@ -30,24 +30,24 @@ struct SignInView: View, KeyboardReadable {
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .foregroundColor(.secondary)
                         .scaleOnAppear(isActive: isShowKeyboard)
+
+                    signInButtons
+
+                    HStack {
+                        DividerCustom(color: .secondary)
+
+                        Texts.or.value
+                            .foregroundColor(.secondary)
+
+                        DividerCustom(color: .secondary)
+                    }
+                    .opacity(0.5)
                 }
-
-                signInButtons
-
-                HStack {
-                    DividerCustom(color: .secondary)
-
-                    Texts.or.value
-                        .foregroundColor(.secondary)
-
-                    DividerCustom(color: .secondary)
-                }
-                .opacity(0.5)
 
                 formSignInEmail
             }
             .padding(24)
-            .background(.black)
+            .background(.thickMaterial)
             .cornerRadius(24)
             .frame(maxWidth: .infinity, alignment: .center)
             .slideOnAppear(delay: 0.05, direction: .fromTop)
@@ -70,7 +70,7 @@ struct SignInView: View, KeyboardReadable {
         .frame(maxHeight: .infinity, alignment: .top)
         .scrollable(scrollOffset: $scrollOffset) {}
         .animatedBackground(true)
-        .background(.accent)
+        .background(.accent.opacity(0.9))
         .popup(isPresent: $viewModel.showPopup, data: viewModel.popupData)
         .onReceive(keyboardPublisher) { value in
             withAnimation {
