@@ -20,28 +20,117 @@ struct SignInView: View, KeyboardReadable {
 
     var body: some View {
         VStack(spacing: 24) {
-            HStack(spacing: 24) {
-                Images.logo.image
-                    .resizable()
-                    .frame(width: 48, height: 48)
+            VStack(spacing: 24) {
+                logo
 
-                Images.logoName.image
-                    .scaleEffect(1.5)
+                if !isShowKeyboard {
+                    Texts.signInToYourAccount.value
+                        .fixedSize(horizontal: false, vertical: /*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/)
+                        .font(.body)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .foregroundColor(.secondary)
+                        .scaleOnAppear(isActive: isShowKeyboard)
+                }
+
+                signInButtons
+
+                HStack {
+                    DividerCustom(color: .secondary)
+
+                    Texts.or.value
+                        .foregroundColor(.secondary)
+
+                    DividerCustom(color: .secondary)
+                }
+                .opacity(0.5)
+
+                formSignInEmail
             }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(.top, 32)
-            .slideOnAppear(delay: 0.1, direction: .fromLeft)
-            .opacityOnAppear(delay: 0.4, duration: 1)
+            .padding(24)
+            .background(.black)
+            .cornerRadius(24)
+            .frame(maxWidth: .infinity, alignment: .center)
+            .slideOnAppear(delay: 0.05, direction: .fromTop)
 
-            if !isShowKeyboard {
-                Texts.plaseInsertEmail.value
-                    .fixedSize(horizontal: false, vertical: /*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/)
-                    .font(.body)
-                    .foregroundColor(.secondary)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .scaleOnAppear(isActive: isShowKeyboard)
+            Spacer()
+
+            HStack {
+                Texts.notHaveAccount.value
+
+                Button(action: { viewModel.navigateToSignUpView() }) {
+                    Texts.registerYourSelf.value
+                        .foregroundColor(.black)
+                        .fontWeight(.semibold)
+                }
             }
 
+            Spacer()
+        }
+        .padding(.top, isShowKeyboard ? 16 : 24)
+        .frame(maxHeight: .infinity, alignment: .top)
+        .scrollable(scrollOffset: $scrollOffset) {}
+        .animatedBackground(true)
+        .background(.accent)
+        .popup(isPresent: $viewModel.showPopup, data: viewModel.popupData)
+        .onReceive(keyboardPublisher) { value in
+            withAnimation {
+                isShowKeyboard = value
+            }
+        }
+    }
+
+    var logo: some View {
+        HStack(spacing: 24) {
+            Images.logo.image
+                .resizable()
+                .frame(width: 48, height: 48)
+
+            Images.logoName.image
+                .scaleEffect(1.5)
+        }
+        .padding(.top, 16)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .slideOnAppear(delay: 0.1, direction: .fromLeft)
+        .opacityOnAppear(delay: 0.4, duration: 1)
+    }
+
+    var signInButtons: some View {
+        VStack(spacing: 16) {
+            Button(action: {
+                hideKeyboard()
+                viewModel.signIn(with: .google)
+            }) {
+                HStack {
+                    ImagesHelper.googleIconVector.image
+                        .resizable()
+                        .frame(width: 24, height: 24)
+
+                    Texts.signInWithGoogle.value
+                }
+                .frame(maxWidth: .infinity)
+            }
+            .filledButton(
+                isLoading: .constant(viewModel.isLoading == .google),
+                backgroundColor: Color(.secondarySystemBackground),
+                labelColor: .secondary
+            )
+
+            Button(action: { hideKeyboard() }) {
+                HStack {
+                    ImagesHelper.appleIconVector.image
+                        .resizable()
+                        .frame(width: 24, height: 24)
+
+                    Texts.signInWithApple.value
+                }
+                .frame(maxWidth: .infinity)
+            }
+            .filledButton(backgroundColor: Color(.secondarySystemBackground), labelColor: .secondary)
+        }
+    }
+
+    var formSignInEmail: some View {
+        Group {
             VStack(spacing: 16) {
                 TextFieldCustom(
                     text: $viewModel.dataForm.email,
@@ -71,43 +160,24 @@ struct SignInView: View, KeyboardReadable {
             VStack(spacing: 12) {
                 Button(action: {
                     hideKeyboard()
-                    viewModel.signIn()
+                    viewModel.signIn(with: .email)
                 }) {
                     Text(Texts.signIn.rawValue)
                         .frame(maxWidth: .infinity)
                 }
-                .filledButton(isLoading: $viewModel.isLoading)
-
-                HStack {
-                    Texts.notHaveAccount.value
-
-                    Button(action: { viewModel.navigateToSignUpView() }) {
-                        Texts.registerYourSelf.value
-                            .foregroundColor(.accentColor)
-                    }
-                }
-            }
-        }
-        .padding(.top, isShowKeyboard ? 16 : 24)
-        .frame(maxHeight: .infinity, alignment: .top)
-        .scrollable(scrollOffset: $scrollOffset) {}
-        .animatedBackground()
-        .gradientTopDynamic(color: Color.accentColor, height: 200, scrollOffset: $scrollOffset)
-        .popup(isPresent: $viewModel.showPopup, data: viewModel.popupData)
-        .onReceive(keyboardPublisher) { value in
-            withAnimation {
-                isShowKeyboard = value
+                .filledButton(isLoading: .constant(viewModel.isLoading == .email))
             }
         }
     }
 }
 
 // MARK: typealias
-
 extension SignInView {
+
     typealias Images = ImagesHelper
     typealias Texts = TextsHelper
     typealias Icons = IconsHelper
+
 }
 
 #Preview {

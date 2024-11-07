@@ -9,33 +9,55 @@ import Foundation
 import SwiftUI
 
 struct FilledButtonModifier: ViewModifier {
-    @Binding var isLoading: Bool
 
-    init(isLoading: Binding<Bool>) {
+    @Binding var isLoading: Bool
+    var backgroundColor: Color
+    var labelColor: Color
+
+    init(
+        isLoading: Binding<Bool>,
+        backgroundColor: Color = Color.accentColor,
+        labelColor: Color = Color.background
+    ) {
         _isLoading = isLoading
+        self.backgroundColor = backgroundColor
+        self.labelColor = labelColor
     }
 
     func body(content: Content) -> some View {
         Group {
             if isLoading {
                 ProgressView()
-                    .tint(ColorsHelper.background.value)
+                    .tint(labelColor)
                     .frame(maxWidth: .infinity)
             } else {
                 content
             }
         }
         .padding()
-        .background(Color.accentColor)
-        .foregroundColor(.background)
+        .background(backgroundColor)
+        .foregroundColor(labelColor)
         .cornerRadius(14)
         .font(.headline)
         .disabled(isLoading)
     }
+
 }
 
 extension View {
-    func filledButton(isLoading: Binding<Bool>? = nil) -> some View {
-        modifier(FilledButtonModifier(isLoading: isLoading ?? Binding.constant(false)))
+
+    func filledButton(
+        isLoading: Binding<Bool>? = nil,
+        backgroundColor: Color = Color.accentColor,
+        labelColor: Color = Color.background
+    ) -> some View {
+        modifier(
+            FilledButtonModifier(
+                isLoading: isLoading ?? Binding.constant(false),
+                backgroundColor: backgroundColor,
+                labelColor: labelColor
+            )
+        )
     }
+
 }
