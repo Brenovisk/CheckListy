@@ -17,6 +17,7 @@ enum TextsHelper: String {
     case registerYourSelf                 = "Registre-se"
     case login                            = "Login"
     case plaseInsertEmail                 = "Por favor, insira seu e-mail e senha para acessar sua conta"
+    case signInToYourAccount              = "Entre na sua conta"
     case email                            = "Email"
     case password                         = "Senha"
     case signIn                           = "Entrar"
@@ -73,6 +74,9 @@ enum TextsHelper: String {
     case favorites                        = "Favoritos"
     case incompletes                      = "Incompletas"
     case completes                        = "Completas"
+    case or                               = "Ou" // swiftlint:disable:this line_length
+    case signInWithGoogle                 = "Continue com o Google"
+    case signInWithApple                  = "Continue com a Apple"
 
 }
 

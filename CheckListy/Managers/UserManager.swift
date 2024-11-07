@@ -89,4 +89,8 @@ class UserManager {
         return image
     }
 
+    func checkUserExistsInDataBase() async throws -> Bool {
+        try await FirebaseDatabase.shared.checkIfItemExist(with: authUser.uid, in: .users)
+    }
+
 }

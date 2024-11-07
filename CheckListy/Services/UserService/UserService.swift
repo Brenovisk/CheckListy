@@ -129,7 +129,6 @@ class UserService {
 }
 
 // MARK: Help method
-
 extension UserService {
 
     private static func reauthenticate(_ user: User, with password: String) async throws {
@@ -152,7 +151,6 @@ extension UserService {
 }
 
 // MARK: Helper Get methods
-
 extension UserService {
 
     private static func getUserFromDatabase(with id: String) async throws -> UserDatabase {
@@ -175,7 +173,6 @@ extension UserService {
 }
 
 // MARK: Helper Remove methods
-
 extension UserService {
 
     private static func remove(_ lists: [String]) async throws {
@@ -188,7 +185,6 @@ extension UserService {
 }
 
 // MARK: - Typealias
-
 extension UserService {
 
     typealias Paths = FirebaseDatabasePaths

@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 
 struct TextFieldCustom: View {
+
     @Binding var text: String
     @State private var enableSecure: Bool = true
     @FocusState private var isFocused: Bool
@@ -80,4 +81,5 @@ struct TextFieldCustom: View {
             onChanged?()
         }
     }
+
 }

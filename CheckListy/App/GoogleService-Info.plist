@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>32143567401-u4a6fdk9plbmrvd3dt720pb4oe99q1nn.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.32143567401-u4a6fdk9plbmrvd3dt720pb4oe99q1nn</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAdSsDUSKFs2WmxgBc4lHMqqJetT8yjc_M</string>
+	<key>GCM_SENDER_ID</key>
+	<string>32143567401</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>alecrim.CheckListy</string>
+	<key>PROJECT_ID</key>
+	<string>checklisty-ee87c</string>
+	<key>STORAGE_BUCKET</key>
+	<string>checklisty-ee87c.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:32143567401:ios:e7d064af9ac0921f15ca38</string>
+	<key>DATABASE_URL</key>
+	<string>https://checklisty-ee87c-default-rtdb.firebaseio.com</string>
+</dict>
+</plist>

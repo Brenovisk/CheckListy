@@ -44,7 +44,7 @@ class FirebaseAuthService: ObservableObject {
     }
 
     @MainActor
-    func signUp(withEmail email: String, password: String, name: String, uiImage: UIImage?, completion: (Bool) -> Void) async throws {
+    func signUp(withEmail email: String, password: String, name: String, uiImage: UIImage?, createFirebaseUser _: Bool = true, completion: (Bool) -> Void) async throws {
         do {
             isEnable = false
             let authDataResult = try await auth.createUser(withEmail: email, password: password)

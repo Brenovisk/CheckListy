@@ -83,6 +83,18 @@ class FirebaseDatabase {
         }
     }
 
+    func checkIfItemExist(with id: String, in table: Paths) async throws -> Bool {
+        return try await withCheckedThrowingContinuation { continuation in
+            databaseRef.child(table.description).child(id).observeSingleEvent(of: .value) { snapshot, _ in
+                if snapshot.exists() {
+                    continuation.resume(returning: true)
+                } else {
+                    continuation.resume(returning: false)
+                }
+            }
+        }
+    }
+
     func clearData() {
         removeListObservers()
         data = []
