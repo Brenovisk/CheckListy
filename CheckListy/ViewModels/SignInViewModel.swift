@@ -19,6 +19,7 @@ class SignInViewModel: ObservableObject {
     @Published private(set) var showStartView: Bool = true
     @Published private(set) var popupData: PopupData = .init()
 
+    var enableAppleSignIn: Bool = false
     private var cancellables = Set<AnyCancellable>()
 
     @MainActor

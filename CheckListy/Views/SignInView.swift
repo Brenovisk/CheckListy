@@ -115,17 +115,19 @@ struct SignInView: View, KeyboardReadable {
                 labelColor: .secondary
             )
 
-            Button(action: { hideKeyboard() }) {
-                HStack {
-                    ImagesHelper.appleIconVector.image
-                        .resizable()
-                        .frame(width: 24, height: 24)
+            if viewModel.enableAppleSignIn {
+                Button(action: { hideKeyboard() }) {
+                    HStack {
+                        ImagesHelper.appleIconVector.image
+                            .resizable()
+                            .frame(width: 24, height: 24)
 
-                    Texts.signInWithApple.value
+                        Texts.signInWithApple.value
+                    }
+                    .frame(maxWidth: .infinity)
                 }
-                .frame(maxWidth: .infinity)
+                .filledButton(backgroundColor: Color(.secondarySystemBackground), labelColor: .secondary)
             }
-            .filledButton(backgroundColor: Color(.secondarySystemBackground), labelColor: .secondary)
         }
     }
 
