@@ -57,7 +57,12 @@
   <img src="READMEAssets/screenshot-10.PNG" width="140"/>
 </p>
 
----
+## 🎨 Design (Figma)
+
+The UI of this app was entirely designed in [Figma](https://figma.com).  
+You can explore the design file or prototype below:
+
+👉 [View on Figma](https://www.figma.com/design/CpSMTh3IYpecddNpsixDkR/CheckListy---Public-Preview?node-id=2-12798)
 
 ## ⚙️ Tech Stack
 
@@ -91,4 +96,15 @@ git clone https://github.com/your-username/checklisty.git
 cd checklisty
 ```
 
-> ⚠️ ***This project is under active development:*** Features and UI may change rapidly while improvements are being made.
+## 🚧 Development Status
+
+> ⚠️ This project is **under active development**.  
+> Features and UI may change as improvements are made.
+
+## 📄 License
+
+This project is licensed under the **MIT License**.
+
+## 👨‍💻 Author
+
+Developed by [Breno Souza](https://github.com/brenovisk)
