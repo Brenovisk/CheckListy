@@ -46,11 +46,11 @@
 		143F923A2C7FABAA00751AD0 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143F92392C7FABAA00751AD0 /* SplashView.swift */; };
 		1440829A2CB5625900710ECF /* UsersPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144082992CB5623900710ECF /* UsersPhoto.swift */; };
 		1440829C2CB570CE00710ECF /* Skeleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1440829B2CB570CE00710ECF /* Skeleton.swift */; };
+		144D15AD2DCBECBC0011EB87 /* check.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 144D15AC2DCBECBC0011EB87 /* check.mp3 */; };
 		145706E42C4DDB94007E642C /* RecordButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145706E32C4DDB94007E642C /* RecordButton.swift */; };
 		145706E62C4DE4E9007E642C /* AudioAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145706E52C4DE4E9007E642C /* AudioAnimation.swift */; };
 		145706E82C4EDE94007E642C /* HeaderSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145706E72C4EDE94007E642C /* HeaderSection.swift */; };
 		145706EA2C4EE5A4007E642C /* FeedbackService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145706E92C4EE5A4007E642C /* FeedbackService.swift */; };
-		145706ED2C4EF2F6007E642C /* check.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 145706EC2C4EF2F6007E642C /* check.mp3 */; };
 		145706EF2C4F09D3007E642C /* ListCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145706EE2C4F09D3007E642C /* ListCard.swift */; };
 		145706F22C4F0C08007E642C /* ListMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145706F12C4F0C08007E642C /* ListMode.swift */; };
 		145706F42C4F4774007E642C /* ScrollableModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 145706F32C4F4774007E642C /* ScrollableModifier.swift */; };
@@ -201,11 +201,11 @@
 		143F92392C7FABAA00751AD0 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		144082992CB5623900710ECF /* UsersPhoto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersPhoto.swift; sourceTree = "<group>"; };
 		1440829B2CB570CE00710ECF /* Skeleton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Skeleton.swift; sourceTree = "<group>"; };
+		144D15AC2DCBECBC0011EB87 /* check.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = check.mp3; sourceTree = "<group>"; };
 		145706E32C4DDB94007E642C /* RecordButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordButton.swift; sourceTree = "<group>"; };
 		145706E52C4DE4E9007E642C /* AudioAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioAnimation.swift; sourceTree = "<group>"; };
 		145706E72C4EDE94007E642C /* HeaderSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderSection.swift; sourceTree = "<group>"; };
 		145706E92C4EE5A4007E642C /* FeedbackService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackService.swift; sourceTree = "<group>"; };
-		145706EC2C4EF2F6007E642C /* check.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = check.mp3; path = ../../../../../../Downloads/check.mp3; sourceTree = "<group>"; };
 		145706EE2C4F09D3007E642C /* ListCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCard.swift; sourceTree = "<group>"; };
 		145706F12C4F0C08007E642C /* ListMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListMode.swift; sourceTree = "<group>"; };
 		145706F32C4F4774007E642C /* ScrollableModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollableModifier.swift; sourceTree = "<group>"; };
@@ -616,7 +616,7 @@
 		14CEA8872C36460100E3CAED /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				145706EC2C4EF2F6007E642C /* check.mp3 */,
+				144D15AC2DCBECBC0011EB87 /* check.mp3 */,
 				14DBB6AA2C3433570084EB23 /* Preview Assets.xcassets */,
 				14DBB6A72C3433570084EB23 /* Colors.xcassets */,
 				149F89C22C73D5C30092F82C /* Images.xcassets */,
@@ -864,10 +864,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				14DBB6AB2C3433570084EB23 /* Preview Assets.xcassets in Resources */,
+				144D15AD2DCBECBC0011EB87 /* check.mp3 in Resources */,
 				14F9C4A12CDC1F060025A76C /* GoogleService-Info.plist in Resources */,
 				149F89C32C73D5C30092F82C /* Images.xcassets in Resources */,
 				14DBB6A82C3433570084EB23 /* Colors.xcassets in Resources */,
-				145706ED2C4EF2F6007E642C /* check.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

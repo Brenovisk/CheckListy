@@ -57,6 +57,7 @@ struct MessageWithImageView<T: View>: View {
                     .multilineTextAlignment(.center)
             }
             .frame(maxWidth: .infinity, alignment: .center)
+            .padding()
 
             if let onAction {
                 Button(action: { onAction() }) {
