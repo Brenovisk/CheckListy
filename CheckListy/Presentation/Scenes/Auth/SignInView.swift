@@ -183,6 +183,11 @@ extension SignInView {
 }
 
 #Preview {
-    SignInView()
-        .environmentObject(SignInViewModel())
+    let container = DIContainer()
+    return SignInView()
+        .environmentObject(SignInViewModel(
+            router: AppRouter(container: container),
+            authService: container.firebaseAuthService,
+            userRepository: container.userRepository
+        ))
 }

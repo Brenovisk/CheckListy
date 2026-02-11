@@ -336,18 +336,25 @@ extension ListsView {
 }
 
 #Preview {
-    NavigationView {
+    let firebaseDatabase = FirebaseDatabase()
+    let localImageDataSource = LocalImageDataSource()
+    let remoteImageDataSource = RemoteImageDataSource()
+    let repository = ListsRepository(firebaseDatabase: firebaseDatabase)
+    let userRepository = UserRepository(
+        firebaseDatabase: firebaseDatabase,
+        localImageDataSource: localImageDataSource,
+        remoteImageDataSource: remoteImageDataSource
+    )
+
+    return NavigationView {
         ListsView()
             .environmentObject(ListsViewModel(
                 router: AppRouter(container: DIContainer()),
-                fetchListsUseCase: FetchListsUseCase(),
-                toggleFavoriteUseCase: ToggleFavoriteUseCase(),
-                updateListUseCase: UpdateListUseCase(),
-                userRepository: UserRepository(
-                    firebaseDatabase: FirebaseDatabase(),
-                    localImageDataSource: LocalImageDataSource(),
-                    remoteImageDataSource: RemoteImageDataSource()
-                )
+                authService: FirebaseAuthService(),
+                fetchListsUseCase: FetchListsUseCase(repository: repository),
+                toggleFavoriteUseCase: ToggleFavoriteUseCase(repository: repository),
+                updateListUseCase: UpdateListUseCase(repository: repository),
+                userRepository: userRepository
             ))
     }
 }

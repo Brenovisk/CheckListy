@@ -38,9 +38,10 @@ struct AuthenticationView: View {
 }
 
 #Preview {
-    // Preview needs fix, but acceptable to leave broken or mock
-    AuthenticationView(viewModel: SignInViewModel(
-        router: AppRouter(container: DIContainer()), 
-        authService: FirebaseAuthService()
+    let container = DIContainer()
+    return AuthenticationView(viewModel: SignInViewModel(
+        router: AppRouter(container: container),
+        authService: container.firebaseAuthService,
+        userRepository: container.userRepository
     ))
 }

@@ -71,8 +71,12 @@ extension SignUpAddPhotoView {
 }
 
 #Preview {
-    NavigationStack {
+    let container = DIContainer()
+    return NavigationStack {
         SignUpAddPhotoView()
-            .environmentObject(SignUpViewModel())
+            .environmentObject(SignUpViewModel(
+                router: AppRouter(container: container),
+                registerUserUseCase: container.registerUserUseCase
+            ))
     }
 }

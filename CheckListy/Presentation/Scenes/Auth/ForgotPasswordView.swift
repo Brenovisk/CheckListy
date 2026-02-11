@@ -76,3 +76,10 @@ extension ForgotPasswordView {
     typealias Texts = TextsHelper
 
 }
+
+#Preview {
+    ForgotPasswordView(viewModel: ForgotPasswordViewModel(
+        router: AppRouter(container: DIContainer()),
+        authService: FirebaseAuthService()
+    ))
+}

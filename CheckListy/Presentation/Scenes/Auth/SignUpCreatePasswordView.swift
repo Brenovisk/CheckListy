@@ -84,8 +84,12 @@ extension SignUpCreatePasswordView {
 }
 
 #Preview {
-    NavigationStack {
+    let container = DIContainer()
+    return NavigationStack {
         SignUpCreatePasswordView()
-            .environmentObject(SignUpViewModel())
+            .environmentObject(SignUpViewModel(
+                router: AppRouter(container: container),
+                registerUserUseCase: container.registerUserUseCase
+            ))
     }
 }

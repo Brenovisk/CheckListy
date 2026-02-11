@@ -17,6 +17,10 @@ struct DetailsListView: View {
     @State private var isShowForm = false
     @State private var isShowFormItem = false
     @State private var multiSelection = Set<UUID>()
+    
+    init(viewModel: DetailsListViewModel) {
+        _viewModel = StateObject(wrappedValue: viewModel)
+    }
 
     var body: some View {
         VStack {
@@ -243,7 +247,9 @@ struct DetailsListView: View {
                         isCheck: true
                     )
                 ]
-            )
+            ),
+            router: AppRouter(container: DIContainer()),
+            repository: ListsRepository(firebaseDatabase: FirebaseDatabase())
         ))
     }
 }

@@ -130,10 +130,12 @@ class ListsViewModel: ObservableObject {
         }
     }
     
+    @MainActor
     func navigateToProfile() {
         router.navigate(to: .profile)
     }
     
+    @MainActor
     func navigateToDetails(list: ListModel) {
         router.navigate(to: .details(list))
     }

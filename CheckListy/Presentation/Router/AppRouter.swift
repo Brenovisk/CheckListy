@@ -22,6 +22,7 @@ enum AppRoute: Hashable {
     case signUpCreatePassword(SignUpViewModel)
 }
 
+@MainActor
 class AppRouter: ObservableObject {
     
     let container: DIContainer

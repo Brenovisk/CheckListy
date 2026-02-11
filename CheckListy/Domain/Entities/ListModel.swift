@@ -38,4 +38,20 @@ struct ListModel: Identifiable, Hashable {
 
         return Double(checkedItems) / Double(total)
     }
+    
+    var isShared: Bool {
+        !usersShared.isEmpty
+    }
+
+    var checkItems: String {
+        let total = items.count
+        let checkedItems = items.filter { $0.isCheck }.count
+        return "\(checkedItems)/\(total)"
+    }
+
+    var createdDate: String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd/MM/yyyy"
+        return formatter.string(from: createdAt)
+    }
 }

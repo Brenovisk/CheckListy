@@ -83,8 +83,12 @@ extension SignUpView {
 }
 
 #Preview {
-    NavigationStack {
+    let container = DIContainer()
+    return NavigationStack {
         SignUpView()
-            .environmentObject(SignUpViewModel())
+            .environmentObject(SignUpViewModel(
+                router: AppRouter(container: container),
+                registerUserUseCase: container.registerUserUseCase
+            ))
     }
 }

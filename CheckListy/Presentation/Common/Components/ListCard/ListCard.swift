@@ -77,12 +77,14 @@ struct ListCard: View {
                     }
 
                     HStack(spacing: 0) {
+                        /* TODO: Implement fetching shared user images via ViewModel/UseCase
                         if list.isShared {
                             UsersPhoto(images: userSharedImages)
                                 .task {
                                     userSharedImages = await list.getUsersSharedImagesProfile()
                                 }
                         }
+                        */
 
                         menu
                     }

@@ -8,9 +8,10 @@ import AVFoundation
 import Speech
 import SwiftUI
 
-actor SpeechRecognizerService: ObservableObject {
+@MainActor
+class SpeechRecognizerService: ObservableObject {
 
-    @MainActor @Published var transcript: String = ""
+    @Published var transcript: String = ""
 
     private var audioEngine: AVAudioEngine?
     private var request: SFSpeechAudioBufferRecognitionRequest?
@@ -27,7 +28,7 @@ actor SpeechRecognizerService: ObservableObject {
 
         recognizer = SFSpeechRecognizer(locale: locale)
         guard recognizer != nil else {
-            transcribe(Errors.nilRecognizer)
+            transcript = Errors.nilRecognizer.description
             return
         }
 
@@ -40,24 +41,24 @@ actor SpeechRecognizerService: ObservableObject {
                     throw Errors.notPermittedToRecord
                 }
             } catch {
-                transcribe(error)
+                updateTranscript(with: error)
             }
         }
     }
 
-    @MainActor func startTranscribing() {
+    func startTranscribing() {
         Task {
             await transcribe()
         }
     }
 
-    @MainActor func resetTranscript() {
+    func resetTranscript() {
         Task {
             await reset()
         }
     }
 
-    @MainActor func stopTranscribing() {
+    func stopTranscribing() {
         Task {
             await reset()
         }
@@ -71,7 +72,7 @@ actor SpeechRecognizerService: ObservableObject {
      */
     private func transcribe() {
         guard let recognizer, recognizer.isAvailable else {
-            transcribe(Errors.recognizerIsUnavailable)
+            updateTranscript(with: Errors.recognizerIsUnavailable)
             return
         }
 
@@ -84,7 +85,7 @@ actor SpeechRecognizerService: ObservableObject {
             })
         } catch {
             reset()
-            transcribe(error)
+            updateTranscript(with: error)
         }
     }
 
@@ -139,26 +140,20 @@ actor SpeechRecognizerService: ObservableObject {
         }
 
         if let result {
-            transcribe(result.bestTranscription.formattedString)
+            Task { @MainActor in
+                self.transcript = result.bestTranscription.formattedString
+            }
         }
     }
 
-    private nonisolated func transcribe(_ message: String) {
-        Task { @MainActor in
-            transcript = message
-        }
-    }
-
-    private nonisolated func transcribe(_ error: Error) {
+    private func updateTranscript(with error: Error) {
         var errorMessage = ""
         if let error = error as? Errors {
             errorMessage += error.description
         } else {
             errorMessage += error.localizedDescription
         }
-        Task { @MainActor [errorMessage] in
-            transcript = "<< \(errorMessage) >>"
-        }
+        transcript = "<< \(errorMessage) >>"
     }
 
 }

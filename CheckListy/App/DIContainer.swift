@@ -7,6 +7,7 @@
 
 import Foundation
 
+@MainActor
 class DIContainer: ObservableObject {
 
     // Services / Data Sources

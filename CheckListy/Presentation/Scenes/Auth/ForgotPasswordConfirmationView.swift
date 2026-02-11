@@ -48,6 +48,9 @@ extension ForgotPasswordConfirmationView {
 #Preview {
     NavigationStack {
         ForgotPasswordConfirmationView()
-            .environmentObject(ForgotPasswordViewModel())
+            .environmentObject(ForgotPasswordViewModel(
+                router: AppRouter(container: DIContainer()),
+                authService: FirebaseAuthService()
+            ))
     }
 }
