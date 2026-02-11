@@ -71,7 +71,11 @@ class AppRouter: ObservableObject {
         case .splash:
             SplashView()
         case .auth:
-            let viewModel = SignInViewModel(router: self, authService: container.firebaseAuthService)
+            let viewModel = SignInViewModel(
+                router: self,
+                authService: container.firebaseAuthService,
+                userRepository: container.userRepository
+            )
             AuthenticationView(viewModel: viewModel)
         case .main:
             let viewModel = ListsViewModel(
@@ -86,10 +90,18 @@ class AppRouter: ObservableObject {
             let viewModel = DetailsListViewModel(list, router: self, repository: container.listsRepository)
             DetailsListView(viewModel: viewModel)
         case .profile:
-            let viewModel = ProfileViewModel(router: self, userManager: UserManager(authUser: try! container.firebaseAuthService.getAuthUser(), repository: container.userRepository), authService: container.firebaseAuthService)
+            let viewModel = ProfileViewModel(
+                router: self,
+                authService: container.firebaseAuthService,
+                userRepository: container.userRepository
+            )
             ProfileView(viewModel: viewModel)
         case .deleteAccount:
-            let viewModel = ProfileViewModel(router: self, userManager: UserManager(authUser: try! container.firebaseAuthService.getAuthUser(), repository: container.userRepository), authService: container.firebaseAuthService)
+            let viewModel = ProfileViewModel(
+                router: self,
+                authService: container.firebaseAuthService,
+                userRepository: container.userRepository
+            )
             DeleteAccountView(viewModel: viewModel)
         case .signUp:
             let viewModel = SignUpViewModel(router: self, registerUserUseCase: container.registerUserUseCase)

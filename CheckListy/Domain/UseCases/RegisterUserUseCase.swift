@@ -23,8 +23,21 @@ class RegisterUserUseCase {
             password: data.password
         )
         
-        let manager = UserManager(authUser: user, repository: userRepository)
-        try await manager.storeDataBase(with: data.name, and: data.uiImage)
+        // Logic previously in UserManager.storeDataBase
+        let userProfile = UserProfile(
+            id: user.uid,
+            name: data.name,
+            email: user.email ?? "",
+            lists: []
+        )
+        
+        try await userRepository.saveUser(userProfile)
+        try await UserService.update(user, displayName: data.name)
+        
+        if let image = data.uiImage, let imageData = image.jpegData(compressionQuality: 0.8) {
+            try await userRepository.saveProfileImage(imageData: imageData, userId: user.uid)
+        }
+        
         completion(false)
     }
 }

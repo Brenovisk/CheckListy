@@ -29,6 +29,7 @@ class ListsViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
     
     private let router: AppRouter
+    private let authService: FirebaseAuthService
     private let fetchListsUseCase: FetchListsUseCase
     private let toggleFavoriteUseCase: ToggleFavoriteUseCase
     private let updateListUseCase: UpdateListUseCase
@@ -71,12 +72,14 @@ class ListsViewModel: ObservableObject {
     @MainActor
     init(
         router: AppRouter,
+        authService: FirebaseAuthService,
         fetchListsUseCase: FetchListsUseCase,
         toggleFavoriteUseCase: ToggleFavoriteUseCase,
         updateListUseCase: UpdateListUseCase,
         userRepository: UserRepositoryProtocol
     ) {
         self.router = router
+        self.authService = authService
         self.fetchListsUseCase = fetchListsUseCase
         self.toggleFavoriteUseCase = toggleFavoriteUseCase
         self.updateListUseCase = updateListUseCase
@@ -86,7 +89,7 @@ class ListsViewModel: ObservableObject {
 
     @MainActor
     func setupDataBase() {
-        guard let user = try? FirebaseAuthService().getAuthUser() else { return }
+        guard let user = try? authService.getAuthUser() else { return }
         authUser = user
         subscribeToDatabaseChanges(userId: user.uid)
     }
@@ -105,14 +108,21 @@ class ListsViewModel: ObservableObject {
 
     @MainActor
     func getUserName() {
-        guard let user = try? FirebaseAuthService().getAuthUser() else { return }
-        let userManager = UserManager(authUser: user)
-        userName = userManager.getName()
+        guard let user = try? authService.getAuthUser() else { return }
+        
+        let storedName = UserDefaultsService.loadItem(.userName)
+        if !storedName.isEmpty {
+            userName = storedName
+        } else {
+            let name = user.displayName ?? ""
+            UserDefaultsService.add(.userName, name)
+            userName = name
+        }
     }
 
     @MainActor
     func getUserImage() async {
-        guard let user = try? FirebaseAuthService().getAuthUser() else { return }
+        guard let user = try? authService.getAuthUser() else { return }
         if let data = try? await userRepository.getProfileImageData(userId: user.uid),
            let image = UIImage(data: data) {
             userImage = image

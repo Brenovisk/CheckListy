@@ -24,10 +24,12 @@ class SignInViewModel: ObservableObject {
     
     private let router: AppRouter
     private let authService: FirebaseAuthService
+    private let userRepository: UserRepositoryProtocol
     
-    init(router: AppRouter, authService: FirebaseAuthService) {
+    init(router: AppRouter, authService: FirebaseAuthService, userRepository: UserRepositoryProtocol) {
         self.router = router
         self.authService = authService
+        self.userRepository = userRepository
     }
 
     @MainActor
@@ -70,15 +72,24 @@ class SignInViewModel: ObservableObject {
 
                 guard let user = try await GoogleSignInService.signIn() else { return }
 
-                // Ideally UserManager should be injected too, but it creates its own repo internally or we inject it. 
-                // We'll use default for now or fix UserManager later.
-                // UserManager default init uses UserRepository default init which uses FirebaseDatabase().
-                // This is acceptable for now but not strict DI.
-                let userManager = UserManager(authUser: user) 
-                let alreadyExist = try await userManager.checkUserExistsInDataBase()
+                // Check if user exists
+                var userExists = false
+                do {
+                    _ = try await userRepository.fetchUser(userId: user.uid)
+                    userExists = true
+                } catch {
+                    userExists = false
+                }
 
-                if !alreadyExist {
-                    try await userManager.storeDataBase(with: user.displayName ?? String(), and: nil)
+                if !userExists {
+                    let userProfile = UserProfile(
+                        id: user.uid,
+                        name: user.displayName ?? "",
+                        email: user.email ?? "",
+                        lists: []
+                    )
+                    try await userRepository.saveUser(userProfile)
+                    try await UserService.update(user, displayName: user.displayName ?? "")
                 }
 
                 isLoading = .none

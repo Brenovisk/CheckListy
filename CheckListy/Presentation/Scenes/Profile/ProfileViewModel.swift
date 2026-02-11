@@ -32,14 +32,31 @@ class ProfileViewModel: ObservableObject {
         do {
             isLoading = true
             let user = try getAuthUser()
-            let userManager = UserManager(authUser: user, repository: userRepository)
+            
+            // Get Name
+            var name = UserDefaultsService.loadItem(.userName)
+            if name.isEmpty {
+                name = user.displayName ?? ""
+                UserDefaultsService.add(.userName, name)
+            }
+            
+            // Get Image
+            var image: UIImage?
+            if let data = try await userRepository.getProfileImageData(userId: user.uid) {
+                image = UIImage(data: data)
+            }
+            
+            // Get Lists (from user profile)
+            let userProfile = try await userRepository.fetchUser(userId: user.uid)
+            let lists = userProfile.lists
 
             userDatabase = try await CheckListy.UserDatabase(
                 id: user.uid,
-                name: userManager.getName(),
-                urlProfileImage: userManager.getUrlProfileImage(),
-                lists: userManager.getList(), profileImage: userManager.getImage(),
-                email: userManager.getEmail()
+                name: name,
+                urlProfileImage: nil, // Local only
+                lists: lists,
+                profileImage: image,
+                email: try UserService.getEmail(of: user)
             )
 
             isLoading = false
@@ -54,8 +71,32 @@ class ProfileViewModel: ObservableObject {
         do {
             isLoading = true
             guard hasChangeData(of: user) else { return }
-            try await updateNameIfNeeded(user)
-            try await updateImageIfNeeded(user)
+            
+            let authUser = try getAuthUser()
+            
+            // Update Name
+            if user.name != userDatabase?.name {
+                try await UserService.update(authUser, displayName: user.name)
+                // Update UserProfile in Repo
+                // We need to fetch current profile to keep other fields or just update known ones?
+                // Domain UserProfile: id, name, email, lists
+                // We have user.lists from input.
+                let userProfile = UserProfile(
+                    id: user.id,
+                    name: user.name,
+                    email: user.email,
+                    lists: user.lists
+                )
+                try await userRepository.saveUser(userProfile)
+            }
+            
+            // Update Image
+            if let image = user.profileImage, image != userDatabase?.profileImage {
+                if let data = image.jpegData(compressionQuality: 0.8) {
+                    try await userRepository.saveProfileImage(imageData: data, userId: user.id)
+                }
+            }
+            
             await getUserDatabase()
             isLoading = false
         } catch {
@@ -68,9 +109,9 @@ class ProfileViewModel: ObservableObject {
     func update(_ oldPassword: String, to newPassword: String) async throws {
         do {
             isLoading = true
-            let userManager = try await getUserManager()
+            let authUser = try getAuthUser()
             guard !newPassword.isEmpty, !oldPassword.isEmpty else { return }
-            try await userManager.update(oldPassword: oldPassword, to: newPassword)
+            try await UserService.update(authUser, oldPassword: oldPassword, to: newPassword)
             isLoading = false
         } catch {
             let errorMessage = FirebaseErrorsHelper.getDescription(to: error)
@@ -105,8 +146,15 @@ class ProfileViewModel: ObservableObject {
         Task {
             do {
                 isLoading = true
-                let userManager = try getUserManager()
-                try await userManager.removeUserData(with: dataForm.password)
+                let authUser = try getAuthUser()
+                
+                try await UserService.reauthtenticateWithFirebaseAuth(authUser, with: dataForm.password)
+                try await UserService.removeLists(of: authUser)
+                // Remove local image? Repo doesn't have delete. Skipping or add delete to repo later.
+                
+                try await UserService.removeFromDataBase(authUser)
+                try await UserService.removeFromFirebaseAuth(authUser)
+                
                 isLoading = false
                 signOut()
             } catch {
@@ -124,30 +172,6 @@ class ProfileViewModel: ObservableObject {
 }
 
 extension ProfileViewModel {
-
-    @MainActor
-    private func updateNameIfNeeded(_ user: UserDatabase) async throws {
-        if user.name != userDatabase?.name {
-            let userManager = try getUserManager()
-            try await userManager.update(name: user.name, of: user)
-            await getUserDatabase()
-        }
-    }
-
-    @MainActor
-    private func updateImageIfNeeded(_ user: UserDatabase) async throws {
-        if let image = user.profileImage, image != userDatabase?.profileImage {
-            let userManager = try getUserManager()
-            try await UserManager.uploadProfile(image, for: user)
-            await getUserDatabase()
-        }
-    }
-
-    @MainActor
-    private func getUserManager() throws -> UserManager {
-        let user = try getAuthUser()
-        return UserManager(authUser: user, repository: userRepository)
-    }
 
     @MainActor
     private func getAuthUser() throws -> User {
