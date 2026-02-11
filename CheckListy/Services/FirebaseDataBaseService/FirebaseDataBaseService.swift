@@ -83,6 +83,18 @@ class FirebaseDatabase {
         }
     }
 
+    func getRawData(from path: Paths, with childId: String) async throws -> NSDictionary {
+        return try await withCheckedThrowingContinuation { continuation in
+            self.databaseRef.child(path.description).child(childId).observeSingleEvent(of: .value) { snapshot, _ in
+                guard let value = snapshot.value as? NSDictionary else {
+                    continuation.resume(throwing: DataError.fetchError)
+                    return
+                }
+                continuation.resume(returning: value)
+            }
+        }
+    }
+
     func checkIfItemExist(with id: String, in table: Paths) async throws -> Bool {
         return try await withCheckedThrowingContinuation { continuation in
             databaseRef.child(table.description).child(id).observeSingleEvent(of: .value) { snapshot, _ in
