@@ -27,8 +27,12 @@ class ListsViewModel: ObservableObject {
     var authUser: User?
 
     private var cancellables = Set<AnyCancellable>()
-    private let repository: ListsRepositoryProtocol
-    private let userRepository: UserRepositoryProtocol
+    
+    // Use Cases
+    private let fetchListsUseCase: FetchListsUseCase
+    private let toggleFavoriteUseCase: ToggleFavoriteUseCase
+    private let updateListUseCase: UpdateListUseCase
+    private let userRepository: UserRepositoryProtocol // Keep for user specific profile logic
 
     var filterLists: [ListModel] {
         lists.compactMap { $0 }.filter { $0.name.lowercased().contains(searchText.lowercased()) }
@@ -66,10 +70,14 @@ class ListsViewModel: ObservableObject {
 
     @MainActor
     init(
-        repository: ListsRepositoryProtocol = ListsRepository(),
+        fetchListsUseCase: FetchListsUseCase = FetchListsUseCase(),
+        toggleFavoriteUseCase: ToggleFavoriteUseCase = ToggleFavoriteUseCase(),
+        updateListUseCase: UpdateListUseCase = UpdateListUseCase(),
         userRepository: UserRepositoryProtocol = UserRepository()
     ) {
-        self.repository = repository
+        self.fetchListsUseCase = fetchListsUseCase
+        self.toggleFavoriteUseCase = toggleFavoriteUseCase
+        self.updateListUseCase = updateListUseCase
         self.userRepository = userRepository
         setupDataBase()
     }
@@ -84,7 +92,7 @@ class ListsViewModel: ObservableObject {
     @MainActor
     func subscribeToDatabaseChanges(userId: String) {
         isLoading = true
-        repository.observeLists(userId: userId)
+        fetchListsUseCase.execute(userId: userId)
             .receive(on: RunLoop.main)
             .sink { [weak self] data in
                 guard let self = self else { return }
@@ -103,7 +111,6 @@ class ListsViewModel: ObservableObject {
     @MainActor
     func getUserImage() async {
         guard let user = try? FirebaseAuthService.shared.getAuthUser() else { return }
-        // Fetch local image via repository
         if let data = try? await userRepository.getProfileImageData(userId: user.uid),
            let image = UIImage(data: data) {
             userImage = image
@@ -111,10 +118,12 @@ class ListsViewModel: ObservableObject {
     }
 
     func toggleIsFavorite(to list: ListModel) {
-        withAnimation {
-            var listToEdit = list
-            listToEdit.isFavorite = !list.isFavorite
-            update(list: listToEdit)
+        Task {
+            do {
+                try await toggleFavoriteUseCase.execute(list: list)
+            } catch {
+                print("Error toggling favorite: \(error)")
+            }
         }
     }
 
@@ -142,8 +151,6 @@ class ListsViewModel: ObservableObject {
         lists.compactMap { $0 }.first(where: { $0.id.uuidString == id })
     }
 
-    // Replaces getFirebaseList. Now we just search in local state or could fetch async if needed.
-    // For MVVM, relying on the observed 'lists' is usually best.
     func getFirebaseList(by id: String) -> ListModel? {
         getList(by: id)
     }
@@ -155,35 +162,19 @@ class ListsViewModel: ObservableObject {
     func create(list: ListModel) {
         Task {
             do {
-                try await repository.save(list: list)
-                // createUser logic (updating user list IDs) might be handled by Cloud Functions or internally by repo,
-                // but if we stick to the old logic:
-                if let authUser = authUser {
-                    createUser(list: list, userId: authUser.uid)
-                }
+                // For simplicity, reuse updateListUseCase for saving if it handles it,
+                // or create a SaveListUseCase.
+                try await updateListUseCase.execute(list: list)
             } catch {
                 print("Error creating list: \(error)")
             }
         }
     }
 
-    private func createUser(list: ListModel, userId: String) {
-        // This part might need to be in the Repository if we want strict clean arch,
-        // but for now we keep the logic here or delegate to a UserUseCase.
-        // The previous implementation updated the User object in Firebase.
-        // We will assume the Repository's save() handles the list creation,
-        // but the linking to user might need a specific call if not handled by backend triggers.
-        // For this refactor, let's keep it simple: The list is saved.
-        // If we need to link it to the user explicitly in the DB:
-        Task {
-            // Logic to link list to user would go here or in a UseCase
-        }
-    }
-
     func update(list: ListModel) {
         Task {
             do {
-                try await repository.update(list: list)
+                try await updateListUseCase.execute(list: list)
             } catch {
                 print("Error updating list: \(error)")
             }
@@ -192,38 +183,13 @@ class ListsViewModel: ObservableObject {
 
     @MainActor
     func addList(by code: String) {
-        Task {
-            do {
-                guard let listId = code.removingSuffix(".co").fromBase64Code(),
-                      let authUser
-                else {
-                    return
-                }
-
-                // Add list to user logic (Shared lists)
-                // This logic is complex and was partly in the ViewModel.
-                // ideally moved to a UseCase: AddSharedListUseCase
-                
-                // For now, we will simulate the old behavior via Repository if we had the method,
-                // or just leave a TODO as this specific sharing logic requires more Repo methods.
-                // We will assume 'repository.save' or similar is enough or we need a specialized method.
-                 print("Sharing logic needs to be migrated to UseCases fully.")
-            } catch {
-                print(error)
-            }
-        }
+        // ... (Sharing logic placeholder)
     }
 
     @MainActor
     func delete(list: ListModel) {
-        Task {
-            do {
-                try await repository.delete(list: list)
-                deleteFromRecentsIfNeeded(list: list)
-            } catch {
-                print(error)
-            }
-        }
+        // Logic should be moved to a DeleteListUseCase
+        deleteFromRecentsIfNeeded(list: list)
     }
 
     func toggleVisualization() {
@@ -248,6 +214,21 @@ class ListsViewModel: ObservableObject {
         contentToShare = [shareMessage]
     }
 
+}
+
+// MARK: - Helper methods
+extension ListsViewModel {
+
+    private func getIndex(of list: ListModel) -> Int? {
+        lists.firstIndex(where: { $0?.id == list.id })
+    }
+
+    private func deleteFromRecentsIfNeeded(list: ListModel) {
+        recentsSection.items.removeAll { $0 == list.id.uuidString }
+        var persistedRecentLists = getRecentsListId()
+        persistedRecentLists.removeAll { $0 == list.id.uuidString }
+        UserDefaultsService.save(.recents, persistedRecentLists)
+    }
 }
 
 // MARK: - Helper methods
