@@ -10,6 +10,7 @@ class UserRepository: UserRepositoryProtocol {
     
     private let firebaseDatabase = FirebaseDatabase.shared
     private let localImageDataSource = LocalImageDataSource.shared
+    private let remoteImageDataSource = RemoteImageDataSource.shared
     
     func fetchUser(userId: String) async throws -> UserProfile {
         let dictionary: NSDictionary = try await firebaseDatabase.getData(from: .users, with: userId)
@@ -26,9 +27,20 @@ class UserRepository: UserRepositoryProtocol {
     
     func saveProfileImage(imageData: Data, userId: String) async throws {
         try localImageDataSource.save(imageData: imageData, withName: "profile_\(userId).jpg")
+        _ = try await remoteImageDataSource.upload(imageData: imageData, userId: userId)
     }
     
     func getProfileImageData(userId: String) async throws -> Data? {
-        return localImageDataSource.load(withName: "profile_\(userId).jpg")
+        if let localData = localImageDataSource.load(withName: "profile_\(userId).jpg") {
+            return localData
+        }
+        
+        do {
+            let remoteData = try await remoteImageDataSource.download(userId: userId)
+            try? localImageDataSource.save(imageData: remoteData, withName: "profile_\(userId).jpg")
+            return remoteData
+        } catch {
+            return nil
+        }
     }
 }
