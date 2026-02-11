@@ -12,7 +12,7 @@ import SwiftUI
 
 class DetailsListViewModel: ObservableObject {
 
-    private let firebaseDataBase = FirebaseDatabase.shared
+    private let repository: ListsRepositoryProtocol
     private var cancellables = Set<AnyCancellable>()
 
     @Published var itemToEdit: ListItemModel?
@@ -32,18 +32,19 @@ class DetailsListViewModel: ObservableObject {
     }
 
     @MainActor
-    init(_ list: ListModel) {
+    init(_ list: ListModel, repository: ListsRepositoryProtocol = ListsRepository()) {
         self.list = list
+        self.repository = repository
         setup(to: list)
         subscribeToDatabaseChanges()
     }
 
     func subscribeToDatabaseChanges() {
-        firebaseDataBase.dataChanged
+        repository.observeLists(userId: list.owner)
             .receive(on: RunLoop.main)
             .sink { [weak self] data in
                 guard let self = self else { return }
-                self.list = data.compactMap { $0 }.first(where: { $0.id == self.list.id }) ?? self.list
+                self.list = data.first(where: { $0.id == self.list.id }) ?? self.list
             }
             .store(in: &cancellables)
     }
@@ -109,30 +110,44 @@ class DetailsListViewModel: ObservableObject {
     }
 
     func updateList(with newList: ListModel) {
-        let pathNewList = "\(FirebaseDatabasePaths.lists.description)/\(list.id.uuidString)"
-        firebaseDataBase.update(path: pathNewList, data: newList.toNSDictionary())
-        list = newList
+        Task {
+            do {
+                try await repository.update(list: newList)
+                await MainActor.run {
+                    list = newList
+                }
+            } catch {
+                print("Error updating list: \(error)")
+            }
+        }
     }
 
     func add(_ item: ListItemModel) {
-        let pathNewList = "\(FirebaseDatabasePaths.lists.description)/\(list.id.uuidString)"
-        list.items.append(item)
-        firebaseDataBase.update(path: pathNewList, data: list.toNSDictionary())
+        var updatedList = list
+        updatedList.items.append(item)
+        updateList(with: updatedList)
     }
 
     func update(_ item: ListItemModel) {
-        let pathNewList = "\(FirebaseDatabasePaths.lists.description)/\(list.id.uuidString)"
         guard let indexItem = getIndex(of: item) else { return }
-        list.items[indexItem] = item
-        firebaseDataBase.update(path: pathNewList, data: list.toNSDictionary())
-        executeFeedbacks()
+        var updatedList = list
+        updatedList.items[indexItem] = item
+        
+        Task {
+            do {
+                try await repository.update(list: updatedList)
+                executeFeedbacks()
+            } catch {
+                print("Error updating item: \(error)")
+            }
+        }
     }
 
     func remove(_ item: ListItemModel) {
-        let pathNewList = "\(FirebaseDatabasePaths.lists.description)/\(list.id.uuidString)"
         guard let indexItem = getIndex(of: item) else { return }
-        list.items.remove(at: indexItem)
-        firebaseDataBase.update(path: pathNewList, data: list.toNSDictionary())
+        var updatedList = list
+        updatedList.items.remove(at: indexItem)
+        updateList(with: updatedList)
     }
 
     func getIndex(of item: ListItemModel) -> Int? {
@@ -141,13 +156,18 @@ class DetailsListViewModel: ObservableObject {
 
     func set(isCheck: Bool, of item: ListItemModel) {
         guard let index = getIndex(of: item) else { return }
-        list.items[index].isCheck = isCheck
-        update(list.items[index])
+        var updatedItem = list.items[index]
+        updatedItem.isCheck = isCheck
+        // We need to update the item in the list
+        // Reuse update(item) which handles finding index again, or modify here
+        update(updatedItem)
     }
 
     func set(isCheck: Bool, of index: Int) {
-        list.items[index].isCheck = isCheck
-        update(list.items[index])
+        guard list.items.indices.contains(index) else { return }
+        var updatedItem = list.items[index]
+        updatedItem.isCheck = isCheck
+        update(updatedItem)
     }
 
     func changeItemIfNeeded(according transcript: String) {

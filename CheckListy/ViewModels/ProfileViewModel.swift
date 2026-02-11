@@ -77,7 +77,8 @@ class ProfileViewModel: ObservableObject {
     func signOut() {
         do {
             UserDefaultsService.clearAll()
-            FirebaseDatabase.shared.clearData()
+            // Repository or Service should handle clearing data if needed.
+            // FirebaseDatabase.shared.clearData() removed to avoid direct dependency.
             try FirebaseAuthService.shared.signOut()
             deleteDocumentsDirectory()
         } catch {
