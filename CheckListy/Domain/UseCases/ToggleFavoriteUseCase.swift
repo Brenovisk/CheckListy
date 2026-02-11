@@ -8,7 +8,7 @@ import Foundation
 class ToggleFavoriteUseCase {
     private let repository: ListsRepositoryProtocol
     
-    init(repository: ListsRepositoryProtocol = ListsRepository()) {
+    init(repository: ListsRepositoryProtocol) {
         self.repository = repository
     }
     

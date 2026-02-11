@@ -23,7 +23,6 @@ class RegisterUserUseCase {
             password: data.password
         )
         
-        // Logic previously in UserManager.storeDataBase
         let userProfile = UserProfile(
             id: user.uid,
             name: data.name,

@@ -9,7 +9,7 @@ import Combine
 class FetchListsUseCase {
     private let repository: ListsRepositoryProtocol
     
-    init(repository: ListsRepositoryProtocol = ListsRepository()) {
+    init(repository: ListsRepositoryProtocol) {
         self.repository = repository
     }
     
