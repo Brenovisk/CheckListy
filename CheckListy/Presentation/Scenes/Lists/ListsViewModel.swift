@@ -151,10 +151,6 @@ class ListsViewModel: ObservableObject {
         lists.compactMap { $0 }.first(where: { $0.id.uuidString == id })
     }
 
-    func getFirebaseList(by id: String) -> ListModel? {
-        getList(by: id)
-    }
-
     func getRecentsListId() -> [String] {
         UserDefaultsService.load(.recents).removingDuplicates()
     }
@@ -229,26 +225,4 @@ extension ListsViewModel {
         persistedRecentLists.removeAll { $0 == list.id.uuidString }
         UserDefaultsService.save(.recents, persistedRecentLists)
     }
-}
-
-// MARK: - Helper methods
-extension ListsViewModel {
-
-    private func getIndex(of list: ListModel) -> Int? {
-        lists.firstIndex(where: { $0?.id == list.id })
-    }
-
-    private func deleteFromRecentsIfNeeded(list: ListModel) {
-        recentsSection.items.removeAll { $0 == list.id.uuidString }
-        var persistedRecentLists = getRecentsListId()
-        persistedRecentLists.removeAll { $0 == list.id.uuidString }
-        UserDefaultsService.save(.recents, persistedRecentLists)
-    }
-}
-
-// MARK: - Typealias
-extension ListsViewModel {
-
-    typealias Paths = FirebaseDatabasePaths
-
 }
