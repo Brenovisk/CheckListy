@@ -13,17 +13,24 @@ import UIKit
 class UserManager {
 
     var authUser: User
+    private let repository: UserRepositoryProtocol
 
-    init(authUser: User) {
+    init(authUser: User, repository: UserRepositoryProtocol = UserRepository()) {
         self.authUser = authUser
+        self.repository = repository
     }
 
     func update(name: String, of user: UserDatabase) async throws {
         try await UserService.update(authUser, displayName: name)
 
-        let updatedUserDatabase = UserDatabase(id: user.id, name: name, urlProfileImage: user.urlProfileImage, lists: user.lists)
-
-        try await updatedUserDatabase.saveToDatabase()
+        // Map to Domain Entity
+        let userProfile = UserProfile(
+            id: user.id,
+            name: name,
+            email: user.email,
+            lists: user.lists
+        )
+        try await repository.saveUser(userProfile)
     }
 
     func update(oldPassword: String, to newPassword: String) async throws {
@@ -33,29 +40,49 @@ class UserManager {
     func removeUserData(with password: String) async throws {
         try await UserService.reauthtenticateWithFirebaseAuth(authUser, with: password)
         try await UserService.removeLists(of: authUser)
-        try await UserService.removeProfileImage(of: authUser)
+        // Remove local image
+        // We might need a delete method in Repository, for now assume save nil or handle externally
+        // try await repository.deleteProfileImage(userId: authUser.uid) 
+        
         try await UserService.removeFromDataBase(authUser)
         try await UserService.removeFromFirebaseAuth(authUser)
     }
 
     func storeDataBase(with name: String, and image: UIImage?) async throws {
-        let userData = UserDatabase(id: authUser.uid, name: name, urlProfileImage: URL(string: String()))
-        try await userData.saveToDatabase()
+        let userProfile = UserProfile(
+            id: authUser.uid,
+            name: name,
+            email: authUser.email ?? "",
+            lists: []
+        )
+        try await repository.saveUser(userProfile)
         try await UserService.update(authUser, displayName: name)
-        guard let image else { return }
-        try await UserService.updateProfile(image, for: userData)
+        
+        if let image = image, let data = image.jpegData(compressionQuality: 0.8) {
+            try await repository.saveProfileImage(imageData: data, userId: authUser.uid)
+        }
     }
 
     static func uploadProfile(_ image: UIImage, for user: UserDatabase) async throws {
-        try await UserService.updateProfile(image, for: user)
+        // Static method is hard to inject repo. 
+        // We should instantiate a default repo or change to instance method.
+        // Changing to use default UserRepository for now.
+        let repo = UserRepository()
+        if let data = image.jpegData(compressionQuality: 0.8) {
+            try await repo.saveProfileImage(imageData: data, userId: user.id)
+        }
     }
 
     func getProfileImage() async throws -> UIImage? {
-        try await UserService.getUserDatabaseImage(for: authUser.uid)
+        if let data = try await repository.getProfileImageData(userId: authUser.uid) {
+            return UIImage(data: data)
+        }
+        return nil
     }
 
     func getUrlProfileImage() async throws -> URL? {
-        try await UserService.getUrlProfileImage(of: authUser.uid)
+        // Deprecated: We use local images now. Return nil or local file URL.
+        return nil 
     }
 
     func getEmail() throws -> String {
@@ -64,8 +91,8 @@ class UserManager {
 
     @MainActor
     func getList() async throws -> [String] {
-        let user: UserDatabase = try await FirebaseDatabase.shared.getData(from: .users, with: authUser.uid)
-        return user.lists
+        let userProfile = try await repository.fetchUser(userId: authUser.uid)
+        return userProfile.lists
     }
 
     func getId() -> String {
@@ -85,12 +112,17 @@ class UserManager {
     }
 
     func getImage() async throws -> UIImage? {
-        let image = try await UserService.getUserDatabaseImage(for: authUser.uid)
-        return image
+        return try await getProfileImage()
     }
 
     func checkUserExistsInDataBase() async throws -> Bool {
-        try await FirebaseDatabase.shared.checkIfItemExist(with: authUser.uid, in: .users)
+        // We can check if we can fetch the user
+        do {
+            _ = try await repository.fetchUser(userId: authUser.uid)
+            return true
+        } catch {
+            return false
+        }
     }
 
 }

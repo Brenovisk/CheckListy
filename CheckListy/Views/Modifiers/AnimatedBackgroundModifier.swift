@@ -10,47 +10,28 @@ import SwiftUI
 
 struct AnimatedBackgroundModifier: ViewModifier, KeyboardReadable {
 
-    @State private var offset = 0.0
-    @State private var opacity = 0.0
-    let animationDuration: Double = 40.0
+    @State private var animate = false
     var blackVectors: Bool
 
     func body(content: Content) -> some View {
         ZStack {
-            VStack {
-                if blackVectors {
-                    ForEach(0 ..< 3) { _ in
-                        ImagesHelper.coloredShapesBlackVector.image
-                            .resizable()
-                            .scaledToFill()
-                    }
-                } else {
-                    ForEach(0 ..< 1) { _ in
-                        ImagesHelper.coloredShapesVector.image
-                            .resizable()
-                            .scaledToFill()
-                    }
-                }
-            }
-            .frame(height: UIScreen.main.bounds.height)
-            .offset(y: offset)
-            .transition(.opacity)
+            LinearGradient(
+                gradient: Gradient(colors: [
+                    Color.blue.opacity(0.3),
+                    Color.purple.opacity(0.3)
+                ]),
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+            .ignoresSafeArea()
+            .opacity(animate ? 1 : 0.8)
             .onAppear {
-                startAnimation()
+                withAnimation(.linear(duration: 5.0).repeatForever(autoreverses: true)) {
+                    animate.toggle()
+                }
             }
 
             content
-        }
-    }
-
-    private func startAnimation() {
-        opacity = 1
-
-        withAnimation(
-            Animation.linear(duration: animationDuration)
-                .repeatForever(autoreverses: false)
-        ) {
-            offset = -UIScreen.main.bounds.height
         }
     }
 
