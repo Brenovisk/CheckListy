@@ -36,7 +36,7 @@ struct ListsView: View {
                         await viewModel.getUserImage()
                     }
                     .onTapGesture {
-                        AppRouter.shared.navigate(to: .profile)
+                        viewModel.navigateToProfile()
                     }
                     .padding(.vertical, 24)
 
@@ -315,7 +315,7 @@ extension ListsView {
     }
 
     private func handleRedirect(_ list: ListModel) {
-        AppRouter.shared.navigate(to: .details(list))
+        viewModel.navigateToDetails(list: list)
     }
 
     private func handleOnFavorite(_ list: ListModel) {
@@ -338,6 +338,16 @@ extension ListsView {
 #Preview {
     NavigationView {
         ListsView()
-            .environmentObject(ListsViewModel())
+            .environmentObject(ListsViewModel(
+                router: AppRouter(container: DIContainer()),
+                fetchListsUseCase: FetchListsUseCase(),
+                toggleFavoriteUseCase: ToggleFavoriteUseCase(),
+                updateListUseCase: UpdateListUseCase(),
+                userRepository: UserRepository(
+                    firebaseDatabase: FirebaseDatabase(),
+                    localImageDataSource: LocalImageDataSource(),
+                    remoteImageDataSource: RemoteImageDataSource()
+                )
+            ))
     }
 }

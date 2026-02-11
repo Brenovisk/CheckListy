@@ -24,19 +24,20 @@ enum AppRoute: Hashable {
 
 class AppRouter: ObservableObject {
     
-    static let shared = AppRouter()
+    let container: DIContainer
     
     @Published var path = NavigationPath()
     @Published var root: AppRoute = .splash
     
     private var cancellables = Set<AnyCancellable>()
     
-    private init() {
+    init(container: DIContainer) {
+        self.container = container
         bindAuthState()
     }
     
     private func bindAuthState() {
-        FirebaseAuthService.shared.$isSignIn
+        container.firebaseAuthService.$isSignIn
             .receive(on: RunLoop.main)
             .sink { [weak self] isSignIn in
                 guard let self = self else { return }
@@ -70,19 +71,33 @@ class AppRouter: ObservableObject {
         case .splash:
             SplashView()
         case .auth:
-            AuthenticationView()
+            let viewModel = SignInViewModel(router: self, authService: container.firebaseAuthService)
+            AuthenticationView(viewModel: viewModel)
         case .main:
-            MainView()
+            let viewModel = ListsViewModel(
+                router: self,
+                fetchListsUseCase: container.fetchListsUseCase,
+                toggleFavoriteUseCase: container.toggleFavoriteUseCase,
+                updateListUseCase: container.updateListUseCase,
+                userRepository: container.userRepository
+            )
+            MainView(viewModel: viewModel)
         case .details(let list):
-            DetailsListView(viewModel: DetailsListViewModel(list))
+            let viewModel = DetailsListViewModel(list, router: self, repository: container.listsRepository)
+            DetailsListView(viewModel: viewModel)
         case .profile:
-            ProfileView()
+            let viewModel = ProfileViewModel(router: self, userManager: UserManager(authUser: try! container.firebaseAuthService.getAuthUser(), repository: container.userRepository), authService: container.firebaseAuthService)
+            ProfileView(viewModel: viewModel)
         case .deleteAccount:
-            DeleteAccountView()
+            let viewModel = ProfileViewModel(router: self, userManager: UserManager(authUser: try! container.firebaseAuthService.getAuthUser(), repository: container.userRepository), authService: container.firebaseAuthService)
+            DeleteAccountView(viewModel: viewModel)
         case .signUp:
-            SignUpView().environmentObject(SignUpViewModel())
+            let viewModel = SignUpViewModel(router: self, registerUserUseCase: container.registerUserUseCase)
+            SignUpView().environmentObject(viewModel)
         case .forgotPassword(let email):
-            ForgotPasswordView(with: email ?? "")
+            let viewModel = ForgotPasswordViewModel(router: self, authService: container.firebaseAuthService)
+            viewModel.dataForm.email = email ?? ""
+            ForgotPasswordView(viewModel: viewModel)
         case .forgotPasswordConfirmation:
             ForgotPasswordConfirmationView()
         case .signUpAddPhoto(let vm):

@@ -14,12 +14,20 @@ class ForgotPasswordViewModel: ObservableObject {
     @Published var showPopup: Bool = false
 
     @Published private(set) var popupData: PopupData = .init()
+    
+    private let router: AppRouter
+    private let authService: FirebaseAuthService
+    
+    init(router: AppRouter, authService: FirebaseAuthService) {
+        self.router = router
+        self.authService = authService
+    }
 
     @MainActor
     func resetPassword() async {
         do {
             isLoading = true
-            try await FirebaseAuthService.shared.resetPassword(with: dataForm.email)
+            try await authService.resetPassword(with: dataForm.email)
             isLoading = false
             navigateToForgotPasswordConfirmationView()
         } catch {
@@ -30,7 +38,7 @@ class ForgotPasswordViewModel: ObservableObject {
     }
 
     func navigateToLogin() {
-        AppRouter.shared.popToRoot()
+        router.popToRoot()
     }
 
 }
@@ -39,7 +47,7 @@ class ForgotPasswordViewModel: ObservableObject {
 extension ForgotPasswordViewModel {
 
     private func navigateToForgotPasswordConfirmationView() {
-        AppRouter.shared.navigate(to: .forgotPasswordConfirmation)
+        router.navigate(to: .forgotPasswordConfirmation)
     }
 
     private func setPopupDataError(with message: String) {

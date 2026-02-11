@@ -9,7 +9,6 @@ import Foundation
 
 class LocalImageDataSource {
     
-    static let shared = LocalImageDataSource()
     private let fileManager = FileManager.default
     
     private var documentsDirectory: URL? {

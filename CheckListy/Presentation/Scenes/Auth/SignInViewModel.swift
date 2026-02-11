@@ -21,6 +21,14 @@ class SignInViewModel: ObservableObject {
 
     var enableAppleSignIn: Bool = false
     private var cancellables = Set<AnyCancellable>()
+    
+    private let router: AppRouter
+    private let authService: FirebaseAuthService
+    
+    init(router: AppRouter, authService: FirebaseAuthService) {
+        self.router = router
+        self.authService = authService
+    }
 
     @MainActor
     func signIn(with type: SignInTypes) {
@@ -41,7 +49,7 @@ class SignInViewModel: ObservableObject {
         Task {
             do {
                 isLoading = .email
-                try await FirebaseAuthService.shared.signIn(
+                try await authService.signIn(
                     withEmail: dataForm.email,
                     password: dataForm.password
                 )
@@ -58,11 +66,15 @@ class SignInViewModel: ObservableObject {
         Task {
             do {
                 isLoading = .google
-                FirebaseAuthService.shared.isEnable = false
+                authService.isEnable = false
 
                 guard let user = try await GoogleSignInService.signIn() else { return }
 
-                let userManager = UserManager(authUser: user)
+                // Ideally UserManager should be injected too, but it creates its own repo internally or we inject it. 
+                // We'll use default for now or fix UserManager later.
+                // UserManager default init uses UserRepository default init which uses FirebaseDatabase().
+                // This is acceptable for now but not strict DI.
+                let userManager = UserManager(authUser: user) 
                 let alreadyExist = try await userManager.checkUserExistsInDataBase()
 
                 if !alreadyExist {
@@ -70,7 +82,7 @@ class SignInViewModel: ObservableObject {
                 }
 
                 isLoading = .none
-                FirebaseAuthService.shared.isEnable = true
+                authService.isEnable = true
             } catch {
                 let errorMessage = FirebaseErrorsHelper.getDescription(to: error)
                 setPopupDataError(with: errorMessage)
@@ -95,13 +107,13 @@ class SignInViewModel: ObservableObject {
 
     func navigateToSignUpView() {
         withAnimation {
-            AppRouter.shared.navigate(to: .signUp)
+            router.navigate(to: .signUp)
         }
     }
 
     func navigateToForgotPasswordView() {
         withAnimation {
-            AppRouter.shared.navigate(to: .forgotPassword(dataForm.email))
+            router.navigate(to: .forgotPassword(dataForm.email))
         }
     }
 

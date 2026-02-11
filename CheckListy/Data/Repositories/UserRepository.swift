@@ -8,9 +8,19 @@ import Firebase
 
 class UserRepository: UserRepositoryProtocol {
     
-    private let firebaseDatabase = FirebaseDatabase.shared
-    private let localImageDataSource = LocalImageDataSource.shared
-    private let remoteImageDataSource = RemoteImageDataSource.shared
+    private let firebaseDatabase: FirebaseDatabase
+    private let localImageDataSource: LocalImageDataSource
+    private let remoteImageDataSource: RemoteImageDataSource
+    
+    init(
+        firebaseDatabase: FirebaseDatabase,
+        localImageDataSource: LocalImageDataSource,
+        remoteImageDataSource: RemoteImageDataSource
+    ) {
+        self.firebaseDatabase = firebaseDatabase
+        self.localImageDataSource = localImageDataSource
+        self.remoteImageDataSource = remoteImageDataSource
+    }
     
     func fetchUser(userId: String) async throws -> UserProfile {
         let dictionary: NSDictionary = try await firebaseDatabase.getData(from: .users, with: userId)

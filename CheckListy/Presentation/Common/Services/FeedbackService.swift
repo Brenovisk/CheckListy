@@ -10,8 +10,8 @@ import AVFAudio
 import SwiftUI
 
 class FeedbackService {
-    static var shared = FeedbackService()
-    private init() {}
+    
+    init() {}
 
     var audioPlayer: AVAudioPlayer?
 

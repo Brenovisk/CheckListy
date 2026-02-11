@@ -10,7 +10,6 @@ import FirebaseStorage
 
 class RemoteImageDataSource {
     
-    static let shared = RemoteImageDataSource()
     private let storage = Storage.storage()
     
     func upload(imageData: Data, userId: String) async throws -> URL {

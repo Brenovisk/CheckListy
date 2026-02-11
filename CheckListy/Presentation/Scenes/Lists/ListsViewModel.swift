@@ -28,11 +28,11 @@ class ListsViewModel: ObservableObject {
 
     private var cancellables = Set<AnyCancellable>()
     
-    // Use Cases
+    private let router: AppRouter
     private let fetchListsUseCase: FetchListsUseCase
     private let toggleFavoriteUseCase: ToggleFavoriteUseCase
     private let updateListUseCase: UpdateListUseCase
-    private let userRepository: UserRepositoryProtocol // Keep for user specific profile logic
+    private let userRepository: UserRepositoryProtocol
 
     var filterLists: [ListModel] {
         lists.compactMap { $0 }.filter { $0.name.lowercased().contains(searchText.lowercased()) }
@@ -70,11 +70,13 @@ class ListsViewModel: ObservableObject {
 
     @MainActor
     init(
-        fetchListsUseCase: FetchListsUseCase = FetchListsUseCase(),
-        toggleFavoriteUseCase: ToggleFavoriteUseCase = ToggleFavoriteUseCase(),
-        updateListUseCase: UpdateListUseCase = UpdateListUseCase(),
-        userRepository: UserRepositoryProtocol = UserRepository()
+        router: AppRouter,
+        fetchListsUseCase: FetchListsUseCase,
+        toggleFavoriteUseCase: ToggleFavoriteUseCase,
+        updateListUseCase: UpdateListUseCase,
+        userRepository: UserRepositoryProtocol
     ) {
+        self.router = router
         self.fetchListsUseCase = fetchListsUseCase
         self.toggleFavoriteUseCase = toggleFavoriteUseCase
         self.updateListUseCase = updateListUseCase
@@ -84,7 +86,7 @@ class ListsViewModel: ObservableObject {
 
     @MainActor
     func setupDataBase() {
-        guard let user = try? FirebaseAuthService.shared.getAuthUser() else { return }
+        guard let user = try? FirebaseAuthService().getAuthUser() else { return }
         authUser = user
         subscribeToDatabaseChanges(userId: user.uid)
     }
@@ -103,18 +105,26 @@ class ListsViewModel: ObservableObject {
 
     @MainActor
     func getUserName() {
-        guard let user = try? FirebaseAuthService.shared.getAuthUser() else { return }
+        guard let user = try? FirebaseAuthService().getAuthUser() else { return }
         let userManager = UserManager(authUser: user)
         userName = userManager.getName()
     }
 
     @MainActor
     func getUserImage() async {
-        guard let user = try? FirebaseAuthService.shared.getAuthUser() else { return }
+        guard let user = try? FirebaseAuthService().getAuthUser() else { return }
         if let data = try? await userRepository.getProfileImageData(userId: user.uid),
            let image = UIImage(data: data) {
             userImage = image
         }
+    }
+    
+    func navigateToProfile() {
+        router.navigate(to: .profile)
+    }
+    
+    func navigateToDetails(list: ListModel) {
+        router.navigate(to: .details(list))
     }
 
     func toggleIsFavorite(to list: ListModel) {
@@ -158,8 +168,6 @@ class ListsViewModel: ObservableObject {
     func create(list: ListModel) {
         Task {
             do {
-                // For simplicity, reuse updateListUseCase for saving if it handles it,
-                // or create a SaveListUseCase.
                 try await updateListUseCase.execute(list: list)
             } catch {
                 print("Error creating list: \(error)")
@@ -179,12 +187,10 @@ class ListsViewModel: ObservableObject {
 
     @MainActor
     func addList(by code: String) {
-        // ... (Sharing logic placeholder)
     }
 
     @MainActor
     func delete(list: ListModel) {
-        // Logic should be moved to a DeleteListUseCase
         deleteFromRecentsIfNeeded(list: list)
     }
 

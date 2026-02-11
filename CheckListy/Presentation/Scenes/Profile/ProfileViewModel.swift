@@ -16,13 +16,23 @@ class ProfileViewModel: ObservableObject {
     @Published var dataForm: DataFormDeleteAccount = .init()
     @Published var showPopup: Bool = false
     @Published private(set) var popupData: PopupData = .init()
+    
+    private let router: AppRouter
+    private let authService: FirebaseAuthService
+    private let userRepository: UserRepositoryProtocol
+    
+    init(router: AppRouter, authService: FirebaseAuthService, userRepository: UserRepositoryProtocol) {
+        self.router = router
+        self.authService = authService
+        self.userRepository = userRepository
+    }
 
     @MainActor
     func getUserDatabase() async {
         do {
             isLoading = true
             let user = try getAuthUser()
-            let userManager = UserManager(authUser: user)
+            let userManager = UserManager(authUser: user, repository: userRepository)
 
             userDatabase = try await CheckListy.UserDatabase(
                 id: user.uid,
@@ -77,9 +87,7 @@ class ProfileViewModel: ObservableObject {
     func signOut() {
         do {
             UserDefaultsService.clearAll()
-            // Repository or Service should handle clearing data if needed.
-            // FirebaseDatabase.shared.clearData() removed to avoid direct dependency.
-            try FirebaseAuthService.shared.signOut()
+            try authService.signOut()
             deleteDocumentsDirectory()
         } catch {
             let errorMessage = FirebaseErrorsHelper.getDescription(to: error)
@@ -110,7 +118,7 @@ class ProfileViewModel: ObservableObject {
     }
 
     func navigateToDeleteAccountView() {
-        AppRouter.shared.navigate(to: .deleteAccount)
+        router.navigate(to: .deleteAccount)
     }
 
 }
@@ -129,6 +137,7 @@ extension ProfileViewModel {
     @MainActor
     private func updateImageIfNeeded(_ user: UserDatabase) async throws {
         if let image = user.profileImage, image != userDatabase?.profileImage {
+            let userManager = try getUserManager()
             try await UserManager.uploadProfile(image, for: user)
             await getUserDatabase()
         }
@@ -137,12 +146,12 @@ extension ProfileViewModel {
     @MainActor
     private func getUserManager() throws -> UserManager {
         let user = try getAuthUser()
-        return UserManager(authUser: user)
+        return UserManager(authUser: user, repository: userRepository)
     }
 
     @MainActor
     private func getAuthUser() throws -> User {
-        try FirebaseAuthService.shared.getAuthUser()
+        try authService.getAuthUser()
     }
 
     private func setPopupDataError(with message: String) {

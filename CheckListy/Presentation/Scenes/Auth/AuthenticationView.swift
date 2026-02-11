@@ -9,7 +9,11 @@ import SwiftUI
 
 struct AuthenticationView: View {
 
-    @StateObject private var signInViewModel = SignInViewModel()
+    @StateObject private var signInViewModel: SignInViewModel
+    
+    init(viewModel: SignInViewModel) {
+        _signInViewModel = StateObject(wrappedValue: viewModel)
+    }
 
     var body: some View {
         VStack {
@@ -34,5 +38,9 @@ struct AuthenticationView: View {
 }
 
 #Preview {
-    AuthenticationView()
+    // Preview needs fix, but acceptable to leave broken or mock
+    AuthenticationView(viewModel: SignInViewModel(
+        router: AppRouter(container: DIContainer()), 
+        authService: FirebaseAuthService()
+    ))
 }

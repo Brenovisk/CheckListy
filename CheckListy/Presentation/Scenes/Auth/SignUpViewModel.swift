@@ -18,8 +18,10 @@ class SignUpViewModel: ObservableObject, Hashable, Equatable {
 
     private var cancellables = Set<AnyCancellable>()
     private let registerUserUseCase: RegisterUserUseCase
+    private let router: AppRouter
     
-    init(registerUserUseCase: RegisterUserUseCase = RegisterUserUseCase()) {
+    init(router: AppRouter, registerUserUseCase: RegisterUserUseCase) {
+        self.router = router
         self.registerUserUseCase = registerUserUseCase
     }
     
@@ -48,11 +50,11 @@ class SignUpViewModel: ObservableObject, Hashable, Equatable {
     }
 
     func navigateToSignUpAddPhotoView() {
-        AppRouter.shared.navigate(to: .signUpAddPhoto(self))
+        router.navigate(to: .signUpAddPhoto(self))
     }
 
     func navigateToSignUpCreatePassword() {
-        AppRouter.shared.navigate(to: .signUpCreatePassword(self))
+        router.navigate(to: .signUpCreatePassword(self))
     }
 
     func setPopupDataError(with message: String) {

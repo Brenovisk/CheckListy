@@ -13,6 +13,7 @@ import SwiftUI
 class DetailsListViewModel: ObservableObject {
 
     private let repository: ListsRepositoryProtocol
+    private let router: AppRouter
     private var cancellables = Set<AnyCancellable>()
 
     @Published var itemToEdit: ListItemModel?
@@ -32,8 +33,9 @@ class DetailsListViewModel: ObservableObject {
     }
 
     @MainActor
-    init(_ list: ListModel, repository: ListsRepositoryProtocol = ListsRepository()) {
+    init(_ list: ListModel, router: AppRouter, repository: ListsRepositoryProtocol) {
         self.list = list
+        self.router = router
         self.repository = repository
         setup(to: list)
         subscribeToDatabaseChanges()
@@ -158,8 +160,6 @@ class DetailsListViewModel: ObservableObject {
         guard let index = getIndex(of: item) else { return }
         var updatedItem = list.items[index]
         updatedItem.isCheck = isCheck
-        // We need to update the item in the list
-        // Reuse update(item) which handles finding index again, or modify here
         update(updatedItem)
     }
 
@@ -212,8 +212,8 @@ class DetailsListViewModel: ObservableObject {
     }
 
     private func executeFeedbacks() {
-        FeedbackService.shared.provideHapticFeedback()
-        FeedbackService.shared.playCheckSoundFeedback()
+        FeedbackService().provideHapticFeedback() // Using instance instead of shared
+        FeedbackService().playCheckSoundFeedback()
     }
 
 }

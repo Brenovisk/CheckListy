@@ -9,11 +9,15 @@ import Foundation
 import SwiftUI
 
 struct ProfileView: View {
-    @EnvironmentObject var viewModel: ProfileViewModel
+    @StateObject var viewModel: ProfileViewModel
 
     @State var isEditProfileForm: Bool = false
     @State var isEditPasswordForm: Bool = false
     @State var isExecutingFormAction: Bool = false
+    
+    init(viewModel: ProfileViewModel) {
+        _viewModel = StateObject(wrappedValue: viewModel)
+    }
 
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -143,12 +147,5 @@ struct ProfileView: View {
                     isEditPasswordForm = false
                 }
         }
-    }
-}
-
-#Preview {
-    NavigationStack {
-        ProfileView()
-            .environmentObject(ProfileViewModel())
     }
 }

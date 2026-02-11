@@ -9,7 +9,11 @@ import SwiftUI
 
 struct DeleteAccountView: View {
 
-    @EnvironmentObject var viewModel: ProfileViewModel
+    @StateObject var viewModel: ProfileViewModel
+    
+    init(viewModel: ProfileViewModel) {
+        _viewModel = StateObject(wrappedValue: viewModel)
+    }
 
     var body: some View {
         VStack(spacing: 24) {
@@ -47,11 +51,4 @@ struct DeleteAccountView: View {
             .frame(width: 250, height: 250)
     }
 
-}
-
-#Preview {
-    NavigationStack {
-        DeleteAccountView()
-            .environmentObject(ProfileViewModel())
-    }
 }

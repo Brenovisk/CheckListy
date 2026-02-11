@@ -14,14 +14,12 @@ import UIKit
 @MainActor
 class FirebaseAuthService: ObservableObject {
 
-    static let shared = FirebaseAuthService()
-
     var auth: Auth = .auth()
 
     @Published var isSignIn: Bool?
     @Published var isEnable: Bool = true
 
-    private init() {
+    init() {
         addListenerUserState()
     }
 
@@ -44,15 +42,14 @@ class FirebaseAuthService: ObservableObject {
     }
 
     @MainActor
-    func signUp(withEmail email: String, password: String, name: String, uiImage: UIImage?, createFirebaseUser _: Bool = true, completion: (Bool) -> Void) async throws {
+    func signUp(withEmail email: String, password: String) async throws -> User {
         do {
             isEnable = false
             let authDataResult = try await auth.createUser(withEmail: email, password: password)
-            let manager = UserManager(authUser: authDataResult.user)
-            try await manager.storeDataBase(with: name, and: uiImage)
-            completion(false)
             isEnable = true
+            return authDataResult.user
         } catch {
+            isEnable = true
             throw error
         }
     }

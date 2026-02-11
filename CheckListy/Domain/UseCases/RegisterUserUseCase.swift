@@ -5,24 +5,26 @@
 
 import Foundation
 import UIKit
+import Firebase
 
 class RegisterUserUseCase {
     private let authService: FirebaseAuthService
-    // Ideally we would inject UserRepository here too if we extracted the profile creation logic 
-    // out of FirebaseAuthService. For now, we wrap the existing service call.
+    private let userRepository: UserRepositoryProtocol
     
-    init(authService: FirebaseAuthService = FirebaseAuthService.shared) {
+    init(authService: FirebaseAuthService, userRepository: UserRepositoryProtocol) {
         self.authService = authService
+        self.userRepository = userRepository
     }
     
     @MainActor
     func execute(data: DataFormSignUp, completion: @escaping (Bool) -> Void) async throws {
-        try await authService.signUp(
+        let user = try await authService.signUp(
             withEmail: data.email,
-            password: data.password,
-            name: data.name,
-            uiImage: data.uiImage,
-            completion: completion
+            password: data.password
         )
+        
+        let manager = UserManager(authUser: user, repository: userRepository)
+        try await manager.storeDataBase(with: data.name, and: data.uiImage)
+        completion(false)
     }
 }

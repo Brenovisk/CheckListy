@@ -13,8 +13,6 @@ import SwiftUI
 
 class FirebaseDatabase {
 
-    static let shared = FirebaseDatabase()
-
     var databaseRef: DatabaseReference!
 
     var data: [ListModel?] = [] {

@@ -12,7 +12,14 @@ import SwiftUI
 struct CheckListyApp: App {
 
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
-    @StateObject private var router = AppRouter.shared
+    @StateObject private var container = DIContainer()
+    @StateObject private var router: AppRouter
+    
+    init() {
+        let container = DIContainer()
+        _container = StateObject(wrappedValue: container)
+        _router = StateObject(wrappedValue: AppRouter(container: container))
+    }
 
     var body: some Scene {
         WindowGroup {
@@ -20,9 +27,15 @@ struct CheckListyApp: App {
                 Group {
                     switch router.root {
                     case .main:
-                        MainView()
+                        MainView(viewModel: ListsViewModel(
+                            router: router,
+                            fetchListsUseCase: container.fetchListsUseCase,
+                            toggleFavoriteUseCase: container.toggleFavoriteUseCase,
+                            updateListUseCase: container.updateListUseCase,
+                            userRepository: container.userRepository
+                        ))
                     case .auth:
-                        AuthenticationView()
+                        AuthenticationView(viewModel: SignInViewModel(router: router, authService: container.firebaseAuthService))
                     default:
                         SplashView()
                     }

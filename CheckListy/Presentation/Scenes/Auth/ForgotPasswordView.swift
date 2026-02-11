@@ -10,14 +10,12 @@ import SwiftUI
 
 struct ForgotPasswordView: View, KeyboardReadable {
 
-    @EnvironmentObject private var viewModel: ForgotPasswordViewModel
+    @StateObject var viewModel: ForgotPasswordViewModel
     @State var isShowKeyboard = false
     @State var scrollOffset: CGFloat = 0
 
-    var email: String
-
-    init(with email: String) {
-        self.email = email
+    init(viewModel: ForgotPasswordViewModel) {
+        _viewModel = StateObject(wrappedValue: viewModel)
         UITextField.appearance().clearButtonMode = .whileEditing
     }
 
@@ -68,9 +66,6 @@ struct ForgotPasswordView: View, KeyboardReadable {
                 isShowKeyboard = value
             }
         }
-        .onAppear {
-            viewModel.dataForm.email = self.email
-        }
     }
 
 }
@@ -80,9 +75,4 @@ extension ForgotPasswordView {
 
     typealias Texts = TextsHelper
 
-}
-
-#Preview {
-    ForgotPasswordView(with: String())
-        .environmentObject(ForgotPasswordViewModel())
 }

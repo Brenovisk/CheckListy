@@ -9,7 +9,11 @@ import FirebaseDatabase
 
 class ListsRepository: ListsRepositoryProtocol {
     
-    private let firebaseDatabase = FirebaseDatabase.shared
+    private let firebaseDatabase: FirebaseDatabase
+    
+    init(firebaseDatabase: FirebaseDatabase) {
+        self.firebaseDatabase = firebaseDatabase
+    }
     
     func observeLists(userId: String) -> AnyPublisher<[ListModel], Never> {
         firebaseDatabase.observeUserLists(userId: userId)

@@ -15,7 +15,7 @@ class UserManager {
     var authUser: User
     private let repository: UserRepositoryProtocol
 
-    init(authUser: User, repository: UserRepositoryProtocol = UserRepository()) {
+    init(authUser: User, repository: UserRepositoryProtocol) {
         self.authUser = authUser
         self.repository = repository
     }
@@ -23,7 +23,6 @@ class UserManager {
     func update(name: String, of user: UserDatabase) async throws {
         try await UserService.update(authUser, displayName: name)
 
-        // Map to Domain Entity
         let userProfile = UserProfile(
             id: user.id,
             name: name,
@@ -40,9 +39,6 @@ class UserManager {
     func removeUserData(with password: String) async throws {
         try await UserService.reauthtenticateWithFirebaseAuth(authUser, with: password)
         try await UserService.removeLists(of: authUser)
-        // Remove local image
-        // We might need a delete method in Repository, for now assume save nil or handle externally
-        // try await repository.deleteProfileImage(userId: authUser.uid) 
         
         try await UserService.removeFromDataBase(authUser)
         try await UserService.removeFromFirebaseAuth(authUser)
@@ -63,13 +59,9 @@ class UserManager {
         }
     }
 
-    static func uploadProfile(_ image: UIImage, for user: UserDatabase) async throws {
-        // Static method is hard to inject repo. 
-        // We should instantiate a default repo or change to instance method.
-        // Changing to use default UserRepository for now.
-        let repo = UserRepository()
+    func uploadProfile(_ image: UIImage, for user: UserDatabase) async throws {
         if let data = image.jpegData(compressionQuality: 0.8) {
-            try await repo.saveProfileImage(imageData: data, userId: user.id)
+            try await repository.saveProfileImage(imageData: data, userId: user.id)
         }
     }
 
@@ -81,7 +73,6 @@ class UserManager {
     }
 
     func getUrlProfileImage() async throws -> URL? {
-        // Deprecated: We use local images now. Return nil or local file URL.
         return nil 
     }
 
@@ -116,7 +107,6 @@ class UserManager {
     }
 
     func checkUserExistsInDataBase() async throws -> Bool {
-        // We can check if we can fetch the user
         do {
             _ = try await repository.fetchUser(userId: authUser.uid)
             return true
