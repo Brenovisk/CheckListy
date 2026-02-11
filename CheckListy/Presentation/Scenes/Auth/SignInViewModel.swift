@@ -95,13 +95,13 @@ class SignInViewModel: ObservableObject {
 
     func navigateToSignUpView() {
         withAnimation {
-            NavigationService.shared.navigateTo(.signUpView)
+            AppRouter.shared.navigate(to: .signUp)
         }
     }
 
     func navigateToForgotPasswordView() {
         withAnimation {
-            NavigationService.shared.navigateTo(.forgotPasswordView(dataForm.email))
+            AppRouter.shared.navigate(to: .forgotPassword(dataForm.email))
         }
     }
 

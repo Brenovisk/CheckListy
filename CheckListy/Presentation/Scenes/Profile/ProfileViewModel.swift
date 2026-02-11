@@ -110,7 +110,7 @@ class ProfileViewModel: ObservableObject {
     }
 
     func navigateToDeleteAccountView() {
-        NavigationService.shared.navigateTo(.deleteAccountView)
+        AppRouter.shared.navigate(to: .deleteAccount)
     }
 
 }

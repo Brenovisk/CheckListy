@@ -36,7 +36,7 @@ struct ListsView: View {
                         await viewModel.getUserImage()
                     }
                     .onTapGesture {
-                        NavigationService.shared.navigateTo(.profileView)
+                        AppRouter.shared.navigate(to: .profile)
                     }
                     .padding(.vertical, 24)
 
@@ -315,7 +315,7 @@ extension ListsView {
     }
 
     private func handleRedirect(_ list: ListModel) {
-        NavigationService.shared.navigateTo(.detailsListView(list: list))
+        AppRouter.shared.navigate(to: .details(list))
     }
 
     private func handleOnFavorite(_ list: ListModel) {

@@ -100,12 +100,6 @@ extension FirebaseAuthService {
 
         Auth.auth(app: app).addStateDidChangeListener { _, user in
             Task { @MainActor in
-                if user != nil {
-                    NavigationService.shared.resetNavigation()
-                } else {
-                    NavigationService.shared.resetNavigationAuth()
-                }
-
                 self.isSignIn = (user != nil)
             }
         }

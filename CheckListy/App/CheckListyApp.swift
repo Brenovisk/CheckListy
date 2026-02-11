@@ -12,28 +12,26 @@ import SwiftUI
 struct CheckListyApp: App {
 
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
-    @StateObject private var firebaseAuthService = FirebaseAuthService.shared
+    @StateObject private var router = AppRouter.shared
 
     var body: some Scene {
         WindowGroup {
-            content()
-                .preferredColorScheme(.dark)
-        }
-    }
-
-}
-
-extension CheckListyApp {
-
-    @ViewBuilder
-    private func content() -> some View {
-        switch firebaseAuthService.authenticationState {
-        case .authenticated:
-            MainView()
-        case .unauthenticated:
-            AuthenticationView()
-        case .loading:
-            ProgressView()
+            NavigationStack(path: $router.path) {
+                Group {
+                    switch router.root {
+                    case .main:
+                        MainView()
+                    case .auth:
+                        AuthenticationView()
+                    default:
+                        SplashView()
+                    }
+                }
+                .navigationDestination(for: AppRoute.self) { route in
+                    router.view(for: route)
+                }
+            }
+            .preferredColorScheme(.dark)
         }
     }
 

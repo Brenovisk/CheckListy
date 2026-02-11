@@ -30,7 +30,7 @@ class ForgotPasswordViewModel: ObservableObject {
     }
 
     func navigateToLogin() {
-        NavigationService.shared.resetNavigationAuth()
+        AppRouter.shared.popToRoot()
     }
 
 }
@@ -39,7 +39,7 @@ class ForgotPasswordViewModel: ObservableObject {
 extension ForgotPasswordViewModel {
 
     private func navigateToForgotPasswordConfirmationView() {
-        NavigationService.shared.navigateTo(.forgotPasswordConfirmationView)
+        AppRouter.shared.navigate(to: .forgotPasswordConfirmation)
     }
 
     private func setPopupDataError(with message: String) {

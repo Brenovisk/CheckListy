@@ -9,7 +9,7 @@ import Combine
 import Foundation
 import UIKit
 
-class SignUpViewModel: ObservableObject {
+class SignUpViewModel: ObservableObject, Hashable, Equatable {
 
     @Published var isLoading: Bool = false
     @Published var dataForm: DataFormSignUp = .init()
@@ -17,19 +17,27 @@ class SignUpViewModel: ObservableObject {
     @Published private(set) var popupData: PopupData = .init()
 
     private var cancellables = Set<AnyCancellable>()
+    private let registerUserUseCase: RegisterUserUseCase
+    
+    init(registerUserUseCase: RegisterUserUseCase = RegisterUserUseCase()) {
+        self.registerUserUseCase = registerUserUseCase
+    }
+    
+    static func == (lhs: SignUpViewModel, rhs: SignUpViewModel) -> Bool {
+        ObjectIdentifier(lhs) == ObjectIdentifier(rhs)
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(ObjectIdentifier(self))
+    }
 
     @MainActor
     func signUp() {
         Task {
             do {
                 isLoading = true
-                try await FirebaseAuthService.shared.signUp(
-                    withEmail: dataForm.email,
-                    password: dataForm.password,
-                    name: dataForm.name,
-                    uiImage: dataForm.uiImage
-                ) { isDone in
-                    isLoading = isDone
+                try await registerUserUseCase.execute(data: dataForm) { [weak self] isDone in
+                    self?.isLoading = isDone
                 }
             } catch {
                 let errorMessage = FirebaseErrorsHelper.getDescription(to: error)
@@ -40,11 +48,11 @@ class SignUpViewModel: ObservableObject {
     }
 
     func navigateToSignUpAddPhotoView() {
-        NavigationService.shared.navigateTo(.signUpAddPhotoView)
+        AppRouter.shared.navigate(to: .signUpAddPhoto(self))
     }
 
     func navigateToSignUpCreatePassword() {
-        NavigationService.shared.navigateTo(.signUpCreatePasswordView)
+        AppRouter.shared.navigate(to: .signUpCreatePassword(self))
     }
 
     func setPopupDataError(with message: String) {
