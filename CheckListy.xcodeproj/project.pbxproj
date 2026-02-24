@@ -61,7 +61,6 @@
 		140392D12F3CEB2300E9AD66 /* SlideOnAppearModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140392982F3CEB2300E9AD66 /* SlideOnAppearModifier.swift */; };
 		140392D22F3CEB2300E9AD66 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140392562F3CEB2300E9AD66 /* ImagePicker.swift */; };
 		140392D32F3CEB2300E9AD66 /* UpdateListUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140392532F3CEB2300E9AD66 /* UpdateListUseCase.swift */; };
-		140392D42F3CEB2300E9AD66 /* SpeechRecognizerUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140392512F3CEB2300E9AD66 /* SpeechRecognizerUseCase.swift */; };
 		140392D52F3CEB2300E9AD66 /* ListsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140392B42F3CEB2300E9AD66 /* ListsViewModel.swift */; };
 		140392D62F3CEB2300E9AD66 /* ValidationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1403924C2F3CEB2300E9AD66 /* ValidationService.swift */; };
 		140392D72F3CEB2300E9AD66 /* StartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140392AE2F3CEB2300E9AD66 /* StartView.swift */; };
@@ -223,7 +222,6 @@
 		1403924D2F3CEB2300E9AD66 /* ValidatorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidatorProtocol.swift; sourceTree = "<group>"; };
 		1403924F2F3CEB2300E9AD66 /* FetchListsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchListsUseCase.swift; sourceTree = "<group>"; };
 		140392502F3CEB2300E9AD66 /* RegisterUserUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterUserUseCase.swift; sourceTree = "<group>"; };
-		140392512F3CEB2300E9AD66 /* SpeechRecognizerUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechRecognizerUseCase.swift; sourceTree = "<group>"; };
 		140392522F3CEB2300E9AD66 /* ToggleFavoriteUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleFavoriteUseCase.swift; sourceTree = "<group>"; };
 		140392532F3CEB2300E9AD66 /* UpdateListUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateListUseCase.swift; sourceTree = "<group>"; };
 		140392562F3CEB2300E9AD66 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
@@ -536,7 +534,6 @@
 			children = (
 				1403924F2F3CEB2300E9AD66 /* FetchListsUseCase.swift */,
 				140392502F3CEB2300E9AD66 /* RegisterUserUseCase.swift */,
-				140392512F3CEB2300E9AD66 /* SpeechRecognizerUseCase.swift */,
 				140392522F3CEB2300E9AD66 /* ToggleFavoriteUseCase.swift */,
 				140392532F3CEB2300E9AD66 /* UpdateListUseCase.swift */,
 			);
@@ -1057,7 +1054,6 @@
 				140392D12F3CEB2300E9AD66 /* SlideOnAppearModifier.swift in Sources */,
 				140392D22F3CEB2300E9AD66 /* ImagePicker.swift in Sources */,
 				140392D32F3CEB2300E9AD66 /* UpdateListUseCase.swift in Sources */,
-				140392D42F3CEB2300E9AD66 /* SpeechRecognizerUseCase.swift in Sources */,
 				140392D52F3CEB2300E9AD66 /* ListsViewModel.swift in Sources */,
 				140392D62F3CEB2300E9AD66 /* ValidationService.swift in Sources */,
 				140392D72F3CEB2300E9AD66 /* StartView.swift in Sources */,

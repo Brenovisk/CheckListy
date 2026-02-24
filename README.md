@@ -71,7 +71,8 @@ You can explore the design file or prototype below:
 - [x] **Google Sign-In**
 - [x] **Combine** with `@PropertyWrapper` for reactivity
 - [x] **Speech Framework** (Apple) for voice recognition
-- [x] **RealmSwift** (only for local photo cache)
+- [x] **RealmSwift
+- [ ] ** (only for local photo cache)
 - [x] **Offline Persistence + Auto-Sync**
 - [x] Modern navigation with `navigationDestination`
 
