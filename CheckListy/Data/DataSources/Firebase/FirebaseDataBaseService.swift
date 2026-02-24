@@ -66,7 +66,7 @@ class FirebaseDatabase {
     func getData<T: ConvertibleDictionary>(from path: Paths, with childId: String) async throws -> T {
         return try await withCheckedThrowingContinuation { continuation in
 
-            self.databaseRef.child(path.description).child(childId).observeSingleEvent(of: .value) { snapshot, _ in
+            self.databaseRef.child(path.description).child(childId).observeSingleEvent(of: .value) { snapshot in
                 guard let value = snapshot.value as? NSDictionary else {
                     continuation.resume(throwing: DataError.fetchError)
                     return
@@ -83,7 +83,7 @@ class FirebaseDatabase {
 
     func getRawData(from path: Paths, with childId: String) async throws -> NSDictionary {
         return try await withCheckedThrowingContinuation { continuation in
-            self.databaseRef.child(path.description).child(childId).observeSingleEvent(of: .value) { snapshot, _ in
+            self.databaseRef.child(path.description).child(childId).observeSingleEvent(of: .value) { snapshot in
                 guard let value = snapshot.value as? NSDictionary else {
                     continuation.resume(throwing: DataError.fetchError)
                     return
@@ -95,7 +95,7 @@ class FirebaseDatabase {
 
     func checkIfItemExist(with id: String, in table: Paths) async throws -> Bool {
         return try await withCheckedThrowingContinuation { continuation in
-            databaseRef.child(table.description).child(id).observeSingleEvent(of: .value) { snapshot, _ in
+            databaseRef.child(table.description).child(id).observeSingleEvent(of: .value) { snapshot in
                 if snapshot.exists() {
                     continuation.resume(returning: true)
                 } else {

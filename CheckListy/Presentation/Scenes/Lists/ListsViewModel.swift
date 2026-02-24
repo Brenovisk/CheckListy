@@ -182,12 +182,14 @@ class ListsViewModel: ObservableObject {
         Task {
             do {
                 try await updateListUseCase.execute(list: list)
+                try await appendListToUser(listId: list.id.uuidString)
             } catch {
                 print("Error creating list: \(error)")
             }
         }
     }
 
+    @MainActor
     func update(list: ListModel) {
         Task {
             do {
@@ -243,5 +245,16 @@ extension ListsViewModel {
         var persistedRecentLists = getRecentsListId()
         persistedRecentLists.removeAll { $0 == list.id.uuidString }
         UserDefaultsService.save(.recents, persistedRecentLists)
+    }
+    
+    @MainActor
+    private func appendListToUser(listId: String) async throws {
+        guard let user = try? authService.getAuthUser() else { return }
+        var userProfile = try await userRepository.fetchUser(userId: user.uid)
+        
+        if !userProfile.lists.contains(listId) {
+            userProfile.lists.append(listId)
+            try await userRepository.saveUser(userProfile)
+        }
     }
 }
