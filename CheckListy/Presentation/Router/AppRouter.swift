@@ -70,17 +70,19 @@ class AppRouter: ObservableObject {
     func view(for route: AppRoute) -> some View {
         switch route {
         case .splash:
-            SplashView()
+            SplashView(expand: true)
         case .auth:
             let viewModel = SignInViewModel(
                 router: self,
                 authService: container.firebaseAuthService,
-                userRepository: container.userRepository
+                userRepository: container.userRepository,
+                userService: container.userService
             )
             AuthenticationView(viewModel: viewModel)
         case .main:
             let viewModel = ListsViewModel(
                 router: self,
+                authService: container.firebaseAuthService,
                 fetchListsUseCase: container.fetchListsUseCase,
                 toggleFavoriteUseCase: container.toggleFavoriteUseCase,
                 updateListUseCase: container.updateListUseCase,
@@ -94,22 +96,27 @@ class AppRouter: ObservableObject {
             let viewModel = ProfileViewModel(
                 router: self,
                 authService: container.firebaseAuthService,
-                userRepository: container.userRepository
+                userRepository: container.userRepository,
+                userService: container.userService
             )
             ProfileView(viewModel: viewModel)
         case .deleteAccount:
             let viewModel = ProfileViewModel(
                 router: self,
                 authService: container.firebaseAuthService,
-                userRepository: container.userRepository
+                userRepository: container.userRepository,
+                userService: container.userService
             )
             DeleteAccountView(viewModel: viewModel)
         case .signUp:
             let viewModel = SignUpViewModel(router: self, registerUserUseCase: container.registerUserUseCase)
             SignUpView().environmentObject(viewModel)
         case .forgotPassword(let email):
-            let viewModel = ForgotPasswordViewModel(router: self, authService: container.firebaseAuthService)
-            viewModel.dataForm.email = email ?? ""
+            let viewModel = {
+                let vm = ForgotPasswordViewModel(router: self, authService: container.firebaseAuthService)
+                vm.dataForm.email = email ?? ""
+                return vm
+            }()
             ForgotPasswordView(viewModel: viewModel)
         case .forgotPasswordConfirmation:
             ForgotPasswordConfirmationView()

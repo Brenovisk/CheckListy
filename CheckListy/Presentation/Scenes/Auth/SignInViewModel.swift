@@ -25,11 +25,13 @@ class SignInViewModel: ObservableObject {
     private let router: AppRouter
     private let authService: FirebaseAuthService
     private let userRepository: UserRepositoryProtocol
+    private let userService: UserService
     
-    init(router: AppRouter, authService: FirebaseAuthService, userRepository: UserRepositoryProtocol) {
+    init(router: AppRouter, authService: FirebaseAuthService, userRepository: UserRepositoryProtocol, userService: UserService) {
         self.router = router
         self.authService = authService
         self.userRepository = userRepository
+        self.userService = userService
     }
 
     @MainActor
@@ -89,7 +91,7 @@ class SignInViewModel: ObservableObject {
                         lists: []
                     )
                     try await userRepository.saveUser(userProfile)
-                    try await UserService.update(user, displayName: user.displayName ?? "")
+                    try await userService.update(user, displayName: user.displayName ?? "")
                 }
 
                 isLoading = .none
@@ -116,12 +118,14 @@ class SignInViewModel: ObservableObject {
         }
     }
 
+    @MainActor
     func navigateToSignUpView() {
         withAnimation {
             router.navigate(to: .signUp)
         }
     }
 
+    @MainActor
     func navigateToForgotPasswordView() {
         withAnimation {
             router.navigate(to: .forgotPassword(dataForm.email))

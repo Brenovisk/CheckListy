@@ -13,8 +13,8 @@ import SwiftUI
 class DetailsListViewModel: ObservableObject {
 
     private let repository: ListsRepositoryProtocol
-    private let router: AppRouter
     private var cancellables = Set<AnyCancellable>()
+    let router: AppRouter
 
     @Published var itemToEdit: ListItemModel?
     @Published var sectionSelected: String = .init()

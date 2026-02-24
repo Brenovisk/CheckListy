@@ -42,6 +42,7 @@ struct AuthenticationView: View {
     return AuthenticationView(viewModel: SignInViewModel(
         router: AppRouter(container: container),
         authService: container.firebaseAuthService,
-        userRepository: container.userRepository
+        userRepository: container.userRepository,
+        userService: container.userService
     ))
 }

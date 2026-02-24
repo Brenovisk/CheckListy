@@ -37,6 +37,7 @@ class ForgotPasswordViewModel: ObservableObject {
         }
     }
 
+    @MainActor
     func navigateToLogin() {
         router.popToRoot()
     }
@@ -46,6 +47,7 @@ class ForgotPasswordViewModel: ObservableObject {
 // MARK: - Helper Methods
 extension ForgotPasswordViewModel {
 
+    @MainActor
     private func navigateToForgotPasswordConfirmationView() {
         router.navigate(to: .forgotPasswordConfirmation)
     }

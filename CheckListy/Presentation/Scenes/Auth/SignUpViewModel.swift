@@ -49,10 +49,12 @@ class SignUpViewModel: ObservableObject, Hashable, Equatable {
         }
     }
 
+    @MainActor
     func navigateToSignUpAddPhotoView() {
         router.navigate(to: .signUpAddPhoto(self))
     }
 
+    @MainActor
     func navigateToSignUpCreatePassword() {
         router.navigate(to: .signUpCreatePassword(self))
     }

@@ -13,10 +13,6 @@ struct ForgotPasswordConfirmationView: View {
     @EnvironmentObject private var viewModel: ForgotPasswordViewModel
     @State var isShowKeyboard = false
 
-    init() {
-        UITextField.appearance().clearButtonMode = .whileEditing
-    }
-
     var body: some View {
         MessageWithImageView(
             image: Images.messageReceivedVector.image,

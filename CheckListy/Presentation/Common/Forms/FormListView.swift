@@ -27,6 +27,7 @@ struct FormListView: View {
     var onSave: ((ListModel) -> Void)?
     var onSaveByCode: ((String) -> Void)?
     var onClose: (() -> Void)?
+    let authService: FirebaseAuthService
 
     let colors: [String] = ["red-app", "green-app", "blue-app", "yellow-app", "purple-app"]
 
@@ -43,8 +44,8 @@ struct FormListView: View {
         "leaf.fill"
     ]
 
-    private init(item: Binding<ListModel?>, onSave: ((ListModel) -> Void)?, onClose: (() -> Void)?, onSaveByCode: ((String) -> Void)?) {
-        self.init(item: item)
+    private init(item: Binding<ListModel?>, authService: FirebaseAuthService, onSave: ((ListModel) -> Void)?, onClose: (() -> Void)?, onSaveByCode: ((String) -> Void)?) {
+        self.init(item: item, authService: authService)
         self.onSave = onSave
         self.onClose = onClose
         self.onSaveByCode = onSaveByCode
@@ -52,13 +53,14 @@ struct FormListView: View {
         UITextField.appearance().clearButtonMode = .whileEditing
     }
 
-    init(item: Binding<ListModel?>) {
+    init(item: Binding<ListModel?>, authService: FirebaseAuthService) {
         _item = item
         _id = State(initialValue: item.wrappedValue?.id ?? UUID())
         _name = State(initialValue: item.wrappedValue?.name ?? "")
         _selectedColor = State(initialValue: item.wrappedValue?.color ?? "red-app")
         _selectedIcon = State(initialValue: item.wrappedValue?.icon ?? "house")
         _items = State(initialValue: item.wrappedValue?.items ?? [])
+        self.authService = authService
     }
 
     var body: some View {
@@ -122,7 +124,7 @@ struct FormListView: View {
                     },
                     trailing:
                     Button(action: {
-                        guard let user = try? FirebaseAuthService.shared.getAuthUser() else { return }
+                        guard let user = try? authService.getAuthUser() else { return }
                         if listCode.isEmpty {
                             let newItem = ListModel(
                                 id: id,
@@ -155,6 +157,7 @@ extension FormListView {
     func onSave(action: ((ListModel) -> Void)?) -> FormListView {
         FormListView(
             item: $item,
+            authService: authService,
             onSave: action,
             onClose: onClose,
             onSaveByCode: onSaveByCode
@@ -164,6 +167,7 @@ extension FormListView {
     func onClose(action: (() -> Void)?) -> FormListView {
         FormListView(
             item: $item,
+            authService: authService,
             onSave: onSave,
             onClose: action,
             onSaveByCode: onSaveByCode
@@ -173,6 +177,7 @@ extension FormListView {
     func onSaveByCode(action: ((String) -> Void)?) -> FormListView {
         FormListView(
             item: $item,
+            authService: authService,
             onSave: onSave,
             onClose: onClose,
             onSaveByCode: action
@@ -183,6 +188,6 @@ extension FormListView {
 
 #Preview {
     NavigationView {
-        FormListView(item: Binding.constant(nil))
+        FormListView(item: Binding.constant(nil), authService: FirebaseAuthService())
     }
 }

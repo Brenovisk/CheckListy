@@ -16,19 +16,21 @@ struct RecordButton: View {
     @State private var showTranscript: Bool = false
 
     var color: Color = .primary
+    var feedbackService: FeedbackService
     var onStartRecord: (() -> Void)?
     var onEndRecord: (() -> Void)?
 
-    private init(transcript: Binding<String>, isPressed: Binding<Bool>, color: Color = .primary, onStartRecord: (() -> Void)?, onEndRecord: (() -> Void)?) {
-        self.init(transcript: transcript, isPressed: isPressed, color: color)
+    private init(transcript: Binding<String>, isPressed: Binding<Bool>, color: Color = .primary, feedbackService: FeedbackService, onStartRecord: (() -> Void)?, onEndRecord: (() -> Void)?) {
+        self.init(transcript: transcript, isPressed: isPressed, color: color, feedbackService: feedbackService)
         self.onStartRecord = onStartRecord
         self.onEndRecord = onEndRecord
     }
 
-    init(transcript: Binding<String>, isPressed: Binding<Bool>, color: Color = .primary) {
+    init(transcript: Binding<String>, isPressed: Binding<Bool>, color: Color = .primary, feedbackService: FeedbackService) {
         _transcript = transcript
         _isPressed = isPressed
         self.color = color
+        self.feedbackService = feedbackService
     }
 
     var body: some View {
@@ -93,12 +95,12 @@ extension RecordButton {
         onStartRecord?()
         showTranscript = true
         resetTimer()
-        FeedbackService.shared.provideHapticFeedback()
+        feedbackService.provideHapticFeedback()
     }
 
     private func stopRecording() {
         onEndRecord?()
-        FeedbackService.shared.provideHapticFeedback()
+        feedbackService.provideHapticFeedback()
     }
 
     private func setupTimer() {
@@ -123,6 +125,7 @@ extension RecordButton {
             transcript: $transcript,
             isPressed: $isPressed,
             color: color,
+            feedbackService: feedbackService,
             onStartRecord: action,
             onEndRecord: onEndRecord
         )
@@ -133,6 +136,7 @@ extension RecordButton {
             transcript: $transcript,
             isPressed: $isPressed,
             color: color,
+            feedbackService: feedbackService,
             onStartRecord: onStartRecord,
             onEndRecord: action
         )
@@ -140,5 +144,5 @@ extension RecordButton {
 }
 
 #Preview {
-    RecordButton(transcript: Binding.constant("Teste"), isPressed: Binding.constant(false))
+    RecordButton(transcript: Binding.constant("Teste"), isPressed: Binding.constant(false), feedbackService: FeedbackService())
 }

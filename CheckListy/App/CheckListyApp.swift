@@ -28,16 +28,21 @@ struct CheckListyApp: App {
                     switch router.root {
                     case .main:
                         MainView(viewModel: ListsViewModel(
-                            router: router,
+                            router: router, authService: container.firebaseAuthService,
                             fetchListsUseCase: container.fetchListsUseCase,
                             toggleFavoriteUseCase: container.toggleFavoriteUseCase,
                             updateListUseCase: container.updateListUseCase,
                             userRepository: container.userRepository
                         ))
                     case .auth:
-                        AuthenticationView(viewModel: SignInViewModel(router: router, authService: container.firebaseAuthService))
+                        AuthenticationView(viewModel: SignInViewModel(
+                            router: router,
+                            authService: container.firebaseAuthService,
+                            userRepository: container.userRepository,
+                            userService: container.userService
+                        ))
                     default:
-                        SplashView()
+                        SplashView(expand: true)
                     }
                 }
                 .navigationDestination(for: AppRoute.self) { route in

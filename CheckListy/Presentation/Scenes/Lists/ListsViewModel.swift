@@ -29,8 +29,8 @@ class ListsViewModel: ObservableObject {
 
     private var cancellables = Set<AnyCancellable>()
     
-    private let router: AppRouter
-    private let authService: FirebaseAuthService
+    let router: AppRouter
+    let authService: FirebaseAuthService
     private let fetchListsUseCase: FetchListsUseCase
     private let toggleFavoriteUseCase: ToggleFavoriteUseCase
     private let updateListUseCase: UpdateListUseCase

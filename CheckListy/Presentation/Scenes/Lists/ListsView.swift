@@ -83,7 +83,7 @@ struct ListsView: View {
             }
         }
         .sheet(isPresented: $showCreateListForm) {
-            FormListView(item: $viewModel.listToEdit)
+            FormListView(item: $viewModel.listToEdit, authService: viewModel.authService)
                 .onSave { newList in
                     handleOnSave(list: newList)
                 }

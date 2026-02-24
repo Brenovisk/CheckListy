@@ -20,11 +20,13 @@ class ProfileViewModel: ObservableObject {
     private let router: AppRouter
     private let authService: FirebaseAuthService
     private let userRepository: UserRepositoryProtocol
+    private let userService: UserService
     
-    init(router: AppRouter, authService: FirebaseAuthService, userRepository: UserRepositoryProtocol) {
+    init(router: AppRouter, authService: FirebaseAuthService, userRepository: UserRepositoryProtocol, userService: UserService) {
         self.router = router
         self.authService = authService
         self.userRepository = userRepository
+        self.userService = userService
     }
 
     @MainActor
@@ -56,7 +58,7 @@ class ProfileViewModel: ObservableObject {
                 urlProfileImage: nil, // Local only
                 lists: lists,
                 profileImage: image,
-                email: try UserService.getEmail(of: user)
+                email: try userService.getEmail(of: user)
             )
 
             isLoading = false
@@ -72,11 +74,11 @@ class ProfileViewModel: ObservableObject {
             isLoading = true
             guard hasChangeData(of: user) else { return }
             
-            let authUser = try getAuthUser()
+            let authUser = try await getAuthUser()
             
             // Update Name
             if user.name != userDatabase?.name {
-                try await UserService.update(authUser, displayName: user.name)
+                try await userService.update(authUser, displayName: user.name)
                 // Update UserProfile in Repo
                 // We need to fetch current profile to keep other fields or just update known ones?
                 // Domain UserProfile: id, name, email, lists
@@ -109,9 +111,9 @@ class ProfileViewModel: ObservableObject {
     func update(_ oldPassword: String, to newPassword: String) async throws {
         do {
             isLoading = true
-            let authUser = try getAuthUser()
+            let authUser = try await getAuthUser()
             guard !newPassword.isEmpty, !oldPassword.isEmpty else { return }
-            try await UserService.update(authUser, oldPassword: oldPassword, to: newPassword)
+            try await userService.update(authUser, oldPassword: oldPassword, to: newPassword)
             isLoading = false
         } catch {
             let errorMessage = FirebaseErrorsHelper.getDescription(to: error)
@@ -148,12 +150,12 @@ class ProfileViewModel: ObservableObject {
                 isLoading = true
                 let authUser = try getAuthUser()
                 
-                try await UserService.reauthtenticateWithFirebaseAuth(authUser, with: dataForm.password)
-                try await UserService.removeLists(of: authUser)
+                try await userService.reauthtenticateWithFirebaseAuth(authUser, with: dataForm.password)
+                try await userService.removeLists(of: authUser)
                 // Remove local image? Repo doesn't have delete. Skipping or add delete to repo later.
                 
-                try await UserService.removeFromDataBase(authUser)
-                try await UserService.removeFromFirebaseAuth(authUser)
+                try await userService.removeFromDataBase(authUser)
+                try await userService.removeFromFirebaseAuth(authUser)
                 
                 isLoading = false
                 signOut()
@@ -165,6 +167,7 @@ class ProfileViewModel: ObservableObject {
         }
     }
 
+    @MainActor
     func navigateToDeleteAccountView() {
         router.navigate(to: .deleteAccount)
     }

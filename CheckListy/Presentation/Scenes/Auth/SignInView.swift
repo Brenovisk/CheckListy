@@ -188,6 +188,7 @@ extension SignInView {
         .environmentObject(SignInViewModel(
             router: AppRouter(container: container),
             authService: container.firebaseAuthService,
-            userRepository: container.userRepository
+            userRepository: container.userRepository,
+            userService: container.userService
         ))
 }

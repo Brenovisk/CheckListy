@@ -102,7 +102,8 @@ struct DetailsListView: View {
                     RecordButton(
                         transcript: $speechRecognizer.transcript,
                         isPressed: $isPressed,
-                        color: Color(viewModel.list.color)
+                        color: Color(viewModel.list.color),
+                        feedbackService: viewModel.router.container.feedbackService
                     )
                     .onStartRecord {
                         startRecord()
@@ -114,7 +115,7 @@ struct DetailsListView: View {
             }
         }
         .sheet(isPresented: $isShowForm) {
-            FormListView(item: listOptionalBinding)
+            FormListView(item: listOptionalBinding, authService: viewModel.router.container.firebaseAuthService)
                 .onSave { newList in
                     viewModel.updateList(with: newList)
                 }
