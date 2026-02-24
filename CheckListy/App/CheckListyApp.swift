@@ -16,6 +16,7 @@ struct CheckListyApp: App {
     @StateObject private var router: AppRouter
     
     init() {
+        FirebaseApp.configure()
         let container = DIContainer()
         _container = StateObject(wrappedValue: container)
         _router = StateObject(wrappedValue: AppRouter(container: container))
