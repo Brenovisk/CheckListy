@@ -10,10 +10,12 @@ import Firebase
 class RegisterUserUseCase {
     private let authService: FirebaseAuthService
     private let userRepository: UserRepositoryProtocol
+    private let userService: UserService
     
-    init(authService: FirebaseAuthService, userRepository: UserRepositoryProtocol) {
+    init(authService: FirebaseAuthService, userRepository: UserRepositoryProtocol, userService: UserService) {
         self.authService = authService
         self.userRepository = userRepository
+        self.userService = userService
     }
     
     @MainActor
@@ -31,7 +33,7 @@ class RegisterUserUseCase {
         )
         
         try await userRepository.saveUser(userProfile)
-        try await UserService.update(user, displayName: data.name)
+        try await userService.update(user, displayName: data.name)
         
         if let image = data.uiImage, let imageData = image.jpegData(compressionQuality: 0.8) {
             try await userRepository.saveProfileImage(imageData: imageData, userId: user.uid)

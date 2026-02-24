@@ -49,22 +49,4 @@ extension UserDatabase {
         )
     }
 
-    func saveToDatabase() async throws {
-        guard let dbRef = FirebaseDatabase.shared.databaseRef else {
-            throw NSError(domain: "DatabaseError", code: -1, userInfo: [NSLocalizedDescriptionKey: "Unable to get database reference"])
-        }
-
-        let userDict = toNSDictionary()
-
-        let _: () = try await withCheckedThrowingContinuation { continuation in
-            dbRef.child("users").child(self.id).setValue(userDict) { error, _ in
-                if let error = error {
-                    continuation.resume(throwing: error)
-                } else {
-                    continuation.resume(returning: ())
-                }
-            }
-        }
-    }
-
 }

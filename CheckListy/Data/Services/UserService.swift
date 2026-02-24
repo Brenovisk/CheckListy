@@ -11,24 +11,32 @@ import UIKit
 
 class UserService {
 
-    static func update(_ user: User, displayName: String) async throws {
+    private let firebaseDatabase: FirebaseDatabase
+    private let firebaseAuthService: FirebaseAuthService
+
+    init(firebaseDatabase: FirebaseDatabase, firebaseAuthService: FirebaseAuthService) {
+        self.firebaseDatabase = firebaseDatabase
+        self.firebaseAuthService = firebaseAuthService
+    }
+
+    func update(_ user: User, displayName: String) async throws {
         try await updateProfile(user) { changeRequest in
             changeRequest.displayName = displayName
         }
     }
 
-    static func update(_ user: User, photoUrl: URL) async throws {
+    func update(_ user: User, photoUrl: URL) async throws {
         try await updateProfile(user) { changeRequest in
             changeRequest.photoURL = photoUrl
         }
     }
 
-    static func update(_ user: User, oldPassword: String, to newPassword: String) async throws {
+    func update(_ user: User, oldPassword: String, to newPassword: String) async throws {
         try await reauthenticate(user, with: oldPassword)
         try await user.updatePassword(to: newPassword)
     }
 
-    static func getEmail(of user: User) throws -> String {
+    func getEmail(of user: User) throws -> String {
         guard let email = user.email else {
             throw Errors.userNotFoundError
         }
@@ -36,26 +44,26 @@ class UserService {
         return email
     }
 
-    static func removeLists(of user: User) async throws {
+    func removeLists(of user: User) async throws {
         let id = user.uid
         let userLists = findLists(user: user, by: id)
         try await remove(userLists)
     }
 
-    static func removeFromDataBase(_ user: User) async throws {
+    func removeFromDataBase(_ user: User) async throws {
         try await removeLists(of: user)
 
         let id = user.uid
         let pathUser = "\(Paths.users)/\(id)"
-        FirebaseDatabase.shared.delete(path: pathUser)
+        firebaseDatabase.delete(path: pathUser)
     }
 
-    static func reauthtenticateWithFirebaseAuth(_ user: User, with password: String) async throws {
-        try await FirebaseAuthService.shared.reauthenticateAuthUser(user, with: password)
+    func reauthtenticateWithFirebaseAuth(_ user: User, with password: String) async throws {
+        try await firebaseAuthService.reauthenticateAuthUser(user, with: password)
     }
 
-    static func removeFromFirebaseAuth(_ user: User) async throws {
-        try await FirebaseAuthService.shared.deleteAuthUser(user)
+    func removeFromFirebaseAuth(_ user: User) async throws {
+        try await firebaseAuthService.deleteAuthUser(user)
     }
 
 }
@@ -63,13 +71,13 @@ class UserService {
 // MARK: Help method
 extension UserService {
 
-    private static func reauthenticate(_ user: User, with password: String) async throws {
+    private func reauthenticate(_ user: User, with password: String) async throws {
         let email = try getEmail(of: user)
         let authCredential = EmailAuthProvider.credential(withEmail: email, password: password)
         try await user.reauthenticate(with: authCredential)
     }
 
-    private static func updateProfile(_ user: User, with changes: ChangeRequest) async throws {
+    private func updateProfile(_ user: User, with changes: ChangeRequest) async throws {
         let changeRequest = user.createProfileChangeRequest()
         changes(changeRequest)
 
@@ -85,8 +93,8 @@ extension UserService {
 // MARK: Helper Find methods
 extension UserService {
 
-    private static func findLists(user: User, by _: String) -> [String] {
-        FirebaseDatabase.shared.data.filter { $0?.owner == user.uid }.compactMap { $0?.id.uuidString }
+    private func findLists(user: User, by _: String) -> [String] {
+        firebaseDatabase.data.filter { $0?.owner == user.uid }.compactMap { $0?.id.uuidString }
     }
 
 }
@@ -94,10 +102,10 @@ extension UserService {
 // MARK: Helper Remove methods
 extension UserService {
 
-    private static func remove(_ lists: [String]) async throws {
+    private func remove(_ lists: [String]) async throws {
         for listId in lists {
             let pathList = "\(Paths.lists.description)/\(listId)"
-            FirebaseDatabase.shared.delete(path: pathList)
+            firebaseDatabase.delete(path: pathList)
         }
     }
 

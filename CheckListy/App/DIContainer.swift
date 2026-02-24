@@ -16,6 +16,7 @@ class DIContainer: ObservableObject {
     let remoteImageDataSource: RemoteImageDataSource
     let localImageDataSource: LocalImageDataSource
     let feedbackService: FeedbackService
+    let userService: UserService
 
     // Repositories
     let listsRepository: ListsRepositoryProtocol
@@ -33,6 +34,11 @@ class DIContainer: ObservableObject {
         self.remoteImageDataSource = RemoteImageDataSource()
         self.localImageDataSource = LocalImageDataSource()
         self.feedbackService = FeedbackService()
+        
+        self.userService = UserService(
+            firebaseDatabase: firebaseDatabase,
+            firebaseAuthService: firebaseAuthService
+        )
 
         self.listsRepository = ListsRepository(firebaseDatabase: firebaseDatabase)
         self.userRepository = UserRepository(
@@ -46,7 +52,8 @@ class DIContainer: ObservableObject {
         self.updateListUseCase = UpdateListUseCase(repository: listsRepository)
         self.registerUserUseCase = RegisterUserUseCase(
             authService: firebaseAuthService,
-            userRepository: userRepository
+            userRepository: userRepository,
+            userService: userService
         )
     }
 }
