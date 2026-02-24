@@ -23,7 +23,7 @@ class UserRepository: UserRepositoryProtocol {
     }
     
     func fetchUser(userId: String) async throws -> UserProfile {
-        let dictionary: NSDictionary = try await firebaseDatabase.getData(from: .users, with: userId)
+        let dictionary: NSDictionary = try await firebaseDatabase.getRawData(from: .users, with: userId)
         guard let user = UserDTO.toDomain(dictionary) else {
             throw NSError(domain: "UserMappingError", code: -1)
         }

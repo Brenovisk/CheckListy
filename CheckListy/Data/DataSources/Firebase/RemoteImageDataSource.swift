@@ -57,7 +57,7 @@ class RemoteImageDataSource {
     
     func delete(userId: String) async throws {
         let ref = storage.reference().child("profile_images/\(userId).jpg")
-        try await withCheckedThrowingContinuation { continuation in
+        try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
             ref.delete { error in
                 if let error = error {
                     continuation.resume(throwing: error)

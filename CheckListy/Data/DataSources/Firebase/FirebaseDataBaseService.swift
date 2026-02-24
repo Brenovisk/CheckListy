@@ -38,12 +38,12 @@ class FirebaseDatabase {
         // Observe user data to get list IDs
         let userRef = databaseRef.child(Paths.users.description).child(userId)
 
-        userRef.observe(.value) { [weak self] snapshot, _ in
+        userRef.observe(.value, with: { [weak self] snapshot in
             guard let self = self else { return }
             guard let value = snapshot.value as? NSDictionary else { return }
             let listIds = value["lists"] as? [String] ?? []
             self.observeLists(listIds: listIds)
-        }
+        })
     }
 
     func add(path: String, data: NSDictionary) {
@@ -153,13 +153,13 @@ extension FirebaseDatabase {
         let listRef = databaseRef.child(Paths.lists.description).child(listId)
 
         // Observe each list
-        let addedHandle = listRef.observe(.value) { [weak self] snapshot in
+        let addedHandle = listRef.observe(.value, with: { [weak self] snapshot in
             guard let self = self else { return }
             guard let value = snapshot.value as? NSDictionary else { return }
 
             let listItem = ListModel.fromNSDictionary(value)
             self.updateList(with: listItem)
-        }
+        })
 
         listObservers[listId] = addedHandle
     }
