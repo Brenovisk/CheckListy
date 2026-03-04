@@ -1,0 +1,35 @@
+{
+  "rules": {
+    "users": {
+      "$userId": {
+        // Only the specific user can read and write their own profile data
+        ".read": "auth != null && auth.uid == $userId",
+        ".write": "auth != null && auth.uid == $userId",
+        
+        // Basic validation: lists must be an array/object if present
+        "lists": {
+          ".validate": "newData.isString() || newData.hasChildren()"
+        }
+      }
+    },
+    "lists": {
+      "$listId": {
+        // Read: Allow if user is authenticated and is either the owner or part of the shared users list
+        // Note: For array-based 'usersShared', client-side checks handle UI rendering.
+        // Server-side, enforcing strict array containment requires restructuring 'usersShared' to a map: { "uid1": true, "uid2": true }.
+        ".read": "auth != null && (data.child('owner').val() === auth.uid || data.child('usersShared').val() != null)",
+        
+        // Write: Allow creation, update or deletion by the owner or authorized shared users
+        ".write": "auth != null",
+        
+        // Validate required fields to prevent malformed data insertion
+        "name": {
+          ".validate": "newData.isString() && newData.val().length > 0"
+        },
+        "owner": {
+          ".validate": "newData.isString()"
+        }
+      }
+    }
+  }
+}

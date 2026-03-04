@@ -88,3 +88,10 @@ fastlane/test_output
 # https://github.com/johnno1962/injectionforxcode
 
 iOSInjectionProject/
+CheckListy/App/GoogleService-Info.plist
+
+GoogleService-Info.plist
+google-services.json
+.env
+.env.local
+firebase-adminsdk*.json

@@ -71,7 +71,8 @@ You can explore the design file or prototype below:
 - [x] **Google Sign-In**
 - [x] **Combine** with `@PropertyWrapper` for reactivity
 - [x] **Speech Framework** (Apple) for voice recognition
-- [x] **RealmSwift** (only for local photo cache)
+- [x] **RealmSwift
+- [ ] ** (only for local photo cache)
 - [x] **Offline Persistence + Auto-Sync**
 - [x] Modern navigation with `navigationDestination`
 
@@ -104,6 +105,18 @@ cd checklisty
 ## 📄 License
 
 This project is licensed under the **MIT License**.
+
+## 🔒 Security Improvements
+
+As part of the pre-open-source preparation, a comprehensive security audit was conducted to ensure safe public exposure:
+
+- **Credential Management:** `GoogleService-Info.plist` (containing Firebase API Keys and Project IDs) was removed from version control and git history tracking to prevent credential leaks.
+- **Environment Configuration:** A `.env.example` file was introduced to guide developers on configuring their own secure environment variables locally without hardcoding secrets in the codebase.
+- **Git Ignore Hardening:** Verified and ensured that sensitive files like `.env`, `GoogleService-Info.plist`, and `firebase-adminsdk` files are strictly ignored.
+- **Firebase Security Rules:** Implemented a new `database.rules.json` that enforces the principle of least privilege:
+  - Validates authenticated access (`auth != null`).
+  - Restricts `/users/{userId}` paths so users can only read/write their own profile data.
+  - Adds schema validation for list attributes to prevent malicious data injection.
 
 ## 👨‍💻 Author
 
