@@ -14,4 +14,6 @@ protocol ListsRepositoryProtocol {
     func update(list: ListModel) async throws
     func delete(list: ListModel) async throws
     func getList(id: String) async throws -> ListModel
+    func updateUsersShared(of listId: String, with usersId: [String])
 }
+

@@ -53,4 +53,9 @@ class UserRepository: UserRepositoryProtocol {
             return nil
         }
     }
+    
+    func updateLists(ids: [String], userId: String) {
+        let path = "\(FirebaseDatabasePaths.users.description)/\(userId)/lists"
+        firebaseDatabase.update(path: path, data: ids.toNSDictionary())
+    }
 }

@@ -12,4 +12,5 @@ protocol UserRepositoryProtocol {
     func saveUser(_ user: UserProfile) async throws
     func saveProfileImage(imageData: Data, userId: String) async throws
     func getProfileImageData(userId: String) async throws -> Data?
+    func updateLists(ids: [String], userId: String)
 }

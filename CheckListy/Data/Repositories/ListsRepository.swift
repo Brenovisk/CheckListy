@@ -46,4 +46,10 @@ class ListsRepository: ListsRepositoryProtocol {
         }
         return list
     }
+    
+    func updateUsersShared(of listId: String, with usersId: [String]) {
+        let path = "\(FirebaseDatabasePaths.lists.description)/\(listId)/usersShared"
+        firebaseDatabase.update(path: path, data: usersId.toNSDictionary())
+    }
+    
 }
