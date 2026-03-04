@@ -146,6 +146,8 @@
 		140393272F3CEB2300E9AD66 /* ListsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140392B32F3CEB2300E9AD66 /* ListsView.swift */; };
 		14044F7D2C571AA800FD3A73 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 14044F7C2C571AA800FD3A73 /* FirebaseStorage */; };
 		14044F7F2C571B1300FD3A73 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 14044F7E2C571B1300FD3A73 /* FirebaseFirestore */; };
+		140F1FBB2F54B1D90068C358 /* OutlineButtonModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140F1FBA2F54B1C60068C358 /* OutlineButtonModifier.swift */; };
+		140F1FBD2F5876E30068C358 /* DeleteListUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140F1FBC2F5876DB0068C358 /* DeleteListUseCase.swift */; };
 		149F89DA2C7517350092F82C /* PopupView in Frameworks */ = {isa = PBXBuildFile; productRef = 149F89D92C7517350092F82C /* PopupView */; };
 		14B2254D2C36D78500A7F15F /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 14B2254C2C36D78500A7F15F /* FirebaseAuth */; };
 		14B225552C3DF62600A7F15F /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 14B225542C3DF62600A7F15F /* FirebaseDatabase */; };
@@ -311,6 +313,8 @@
 		140392B92F3CEB2300E9AD66 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		140392BA2F3CEB2300E9AD66 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		140392BC2F3CEB2300E9AD66 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
+		140F1FBA2F54B1C60068C358 /* OutlineButtonModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutlineButtonModifier.swift; sourceTree = "<group>"; };
+		140F1FBC2F5876DB0068C358 /* DeleteListUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteListUseCase.swift; sourceTree = "<group>"; };
 		14DBB6A02C3433560084EB23 /* CheckListy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CheckListy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		14DBB6B02C3433570084EB23 /* CheckListyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CheckListyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		14DBB6B42C3433570084EB23 /* CheckListyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckListyTests.swift; sourceTree = "<group>"; };
@@ -532,6 +536,7 @@
 		140392542F3CEB2300E9AD66 /* UseCases */ = {
 			isa = PBXGroup;
 			children = (
+				140F1FBC2F5876DB0068C358 /* DeleteListUseCase.swift */,
 				1403924F2F3CEB2300E9AD66 /* FetchListsUseCase.swift */,
 				140392502F3CEB2300E9AD66 /* RegisterUserUseCase.swift */,
 				140392522F3CEB2300E9AD66 /* ToggleFavoriteUseCase.swift */,
@@ -643,6 +648,7 @@
 		1403929A2F3CEB2300E9AD66 /* Modifiers */ = {
 			isa = PBXGroup;
 			children = (
+				140F1FBA2F54B1C60068C358 /* OutlineButtonModifier.swift */,
 				140392892F3CEB2300E9AD66 /* AnimatedBackgroundModifier.swift */,
 				1403928A2F3CEB2300E9AD66 /* CollapseModifier.swift */,
 				1403928B2F3CEB2300E9AD66 /* ContainerRelativeFrameHorizontalModifier.swift */,
@@ -1046,6 +1052,7 @@
 				140392C92F3CEB2300E9AD66 /* DataFormDeleteAccount.swift in Sources */,
 				140392CA2F3CEB2300E9AD66 /* FormItemView.swift in Sources */,
 				140392CB2F3CEB2300E9AD66 /* ListsRepositoryProtocol.swift in Sources */,
+				140F1FBB2F54B1D90068C358 /* OutlineButtonModifier.swift in Sources */,
 				140392CC2F3CEB2300E9AD66 /* TextsHelper.swift in Sources */,
 				140392CD2F3CEB2300E9AD66 /* SignUpCreatePasswordView.swift in Sources */,
 				140392CE2F3CEB2300E9AD66 /* ListItemModel.swift in Sources */,
@@ -1075,6 +1082,7 @@
 				140392E72F3CEB2300E9AD66 /* ToolbarDoneButton.swift in Sources */,
 				140392E82F3CEB2300E9AD66 /* ScrollHorizontalModifier.swift in Sources */,
 				140392E92F3CEB2300E9AD66 /* FormListView.swift in Sources */,
+				140F1FBD2F5876E30068C358 /* DeleteListUseCase.swift in Sources */,
 				140392EA2F3CEB2300E9AD66 /* IconsHelper.swift in Sources */,
 				140392EB2F3CEB2300E9AD66 /* FetchListsUseCase.swift in Sources */,
 				140392EC2F3CEB2300E9AD66 /* SegmentPicker.swift in Sources */,

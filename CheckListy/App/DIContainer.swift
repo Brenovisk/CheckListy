@@ -26,6 +26,7 @@ class DIContainer: ObservableObject {
     let fetchListsUseCase: FetchListsUseCase
     let toggleFavoriteUseCase: ToggleFavoriteUseCase
     let updateListUseCase: UpdateListUseCase
+    let deleteListUseCase: DeleteListUseCase
     let registerUserUseCase: RegisterUserUseCase
 
     init() {
@@ -50,6 +51,7 @@ class DIContainer: ObservableObject {
         self.fetchListsUseCase = FetchListsUseCase(repository: listsRepository)
         self.toggleFavoriteUseCase = ToggleFavoriteUseCase(repository: listsRepository)
         self.updateListUseCase = UpdateListUseCase(repository: listsRepository)
+        self.deleteListUseCase = DeleteListUseCase(repository: listsRepository)
         self.registerUserUseCase = RegisterUserUseCase(
             authService: firebaseAuthService,
             userRepository: userRepository,

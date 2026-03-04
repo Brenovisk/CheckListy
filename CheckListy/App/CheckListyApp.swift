@@ -29,10 +29,12 @@ struct CheckListyApp: App {
                     switch router.root {
                     case .main:
                         MainView(viewModel: ListsViewModel(
-                            router: router, authService: container.firebaseAuthService,
+                            router: router,
+                            authService: container.firebaseAuthService,
                             fetchListsUseCase: container.fetchListsUseCase,
                             toggleFavoriteUseCase: container.toggleFavoriteUseCase,
                             updateListUseCase: container.updateListUseCase,
+                            deleteListUseCase: container.deleteListUseCase,
                             userRepository: container.userRepository
                         ))
                     case .auth:

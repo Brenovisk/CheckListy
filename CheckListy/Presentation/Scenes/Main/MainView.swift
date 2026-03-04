@@ -39,6 +39,7 @@ struct MainView: View {
         fetchListsUseCase: FetchListsUseCase(repository: repository),
         toggleFavoriteUseCase: ToggleFavoriteUseCase(repository: repository),
         updateListUseCase: UpdateListUseCase(repository: repository),
+        deleteListUseCase: DeleteListUseCase(repository: repository),
         userRepository: userRepository
     ))
 }

@@ -34,6 +34,7 @@ class ListsViewModel: ObservableObject {
     private let fetchListsUseCase: FetchListsUseCase
     private let toggleFavoriteUseCase: ToggleFavoriteUseCase
     private let updateListUseCase: UpdateListUseCase
+    private let deleteListUseCase: DeleteListUseCase
     private let userRepository: UserRepositoryProtocol
 
     var filterLists: [ListModel] {
@@ -77,6 +78,7 @@ class ListsViewModel: ObservableObject {
         fetchListsUseCase: FetchListsUseCase,
         toggleFavoriteUseCase: ToggleFavoriteUseCase,
         updateListUseCase: UpdateListUseCase,
+        deleteListUseCase: DeleteListUseCase,
         userRepository: UserRepositoryProtocol
     ) {
         self.router = router
@@ -84,6 +86,7 @@ class ListsViewModel: ObservableObject {
         self.fetchListsUseCase = fetchListsUseCase
         self.toggleFavoriteUseCase = toggleFavoriteUseCase
         self.updateListUseCase = updateListUseCase
+        self.deleteListUseCase = deleteListUseCase
         self.userRepository = userRepository
         setupDataBase()
     }
@@ -195,7 +198,7 @@ class ListsViewModel: ObservableObject {
             do {
                 try await updateListUseCase.execute(list: list)
             } catch {
-                print("Error updating list: \(error)")
+                debugPrint("Error updating list: \(error)")
             }
         }
     }
@@ -206,7 +209,15 @@ class ListsViewModel: ObservableObject {
 
     @MainActor
     func delete(list: ListModel) {
-        deleteFromRecentsIfNeeded(list: list)
+        Task {
+            do {
+                try await deleteListUseCase.execute(list: list)
+                try await removeListToUser(listId: list.id.uuidString)
+                deleteFromRecentsIfNeeded(list: list)
+            } catch {
+                debugPrint("Error updating list: \(error)")
+            }
+        }
     }
 
     func toggleVisualization() {
@@ -254,6 +265,18 @@ extension ListsViewModel {
         
         if !userProfile.lists.contains(listId) {
             userProfile.lists.append(listId)
+            try await userRepository.saveUser(userProfile)
+        }
+    }
+    
+    @MainActor
+    private func removeListToUser(listId: String) async throws {
+        guard let user = try? authService.getAuthUser() else { return }
+        var userProfile = try await userRepository.fetchUser(userId: user.uid)
+        
+        if userProfile.lists.contains(listId),
+           let index = userProfile.lists.firstIndex(of: listId) {
+            userProfile.lists.remove(at: index)
             try await userRepository.saveUser(userProfile)
         }
     }

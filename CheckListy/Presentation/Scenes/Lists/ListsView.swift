@@ -43,7 +43,7 @@ struct ListsView: View {
                     HStack(alignment: .center) {
                         TitleIcon(title: TextsHelper.myLists.rawValue)
 
-                        Spacer()
+                        Spacer() 
 
                         actionButtons
                     }
@@ -228,7 +228,9 @@ struct ListsView: View {
                     Text(TextsHelper.addList.rawValue)
                 }
             }
-        }.frame(maxWidth: .infinity, alignment: .leading)
+        }
+        .outlineButton()
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
 
 }
@@ -354,6 +356,7 @@ extension ListsView {
                 fetchListsUseCase: FetchListsUseCase(repository: repository),
                 toggleFavoriteUseCase: ToggleFavoriteUseCase(repository: repository),
                 updateListUseCase: UpdateListUseCase(repository: repository),
+                deleteListUseCase: DeleteListUseCase(repository: repository),
                 userRepository: userRepository
             ))
     }
