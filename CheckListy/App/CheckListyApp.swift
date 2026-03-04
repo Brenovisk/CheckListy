@@ -35,7 +35,8 @@ struct CheckListyApp: App {
                             toggleFavoriteUseCase: container.toggleFavoriteUseCase,
                             updateListUseCase: container.updateListUseCase,
                             deleteListUseCase: container.deleteListUseCase,
-                            userRepository: container.userRepository
+                            addSharedList: container.addSharedList,
+                            userRepository: container.userRepository,
                         ))
                     case .auth:
                         AuthenticationView(viewModel: SignInViewModel(

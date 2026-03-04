@@ -35,6 +35,7 @@ class ListsViewModel: ObservableObject {
     private let toggleFavoriteUseCase: ToggleFavoriteUseCase
     private let updateListUseCase: UpdateListUseCase
     private let deleteListUseCase: DeleteListUseCase
+    private let addSharedList: AddSharedList
     private let userRepository: UserRepositoryProtocol
 
     var filterLists: [ListModel] {
@@ -79,6 +80,7 @@ class ListsViewModel: ObservableObject {
         toggleFavoriteUseCase: ToggleFavoriteUseCase,
         updateListUseCase: UpdateListUseCase,
         deleteListUseCase: DeleteListUseCase,
+        addSharedList: AddSharedList,
         userRepository: UserRepositoryProtocol
     ) {
         self.router = router
@@ -87,6 +89,7 @@ class ListsViewModel: ObservableObject {
         self.toggleFavoriteUseCase = toggleFavoriteUseCase
         self.updateListUseCase = updateListUseCase
         self.deleteListUseCase = deleteListUseCase
+        self.addSharedList = addSharedList
         self.userRepository = userRepository
         setupDataBase()
     }
@@ -205,17 +208,27 @@ class ListsViewModel: ObservableObject {
 
     @MainActor
     func addList(by code: String) {
+        Task {
+            do {
+                guard let authUser else { return }
+                let currentLists = lists.compactMap { $0?.id.uuidString }
+                try await addSharedList.execute(currentLists: currentLists, userId: authUser.uid, sharedCode: code)
+            } catch {
+                debugPrint("Error add shared list: \(error)")
+            }
+        }
     }
 
     @MainActor
     func delete(list: ListModel) {
         Task {
             do {
-                try await deleteListUseCase.execute(list: list)
+                guard let authUser else { return }
+                try await deleteListUseCase.execute(list: list, userId: authUser.uid)
                 try await removeListToUser(listId: list.id.uuidString)
                 deleteFromRecentsIfNeeded(list: list)
             } catch {
-                debugPrint("Error updating list: \(error)")
+                debugPrint("Error deleting list: \(error)")
             }
         }
     }

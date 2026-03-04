@@ -87,6 +87,7 @@ class AppRouter: ObservableObject {
                 toggleFavoriteUseCase: container.toggleFavoriteUseCase,
                 updateListUseCase: container.updateListUseCase,
                 deleteListUseCase: container.deleteListUseCase,
+                addSharedList: container.addSharedList,
                 userRepository: container.userRepository
             )
             MainView(viewModel: viewModel)

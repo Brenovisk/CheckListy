@@ -28,6 +28,7 @@ class DIContainer: ObservableObject {
     let updateListUseCase: UpdateListUseCase
     let deleteListUseCase: DeleteListUseCase
     let registerUserUseCase: RegisterUserUseCase
+    let addSharedList: AddSharedList
 
     init() {
         self.firebaseDatabase = FirebaseDatabase()
@@ -57,5 +58,6 @@ class DIContainer: ObservableObject {
             userRepository: userRepository,
             userService: userService
         )
+        self.addSharedList = AddSharedList(listRepository: listsRepository, userRepository: userRepository)
     }
 }

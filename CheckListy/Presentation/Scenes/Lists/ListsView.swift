@@ -357,6 +357,7 @@ extension ListsView {
                 toggleFavoriteUseCase: ToggleFavoriteUseCase(repository: repository),
                 updateListUseCase: UpdateListUseCase(repository: repository),
                 deleteListUseCase: DeleteListUseCase(repository: repository),
+                addSharedList: AddSharedList(listRepository: repository, userRepository: userRepository),
                 userRepository: userRepository
             ))
     }

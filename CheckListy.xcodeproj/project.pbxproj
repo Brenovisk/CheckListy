@@ -148,6 +148,7 @@
 		14044F7F2C571B1300FD3A73 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 14044F7E2C571B1300FD3A73 /* FirebaseFirestore */; };
 		140F1FBB2F54B1D90068C358 /* OutlineButtonModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140F1FBA2F54B1C60068C358 /* OutlineButtonModifier.swift */; };
 		140F1FBD2F5876E30068C358 /* DeleteListUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140F1FBC2F5876DB0068C358 /* DeleteListUseCase.swift */; };
+		140F1FBF2F58CF460068C358 /* AddSharedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140F1FBE2F58CF370068C358 /* AddSharedList.swift */; };
 		149F89DA2C7517350092F82C /* PopupView in Frameworks */ = {isa = PBXBuildFile; productRef = 149F89D92C7517350092F82C /* PopupView */; };
 		14B2254D2C36D78500A7F15F /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 14B2254C2C36D78500A7F15F /* FirebaseAuth */; };
 		14B225552C3DF62600A7F15F /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 14B225542C3DF62600A7F15F /* FirebaseDatabase */; };
@@ -315,6 +316,7 @@
 		140392BC2F3CEB2300E9AD66 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		140F1FBA2F54B1C60068C358 /* OutlineButtonModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutlineButtonModifier.swift; sourceTree = "<group>"; };
 		140F1FBC2F5876DB0068C358 /* DeleteListUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteListUseCase.swift; sourceTree = "<group>"; };
+		140F1FBE2F58CF370068C358 /* AddSharedList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSharedList.swift; sourceTree = "<group>"; };
 		14DBB6A02C3433560084EB23 /* CheckListy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CheckListy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		14DBB6B02C3433570084EB23 /* CheckListyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CheckListyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		14DBB6B42C3433570084EB23 /* CheckListyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckListyTests.swift; sourceTree = "<group>"; };
@@ -536,6 +538,7 @@
 		140392542F3CEB2300E9AD66 /* UseCases */ = {
 			isa = PBXGroup;
 			children = (
+				140F1FBE2F58CF370068C358 /* AddSharedList.swift */,
 				140F1FBC2F5876DB0068C358 /* DeleteListUseCase.swift */,
 				1403924F2F3CEB2300E9AD66 /* FetchListsUseCase.swift */,
 				140392502F3CEB2300E9AD66 /* RegisterUserUseCase.swift */,
@@ -1129,6 +1132,7 @@
 				140393152F3CEB2300E9AD66 /* SignInView.swift in Sources */,
 				140393162F3CEB2300E9AD66 /* ListMode.swift in Sources */,
 				140393172F3CEB2300E9AD66 /* FormChangeUserPassword.swift in Sources */,
+				140F1FBF2F58CF460068C358 /* AddSharedList.swift in Sources */,
 				140393182F3CEB2300E9AD66 /* DefaultSectionOption.swift in Sources */,
 				140393192F3CEB2300E9AD66 /* AppRouter.swift in Sources */,
 				1403931A2F3CEB2300E9AD66 /* UsersPhoto.swift in Sources */,

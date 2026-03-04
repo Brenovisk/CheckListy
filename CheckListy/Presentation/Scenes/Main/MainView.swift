@@ -33,13 +33,16 @@ struct MainView: View {
         remoteImageDataSource: remoteImageDataSource
     )
     
-    return MainView(viewModel: ListsViewModel(
-        router: AppRouter(container: DIContainer()),
-        authService: FirebaseAuthService(),
-        fetchListsUseCase: FetchListsUseCase(repository: repository),
-        toggleFavoriteUseCase: ToggleFavoriteUseCase(repository: repository),
-        updateListUseCase: UpdateListUseCase(repository: repository),
-        deleteListUseCase: DeleteListUseCase(repository: repository),
-        userRepository: userRepository
-    ))
+    return MainView(
+        viewModel: ListsViewModel(
+            router: AppRouter(container: DIContainer()),
+            authService: FirebaseAuthService(),
+            fetchListsUseCase: FetchListsUseCase(repository: repository),
+            toggleFavoriteUseCase: ToggleFavoriteUseCase(repository: repository),
+            updateListUseCase: UpdateListUseCase(repository: repository),
+            deleteListUseCase: DeleteListUseCase(repository: repository),
+            addSharedList: AddSharedList(listRepository: repository, userRepository: userRepository),
+            userRepository: userRepository
+        )
+    )
 }
